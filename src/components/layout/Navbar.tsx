@@ -8,20 +8,24 @@ import logo from '../../assets/logo.png';
 // Categories in the top slim bar
 const navItems = [
   { label: 'Home', path: '/' },
-  { label: 'Production', path: '/production' },
-  { label: 'Piano Lessons', path: '/lessons' },
-  { label: 'Studio Rental', path: '/rental' },
-  { label: 'Piano Service', path: '/piano-service' },
+  { label: 'Recording', path: '/#recording' },
+  { label: 'Capturing', path: '/#capturing' },
+  { label: 'Mixing', path: '/#mixing' },
+  { label: 'Mastering', path: '/#mastering' },
+  { label: 'Instrumental', path: '/#instrumental' },
+  { label: 'Studio Rental', path: '/#rental' },
   { label: 'About', path: '/about' },
 ];
 
 // Expanded navigation items for mobile drawer
 const drawerNavItems = [
   { label: 'Home', path: '/' },
-  { label: 'Production', path: '/production' },
-  { label: 'Piano Lessons', path: '/lessons' },
-  { label: 'Studio Rental', path: '/rental' },
-  { label: 'Piano Service', path: '/piano-service' },
+  { label: 'Audio Recording', path: '/#recording' },
+  { label: 'Audio Capturing', path: '/#capturing' },
+  { label: 'Audio Mixing', path: '/#mixing' },
+  { label: 'Audio Mastering', path: '/#mastering' },
+  { label: 'Instrumental Creation', path: '/#instrumental' },
+  { label: 'Studio Rental', path: '/#rental' },
   { label: 'About', path: '/about' },
   { label: "Today's", path: '/offers' },
   { label: 'View Plans', path: '/pricing' },
@@ -35,11 +39,30 @@ const Navbar: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const location = useLocation();
   const [hideTopBar, setHideTopBar] = React.useState(false);
+  const [isFeaturedActive, setIsFeaturedActive] = React.useState(false);
   const lastScrollY = React.useRef(0);
 
   React.useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+
+      // Detect if the Featured Services section is active in the viewport (using hysteresis buffer to prevent boundary flickering)
+      const featuredEl = document.getElementById('featured');
+      if (featuredEl) {
+        const rect = featuredEl.getBoundingClientRect();
+        setIsFeaturedActive((prevActive) => {
+          if (prevActive) {
+            // Stay active until scrolled past bottom OR scrolled up past 60px buffer
+            return rect.top <= 60 && rect.bottom > 48;
+          } else {
+            // Become active only when Section 3 hits the top (top <= 0)
+            return rect.top <= 0 && rect.bottom > 48;
+          }
+        });
+      } else {
+        setIsFeaturedActive(false);
+      }
+
       if (currentScrollY > 40) {
         if (currentScrollY > lastScrollY.current) {
           setHideTopBar(true);
@@ -126,12 +149,18 @@ const Navbar: React.FC = () => {
         position="sticky" 
         sx={{ 
           boxShadow: 'none',
-          backgroundColor: 'transparent',
+          backgroundColor: '#161616',
           borderBottom: 'none',
-          transform: hideTopBar ? 'translateY(-40px)' : 'translateY(0)',
-          transition: hideTopBar
-            ? 'transform 250ms cubic-bezier(0.3, 0, 0.8, 0.15)'
-            : 'transform 350ms cubic-bezier(0.05, 0.7, 0.1, 1)',
+          transform: isFeaturedActive 
+            ? 'translateY(-120px)' 
+            : hideTopBar 
+              ? 'translateY(-40px)' 
+              : 'translateY(0)',
+          transition: isFeaturedActive
+            ? 'transform 300ms cubic-bezier(0.16, 1, 0.3, 1)'
+            : hideTopBar
+              ? 'transform 250ms cubic-bezier(0.3, 0, 0.8, 0.15)'
+              : 'transform 350ms cubic-bezier(0.05, 0.7, 0.1, 1)',
         }}
       >
         {/* Top Slim 40px Bar */}
@@ -145,12 +174,7 @@ const Navbar: React.FC = () => {
             px: { xs: 2, sm: 4, md: '60px', lg: '100px' },
             width: '100%',
             boxSizing: 'border-box',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-            opacity: hideTopBar ? 0 : 1,
             pointerEvents: hideTopBar ? 'none' : 'auto',
-            transition: hideTopBar
-              ? 'opacity 200ms linear'
-              : 'opacity 300ms cubic-bezier(0.05, 0.7, 0.1, 1)'
           }}
         >
           <Toolbar 
@@ -162,10 +186,6 @@ const Navbar: React.FC = () => {
               padding: 0,
               boxSizing: 'border-box',
               width: '100%',
-              transform: hideTopBar ? 'translateY(-8px)' : 'translateY(0)',
-              transition: hideTopBar
-                ? 'transform 200ms cubic-bezier(0.3, 0, 0.8, 0.15)'
-                : 'transform 350ms cubic-bezier(0.05, 0.7, 0.1, 1)'
             }}
           >
             {isMobile ? (
@@ -251,7 +271,6 @@ const Navbar: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             backgroundColor: '#000000', // Total Black background
-            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
             px: { xs: 2, sm: 4, md: '60px', lg: '100px' },
             width: '100%',
             boxSizing: 'border-box'

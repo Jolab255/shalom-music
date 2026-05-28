@@ -1,3 +1,130 @@
+@font-face {
+  font-family: 'Sans Superellipse Ragan 2';
+  src: url('./assets/fonts/Sans Superellipse Ragan 2.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sans Superellipse Ragid 2';
+  src: url('./assets/fonts/Sans Superellipse Ragid 2.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AerodomeRegular-2vMGK';
+  src: url('./assets/fonts/AerodomeRegular-2vMGK.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Lineal / Linear Font Declarations */
+@font-face {
+  font-family: 'Lineal';
+  src: url('./assets/fonts/lineal/Lineal-Thin.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Thin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Linear';
+  src: url('./assets/fonts/lineal/Lineal-Thin.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Thin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lineal';
+  src: url('./assets/fonts/lineal/Lineal-Light.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Linear';
+  src: url('./assets/fonts/lineal/Lineal-Light.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lineal';
+  src: url('./assets/fonts/lineal/Lineal-Regular.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Linear';
+  src: url('./assets/fonts/lineal/Lineal-Regular.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lineal';
+  src: url('./assets/fonts/lineal/Lineal-Medium.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Linear';
+  src: url('./assets/fonts/lineal/Lineal-Medium.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lineal';
+  src: url('./assets/fonts/lineal/Lineal-Bold.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Linear';
+  src: url('./assets/fonts/lineal/Lineal-Bold.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lineal';
+  src: url('./assets/fonts/lineal/Lineal-Heavy.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Heavy.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Linear';
+  src: url('./assets/fonts/lineal/Lineal-Heavy.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Heavy.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lineal';
+  src: url('./assets/fonts/lineal/Lineal-Black.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Linear';
+  src: url('./assets/fonts/lineal/Lineal-Black.woff2') format('woff2'),
+       url('./assets/fonts/lineal/Lineal-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+}
+
 body {
   margin: 0;
   padding: 0;
