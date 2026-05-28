@@ -568,6 +568,36 @@ This document logs the step-by-step changes, configurations, and achievements im
   - Built a dedicated dark glassmorphic `Dialog` container (`maxWidth: '420px'`, `scroll="paper"`, `TransitionComponent={Grow}`, hidden scrollbar, layered cancel button) detailing the original price of **`100,000 TZS`** and the special offer price of **`99,999 TZS`** with high-value mastering inclusions.
 * **Achievement**: Beautiful presentation for the Audio Mastering service with exceptionally tight, neat, and highly integrated vertical gaps above and below the visual asset, wrapping commercial distribution readiness and sonic polish with highly sophisticated typography.
 
+### Step 66: Premium Widescreen Assets Generation for Instrumental Creation and Studio Rental
+* **Goal**: Generate high-end, custom widescreen images for Instrumental Creation and Studio Rental to prevent any placeholder files and maintain complete aesthetic synergy.
+* **Changes**:
+  - Generated `instrumental-creation.png` featuring a sleek, ultra-modern dark music production workspace, DAW screen with midi keyboards, synth controls, and cyber-pink glowing waveforms.
+  - Generated `studio-rental.png` representing an elite acoustic wood live room tracking suite with a grand piano and vintage recording instruments.
+  - Copied both generated premium images into the `src/assets/` project workspace assets directory.
+* **Achievement**: Complete removal of generic templates or image placeholders, replaced by bespoke cinematic art assets matching our premium brand color coordinates.
+
+### Step 67: Instrumental Creation Centered Layout & Pricing Dialogue Popup Integration
+* **Goal**: Upgrade the Instrumental Creation tab (`index === 4`) to implement the premium centered single-column layout, widescreen visual asset, single-row horizontal specs grid, and custom Dialog pricing popups.
+* **Changes**:
+  - Inserted a conditional layout block in [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx) for `index === 4`.
+  - Centered the colossal headline `"Bespoke Beatmaking & Orchestration"`.
+  - Centered the description paragraph and mapped the new widescreen visual asset `instrumental-creation.png` (`instrumentalCreationImg`) below it with tight margins and clean border-radius parameters.
+  - Implemented the borderless, hoverless, transparent single-row horizontal specifications grid explaining the 4 core instrumental creation features (Custom Beatmaking, Cinematic Orchestral Scores, Commercial Jingles, Sonic Branding) in Linear typography.
+  - Configured the action button to trigger `setIsInstrumentalPopupOpen(true)`.
+  - Built a dedicated dark glassmorphic `Dialog` container (`maxWidth: '420px'`, `scroll="paper"`, `TransitionComponent={Grow}`, hidden scrollbar, layered cancel button) detailing the original price of **`300,000 TZS`** and the special offer price of **`299,999 TZS`** with high-value beatmaking and orchestration inclusions.
+* **Achievement**: Elegant and interactive presentation for the Instrumental Creation service that perfectly coordinates with the rest of the audio engineering pillars.
+
+### Step 68: Studio Rental Centered Layout & Pricing Dialogue Popup Integration
+* **Goal**: Upgrade the Studio Rental tab (`index === 5`) to implement the premium centered single-column layout, widescreen visual asset, single-row horizontal specs grid, and custom Dialog pricing popups.
+* **Changes**:
+  - Inserted a conditional layout block in [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx) for `index === 5`.
+  - Centered the colossal headline `"Elite Creative Production Spaces"`.
+  - Centered the description paragraph and mapped the new widescreen visual asset `studio-rental.png` (`studioRentalImg`) below it with tight margins and clean border-radius parameters.
+  - Implemented the borderless, hoverless, transparent single-row horizontal specifications grid explaining the 4 core studio space features (Acoustic Tracking Space, Analog Summing, Pianos & Drums, Luxury Lounges) in Linear typography.
+  - Configured the action button to trigger `setIsRentalPopupOpen(true)`.
+  - Built a dedicated dark glassmorphic `Dialog` container (`maxWidth: '420px'`, `scroll="paper"`, `TransitionComponent={Grow}`, hidden scrollbar, layered cancel button) detailing the original price of **`150,000 TZS`** and the special offer price of **`149,999 TZS`** for a 4-hour half-day creative block, including full piano and technology setup inclusions.
+* **Achievement**: Gorgeous, complete design parity across all six core featured audio services, making the entire website feel extremely premium, solid, and highly cohesive.
+
 ---
 
 ## 🏆 Project Achievements
@@ -579,5 +609,5 @@ This document logs the step-by-step changes, configurations, and achievements im
 6. **Seamless Dark-Mode Flow**: The homepage now transitions beautifully from the pure black hero to an exquisite pure black, highly interactive 4-pillar expertise panel, incorporating custom outlined typography, a brand-pink product statistics band (Sounds, FX, Instruments), the dedicated `sect_2.png` widescreen fluid showcase banner (occupying 90% viewport width with a precise 5% margin), and the detailed products highlight paragraph.
 7. **Cloudy & Sandy Texturing**: Both the colossal Hero section (Section 1) and the widescreen Expertise section (Section 2) feature an exquisite dark radial mist (cloudy atmosphere) blended with a high-fidelity SVG fractal noise (sandy texture) background for a tactile, editorial, and continuous creative backdrop.
 8. **Top Segment Color Harmonization**: The second utility navigation header and the entire Hero section share the exact same `#000000` (pure black) base background, merging them into a unified, seamless layout block.
-9. **Full Design Parity for Key Audio Tabs**: Audio Recording, Audio Capturing, Audio Mixing, and Audio Mastering tabs all implement the centered single-column layout, widescreen local visual assets, borderless/hoverless specs grids in clean Linear typography, and custom dark glassmorphic pricing Dialogs with specific TZS rates and blink offer badges.
+9. **Full Design Parity for All Featured Tabs**: All six core featured service tabs (Audio Recording, Audio Capturing, Audio Mixing, Audio Mastering, Instrumental Creation, and Studio Rental) now implement the pristine centered single-column layout, widescreen custom visual assets, borderless/hoverless specs grids in clean Linear typography, and custom dark glassmorphic pricing Dialogs with specific TZS rates and blink offer badges.
 10. **Clean Codebase**: 100% build-verified, type-safe, and warning-free compilation under strict TypeScript configs.

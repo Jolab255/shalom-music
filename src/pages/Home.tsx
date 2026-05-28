@@ -16,6 +16,9 @@ import audioRecordingImg from '../assets/audio-recording.png';
 import audioCapturingImg from '../assets/audio-capturing.png';
 import audioEditingImg from '../assets/audio-editing.png';
 import audioMasteringImg from '../assets/audio-mastering.png';
+import instrumentalCreationImg from '../assets/instrumental-creation.png';
+import studioRentalImg from '../assets/studio-rental.png';
+
 
 const leftImages = [
   '/assets/piano_lessons.png',
@@ -38,6 +41,8 @@ const Home: React.FC = () => {
   const [isCapturingPopupOpen, setIsCapturingPopupOpen] = useState(false);
   const [isMixingPopupOpen, setIsMixingPopupOpen] = useState(false);
   const [isMasteringPopupOpen, setIsMasteringPopupOpen] = useState(false);
+  const [isInstrumentalPopupOpen, setIsInstrumentalPopupOpen] = useState(false);
+  const [isRentalPopupOpen, setIsRentalPopupOpen] = useState(false);
 
   useEffect(() => {
     if (hash) {
@@ -1411,29 +1416,29 @@ const Home: React.FC = () => {
               );
             }
 
-            return (
-              <Grid 
-                container 
-                spacing={8} 
-                alignItems="center" 
-                key={index}
-                sx={{
-                  animation: 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                  '@keyframes fadeInUp': {
-                    '0%': { opacity: 0, transform: 'translateY(20px)' },
-                    '100%': { opacity: 1, transform: 'translateY(0)' }
-                  }
-                }}
-              >
-                {/* Text Content Column */}
-                <Grid size={{ xs: 12, md: 6 }}>
+            if (index === 4) {
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    animation: 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    '@keyframes fadeInUp': {
+                      '0%': { opacity: 0, transform: 'translateY(20px)' },
+                      '100%': { opacity: 1, transform: 'translateY(0)' }
+                    }
+                  }}
+                >
                   <Typography 
                     variant="h3" 
                     sx={{ 
                       mb: 3, 
                       fontWeight: 700, 
                       fontFamily: '"Space Grotesk", sans-serif',
-                      fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.6rem' },
+                      fontSize: { xs: '2rem', sm: '2.5rem', md: '3.2rem' },
                       color: 'white',
                       lineHeight: 1.2
                     }}
@@ -1442,45 +1447,124 @@ const Home: React.FC = () => {
                   </Typography>
                   <Typography 
                     sx={{ 
-                      mb: 4, 
+                      mb: 1, 
                       color: 'rgba(255, 255, 255, 0.7)', 
-                      fontSize: '1.05rem', 
-                      lineHeight: 1.7,
+                      fontSize: '1.1rem', 
+                      lineHeight: 1.8,
                       fontFamily: '"Linear", sans-serif',
-                      fontWeight: 300
+                      fontWeight: 300,
+                      maxWidth: '900px',
+                      mx: 'auto'
                     }}
                   >
                     {service.desc}
                   </Typography>
 
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mb: 5 }}>
-                    {service.features.map((feature, i) => (
-                      <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <CheckCircleOutlineIcon sx={{ color: '#ff2a74', fontSize: 22 }} />
-                        <Typography 
-                          sx={{ 
-                            fontSize: '1.05rem', 
-                            fontWeight: 500,
-                            fontFamily: '"Space Grotesk", sans-serif',
-                            color: 'white'
-                          }}
-                        >
-                          {feature}
-                        </Typography>
-                      </Box>
-                    ))}
+                  {/* Instrumental Creation Tab Image */}
+                  <Box 
+                    sx={{ 
+                      display: 'flex', 
+                      justifyContent: 'center', 
+                      mb: 1, 
+                      width: '100%',
+                      maxWidth: '900px',
+                      mx: 'auto'
+                    }}
+                  >
+                    <Box 
+                      component="img" 
+                      src={instrumentalCreationImg} 
+                      alt="Instrumental Creation studio workspace" 
+                      sx={{ 
+                        width: '100%', 
+                        height: 'auto', 
+                        borderRadius: 1
+                      }} 
+                    />
                   </Box>
 
+                  {/* Explanatory Grid of Instrumental Creation Features */}
+                  <Grid 
+                    container 
+                    spacing={3} 
+                    sx={{ 
+                      maxWidth: '1100px', 
+                      mx: 'auto', 
+                      mb: 6,
+                      textAlign: 'left'
+                    }}
+                  >
+                    {[
+                      { 
+                        title: 'Custom Beatmaking & Synth Compositions', 
+                        desc: 'Access premium sound synthesis matrices, dynamic MIDI keyboards, and multi-layered electronic beats.' 
+                      },
+                      { 
+                        title: 'Full Cinematic Orchestral Scores', 
+                        desc: 'Arrange majestic cinematic string sections, woodwind ensembles, and high-fidelity custom orchestral soundscapes.' 
+                      },
+                      { 
+                        title: 'Bespoke Commercial Jingle Writing', 
+                        desc: 'Co-create catchy melodic hooks and unique music signatures crafted specifically for corporate brand identification.' 
+                      },
+                      { 
+                        title: 'Unique Sonic Branding & Soundbeds', 
+                        desc: 'Develop highly tailored, customized background soundbeds to set the perfect mood for your media productions.' 
+                      }
+                    ].map((item, i) => (
+                      <Grid size={{ xs: 12, sm: 6, md: 3 }} key={i}>
+                        <Box 
+                          sx={{ 
+                            p: 1.5, 
+                            bgcolor: 'transparent', 
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                            gap: 1.5
+                          }}
+                        >
+                          <CheckCircleOutlineIcon sx={{ color: '#ff2a74', fontSize: 20 }} />
+                          <Box>
+                            <Typography 
+                              sx={{ 
+                                fontFamily: '"Linear", sans-serif', 
+                                fontWeight: 700, 
+                                fontSize: { xs: '1.1rem', md: '1.2rem' }, 
+                                color: 'white',
+                                mb: 0.75,
+                                letterSpacing: '0.01em'
+                              }}
+                            >
+                              {item.title}
+                            </Typography>
+                            <Typography 
+                              sx={{ 
+                                fontFamily: '"Linear", sans-serif', 
+                                fontWeight: 300, 
+                                fontSize: { xs: '0.9rem', md: '0.95rem' }, 
+                                color: 'rgba(255, 255, 255, 0.6)',
+                                lineHeight: 1.4
+                              }}
+                            >
+                              {item.desc}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+
                   <Button
-                    component={RouterLink}
-                    to={service.link}
+                    onClick={() => setIsInstrumentalPopupOpen(true)}
                     variant="outlined"
                     size="large"
                     sx={{
                       border: '2px solid #ff2a74',
                       color: '#ff2a74',
-                      px: 4.5,
-                      py: 1.2,
+                      px: 5,
+                      py: 1.3,
                       fontSize: '16px',
                       fontWeight: 700,
                       borderRadius: '4px',
@@ -1495,114 +1579,182 @@ const Home: React.FC = () => {
                       fontFamily: '"Space Grotesk", sans-serif',
                     }}
                   >
-                    Explore {service.title}
+                    Request Instrumental Creation Session
                   </Button>
-                </Grid>
+                </Box>
+              );
+            }
 
-                {/* Glassmorphic Glowing Visual Column */}
-                <Grid size={{ xs: 12, md: 6 }}>
-                  <Box 
+            if (index === 5) {
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    animation: 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    '@keyframes fadeInUp': {
+                      '0%': { opacity: 0, transform: 'translateY(20px)' },
+                      '100%': { opacity: 1, transform: 'translateY(0)' }
+                    }
+                  }}
+                >
+                  <Typography 
+                    variant="h3" 
                     sx={{ 
-                      position: 'relative',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      width: '100%',
-                      height: { xs: '320px', md: '420px' },
-                      borderRadius: 2,
-                      overflow: 'hidden',
-                      bgcolor: 'rgba(10, 10, 10, 0.65)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
-                      backdropFilter: 'blur(16px)',
-                      boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)',
-                      p: 4,
-                      // Subtle glowing background mesh gradient
-                      '&::after': {
-                        content: '""',
-                        position: 'absolute',
-                        width: '200px',
-                        height: '200px',
-                        borderRadius: '50%',
-                        background: 'radial-gradient(circle, rgba(255, 42, 116, 0.25) 0%, transparent 70%)',
-                        filter: 'blur(40px)',
-                        zIndex: 0,
-                        animation: 'pulseGlow 8s ease-in-out infinite alternate',
-                        '@keyframes pulseGlow': {
-                          '0%': { transform: 'scale(1) translate(-20px, -20px)' },
-                          '100%': { transform: 'scale(1.3) translate(20px, 20px)' }
-                        }
-                      }
+                      mb: 3, 
+                      fontWeight: 700, 
+                      fontFamily: '"Space Grotesk", sans-serif',
+                      fontSize: { xs: '2rem', sm: '2.5rem', md: '3.2rem' },
+                      color: 'white',
+                      lineHeight: 1.2
                     }}
                   >
-                    {/* Centered Premium Icon Representation */}
+                    {service.headline}
+                  </Typography>
+                  <Typography 
+                    sx={{ 
+                      mb: 1, 
+                      color: 'rgba(255, 255, 255, 0.7)', 
+                      fontSize: '1.1rem', 
+                      lineHeight: 1.8,
+                      fontFamily: '"Linear", sans-serif',
+                      fontWeight: 300,
+                      maxWidth: '900px',
+                      mx: 'auto'
+                    }}
+                  >
+                    {service.desc}
+                  </Typography>
+
+                  {/* Studio Rental Tab Image */}
+                  <Box 
+                    sx={{ 
+                      display: 'flex', 
+                      justifyContent: 'center', 
+                      mb: 1, 
+                      width: '100%',
+                      maxWidth: '900px',
+                      mx: 'auto'
+                    }}
+                  >
                     <Box 
+                      component="img" 
+                      src={studioRentalImg} 
+                      alt="Premium Studio Space Rental Interior" 
                       sx={{ 
-                        position: 'relative', 
-                        zIndex: 2, 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center', 
-                        gap: 3 
-                      }}
-                    >
-                      <Box 
-                        sx={{ 
-                          width: 100, 
-                          height: 100, 
-                          borderRadius: '50%', 
-                          bgcolor: 'rgba(255, 42, 116, 0.08)', 
-                          border: '2px solid rgba(255, 42, 116, 0.25)', 
-                          display: 'flex', 
-                          justifyContent: 'center', 
-                          alignItems: 'center',
-                          color: '#ff2a74',
-                          boxShadow: '0 0 30px rgba(255, 42, 116, 0.15)',
-                          animation: 'floatIcon 6s ease-in-out infinite',
-                          '@keyframes floatIcon': {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-12px)' }
-                          }
-                        }}
-                      >
-                        {service.largeIcon}
-                      </Box>
-                      <Typography 
-                        variant="h6" 
-                        sx={{ 
-                          fontFamily: '"Space Grotesk", sans-serif', 
-                          fontWeight: 700, 
-                          color: 'rgba(255, 255, 255, 0.9)',
-                          letterSpacing: '0.04em',
-                          textTransform: 'uppercase'
-                        }}
-                      >
-                        {service.title} SPECIFICATIONS
-                      </Typography>
-                      {/* Modern data visualizer representation */}
-                      <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-end', height: '40px', mt: 1 }}>
-                        {[0.4, 0.7, 0.9, 0.5, 0.8, 0.6, 0.9, 0.4].map((h, i) => (
-                          <Box 
-                            key={i} 
-                            sx={{ 
-                              width: '6px', 
-                              height: `${h * 100}%`, 
-                              bgcolor: 'rgba(255, 42, 116, 0.35)', 
-                              borderRadius: '3px',
-                              animation: `growBar 1.2s ease-in-out infinite alternate`,
-                              animationDelay: `${i * 0.15}s`,
-                              '@keyframes growBar': {
-                                '0%': { height: '20%' },
-                                '100%': { height: `${h * 100}%`, bgcolor: '#ff2a74' }
-                              }
-                            }} 
-                          />
-                        ))}
-                      </Box>
-                    </Box>
+                        width: '100%', 
+                        height: 'auto', 
+                        borderRadius: 1
+                      }} 
+                    />
                   </Box>
-                </Grid>
-              </Grid>
-            );
+
+                  {/* Explanatory Grid of Studio Rental Features */}
+                  <Grid 
+                    container 
+                    spacing={3} 
+                    sx={{ 
+                      maxWidth: '1100px', 
+                      mx: 'auto', 
+                      mb: 6,
+                      textAlign: 'left'
+                    }}
+                  >
+                    {[
+                      { 
+                        title: 'Acoustically Calibrated Recording Spaces', 
+                        desc: 'Rent room environments featuring variable organic acoustics, designed specifically for transparent and clear tracking.' 
+                      },
+                      { 
+                        title: 'Elite Analog Summing & Console Routing', 
+                        desc: 'Route your tracks through vintage analog consoles, warm tube summiers, and luxury outboard racks.' 
+                      },
+                      { 
+                        title: 'Vintage Pianos, Synths & Drum Kits', 
+                        desc: 'Gain full access to our Yamaha grand piano, analog synthesizer arrays, and custom acoustic drum kits.' 
+                      },
+                      { 
+                        title: 'Luxury Lounges & Production Suites', 
+                        desc: 'Relax between takes inside highly comfortable creative lounges equipped with high-speed Wi-Fi and refreshments.' 
+                      }
+                    ].map((item, i) => (
+                      <Grid size={{ xs: 12, sm: 6, md: 3 }} key={i}>
+                        <Box 
+                          sx={{ 
+                            p: 1.5, 
+                            bgcolor: 'transparent', 
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                            gap: 1.5
+                          }}
+                        >
+                          <CheckCircleOutlineIcon sx={{ color: '#ff2a74', fontSize: 20 }} />
+                          <Box>
+                            <Typography 
+                              sx={{ 
+                                fontFamily: '"Linear", sans-serif', 
+                                fontWeight: 700, 
+                                fontSize: { xs: '1.1rem', md: '1.2rem' }, 
+                                color: 'white',
+                                mb: 0.75,
+                                letterSpacing: '0.01em'
+                              }}
+                            >
+                              {item.title}
+                            </Typography>
+                            <Typography 
+                              sx={{ 
+                                fontFamily: '"Linear", sans-serif', 
+                                fontWeight: 300, 
+                                fontSize: { xs: '0.9rem', md: '0.95rem' }, 
+                                color: 'rgba(255, 255, 255, 0.6)',
+                                lineHeight: 1.4
+                              }}
+                            >
+                              {item.desc}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+
+                  <Button
+                    onClick={() => setIsRentalPopupOpen(true)}
+                    variant="outlined"
+                    size="large"
+                    sx={{
+                      border: '2px solid #ff2a74',
+                      color: '#ff2a74',
+                      px: 5,
+                      py: 1.3,
+                      fontSize: '16px',
+                      fontWeight: 700,
+                      borderRadius: '4px',
+                      '&:hover': { 
+                        border: '2px solid #ff2a74',
+                        bgcolor: '#ff2a74',
+                        color: 'white',
+                        transform: 'translateY(-2px)' 
+                      },
+                      transition: 'all 0.3s ease',
+                      textTransform: 'none',
+                      fontFamily: '"Space Grotesk", sans-serif',
+                    }}
+                  >
+                    Request Studio Space Booking
+                  </Button>
+                </Box>
+              );
+            }
+
+            return null;
           })}
         </Container>
       </Box>
@@ -2533,6 +2685,428 @@ const Home: React.FC = () => {
             component={RouterLink}
             to="/contact"
             onClick={() => setIsMasteringPopupOpen(false)}
+            variant="contained"
+            fullWidth
+            sx={{
+              bgcolor: '#ff2a74',
+              color: 'white',
+              py: 1.2,
+              fontSize: '15px',
+              fontWeight: 700,
+              borderRadius: '4px',
+              boxShadow: 'none',
+              '&:hover': { bgcolor: '#e01b5d', boxShadow: 'none' },
+              fontFamily: '"Space Grotesk", sans-serif',
+              textTransform: 'none'
+            }}
+          >
+            Proceed to Book Session
+          </Button>
+        </DialogContent>
+      </Dialog>
+
+      {/* Instrumental Creation Request Pricing Popup */}
+      <Dialog
+        open={isInstrumentalPopupOpen}
+        onClose={() => setIsInstrumentalPopupOpen(false)}
+        TransitionComponent={Grow}
+        transitionDuration={{ enter: 400, exit: 250 }}
+        scroll="paper"
+        PaperProps={{
+          sx: {
+            bgcolor: '#0a0a0a',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '4px',
+            maxWidth: '420px',
+            width: '100%',
+            maxHeight: 'calc(100vh - 48px)',
+            py: { xs: 1.5, sm: 2 },
+            px: { xs: 2.5, sm: 3 },
+            position: 'relative',
+            boxShadow: '0 20px 45px rgba(0, 0, 0, 0.95)',
+            backgroundImage: 'none',
+            display: 'flex',
+            flexDirection: 'column'
+          }
+        }}
+        sx={{
+          backdropFilter: 'blur(10px)',
+          '& .MuiBackdrop-root': {
+            bgcolor: 'rgba(0, 0, 0, 0.85)'
+          }
+        }}
+      >
+        <IconButton 
+          onClick={() => setIsInstrumentalPopupOpen(false)} 
+          aria-label="close"
+          sx={{ 
+            position: 'absolute', 
+            top: 12, 
+            right: 12, 
+            zIndex: 10,
+            color: 'rgba(255, 255, 255, 0.6)', 
+            '&:hover': { color: 'white', bgcolor: 'rgba(255, 255, 255, 0.05)' } 
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+
+        <DialogContent 
+          sx={{ 
+            p: 0, 
+            textAlign: 'center', 
+            color: 'white', 
+            overflowY: 'auto',
+            '&::-webkit-scrollbar': {
+              display: 'none'
+            },
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none'
+          }}
+        >
+          <Typography 
+            variant="h4" 
+            sx={{ 
+              fontFamily: '"Space Grotesk", sans-serif', 
+              fontWeight: 700, 
+              fontSize: { xs: '1.3rem', sm: '1.6rem' },
+              mb: 1,
+              mt: 2.5,
+              px: 4
+            }}
+          >
+            Bespoke Beatmaking & Orchestration
+          </Typography>
+          <Typography 
+            sx={{ 
+              fontFamily: '"Linear", sans-serif',
+              fontWeight: 300,
+              fontSize: '0.9rem',
+              color: 'rgba(255, 255, 255, 0.65)',
+              mb: 2.5,
+              lineHeight: 1.4
+            }}
+          >
+            Co-create a completely unique sonic identity with elite beatmaking and majestic cinematic orchestration.
+          </Typography>
+
+          {/* Pricing Panel */}
+          <Box 
+            sx={{ 
+              bgcolor: 'rgba(255, 42, 116, 0.05)',
+              border: '1px dashed rgba(255, 42, 116, 0.25)',
+              borderRadius: '4px',
+              py: 2,
+              px: 2,
+              mb: 2.5,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative'
+            }}
+          >
+            {/* Offer Badge */}
+            <Box 
+              sx={{ 
+                position: 'absolute',
+                top: -10,
+                bgcolor: '#ff2a74',
+                color: 'white',
+                fontFamily: '"Space Grotesk", sans-serif',
+                fontWeight: 700,
+                fontSize: '0.68rem',
+                letterSpacing: '0.1em',
+                px: 1.5,
+                py: 0.2,
+                borderRadius: '4px',
+                animation: 'pulseGlow 2s infinite alternate',
+                '@keyframes pulseGlow': {
+                  '0%': { boxShadow: '0 0 10px rgba(255, 42, 116, 0.4)' },
+                  '100%': { boxShadow: '0 0 20px rgba(255, 42, 116, 0.8)' }
+                }
+              }}
+            >
+              LIMITED OFFER
+            </Box>
+
+            <Typography 
+              sx={{ 
+                textDecoration: 'line-through', 
+                color: 'rgba(255, 255, 255, 0.4)', 
+                fontSize: '1.1rem',
+                fontFamily: '"Space Grotesk", sans-serif',
+                fontWeight: 500,
+                mb: 0.25,
+                mt: 0.25
+              }}
+            >
+              300,000 TZS
+            </Typography>
+            <Typography 
+              sx={{ 
+                color: '#ff2a74', 
+                fontWeight: 900, 
+                fontSize: { xs: '1.8rem', sm: '2.2rem' },
+                fontFamily: '"Space Grotesk", sans-serif',
+                lineHeight: 1
+              }}
+            >
+              299,999 TZS
+            </Typography>
+            <Typography 
+              sx={{ 
+                fontSize: '0.75rem',
+                color: 'rgba(255, 255, 255, 0.5)',
+                fontFamily: '"Linear", sans-serif',
+                mt: 0.75
+              }}
+            >
+              Full session production & orchestration track files included.
+            </Typography>
+          </Box>
+
+          {/* Inclusions List */}
+          <Box sx={{ textAlign: 'left', mb: 3, display: 'flex', flexDirection: 'column', gap: 1, px: 1 }}>
+            {[
+              'Full custom electronic beatmaker & synth programming matrices',
+              'Multi-layered cinematic orchestral arrangement & instrumentation',
+              'Tailored corporate advertising jingles & sound branding',
+              'Access to advanced elite analog/digital sound synthesis systems',
+              'Creative songwriting structure & composition consultation included'
+            ].map((text, i) => (
+              <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
+                <CheckCircleOutlineIcon sx={{ color: '#ff2a74', fontSize: 16 }} />
+                <Typography 
+                  sx={{ 
+                    fontFamily: '"Linear", sans-serif', 
+                    fontWeight: 300, 
+                    fontSize: '0.84rem', 
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    lineHeight: 1.3
+                  }}
+                >
+                  {text}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+
+          <Button
+            component={RouterLink}
+            to="/contact"
+            onClick={() => setIsInstrumentalPopupOpen(false)}
+            variant="contained"
+            fullWidth
+            sx={{
+              bgcolor: '#ff2a74',
+              color: 'white',
+              py: 1.2,
+              fontSize: '15px',
+              fontWeight: 700,
+              borderRadius: '4px',
+              boxShadow: 'none',
+              '&:hover': { bgcolor: '#e01b5d', boxShadow: 'none' },
+              fontFamily: '"Space Grotesk", sans-serif',
+              textTransform: 'none'
+            }}
+          >
+            Proceed to Book Session
+          </Button>
+        </DialogContent>
+      </Dialog>
+
+      {/* Studio Space Rental Request Pricing Popup */}
+      <Dialog
+        open={isRentalPopupOpen}
+        onClose={() => setIsRentalPopupOpen(false)}
+        TransitionComponent={Grow}
+        transitionDuration={{ enter: 400, exit: 250 }}
+        scroll="paper"
+        PaperProps={{
+          sx: {
+            bgcolor: '#0a0a0a',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '4px',
+            maxWidth: '420px',
+            width: '100%',
+            maxHeight: 'calc(100vh - 48px)',
+            py: { xs: 1.5, sm: 2 },
+            px: { xs: 2.5, sm: 3 },
+            position: 'relative',
+            boxShadow: '0 20px 45px rgba(0, 0, 0, 0.95)',
+            backgroundImage: 'none',
+            display: 'flex',
+            flexDirection: 'column'
+          }
+        }}
+        sx={{
+          backdropFilter: 'blur(10px)',
+          '& .MuiBackdrop-root': {
+            bgcolor: 'rgba(0, 0, 0, 0.85)'
+          }
+        }}
+      >
+        <IconButton 
+          onClick={() => setIsRentalPopupOpen(false)} 
+          aria-label="close"
+          sx={{ 
+            position: 'absolute', 
+            top: 12, 
+            right: 12, 
+            zIndex: 10,
+            color: 'rgba(255, 255, 255, 0.6)', 
+            '&:hover': { color: 'white', bgcolor: 'rgba(255, 255, 255, 0.05)' } 
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+
+        <DialogContent 
+          sx={{ 
+            p: 0, 
+            textAlign: 'center', 
+            color: 'white', 
+            overflowY: 'auto',
+            '&::-webkit-scrollbar': {
+              display: 'none'
+            },
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none'
+          }}
+        >
+          <Typography 
+            variant="h4" 
+            sx={{ 
+              fontFamily: '"Space Grotesk", sans-serif', 
+              fontWeight: 700, 
+              fontSize: { xs: '1.3rem', sm: '1.6rem' },
+              mb: 1,
+              mt: 2.5,
+              px: 4
+            }}
+          >
+            Elite Creative Production Spaces
+          </Typography>
+          <Typography 
+            sx={{ 
+              fontFamily: '"Linear", sans-serif',
+              fontWeight: 300,
+              fontSize: '0.9rem',
+              color: 'rgba(255, 255, 255, 0.65)',
+              mb: 2.5,
+              lineHeight: 1.4
+            }}
+          >
+            Rent our acoustically perfected live tracking rooms, control suites, and premium instruments.
+          </Typography>
+
+          {/* Pricing Panel */}
+          <Box 
+            sx={{ 
+              bgcolor: 'rgba(255, 42, 116, 0.05)',
+              border: '1px dashed rgba(255, 42, 116, 0.25)',
+              borderRadius: '4px',
+              py: 2,
+              px: 2,
+              mb: 2.5,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative'
+            }}
+          >
+            {/* Offer Badge */}
+            <Box 
+              sx={{ 
+                position: 'absolute',
+                top: -10,
+                bgcolor: '#ff2a74',
+                color: 'white',
+                fontFamily: '"Space Grotesk", sans-serif',
+                fontWeight: 700,
+                fontSize: '0.68rem',
+                letterSpacing: '0.1em',
+                px: 1.5,
+                py: 0.2,
+                borderRadius: '4px',
+                animation: 'pulseGlow 2s infinite alternate',
+                '@keyframes pulseGlow': {
+                  '0%': { boxShadow: '0 0 10px rgba(255, 42, 116, 0.4)' },
+                  '100%': { boxShadow: '0 0 20px rgba(255, 42, 116, 0.8)' }
+                }
+              }}
+            >
+              LIMITED OFFER
+            </Box>
+
+            <Typography 
+              sx={{ 
+                textDecoration: 'line-through', 
+                color: 'rgba(255, 255, 255, 0.4)', 
+                fontSize: '1.1rem',
+                fontFamily: '"Space Grotesk", sans-serif',
+                fontWeight: 500,
+                mb: 0.25,
+                mt: 0.25
+              }}
+            >
+              150,000 TZS
+            </Typography>
+            <Typography 
+              sx={{ 
+                color: '#ff2a74', 
+                fontWeight: 900, 
+                fontSize: { xs: '1.8rem', sm: '2.2rem' },
+                fontFamily: '"Space Grotesk", sans-serif',
+                lineHeight: 1
+              }}
+            >
+              149,999 TZS
+            </Typography>
+            <Typography 
+              sx={{ 
+                fontSize: '0.75rem',
+                color: 'rgba(255, 255, 255, 0.5)',
+                fontFamily: '"Linear", sans-serif',
+                mt: 0.75
+              }}
+            >
+              Price applies for 4-hour half-day creative studio session block.
+            </Typography>
+          </Box>
+
+          {/* Inclusions List */}
+          <Box sx={{ textAlign: 'left', mb: 3, display: 'flex', flexDirection: 'column', gap: 1, px: 1 }}>
+            {[
+              'Acoustically calibrated 400 sq ft main live room tracking space',
+              'Control Room A console routing & high-end Genelec monitors',
+              'Full access to Yamaha C7 grand piano, analog synths & custom drums',
+              'Luxury artist lounges equipped with high-speed Wi-Fi',
+              'Dedicated on-site resident tech setup assistant & runner'
+            ].map((text, i) => (
+              <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
+                <CheckCircleOutlineIcon sx={{ color: '#ff2a74', fontSize: 16 }} />
+                <Typography 
+                  sx={{ 
+                    fontFamily: '"Linear", sans-serif', 
+                    fontWeight: 300, 
+                    fontSize: '0.84rem', 
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    lineHeight: 1.3
+                  }}
+                >
+                  {text}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+
+          <Button
+            component={RouterLink}
+            to="/contact"
+            onClick={() => setIsRentalPopupOpen(false)}
             variant="contained"
             fullWidth
             sx={{
