@@ -665,7 +665,17 @@ This document logs the step-by-step changes, configurations, and achievements im
   - Eliminated the circular crop mask, border properties, glowing ambient shadows, and background SVG sandy filters.
   - Set the `<video>` element style to its natural widescreen aspect ratio (`maxWidth: '100%'`, `maxHeight: '100%'`, centered on a pure black `#000000` screen).
   - Maintained the native event listeners (`onCanPlayThrough`, `onLoadedData`) and configured a 1.5-second showcase playback timer before initiating a smooth fade-out unmounting sequence.
-* **Achievement**: An ultra-clean, exceptionally elegant, and highly cinematic minimalist video loader screen that presents the raw visual intro in its uncropped, natural form.
+
+### Step 79: Intelligent Cinematic Splash Loader Control Sequence
+* **Goal**: Implement a smart loading sequence where the splash video must play for a minimum of 10 seconds and always play fully to its end before dismissing, repeating (looping) if critical window resources have not finished downloading.
+* **Changes**:
+  - Modified [Loader.tsx](file:///home/jolab/websites/shalom-music/src/components/layout/Loader.tsx) to remove the HTML5 auto-looping `loop` attribute from the `<video>` element.
+  - Implemented `resourcesLoaded` state tracking by analyzing `document.readyState === 'complete'` and listening to native window `load` events.
+  - Added a `minTimeReached` state linked to a strict `10,000ms` (10-second) timeout timer.
+  - Configured the video's `onEnded` event listener:
+    - If `resourcesLoaded` is `true` AND `minTimeReached` is `true`, triggers a smooth unmounting sequence.
+    - If either is `false` (meaning the page is still loading or 10 seconds has not passed), resets `currentTime` to `0` and programmatically plays the video again to loop seamlessly.
+* **Achievement**: An incredibly smooth, high-end creative landing intro where the video is never interrupted mid-playback, loops as long as resources load, satisfies a mandatory 10-second preview, and fades out only upon visual completion.
 
 ---
 

@@ -8,31 +8,59 @@ interface LoaderProps {
 const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
   const [fade, setFade] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
+  const [resourcesLoaded, setResourcesLoaded] = useState(
+    typeof window !== 'undefined' ? document.readyState === 'complete' : false
+  );
+  const [minTimeReached, setMinTimeReached] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (videoReady) {
-      // Showcase the video for 1.5 seconds before smoothly fading out to enter the site
-      const dismissTimer = setTimeout(() => {
-        setFade(true);
-        const completeTimer = setTimeout(() => {
-          onComplete();
-        }, 800); // Fully unmount after fade-out transition completes
-        return () => clearTimeout(completeTimer);
-      }, 1500);
+    // 1. Listen for window load event to track resource loading status
+    if (resourcesLoaded) return;
 
-      return () => clearTimeout(dismissTimer);
-    }
-  }, [videoReady, onComplete]);
+    const handleLoad = () => {
+      setResourcesLoaded(true);
+    };
+
+    window.addEventListener('load', handleLoad);
+    return () => window.removeEventListener('load', handleLoad);
+  }, [resourcesLoaded]);
+
+  useEffect(() => {
+    // 2. Establish the mandatory 10-second minimum playtime timer
+    const timer = setTimeout(() => {
+      setMinTimeReached(true);
+    }, 10000); // 10 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleVideoCanPlay = () => {
     setVideoReady(true);
     if (videoRef.current) {
       videoRef.current.play().catch((err) => {
         console.log("Autoplay policy restriction or video load error:", err);
-        // Fallback to avoid locking the screen if browser blocks autoplay
         setVideoReady(true);
       });
+    }
+  };
+
+  const handleVideoEnded = () => {
+    // 3. When video ends, verify if resources have finished loading AND 10s timer is complete
+    if (resourcesLoaded && minTimeReached) {
+      setFade(true);
+      const completeTimer = setTimeout(() => {
+        onComplete();
+      }, 800); // Unmount after fade-out transition finishes
+      return () => clearTimeout(completeTimer);
+    } else {
+      // Replay the loading video from the beginning
+      if (videoRef.current) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.play().catch((err) => {
+          console.log("Video replay error:", err);
+        });
+      }
     }
   };
 
@@ -61,9 +89,9 @@ const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
         src="/loader-video.mp4"
         muted
         playsInline
-        loop
         onCanPlayThrough={handleVideoCanPlay}
         onLoadedData={handleVideoCanPlay}
+        onEnded={handleVideoEnded}
         style={{
           maxWidth: '100%',
           maxHeight: '100%',
