@@ -123,10 +123,17 @@ This document logs the step-by-step changes, configurations, and achievements im
   - Kept the logo at its exact full scale (`60px` mobile / `70px` desktop) to maintain brand prominence, fitting it perfectly inside the bar with minimum spacing.
 * **Achievement**: A much slimmer and tighter header bar that occupies less vertical real estate while keeping logo size and layout readability fully intact.
 
+### Step 13: Hanging Logo Overhang
+* **Goal**: Increase the brand logo size a bit to improve visibility, while maintaining the slim bar heights.
+* **Changes**:
+  - Enlarged the logo dimensions to `86px` height on desktop and `72px` on mobile (previously `70px` and `60px`).
+  - Added relative positioning and negative vertical margins (`mt: { xs: -0.5, sm: -1 }`, `mb: { xs: -0.5, sm: -1 }`) to offset the layout height, preventing the larger image from stretching the parent utility bar's `72px`/`64px` constraints.
+* **Achievement**: The brand logo stands out dramatically with a premium "hanging logo" overhang look, without expanding the vertical footprint of the navbar.
+
 ---
 
 ## 🏆 Project Achievements
 1. **Premium Aesthetics**: High-end typography (Syne & Space Grotesk) paired with pink active and hover underlines on categories, blinking CSS animations, premium dark modes, and subtle `4px` border-radius details.
-2. **Branding Clarity**: Full-scale `70px` brand logos housed in a compact `72px` desktop (and `64px` mobile) black bar and complete focus on key studio pillars (Music Production, Piano Lessons, Studio Rental, and Piano Services).
+2. **Branding Clarity**: Full-scale `86px` brand logos housed in a compact `72px` desktop (and `64px` mobile) black bar via an elegant hanging logo design, maintaining complete focus on key studio pillars (Music Production, Piano Lessons, Studio Rental, and Piano Services).
 3. **Robust Mobile & Navigation Support**: Full hamburger navigation drawer with branded logo visibility and a customized `ScrollToHash` router component that ensures smooth navigation to testimonials or other section hashes.
 4. **Clean Codebase**: 100% build-verified, type-safe, and warning-free compilation under strict TypeScript configs.

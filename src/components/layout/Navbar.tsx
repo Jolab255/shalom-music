@@ -230,9 +230,13 @@ const Navbar: React.FC = () => {
               src={logo} 
               alt="Shalom Music Logo" 
               sx={{ 
-                height: { xs: '60px', sm: '70px' }, 
+                height: { xs: '72px', sm: '86px' }, 
                 objectFit: 'contain',
-                display: 'block'
+                display: 'block',
+                position: 'relative',
+                zIndex: 2,
+                mt: { xs: -0.5, sm: -1 },
+                mb: { xs: -0.5, sm: -1 }
               }} 
             />
           </Box>
