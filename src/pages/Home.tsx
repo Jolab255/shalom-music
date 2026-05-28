@@ -11,6 +11,7 @@ import BuildIcon from '@mui/icons-material/Build';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import CloseIcon from '@mui/icons-material/Close';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import sect2Img from '../assets/sect_2.png';
 import audioRecordingImg from '../assets/audio-recording.png';
 import audioCapturingImg from '../assets/audio-capturing.png';
@@ -2102,75 +2103,157 @@ const Home: React.FC = () => {
           >
             What Our Clients Say
           </Typography>
-          <Grid container spacing={4}>
-            {[
-              { name: 'Alex Rivera', role: 'Artist', text: 'Shalom Music transformed my rough demos into a professional EP. The attention to detail is unmatched.' },
-              { name: 'Sarah Johnson', role: 'Student', text: 'The piano lessons are incredible. I went from a complete beginner to playing my favorite pieces in months.' },
-              { name: 'Michael Chen', role: 'Producer', text: 'The studio rental facilities are top-notch. High-end gear and a very creative atmosphere.' }
-            ].map((testimonial, idx) => (
-              <Grid size={{ xs: 12, md: 4 }} key={idx}>
-                <Card 
-                  elevation={0} 
-                  sx={{ 
-                    p: 4, 
-                    bgcolor: 'rgba(255, 255, 255, 0.03)', 
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    borderRadius: '4px',
+          <Grid container spacing={6} alignItems="center" sx={{ mt: 2 }}>
+            {/* Left Column: Interactive Video Thumbnail Card */}
+            <Grid size={{ xs: 12, md: 7 }}>
+              <Box 
+                component="a"
+                href="https://www.youtube.com/watch?v=TSscXIs3PLQ&list=RDEMXSoe68D-7T5qMUxuCNK5ow&start_radio=1"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ 
+                  display: 'block',
+                  position: 'relative',
+                  width: '100%',
+                  height: { xs: '240px', sm: '380px', md: '440px' },
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)',
+                  cursor: 'pointer',
+                  '&:hover .video-cover': {
+                    transform: 'scale(1.03)',
+                  },
+                  '&:hover .play-btn': {
+                    transform: 'translate(-50%, -50%) scale(1.1)',
+                    bgcolor: '#ff2a74',
+                    boxShadow: '0 0 30px rgba(255, 42, 116, 0.6)'
+                  }
+                }}
+              >
+                {/* Real YouTube Video Thumbnail */}
+                <Box 
+                  className="video-cover"
+                  component="img"
+                  src="https://img.youtube.com/vi/TSscXIs3PLQ/hqdefault.jpg"
+                  alt="Harmony Project Cover"
+                  sx={{
+                    width: '100%',
                     height: '100%',
-                    color: 'white',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      bgcolor: 'rgba(255, 255, 255, 0.05)',
-                      borderColor: 'rgba(255, 42, 116, 0.3)',
-                      transform: 'translateY(-4px)',
-                    }
+                    objectFit: 'cover',
+                    transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
+                  }}
+                />
+
+                {/* Dark Overlay for depth */}
+                <Box 
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%)',
+                    zIndex: 2
+                  }}
+                />
+
+                {/* Glowing Premium Play Button */}
+                <Box 
+                  className="play-btn"
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%) scale(1)',
+                    width: { xs: '60px', sm: '80px' },
+                    height: { xs: '60px', sm: '80px' },
+                    borderRadius: '50%',
+                    bgcolor: 'rgba(0, 0, 0, 0.6)',
+                    border: '2px solid #ff2a74',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                    zIndex: 3
                   }}
                 >
-                  <Box sx={{ display: 'flex', color: '#ff2a74', mb: 2 }}>
-                    {[...Array(5)].map((_, i) => <StarIcon key={i} fontSize="small" />)}
-                  </Box>
-                  <Typography 
-                    variant="body1" 
-                    sx={{ 
-                      mb: 4, 
-                      fontStyle: 'italic', 
-                      fontFamily: '"Linear", sans-serif',
-                      fontWeight: 300,
-                      color: 'rgba(255, 255, 255, 0.85)',
-                      lineHeight: 1.6
-                    }}
-                  >
-                    "{testimonial.text}"
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <Avatar sx={{ bgcolor: '#ff2a74', color: 'white', fontFamily: '"Space Grotesk", sans-serif', fontWeight: 700 }}>
-                      {testimonial.name[0]}
-                    </Avatar>
-                    <Box>
-                      <Typography 
-                        variant="subtitle1" 
-                        sx={{ 
-                          fontWeight: 700,
-                          fontFamily: '"Space Grotesk", sans-serif',
-                          color: 'white'
-                        }}
-                      >
-                        {testimonial.name}
-                      </Typography>
-                      <Typography 
-                        variant="body2" 
-                        sx={{ 
-                          fontFamily: '"Linear", sans-serif',
-                          color: 'rgba(255, 255, 255, 0.5)'
-                        }}
-                      >
-                        {testimonial.role}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Card>
-              </Grid>
-            ))}
+                  <PlayArrowIcon sx={{ color: 'white', fontSize: { xs: 32, sm: 40 }, ml: 0.5 }} />
+                </Box>
+              </Box>
+            </Grid>
+
+            {/* Right Column: Testimony Content */}
+            <Grid size={{ xs: 12, md: 5 }} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+              {/* Star Rating & Category */}
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <Box sx={{ display: 'flex', color: '#ff2a74' }}>
+                  {[...Array(5)].map((_, i) => <StarIcon key={i} fontSize="small" />)}
+                </Box>
+                <Typography 
+                  variant="caption" 
+                  sx={{ 
+                    color: '#ff2a74', 
+                    fontFamily: '"Space Grotesk", sans-serif', 
+                    fontWeight: 700, 
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    bgcolor: 'rgba(255, 42, 116, 0.1)',
+                    px: 1.5,
+                    py: 0.5,
+                    borderRadius: '4px'
+                  }}
+                >
+                  Featured Production
+                </Typography>
+              </Box>
+
+              {/* Name */}
+              <Box>
+                <Typography 
+                  variant="h3" 
+                  sx={{ 
+                    fontWeight: 900,
+                    fontFamily: '"Sans Superellipse Ragan 2", sans-serif',
+                    fontSize: { xs: '2rem', sm: '2.5rem' },
+                    color: 'white',
+                    lineHeight: 1.1,
+                    mb: 1
+                  }}
+                >
+                  Harmony
+                </Typography>
+                <Typography 
+                  variant="subtitle1" 
+                  sx={{ 
+                    fontFamily: '"Linear", sans-serif', 
+                    color: 'rgba(255,255,255,0.4)',
+                    fontWeight: 400
+                  }}
+                >
+                  Music Production & Hybrid Stereo Mix
+                </Typography>
+              </Box>
+
+              {/* Testimony */}
+              <Typography 
+                variant="body1" 
+                sx={{ 
+                  fontStyle: 'italic', 
+                  fontFamily: '"Linear", sans-serif',
+                  fontWeight: 300,
+                  fontSize: { xs: '1.05rem', sm: '1.15rem' },
+                  color: 'rgba(255, 255, 255, 0.85)',
+                  lineHeight: 1.8,
+                  position: 'relative',
+                  pl: 3,
+                  borderLeft: '2px solid #ff2a74',
+                  textAlign: 'justify'
+                }}
+              >
+                "Working with Shalom Music was a game-changer for our project. Their world-class engineering, premium vocal chains, and state-of-the-art mixing environment captured the absolute soul of our performance. The depth, clarity, and commercial presence of the final master exceeded every standard we set. There is no other studio that combines this level of technical mastery with true artistic intuition."
+              </Typography>
+            </Grid>
           </Grid>
         </Container>
       </Box>
