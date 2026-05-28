@@ -1445,9 +1445,9 @@ const Home: React.FC = () => {
                   >
                     {service.headline}
                   </Typography>
-                  <Typography 
+                   <Typography 
                     sx={{ 
-                      mb: 1, 
+                      mb: 0, 
                       color: 'rgba(255, 255, 255, 0.7)', 
                       fontSize: '1.1rem', 
                       lineHeight: 1.8,
@@ -1465,7 +1465,7 @@ const Home: React.FC = () => {
                     sx={{ 
                       display: 'flex', 
                       justifyContent: 'center', 
-                      mt: -1.5,
+                      mt: -3.5,
                       mb: 1, 
                       width: '100%',
                       maxWidth: '680px',
@@ -1617,7 +1617,7 @@ const Home: React.FC = () => {
                   </Typography>
                   <Typography 
                     sx={{ 
-                      mb: 1, 
+                      mb: 0, 
                       color: 'rgba(255, 255, 255, 0.7)', 
                       fontSize: '1.1rem', 
                       lineHeight: 1.8,
@@ -1635,7 +1635,7 @@ const Home: React.FC = () => {
                     sx={{ 
                       display: 'flex', 
                       justifyContent: 'center', 
-                      mt: -1.5,
+                      mt: -3.5,
                       mb: 1, 
                       width: '100%',
                       maxWidth: '900px',
