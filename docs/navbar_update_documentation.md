@@ -596,7 +596,14 @@ This document logs the step-by-step changes, configurations, and achievements im
   - Implemented the borderless, hoverless, transparent single-row horizontal specifications grid explaining the 4 core studio space features (Acoustic Tracking Space, Analog Summing, Pianos & Drums, Luxury Lounges) in Linear typography.
   - Configured the action button to trigger `setIsRentalPopupOpen(true)`.
   - Built a dedicated dark glassmorphic `Dialog` container (`maxWidth: '420px'`, `scroll="paper"`, `TransitionComponent={Grow}`, hidden scrollbar, layered cancel button) detailing the original price of **`150,000 TZS`** and the special offer price of **`149,999 TZS`** for a 4-hour half-day creative block, including full piano and technology setup inclusions.
-* **Achievement**: Gorgeous, complete design parity across all six core featured audio services, making the entire website feel extremely premium, solid, and highly cohesive.
+
+### Step 69: Instrumental Creation Image Height Minimization & Aspect Ratio Correction
+* **Goal**: Reduce the vertical height of the Instrumental Creation image inside the tab panel to prevent it from looking overly long and keep it in a sleek landscape orientation.
+* **Changes**:
+  - Modified the image container Box wrapper for Instrumental Creation inside [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx).
+  - Set a dynamic, constrained height of `{ xs: '240px', sm: '320px', md: '360px', lg: '400px' }` and configured `overflow: 'hidden'` with a `borderRadius` of 1.
+  - Set the internal `img` element to `height: '100%'` with `objectFit: 'cover'` and `objectPosition: 'center'`.
+* **Achievement**: The Instrumental Creation workspace image is elegantly cropped into a gorgeous widescreen landscape format, ensuring perfect screen density and structural integration with the surrounding elements.
 
 ---
 
