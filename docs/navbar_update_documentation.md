@@ -634,7 +634,12 @@ This document logs the step-by-step changes, configurations, and achievements im
 * **Changes**:
   - Modified the image container Box wrapper for Studio Rental inside [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx).
   - Swapped the container's max width from `900px` to **`680px`**, matching the uncropped Instrumental Creation image size.
-* **Achievement**: The visual assets across both of the final two tabs share identical, balanced widescreen proportions on the screen, creating a symmetrical and professional visual transition.
+
+### Step 75: Extreme Spacing Compression & Top Gap Elimination Phase II
+* **Goal**: Symmetrically compress the top gap above the images in both the Instrumental Creation and Studio Rental tabs even further to completely override the text line height padding and establish a tight structural integration.
+* **Changes**:
+  - Increased the negative top margin parameter of the image container Box wrappers in both the Instrumental Creation (`index === 4`) and Studio Rental (`index === 5`) tabs in [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx) from `mt: -3.5` to **`mt: -5.5`** (translating to a `-44px` vertical pull).
+* **Achievement**: The visual space between the service descriptions and the illustrations is condensed to a clean, luxury structural minimum.
 
 ---
 

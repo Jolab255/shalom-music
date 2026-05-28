@@ -1465,7 +1465,7 @@ const Home: React.FC = () => {
                     sx={{ 
                       display: 'flex', 
                       justifyContent: 'center', 
-                      mt: -3.5,
+                      mt: -5.5,
                       mb: 1, 
                       width: '100%',
                       maxWidth: '680px',
@@ -1635,7 +1635,7 @@ const Home: React.FC = () => {
                     sx={{ 
                       display: 'flex', 
                       justifyContent: 'center', 
-                      mt: -3.5,
+                      mt: -5.5,
                       mb: 1, 
                       width: '100%',
                       maxWidth: '680px',
