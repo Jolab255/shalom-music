@@ -2117,18 +2117,12 @@ const Home: React.FC = () => {
                   position: 'relative',
                   width: '100%',
                   height: { xs: '240px', sm: '380px', md: '440px' },
-                  borderRadius: '8px',
                   overflow: 'hidden',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
                   boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)',
                   cursor: 'pointer',
                   '&:hover .video-cover': {
                     transform: 'scale(1.03)',
-                  },
-                  '&:hover .play-btn': {
-                    transform: 'translate(-50%, -50%) scale(1.1)',
-                    bgcolor: '#ff2a74',
-                    boxShadow: '0 0 30px rgba(255, 42, 116, 0.6)'
                   }
                 }}
               >
@@ -2158,29 +2152,6 @@ const Home: React.FC = () => {
                     zIndex: 2
                   }}
                 />
-
-                {/* Glowing Premium Play Button */}
-                <Box 
-                  className="play-btn"
-                  sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%) scale(1)',
-                    width: { xs: '60px', sm: '80px' },
-                    height: { xs: '60px', sm: '80px' },
-                    borderRadius: '50%',
-                    bgcolor: 'rgba(0, 0, 0, 0.6)',
-                    border: '2px solid #ff2a74',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                    zIndex: 3
-                  }}
-                >
-                  <PlayArrowIcon sx={{ color: 'white', fontSize: { xs: 32, sm: 40 }, ml: 0.5 }} />
-                </Box>
               </Box>
             </Grid>
 
