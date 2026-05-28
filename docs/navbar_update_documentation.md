@@ -608,7 +608,15 @@ This document logs the step-by-step changes, configurations, and achievements im
 * **Goal**: Minimize the vertical gap between the description paragraph and the widescreen images inside both the Instrumental Creation and Studio Rental tabs to create a tight, integrated visual rhythm.
 * **Changes**:
   - Added a negative top margin (`mt: -1.5` or `-12px` of vertical lift) to the image container Box wrappers in both the Instrumental Creation (`index === 4`) and Studio Rental (`index === 5`) tabs in [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx).
-* **Achievement**: The visual space between the copy blocks and the illustrations has been beautifully condensed, resulting in a cohesive, unified, and pixel-precise presentation.
+
+### Step 71: Instrumental Creation Image Full-Frame Resolution & Scaling Optimization
+* **Goal**: Display the entire Instrumental Creation studio workspace image with zero cropping (resolving the issue where the top of the workspace DAW screen was cut off by widescreen height constraints) while maintaining a balanced layout size on desktop.
+* **Changes**:
+  - Restored the image container Box wrapper for Instrumental Creation inside [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx) to use standard margins (`mt: 1`, `mb: 2`).
+  - Swapped the container's max width from `900px` to a highly refined, compact **`680px`**.
+  - Removed the `height` constraint, `overflow: 'hidden'`, and `objectFit: 'cover'` properties entirely.
+  - Set the image element back to `height: 'auto'` to scale it naturally.
+* **Achievement**: The premium music production workspace illustration is displayed in full, uncropped detail (keeping the DAW screen, keyboards, and synthesis matrices completely intact) while remaining beautifully integrated within the page dimensions.
 
 ---
 

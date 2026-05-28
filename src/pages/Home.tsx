@@ -1465,13 +1465,10 @@ const Home: React.FC = () => {
                     sx={{ 
                       display: 'flex', 
                       justifyContent: 'center', 
-                      mt: -1.5,
-                      mb: 1, 
+                      mt: 1,
+                      mb: 2, 
                       width: '100%',
-                      maxWidth: '900px',
-                      height: { xs: '240px', sm: '320px', md: '360px', lg: '400px' },
-                      overflow: 'hidden',
-                      borderRadius: 1,
+                      maxWidth: '680px',
                       mx: 'auto'
                     }}
                   >
@@ -1481,9 +1478,8 @@ const Home: React.FC = () => {
                       alt="Instrumental Creation studio workspace" 
                       sx={{ 
                         width: '100%', 
-                        height: '100%', 
-                        objectFit: 'cover',
-                        objectPosition: 'center'
+                        height: 'auto', 
+                        borderRadius: 1
                       }} 
                     />
                   </Box>
