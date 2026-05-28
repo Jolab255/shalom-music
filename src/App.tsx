@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { HelmetProvider } from 'react-helmet-async';
 import theme from './theme/theme';
 import Layout from './components/layout/Layout';
+import Loader from './components/layout/Loader';
 import Home from './pages/Home';
 import Production from './pages/Production';
 import Lessons from './pages/Lessons';
@@ -36,9 +37,12 @@ const ScrollToHash = () => {
 };
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
   return (
     <HelmetProvider>
       <ThemeProvider theme={theme}>
+        {loading && <Loader onComplete={() => setLoading(false)} />}
         <Router>
           <ScrollToHash />
           <Layout>

@@ -639,7 +639,24 @@ This document logs the step-by-step changes, configurations, and achievements im
 * **Goal**: Symmetrically compress the top gap above the images in both the Instrumental Creation and Studio Rental tabs even further to completely override the text line height padding and establish a tight structural integration.
 * **Changes**:
   - Increased the negative top margin parameter of the image container Box wrappers in both the Instrumental Creation (`index === 4`) and Studio Rental (`index === 5`) tabs in [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx) from `mt: -3.5` to **`mt: -5.5`** (translating to a `-44px` vertical pull).
-* **Achievement**: The visual space between the service descriptions and the illustrations is condensed to a clean, luxury structural minimum.
+
+### Step 76: Static Video Preloading & Asset Relocation
+* **Goal**: Optimize the loading performance of the 2MB intro loading video to run instantly on page access.
+* **Changes**:
+  - Relocated the video asset `loader-video.mp4` from source assets to the static [public/](file:///home/jolab/websites/shalom-music/public/loader-video.mp4) directory, giving it a stable direct URL.
+  - Inserted a static `<link rel="preload" as="video">` tag inside [index.html](file:///home/jolab/websites/shalom-music/index.html) to begin prefetching the video immediately upon site hit, concurrent with bundle downloads.
+* **Achievement**: The large video file is preloaded before React mounts, preventing blank layouts or buffer-loading stutters.
+
+### Step 77: Premium Animated Loading Splash Video Component & App Root Integration
+* **Goal**: Construct a premium, beautiful animated splash loading overlay that plays the loader video in a high-fidelity container.
+* **Changes**:
+  - Created [Loader.tsx](file:///home/jolab/websites/shalom-music/src/components/layout/Loader.tsx) rendering a full-screen `#000000` glassmorphic overlay with dynamic radial gradients and low-opacity SVG noise texture.
+  - Masked the video in a perfect glowing circular viewport (`borderRadius: '50%'`) featuring an ambient pink shadow ring (`#ff2a74`).
+  - Implemented an instant-loading, lightweight CSS equalizer loading animation before the video is ready to prevent blank spaces.
+  - Simulated a smooth loading progress percentage bar (`0%` to `100%`) in Space Grotesk typography.
+  - Listened to the video's `onCanPlayThrough` event and the progress bar to trigger a smooth cubic-bezier opacity fade-out transition, unmounting the loader to enter the main layouts.
+  - Integrated the loading state at the application root level in [App.tsx](file:///home/jolab/websites/shalom-music/src/App.tsx).
+* **Achievement**: An incredibly sleek and visually stunning splash screen that immediately wows the visitor with premium brand copywriting, high-fidelity circular masking, and fluid transitions.
 
 ---
 
