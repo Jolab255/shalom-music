@@ -616,7 +616,13 @@ This document logs the step-by-step changes, configurations, and achievements im
   - Swapped the container's max width from `900px` to a highly refined, compact **`680px`**.
   - Removed the `height` constraint, `overflow: 'hidden'`, and `objectFit: 'cover'` properties entirely.
   - Set the image element back to `height: 'auto'` to scale it naturally.
-* **Achievement**: The premium music production workspace illustration is displayed in full, uncropped detail (keeping the DAW screen, keyboards, and synthesis matrices completely intact) while remaining beautifully integrated within the page dimensions.
+
+### Step 72: Instrumental Creation Image Spacing Compression & Structural Integration
+* **Goal**: Minimize the vertical gap between the uncropped Instrumental Creation image and both the description text above it and the specifications grid below it to create a tight, cohesive visual integration.
+* **Changes**:
+  - Modified the margins on the image container Box wrapper for Instrumental Creation inside [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx).
+  - Configured a negative top margin (`mt: -1.5` or `-12px` of vertical lift) and compressed the bottom margin from `mb: 2` to **`mb: 1`** (8px).
+* **Achievement**: Seamless, balanced visual spacing that cleanly links the uncropped workspace illustration with its flanking text blocks in perfect symmetry with the surrounding tabs.
 
 ---
 
