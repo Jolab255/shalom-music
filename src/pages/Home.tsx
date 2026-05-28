@@ -23,6 +23,7 @@ import whyShalom1Img from '../assets/why-shalom-1.png';
 import whyShalom2Img from '../assets/why-shalom-2.png';
 import whyShalom3Img from '../assets/why-shalom-3.png';
 import whyShalom4Img from '../assets/why-shalom-4.png';
+import harmonyImg from '../assets/harmony.png';
 
 const whyShalomSlides = [
   {
@@ -2135,7 +2136,7 @@ const Home: React.FC = () => {
                 <Box 
                   className="video-cover"
                   component="img"
-                  src="https://img.youtube.com/vi/TSscXIs3PLQ/hqdefault.jpg"
+                  src={harmonyImg}
                   alt="Harmony Project Cover"
                   sx={{
                     width: '100%',
