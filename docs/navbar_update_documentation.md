@@ -116,10 +116,17 @@ This document logs the step-by-step changes, configurations, and achievements im
   - Swapped active states: updated both the desktop category menu links and mobile slide-out drawer items so that active elements highlight in pink (`#ff2a74`) rather than gold.
 * **Achievement**: Elegant and compact navbar layout with fully operational smooth-scroll hash-routing, pinky hover and active highlights on category tabs, and clean, hover-free interactive states for the right action items.
 
+### Step 12: Second Bar Height Reduction
+* **Goal**: Reduce the height/padding of the second utility bar without altering the brand logo dimensions.
+* **Changes**:
+  - Decreased the secondary black header container's `height` from a static `80px` to responsive values: `height: { xs: 64, sm: 72 }` and `minHeight: { xs: '64px !important', sm: '72px !important' }`.
+  - Kept the logo at its exact full scale (`60px` mobile / `70px` desktop) to maintain brand prominence, fitting it perfectly inside the bar with minimum spacing.
+* **Achievement**: A much slimmer and tighter header bar that occupies less vertical real estate while keeping logo size and layout readability fully intact.
+
 ---
 
 ## 🏆 Project Achievements
 1. **Premium Aesthetics**: High-end typography (Syne & Space Grotesk) paired with pink active and hover underlines on categories, blinking CSS animations, premium dark modes, and subtle `4px` border-radius details.
-2. **Branding Clarity**: Full-scale `70px` brand logos housed in an expanded `80px` black bar and complete focus on key studio pillars (Music Production, Piano Lessons, Studio Rental, and Piano Services).
+2. **Branding Clarity**: Full-scale `70px` brand logos housed in a compact `72px` desktop (and `64px` mobile) black bar and complete focus on key studio pillars (Music Production, Piano Lessons, Studio Rental, and Piano Services).
 3. **Robust Mobile & Navigation Support**: Full hamburger navigation drawer with branded logo visibility and a customized `ScrollToHash` router component that ensures smooth navigation to testimonials or other section hashes.
 4. **Clean Codebase**: 100% build-verified, type-safe, and warning-free compilation under strict TypeScript configs.

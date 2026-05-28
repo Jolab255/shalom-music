@@ -209,11 +209,11 @@ const Navbar: React.FC = () => {
           </Toolbar>
         </Box>
 
-        {/* Second 80px Bar (Total Black) */}
+        {/* Second Bar (Total Black) */}
         <Box
           sx={{
-            height: 80,
-            minHeight: '80px !important',
+            height: { xs: 64, sm: 72 },
+            minHeight: { xs: '64px !important', sm: '72px !important' },
             display: 'flex',
             alignItems: 'center',
             backgroundColor: '#000000', // Total Black background
