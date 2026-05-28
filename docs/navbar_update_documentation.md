@@ -130,10 +130,26 @@ This document logs the step-by-step changes, configurations, and achievements im
   - Added relative positioning and negative vertical margins (`mt: { xs: -0.5, sm: -1 }`, `mb: { xs: -0.5, sm: -1 }`) to offset the layout height, preventing the larger image from stretching the parent utility bar's `72px`/`64px` constraints.
 * **Achievement**: The brand logo stands out dramatically with a premium "hanging logo" overhang look, without expanding the vertical footprint of the navbar.
 
+### Step 14: Scroll-Linked Dynamic Header Slide & Fade
+* **Goal**: Enable the top slim category bar to slide up and fade away when scrolling down the page, while keeping the main logo/actions bar sticky at the very top. Reveal the top bar again when scrolling up.
+* **Changes**:
+  - Implemented scroll tracking state `hideTopBar` and a passive event listener in [Navbar.tsx](file:///home/jolab/websites/shalom-music/src/components/layout/Navbar.tsx) to monitor vertical page scroll direction.
+  - Configured the parent `<AppBar>` to translate up by `-40px` (`transform: hideTopBar ? 'translateY(-40px)' : 'translateY(0)'`) with a smooth CSS cubic-bezier transition, sliding the top bar out of view while pulling the main logo bar directly to `top: 0` of the screen.
+  - Linked the top bar's opacity and click interactions (`opacity: hideTopBar ? 0 : 1`, `pointerEvents: hideTopBar ? 'none' : 'auto'`) with a transition for a fade effect.
+* **Achievement**: An immersive, premium navigation behavior that expands readable screen space when exploring content, while keeping important brand markers and key action items accessible at all times.
+
+### Step 15: Enhanced Easing and Content Parallax
+* **Goal**: Refine the hiding and revealing animations to look professional and organic, implementing asymmetric entering/leaving transition states.
+* **Changes**:
+  - Implemented asymmetric easing curves on `<AppBar>`'s `transform`: uses a fast accelerating curve (`250ms cubic-bezier(0.3, 0, 0.8, 0.15)`) for scroll-down exit and a soft decelerating curve (`350ms cubic-bezier(0.05, 0.7, 0.1, 1)`) for scroll-up entry.
+  - Added asymmetric opacity transition curves on the top category bar's `<Box>`.
+  - Added a parallel translation translation shift on the internal `<Toolbar>` (`transform: hideTopBar ? 'translateY(-8px)' : 'translateY(0)'`), shifting the top links upward by 8px while fading out on scroll-down to create a gorgeous parallax effect.
+* **Achievement**: An exceptionally organic, highly polished animation sequence that adds layers of depth and luxury to scroll transitions.
+
 ---
 
 ## 🏆 Project Achievements
 1. **Premium Aesthetics**: High-end typography (Syne & Space Grotesk) paired with pink active and hover underlines on categories, blinking CSS animations, premium dark modes, and subtle `4px` border-radius details.
 2. **Branding Clarity**: Full-scale `86px` brand logos housed in a compact `72px` desktop (and `64px` mobile) black bar via an elegant hanging logo design, maintaining complete focus on key studio pillars (Music Production, Piano Lessons, Studio Rental, and Piano Services).
-3. **Robust Mobile & Navigation Support**: Full hamburger navigation drawer with branded logo visibility and a customized `ScrollToHash` router component that ensures smooth navigation to testimonials or other section hashes.
+3. **Robust Mobile & Navigation Support**: Full hamburger navigation drawer with branded logo visibility, a customized `ScrollToHash` router component that ensures smooth navigation, and a scroll-linked dynamic header transition with custom asymmetric easing curves and content translations (parallax shift) that hides the top bar and sticks the logo bar to the top of the viewport on scroll-down.
 4. **Clean Codebase**: 100% build-verified, type-safe, and warning-free compilation under strict TypeScript configs.

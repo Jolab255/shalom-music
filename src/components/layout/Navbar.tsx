@@ -34,6 +34,27 @@ const Navbar: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const location = useLocation();
+  const [hideTopBar, setHideTopBar] = React.useState(false);
+  const lastScrollY = React.useRef(0);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > 40) {
+        if (currentScrollY > lastScrollY.current) {
+          setHideTopBar(true);
+        } else {
+          setHideTopBar(false);
+        }
+      } else {
+        setHideTopBar(false);
+      }
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -106,7 +127,11 @@ const Navbar: React.FC = () => {
         sx={{ 
           boxShadow: 'none',
           backgroundColor: 'transparent',
-          borderBottom: 'none'
+          borderBottom: 'none',
+          transform: hideTopBar ? 'translateY(-40px)' : 'translateY(0)',
+          transition: hideTopBar
+            ? 'transform 250ms cubic-bezier(0.3, 0, 0.8, 0.15)'
+            : 'transform 350ms cubic-bezier(0.05, 0.7, 0.1, 1)',
         }}
       >
         {/* Top Slim 40px Bar */}
@@ -120,7 +145,12 @@ const Navbar: React.FC = () => {
             px: { xs: 2, sm: 4, md: '60px', lg: '100px' },
             width: '100%',
             boxSizing: 'border-box',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
+            borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+            opacity: hideTopBar ? 0 : 1,
+            pointerEvents: hideTopBar ? 'none' : 'auto',
+            transition: hideTopBar
+              ? 'opacity 200ms linear'
+              : 'opacity 300ms cubic-bezier(0.05, 0.7, 0.1, 1)'
           }}
         >
           <Toolbar 
@@ -131,7 +161,11 @@ const Navbar: React.FC = () => {
               height: 40,
               padding: 0,
               boxSizing: 'border-box',
-              width: '100%'
+              width: '100%',
+              transform: hideTopBar ? 'translateY(-8px)' : 'translateY(0)',
+              transition: hideTopBar
+                ? 'transform 200ms cubic-bezier(0.3, 0, 0.8, 0.15)'
+                : 'transform 350ms cubic-bezier(0.05, 0.7, 0.1, 1)'
             }}
           >
             {isMobile ? (
