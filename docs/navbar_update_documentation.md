@@ -603,7 +603,12 @@ This document logs the step-by-step changes, configurations, and achievements im
   - Modified the image container Box wrapper for Instrumental Creation inside [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx).
   - Set a dynamic, constrained height of `{ xs: '240px', sm: '320px', md: '360px', lg: '400px' }` and configured `overflow: 'hidden'` with a `borderRadius` of 1.
   - Set the internal `img` element to `height: '100%'` with `objectFit: 'cover'` and `objectPosition: 'center'`.
-* **Achievement**: The Instrumental Creation workspace image is elegantly cropped into a gorgeous widescreen landscape format, ensuring perfect screen density and structural integration with the surrounding elements.
+
+### Step 70: Tab Section Vertical Rhythm Optimization & Image Gap Compression
+* **Goal**: Minimize the vertical gap between the description paragraph and the widescreen images inside both the Instrumental Creation and Studio Rental tabs to create a tight, integrated visual rhythm.
+* **Changes**:
+  - Added a negative top margin (`mt: -1.5` or `-12px` of vertical lift) to the image container Box wrappers in both the Instrumental Creation (`index === 4`) and Studio Rental (`index === 5`) tabs in [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx).
+* **Achievement**: The visual space between the copy blocks and the illustrations has been beautifully condensed, resulting in a cohesive, unified, and pixel-precise presentation.
 
 ---
 
