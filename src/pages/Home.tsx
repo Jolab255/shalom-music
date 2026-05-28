@@ -1638,7 +1638,7 @@ const Home: React.FC = () => {
                       mt: -3.5,
                       mb: 1, 
                       width: '100%',
-                      maxWidth: '900px',
+                      maxWidth: '680px',
                       mx: 'auto'
                     }}
                   >

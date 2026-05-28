@@ -628,7 +628,13 @@ This document logs the step-by-step changes, configurations, and achievements im
 * **Changes**:
   - Eliminated the paragraph bottom margin (`mb: 0` instead of `mb: 1`) on the service description `<Typography>` blocks for both Instrumental Creation (`index === 4`) and Studio Rental (`index === 5`) in [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx).
   - Maximized the negative top margin (`mt: -3.5` instead of `mt: -1.5`, translating to a `-28px` vertical pull) on the image container Box wrappers for both tabs.
-* **Achievement**: The visual space between the text and the photos is completely condensed, delivering a premium, seamless visual connection.
+
+### Step 74: Studio Rental Image Scaling Alignment & Complete Symmetry
+* **Goal**: Scale down the Studio Rental image container to perfectly match the Instrumental Creation tab image's dimensions, achieving complete size parity and visual alignment between both layout sections.
+* **Changes**:
+  - Modified the image container Box wrapper for Studio Rental inside [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx).
+  - Swapped the container's max width from `900px` to **`680px`**, matching the uncropped Instrumental Creation image size.
+* **Achievement**: The visual assets across both of the final two tabs share identical, balanced widescreen proportions on the screen, creating a symmetrical and professional visual transition.
 
 ---
 
