@@ -656,7 +656,16 @@ This document logs the step-by-step changes, configurations, and achievements im
   - Simulated a smooth loading progress percentage bar (`0%` to `100%`) in Space Grotesk typography.
   - Listened to the video's `onCanPlayThrough` event and the progress bar to trigger a smooth cubic-bezier opacity fade-out transition, unmounting the loader to enter the main layouts.
   - Integrated the loading state at the application root level in [App.tsx](file:///home/jolab/websites/shalom-music/src/App.tsx).
-* **Achievement**: An incredibly sleek and visually stunning splash screen that immediately wows the visitor with premium brand copywriting, high-fidelity circular masking, and fluid transitions.
+
+### Step 78: Minimalist Pure Video Splash Loader Refinement
+* **Goal**: Refine the loading splash screen to display only the raw, natural video centered on a solid black screen, removing all text copy, progress bars, circular masks, glowing rings, and background textures per visual feedback.
+* **Changes**:
+  - Rewrote [Loader.tsx](file:///home/jolab/websites/shalom-music/src/components/layout/Loader.tsx) to remove the simulated percent state and progress bar components.
+  - Removed all typography and headers ("Shalom Music" brand text, "DISCOVER YOUR SOUND..." subtitle).
+  - Eliminated the circular crop mask, border properties, glowing ambient shadows, and background SVG sandy filters.
+  - Set the `<video>` element style to its natural widescreen aspect ratio (`maxWidth: '100%'`, `maxHeight: '100%'`, centered on a pure black `#000000` screen).
+  - Maintained the native event listeners (`onCanPlayThrough`, `onLoadedData`) and configured a 1.5-second showcase playback timer before initiating a smooth fade-out unmounting sequence.
+* **Achievement**: An ultra-clean, exceptionally elegant, and highly cinematic minimalist video loader screen that presents the raw visual intro in its uncropped, natural form.
 
 ---
 
