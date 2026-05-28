@@ -117,14 +117,18 @@ const Production: React.FC = () => {
                 sx={{ 
                   width: '100%', 
                   height: 450, 
-                  bgcolor: 'black', 
                   borderRadius: 2,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                  overflow: 'hidden',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+                  border: '1px solid rgba(255,255,255,0.1)'
                 }}
               >
-                <Typography variant="body2" sx={{ color: 'white', opacity: 0.3 }}>[ Studio Gear Image ]</Typography>
+                <Box 
+                  component="img"
+                  src="/assets/studio_interior.png"
+                  alt="Studio Production Equipment"
+                  sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               </Box>
             </Grid>
           </Grid>

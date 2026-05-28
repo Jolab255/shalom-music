@@ -99,24 +99,39 @@ const VoiceTraining: React.FC = () => {
                 sx={{ 
                   width: '100%', 
                   height: 400, 
-                  bgcolor: 'black', 
-                  color: 'white', 
                   borderRadius: 2,
-                  p: 6,
+                  position: 'relative',
+                  overflow: 'hidden',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+                  backgroundImage: 'url("/assets/voice_training.png")',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
                   display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center'
+                  alignItems: 'stretch'
                 }}
               >
-                <StarIcon sx={{ fontSize: 40, mb: 3 }} />
-                <Typography variant="h4" sx={{ fontWeight: 800, mb: 2 }}>
-                  Artist Development
-                </Typography>
-                <Typography variant="body1" sx={{ opacity: 0.8, mb: 4 }}>
-                  Beyond just singing, we help you develop your identity as an artist. This includes choosing the right repertoire and finding your "signature sound."
-                </Typography>
-                <Divider sx={{ borderColor: 'rgba(255,255,255,0.2)', mb: 4 }} />
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>Available for all levels.</Typography>
+                <Box 
+                  sx={{ 
+                    width: '100%',
+                    bgcolor: 'rgba(0,0,0,0.75)',
+                    backdropFilter: 'blur(3px)',
+                    p: 6,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    color: 'white'
+                  }}
+                >
+                  <StarIcon sx={{ fontSize: 40, mb: 3, color: '#d4af37' }} />
+                  <Typography variant="h4" sx={{ fontWeight: 800, mb: 2 }}>
+                    Artist Development
+                  </Typography>
+                  <Typography variant="body1" sx={{ opacity: 0.9, mb: 4, lineHeight: 1.6 }}>
+                    Beyond just singing, we help you develop your identity as an artist. This includes choosing the right repertoire and finding your "signature sound."
+                  </Typography>
+                  <Divider sx={{ borderColor: 'rgba(255,255,255,0.2)', mb: 4 }} />
+                  <Typography variant="h6" sx={{ fontWeight: 700 }}>Available for all levels.</Typography>
+                </Box>
               </Box>
             </Grid>
           </Grid>

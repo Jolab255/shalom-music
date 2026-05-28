@@ -37,20 +37,22 @@ const Lessons: React.FC = () => {
                 sx={{ 
                   width: '100%', 
                   height: 450, 
-                  bgcolor: '#222', 
                   borderRadius: 2,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
                   position: 'relative',
                   overflow: 'hidden',
-                  border: '1px solid #333'
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+                  border: '1px solid rgba(255,255,255,0.1)'
                 }}
               >
-                <Typography variant="body2" sx={{ opacity: 0.3 }}>[ Professional Piano Image ]</Typography>
-                <Box sx={{ position: 'absolute', bottom: 20, right: 20, bgcolor: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', p: 2, borderRadius: 1 }}>
-                  <Typography variant="caption" sx={{ display: 'block', fontWeight: 700 }}>STUDENT SUCCESS RATE</Typography>
-                  <Typography variant="h4" sx={{ fontWeight: 900 }}>98%</Typography>
+                <Box 
+                  component="img"
+                  src="/assets/piano_lessons.png"
+                  alt="Professional Piano Lessons"
+                  sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+                <Box sx={{ position: 'absolute', bottom: 20, right: 20, bgcolor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(10px)', p: 2, borderRadius: 1, border: '1px solid rgba(255,255,255,0.1)' }}>
+                  <Typography variant="caption" sx={{ display: 'block', fontWeight: 700, color: '#d4af37' }}>STUDENT SUCCESS RATE</Typography>
+                  <Typography variant="h4" sx={{ fontWeight: 900, color: 'white' }}>98%</Typography>
                 </Box>
               </Box>
             </Grid>
@@ -108,7 +110,23 @@ const Lessons: React.FC = () => {
         <Container maxWidth="lg">
           <Grid container spacing={8} alignItems="center">
             <Grid size={{ xs: 12, md: 6 }}>
-              <Box sx={{ width: '100%', height: 400, bgcolor: '#ddd', borderRadius: 2 }} />
+              <Box 
+                sx={{ 
+                  width: '100%', 
+                  height: 400, 
+                  borderRadius: 2, 
+                  overflow: 'hidden',
+                  boxShadow: '0 15px 30px rgba(0,0,0,0.1)',
+                  border: '1px solid #e0e0e0'
+                }}
+              >
+                <Box 
+                  component="img"
+                  src="/assets/about_legacy.png"
+                  alt="Student learning music"
+                  sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
               <Typography variant="h3" sx={{ fontWeight: 800, mb: 4 }}>

@@ -33,15 +33,18 @@ const StudioRental: React.FC = () => {
                 sx={{ 
                   width: '100%', 
                   height: 400, 
-                  bgcolor: '#111', 
                   borderRadius: 2,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  border: '1px solid #222'
+                  overflow: 'hidden',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+                  border: '1px solid rgba(255,255,255,0.1)'
                 }}
               >
-                <MeetingRoomIcon sx={{ fontSize: 100, color: '#333' }} />
+                <Box 
+                  component="img"
+                  src="/assets/studio_interior.png"
+                  alt="Premium Recording Studio Space"
+                  sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               </Box>
             </Grid>
           </Grid>

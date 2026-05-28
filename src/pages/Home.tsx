@@ -17,32 +17,103 @@ const Home: React.FC = () => {
       {/* Hero Section */}
       <Box 
         sx={{ 
-          bgcolor: 'black', 
           color: 'white', 
-          py: { xs: 8, md: 20 }, 
-          textAlign: 'center',
+          pt: { xs: 12, md: 24 }, 
+          pb: { xs: 12, md: 22 },
           position: 'relative',
           overflow: 'hidden',
-          backgroundImage: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url("/assets/hero.png")',
+          backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%), url("/assets/hero.png")',
           backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+          display: 'flex',
+          alignItems: 'center',
+          minHeight: '85vh',
         }}
       >
-        <Container maxWidth="md">
-          <Typography variant="h1" sx={{ fontSize: { xs: '3rem', md: '5rem' }, mb: 2, fontWeight: 900 }}>
-            Excellence in Sound
-          </Typography>
-          <Typography variant="h5" sx={{ mb: 6, opacity: 0.9, fontWeight: 300, letterSpacing: '0.1em' }}>
-            PREMIUM PRODUCTION • PROFESSIONAL LESSONS • PIANO SERVICES
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Button variant="contained" size="large" sx={{ bgcolor: 'white', color: 'black', px: 4, py: 1.5, '&:hover': { bgcolor: '#e0e0e0' } }}>
-              View Our Services
-            </Button>
-            <Button variant="outlined" size="large" sx={{ borderColor: 'white', color: 'white', px: 4, py: 1.5, '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' } }}>
-              Book a Consultation
-            </Button>
-          </Box>
+        {/* Subtle decorative glow overlay */}
+        <Box 
+          sx={{
+            position: 'absolute',
+            top: '20%',
+            left: '10%',
+            width: '30%',
+            height: '40%',
+            background: 'radial-gradient(circle, rgba(255,215,0,0.15) 0%, rgba(0,0,0,0) 70%)',
+            filter: 'blur(50px)',
+            zIndex: 1,
+            pointerEvents: 'none'
+          }}
+        />
+        
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+          <Grid container spacing={4} sx={{ alignItems: 'center' }}>
+            <Grid size={{ xs: 12, md: 8 }}>
+              {/* Premium Badge */}
+              <Box 
+                sx={{ 
+                  display: 'inline-flex', 
+                  alignItems: 'center', 
+                  gap: 1, 
+                  px: 2, 
+                  py: 0.75, 
+                  borderRadius: 50, 
+                  border: '1px solid rgba(255,255,255,0.2)', 
+                  backdropFilter: 'blur(10px)', 
+                  bgcolor: 'rgba(255,255,255,0.05)', 
+                  mb: 4,
+                  boxShadow: '0 4px 30px rgba(0,0,0,0.1)'
+                }}
+              >
+                <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#d4af37', boxShadow: '0 0 10px #d4af37' }} />
+                <Typography variant="caption" sx={{ letterSpacing: '0.15em', fontWeight: 700, color: '#e0e0e0', textTransform: 'uppercase' }}>
+                  Premium Studio Experience
+                </Typography>
+              </Box>
+
+              <Typography variant="h1" sx={{ fontSize: { xs: '3.5rem', md: '5.5rem' }, mb: 2, fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.03em' }}>
+                Excellence in <span style={{ color: '#d4af37' }}>Sound</span>
+              </Typography>
+              <Typography variant="h5" sx={{ mb: 6, opacity: 0.9, fontWeight: 300, letterSpacing: '0.08em', maxW: '600px', lineHeight: 1.6 }}>
+                Crafting world-class recordings, cultivating musical talent, and providing expert piano services in an acoustically optimized environment.
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 2.5, flexWrap: 'wrap' }}>
+                <Button 
+                  variant="contained" 
+                  size="large" 
+                  sx={{ 
+                    bgcolor: '#d4af37', 
+                    color: 'black', 
+                    px: 4.5, 
+                    py: 1.8, 
+                    fontWeight: 700,
+                    borderRadius: 2,
+                    boxShadow: '0 10px 20px rgba(212,175,55,0.2)',
+                    '&:hover': { bgcolor: '#f3cf5e', boxShadow: '0 12px 24px rgba(212,175,55,0.35)', transform: 'translateY(-2px)' },
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  View Our Services
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  size="large" 
+                  sx={{ 
+                    borderColor: 'rgba(255,255,255,0.4)', 
+                    color: 'white', 
+                    px: 4.5, 
+                    py: 1.8, 
+                    borderRadius: 2,
+                    backdropFilter: 'blur(5px)',
+                    '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.08)', transform: 'translateY(-2px)' },
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  Book a Consultation
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
         </Container>
       </Box>
 
@@ -104,16 +175,26 @@ const Home: React.FC = () => {
               <Box 
                 sx={{ 
                   width: '100%', 
-                  height: 400, 
-                  bgcolor: '#333', 
+                  height: { xs: 350, md: 450 }, 
                   borderRadius: 4,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  border: '1px solid #444'
+                  overflow: 'hidden',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  position: 'relative'
                 }}
               >
-                <Typography variant="body2" sx={{ opacity: 0.5 }}>[ Studio Image Placeholder ]</Typography>
+                <Box 
+                  component="img" 
+                  src="/assets/studio_interior.png" 
+                  alt="Shalom Music Recording Studio"
+                  sx={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'cover',
+                    transition: 'transform 0.8s ease',
+                    '&:hover': { transform: 'scale(1.05)' }
+                  }} 
+                />
               </Box>
             </Grid>
           </Grid>
