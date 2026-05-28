@@ -18,6 +18,33 @@ import audioEditingImg from '../assets/audio-editing.png';
 import audioMasteringImg from '../assets/audio-mastering.png';
 import instrumentalCreationImg from '../assets/instrumental-creation.png';
 import studioRentalImg from '../assets/studio-rental.png';
+import whyShalom1Img from '../assets/why-shalom-1.png';
+import whyShalom2Img from '../assets/why-shalom-2.png';
+import whyShalom3Img from '../assets/why-shalom-3.png';
+import whyShalom4Img from '../assets/why-shalom-4.png';
+
+const whyShalomSlides = [
+  {
+    image: whyShalom1Img,
+    title: 'Professional Grade Equipment & Software',
+    description: 'Equipped with industry-standard hardware and cutting-edge software, we combine technical precision with artistic passion to deliver exceptional results. From pristine acoustic recordings to modern digital production, we ensure your sound meets the highest professional standards.'
+  },
+  {
+    image: whyShalom3Img,
+    title: 'Affordable Prices & Better Customer Support',
+    description: 'We believe world-class music services should be accessible to all. We offer highly competitive, transparent pricing across all studio bookings, lessons, and piano services—backed by dedicated, warm customer support that puts your creative journey first.'
+  },
+  {
+    image: whyShalom2Img,
+    title: 'Tailored Learning Programs for Students',
+    description: 'Our structured piano curriculum is tailored to all skill levels, from absolute beginners to advanced musicians. Led by expert instructors, we blend classical foundations with modern creative techniques to help you master the keyboard with confidence.'
+  },
+  {
+    image: whyShalom4Img,
+    title: 'Acoustically Treated Studio Environment',
+    description: 'Designed and optimized for pristine sound isolation and clean acoustics, our tracking and control rooms offer a perfect sonic canvas. Capture your voice, instruments, and mixes in a space built to deliver zero distortion and perfect clarity.'
+  }
+];
 
 
 const leftImages = [
@@ -34,6 +61,88 @@ const rightImages = [
   '/assets/studio_interior.png',
 ];
 
+interface TabImageWithLoaderProps {
+  src: string;
+  alt: string;
+  sx?: any;
+}
+
+const TabImageWithLoader: React.FC<TabImageWithLoaderProps> = ({ src, alt, sx }) => {
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [minTimeElapsed, setMinTimeElapsed] = useState(false);
+
+  useEffect(() => {
+    setImgLoaded(false);
+    setMinTimeElapsed(false);
+
+    const timer = setTimeout(() => {
+      setMinTimeElapsed(true);
+    }, 1000); // 1 second minimum loader duration
+
+    return () => clearTimeout(timer);
+  }, [src]);
+
+  const handleImageLoad = () => {
+    setImgLoaded(true);
+  };
+
+  const showLoader = !imgLoaded || !minTimeElapsed;
+
+  return (
+    <Box sx={{ position: 'relative', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      {showLoader && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: { xs: '100px', sm: '140px', md: '180px' },
+            bgcolor: 'transparent',
+            zIndex: 2,
+          }}
+        >
+          <video
+            src="/loader-video.mp4"
+            muted
+            playsInline
+            autoPlay
+            loop
+            style={{
+              maxWidth: '100px',
+              width: '30%',
+              height: 'auto',
+            }}
+          />
+        </Box>
+      )}
+
+      <Box
+        component="img"
+        src={src}
+        alt={alt}
+        onLoad={handleImageLoad}
+        sx={{
+          width: '100%',
+          height: 'auto',
+          borderRadius: 1,
+          ...sx,
+          ...(showLoader ? {
+            position: 'absolute',
+            opacity: 0,
+            pointerEvents: 'none',
+            zIndex: -1,
+          } : {
+            position: 'relative',
+            opacity: 1,
+            transition: 'opacity 0.5s ease-in-out',
+          })
+        }}
+      />
+    </Box>
+  );
+};
+
 const Home: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
   const { hash } = useLocation();
@@ -43,6 +152,15 @@ const Home: React.FC = () => {
   const [isMasteringPopupOpen, setIsMasteringPopupOpen] = useState(false);
   const [isInstrumentalPopupOpen, setIsInstrumentalPopupOpen] = useState(false);
   const [isRentalPopupOpen, setIsRentalPopupOpen] = useState(false);
+
+  const [activeWhySlide, setActiveWhySlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveWhySlide((prev) => (prev + 1) % whyShalomSlides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (hash) {
@@ -644,7 +762,7 @@ const Home: React.FC = () => {
           bgcolor: '#000000', 
           color: 'white', 
           pt: 4,
-          pb: 15,
+          pb: 8,
           position: 'relative',
           overflow: 'visible',
           // Matching Section 2 cloudy mist gradient + sandy overlay
@@ -795,8 +913,7 @@ const Home: React.FC = () => {
                       mx: 'auto'
                     }}
                   >
-                    <Box 
-                      component="img" 
+                    <TabImageWithLoader 
                       src={audioRecordingImg} 
                       alt="Audio Recording studio visualization" 
                       sx={{ 
@@ -964,8 +1081,7 @@ const Home: React.FC = () => {
                       mx: 'auto'
                     }}
                   >
-                    <Box 
-                      component="img" 
+                    <TabImageWithLoader 
                       src={audioCapturingImg} 
                       alt="Audio Capturing studio visualization" 
                       sx={{ 
@@ -1133,8 +1249,7 @@ const Home: React.FC = () => {
                       mx: 'auto'
                     }}
                   >
-                    <Box 
-                      component="img" 
+                    <TabImageWithLoader 
                       src={audioEditingImg} 
                       alt="Audio Mixing studio visualization" 
                       sx={{ 
@@ -1302,8 +1417,7 @@ const Home: React.FC = () => {
                       mx: 'auto'
                     }}
                   >
-                    <Box 
-                      component="img" 
+                    <TabImageWithLoader 
                       src={audioMasteringImg} 
                       alt="Audio Mastering studio visualization" 
                       sx={{ 
@@ -1472,8 +1586,7 @@ const Home: React.FC = () => {
                       mx: 'auto'
                     }}
                   >
-                    <Box 
-                      component="img" 
+                    <TabImageWithLoader 
                       src={instrumentalCreationImg} 
                       alt="Instrumental Creation studio workspace" 
                       sx={{ 
@@ -1642,8 +1755,7 @@ const Home: React.FC = () => {
                       mx: 'auto'
                     }}
                   >
-                    <Box 
-                      component="img" 
+                    <TabImageWithLoader 
                       src={studioRentalImg} 
                       alt="Premium Studio Space Rental Interior" 
                       sx={{ 
@@ -1762,102 +1874,381 @@ const Home: React.FC = () => {
       </Box>
 
       {/* Why Choose Us */}
-      <Box sx={{ bgcolor: 'black', color: 'white', py: 15 }}>
-        <Container maxWidth="lg">
-          <Grid container spacing={8} alignItems="center">
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Typography variant="h2" sx={{ mb: 4, fontWeight: 800 }}>
-                Why Shalom Music?
-              </Typography>
-              <Typography variant="body1" sx={{ mb: 6, opacity: 0.8, fontSize: '1.1rem' }}>
-                We combine technical expertise with artistic passion to deliver results that exceed expectations. Our commitment to excellence is reflected in every project we undertake.
-              </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                {[
-                  'Professional Grade Equipment & Software',
-                  'Tailored Learning Programs for Students',
-                  'Expert Technical Support for Piano Owners',
-                  'Acoustically Treated Studio Environment'
-                ].map((text, i) => (
-                  <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <CheckCircleOutlineIcon sx={{ color: 'white' }} />
-                    <Typography variant="h6" sx={{ fontWeight: 500 }}>{text}</Typography>
-                  </Box>
+      <Box 
+        sx={{ 
+          bgcolor: '#000000',
+          color: 'white', 
+          pt: 0,
+          pb: 0,
+          position: 'relative',
+          overflow: 'hidden',
+          // Cloudy background using radial-gradients blending into pure black
+          background: `
+            radial-gradient(circle at 80% 30%, rgba(45, 45, 55, 0.45) 0%, transparent 50%),
+            radial-gradient(circle at 20% 70%, rgba(35, 35, 45, 0.4) 0%, transparent 60%),
+            #000000
+          `,
+          // Sandy texture overlay using data URI SVG noise with low opacity
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100%',
+            height: '100%',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            opacity: 0.045, 
+            pointerEvents: 'none',
+            zIndex: 1
+          }
+        }}
+      >
+        {/* Full-bleed cinematic banner image touching the left and right edges */}
+        <Box 
+          sx={{ 
+            width: '100%', 
+            height: { xs: '640px', sm: '560px', md: '65vh' }, 
+            overflow: 'hidden',
+            position: 'relative',
+            zIndex: 2,
+            mb: 0,
+            borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+            bgcolor: '#000000'
+          }}
+        >
+          {/* Slides Cross-Fade Wrapper */}
+          {whyShalomSlides.map((slide, index) => (
+            <Box 
+              key={index}
+              component="img" 
+              src={slide.image}
+              alt={slide.title}
+              sx={{ 
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover',
+                objectPosition: index === 2 ? 'center 25%' : index === 3 ? 'center 75%' : 'top',
+                opacity: index === activeWhySlide ? 1 : 0,
+                transition: 'opacity 1s ease-in-out, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+                transform: index === activeWhySlide ? 'scale(1.03)' : 'scale(1.0)',
+                zIndex: index === activeWhySlide ? 2 : 1
+              }} 
+            />
+          ))}
+
+          {/* Left-Aligned Overlaid Content - Squeezed at the top of the image with few paddings, aligned with page grid */}
+          <Box 
+            sx={{ 
+              position: 'absolute',
+              top: { xs: '32px', sm: '48px' }, // Squeezed down a bit
+              left: 0,
+              right: 0,
+              zIndex: 4,
+            }}
+          >
+            <Container maxWidth="lg">
+              {/* Text Slide Cross-Fade Wrapper */}
+              <Box sx={{ position: 'relative', minHeight: { xs: '380px', sm: '320px', md: '280px' } }}>
+                {whyShalomSlides.map((slide, index) => {
+                  const isRightSlide = index === 1 || index === 3; // Slide 2 (index 1) and Slide 4 (index 3) are right-aligned!
+                  return (
+                    <Box 
+                      key={index}
+                      sx={{ 
+                        position: index === activeWhySlide ? 'relative' : 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        opacity: index === activeWhySlide ? 1 : 0,
+                        transform: index === activeWhySlide ? 'translateY(0)' : 'translateY(15px)',
+                        transition: 'opacity 0.8s ease-in-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                        visibility: index === activeWhySlide ? 'visible' : 'hidden',
+                        zIndex: index === activeWhySlide ? 4 : 1,
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: { xs: 'flex-start', md: isRightSlide ? 'flex-end' : 'flex-start' }, // Right-aligned inside the column on desktop
+                        ml: { xs: 0, md: isRightSlide ? 'auto' : 0 }, // Shifts to the right side on desktop
+                        gap: 1.5
+                      }}
+                    >
+                      {/* Title in Sans Superellipse Ragan 2 */}
+                      <Typography 
+                        variant="h3" 
+                        sx={{ 
+                          fontWeight: 900, 
+                          fontSize: { xs: '2.4rem', sm: '3.6rem', md: '4.6rem', lg: '5.2rem' },
+                          lineHeight: 1.0,
+                          letterSpacing: '0.02em',
+                          fontFamily: '"Sans Superellipse Ragan 2", sans-serif',
+                          color: '#ffffff',
+                          textShadow: '0 2px 10px rgba(0,0,0,0.5)',
+                          textAlign: { xs: 'left', md: isRightSlide ? 'right' : 'left' }, // Right-aligned title
+                          whiteSpace: { xs: 'normal', md: 'nowrap' }
+                        }}
+                      >
+                        {slide.title}
+                      </Typography>
+
+                      {/* Elegant Vertical Divider line */}
+                      <Box 
+                        sx={{ 
+                          width: '1px', 
+                          height: { xs: '30px', sm: '40px' }, 
+                          bgcolor: 'rgba(255, 255, 255, 0.25)',
+                          my: 1,
+                          ml: { xs: 1, md: isRightSlide ? 0 : 1 },
+                          mr: { xs: 0, md: isRightSlide ? 1 : 0 }
+                        }} 
+                      />
+
+                      {/* Simple overview/summary */}
+                      <Typography 
+                        variant="body1" 
+                        sx={{ 
+                          color: 'rgba(255, 255, 255, 0.85)', 
+                          fontSize: { xs: '0.9rem', sm: '1rem' }, 
+                          lineHeight: 1.7,
+                          fontFamily: '"Linear", sans-serif',
+                          fontWeight: 300,
+                          textShadow: '0 2px 8px rgba(0,0,0,0.6)',
+                          textAlign: { xs: 'left', md: isRightSlide ? 'justify' : 'left' }, // Justified text
+                          maxWidth: { xs: '100%', md: '50%' } // restricts summary to 50% width on desktop
+                        }}
+                      >
+                        {slide.description}
+                      </Typography>
+                    </Box>
+                  );
+                })}
+              </Box>
+
+              {/* Premium Progress/Navigation Indicator Bars */}
+              <Box sx={{ display: 'flex', gap: 1.5, mt: { xs: 4, sm: 3, md: 2 } }}>
+                {whyShalomSlides.map((_, i) => (
+                  <Box 
+                    key={i}
+                    onClick={() => setActiveWhySlide(i)}
+                    sx={{ 
+                      width: { xs: '32px', sm: '48px' }, 
+                      height: '3px', 
+                      bgcolor: i === activeWhySlide ? '#ff2a74' : 'rgba(255, 255, 255, 0.2)', 
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        bgcolor: i === activeWhySlide ? '#ff2a74' : 'rgba(255, 255, 255, 0.5)'
+                      }
+                    }}
+                  />
                 ))}
               </Box>
-            </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Box 
-                sx={{ 
-                  width: '100%', 
-                  height: { xs: 350, md: 450 }, 
-                  borderRadius: 4,
-                  overflow: 'hidden',
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  position: 'relative'
-                }}
-              >
-                <Box 
-                  component="img" 
-                  src="/assets/studio_interior.png" 
-                  alt="Shalom Music Recording Studio"
+            </Container>
+          </Box>
+        </Box>
+
+
+      </Box>
+
+      {/* Testimonials */}
+      <Box 
+        sx={{ 
+          bgcolor: '#000000',
+          color: 'white', 
+          py: 15,
+          position: 'relative',
+          overflow: 'hidden',
+          // Cloudy background using radial-gradients blending into pure black
+          background: `
+            radial-gradient(circle at 80% 30%, rgba(45, 45, 55, 0.45) 0%, transparent 50%),
+            radial-gradient(circle at 20% 70%, rgba(35, 35, 45, 0.4) 0%, transparent 60%),
+            #000000
+          `,
+          // Sandy texture overlay using data URI SVG noise with low opacity
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100%',
+            height: '100%',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            opacity: 0.045, 
+            pointerEvents: 'none',
+            zIndex: 1
+          }
+        }}
+      >
+        <Container id="testimonials" maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+          <Typography 
+            variant="h2" 
+            align="center" 
+            sx={{ 
+              mb: 10, 
+              fontWeight: 800,
+              fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
+              fontSize: { xs: '1.8rem', sm: '2.4rem', md: '3rem' },
+              letterSpacing: '0.04em',
+              color: 'transparent',
+              WebkitTextStroke: '1.5px #ffffff',
+              textTransform: 'uppercase'
+            }}
+          >
+            What Our Clients Say
+          </Typography>
+          <Grid container spacing={4}>
+            {[
+              { name: 'Alex Rivera', role: 'Artist', text: 'Shalom Music transformed my rough demos into a professional EP. The attention to detail is unmatched.' },
+              { name: 'Sarah Johnson', role: 'Student', text: 'The piano lessons are incredible. I went from a complete beginner to playing my favorite pieces in months.' },
+              { name: 'Michael Chen', role: 'Producer', text: 'The studio rental facilities are top-notch. High-end gear and a very creative atmosphere.' }
+            ].map((testimonial, idx) => (
+              <Grid size={{ xs: 12, md: 4 }} key={idx}>
+                <Card 
+                  elevation={0} 
                   sx={{ 
-                    width: '100%', 
-                    height: '100%', 
-                    objectFit: 'cover',
-                    transition: 'transform 0.8s ease',
-                    '&:hover': { transform: 'scale(1.05)' }
-                  }} 
-                />
-              </Box>
-            </Grid>
+                    p: 4, 
+                    bgcolor: 'rgba(255, 255, 255, 0.03)', 
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: '4px',
+                    height: '100%',
+                    color: 'white',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      bgcolor: 'rgba(255, 255, 255, 0.05)',
+                      borderColor: 'rgba(255, 42, 116, 0.3)',
+                      transform: 'translateY(-4px)',
+                    }
+                  }}
+                >
+                  <Box sx={{ display: 'flex', color: '#ff2a74', mb: 2 }}>
+                    {[...Array(5)].map((_, i) => <StarIcon key={i} fontSize="small" />)}
+                  </Box>
+                  <Typography 
+                    variant="body1" 
+                    sx={{ 
+                      mb: 4, 
+                      fontStyle: 'italic', 
+                      fontFamily: '"Linear", sans-serif',
+                      fontWeight: 300,
+                      color: 'rgba(255, 255, 255, 0.85)',
+                      lineHeight: 1.6
+                    }}
+                  >
+                    "{testimonial.text}"
+                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <Avatar sx={{ bgcolor: '#ff2a74', color: 'white', fontFamily: '"Space Grotesk", sans-serif', fontWeight: 700 }}>
+                      {testimonial.name[0]}
+                    </Avatar>
+                    <Box>
+                      <Typography 
+                        variant="subtitle1" 
+                        sx={{ 
+                          fontWeight: 700,
+                          fontFamily: '"Space Grotesk", sans-serif',
+                          color: 'white'
+                        }}
+                      >
+                        {testimonial.name}
+                      </Typography>
+                      <Typography 
+                        variant="body2" 
+                        sx={{ 
+                          fontFamily: '"Linear", sans-serif',
+                          color: 'rgba(255, 255, 255, 0.5)'
+                        }}
+                      >
+                        {testimonial.role}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
         </Container>
       </Box>
 
-      {/* Testimonials */}
-      <Container id="testimonials" maxWidth="lg" sx={{ py: 15 }}>
-        <Typography variant="h2" align="center" sx={{ mb: 10, fontWeight: 800 }}>
-          What Our Clients Say
-        </Typography>
-        <Grid container spacing={4}>
-          {[
-            { name: 'Alex Rivera', role: 'Artist', text: 'Shalom Music transformed my rough demos into a professional EP. The attention to detail is unmatched.' },
-            { name: 'Sarah Johnson', role: 'Student', text: 'The piano lessons are incredible. I went from a complete beginner to playing my favorite pieces in months.' },
-            { name: 'Michael Chen', role: 'Producer', text: 'The studio rental facilities are top-notch. High-end gear and a very creative atmosphere.' }
-          ].map((testimonial, idx) => (
-            <Grid size={{ xs: 12, md: 4 }} key={idx}>
-              <Card elevation={0} sx={{ p: 4, bgcolor: '#f9f9f9', height: '100%' }}>
-                <Box sx={{ display: 'flex', color: 'black', mb: 2 }}>
-                  {[...Array(5)].map((_, i) => <StarIcon key={i} fontSize="small" />)}
-                </Box>
-                <Typography variant="body1" sx={{ mb: 4, fontStyle: 'italic' }}>
-                  "{testimonial.text}"
-                </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <Avatar sx={{ bgcolor: 'black' }}>{testimonial.name[0]}</Avatar>
-                  <Box>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>{testimonial.name}</Typography>
-                    <Typography variant="body2" color="text.secondary">{testimonial.role}</Typography>
-                  </Box>
-                </Box>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-
       {/* CTA Section */}
-      <Box sx={{ bgcolor: '#eee', py: 12, textAlign: 'center' }}>
-        <Container maxWidth="md">
-          <Typography variant="h3" sx={{ mb: 3, fontWeight: 800 }}>
+      <Box 
+        sx={{ 
+          bgcolor: '#000000',
+          color: 'white', 
+          py: 15,
+          position: 'relative',
+          overflow: 'hidden',
+          textAlign: 'center',
+          // Cloudy background using radial-gradients blending into pure black
+          background: `
+            radial-gradient(circle at 80% 30%, rgba(45, 45, 55, 0.45) 0%, transparent 50%),
+            radial-gradient(circle at 20% 70%, rgba(35, 35, 45, 0.4) 0%, transparent 60%),
+            #000000
+          `,
+          // Sandy texture overlay using data URI SVG noise with low opacity
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100%',
+            height: '100%',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            opacity: 0.045, 
+            pointerEvents: 'none',
+            zIndex: 1
+          }
+        }}
+      >
+        <Container maxWidth="md" sx={{ position: 'relative', zIndex: 2 }}>
+          <Typography 
+            variant="h3" 
+            sx={{ 
+              mb: 3, 
+              fontWeight: 800,
+              fontFamily: '"Syne", sans-serif',
+              letterSpacing: '-0.01em',
+            }}
+          >
             Ready to start your musical journey?
           </Typography>
-          <Typography variant="h6" sx={{ mb: 6, color: 'text.secondary', fontWeight: 400 }}>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              mb: 6, 
+              color: 'rgba(255, 255, 255, 0.7)', 
+              fontWeight: 300,
+              fontFamily: '"Linear", sans-serif',
+            }}
+          >
             Join Shalom Music today and experience excellence in sound.
           </Typography>
-          <Button variant="contained" size="large" sx={{ bgcolor: 'black', color: 'white', px: 6, py: 2, '&:hover': { bgcolor: '#333' } }}>
+          <Button 
+            variant="contained" 
+            size="large" 
+            component={RouterLink}
+            to="/contact"
+            sx={{ 
+              bgcolor: '#ff2a74', 
+              color: 'white', 
+              px: 6, 
+              py: 2, 
+              fontWeight: 700,
+              fontFamily: '"Space Grotesk", sans-serif',
+              borderRadius: '4px',
+              '&:hover': { 
+                bgcolor: '#ff0055',
+                boxShadow: '0 8px 24px rgba(255, 42, 116, 0.3)' 
+              } 
+            }}
+          >
             Get Started Now
           </Button>
         </Container>

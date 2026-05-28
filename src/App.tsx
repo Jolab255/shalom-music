@@ -5,6 +5,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import theme from './theme/theme';
 import Layout from './components/layout/Layout';
 import Loader from './components/layout/Loader';
+import ErrorBoundary from './components/common/ErrorBoundary';
+import { NotificationProvider } from './components/common/NotificationContext';
 import Home from './pages/Home';
 import Production from './pages/Production';
 import Lessons from './pages/Lessons';
@@ -40,27 +42,31 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   return (
-    <HelmetProvider>
-      <ThemeProvider theme={theme}>
-        {loading && <Loader onComplete={() => setLoading(false)} />}
-        <Router>
-          <ScrollToHash />
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/production" element={<Production />} />
-              <Route path="/lessons" element={<Lessons />} />
-              <Route path="/rental" element={<StudioRental />} />
-              <Route path="/piano-service" element={<PianoService />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/offers" element={<Pricing />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-            </Routes>
-          </Layout>
-        </Router>
-      </ThemeProvider>
-    </HelmetProvider>
+    <ErrorBoundary>
+      <HelmetProvider>
+        <NotificationProvider>
+          <ThemeProvider theme={theme}>
+            {loading && <Loader onComplete={() => setLoading(false)} />}
+            <Router>
+              <ScrollToHash />
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/production" element={<Production />} />
+                  <Route path="/lessons" element={<Lessons />} />
+                  <Route path="/rental" element={<StudioRental />} />
+                  <Route path="/piano-service" element={<PianoService />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/offers" element={<Pricing />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                </Routes>
+              </Layout>
+            </Router>
+          </ThemeProvider>
+        </NotificationProvider>
+      </HelmetProvider>
+    </ErrorBoundary>
   );
 }
 

@@ -677,6 +677,42 @@ This document logs the step-by-step changes, configurations, and achievements im
     - If either is `false` (meaning the page is still loading or 10 seconds has not passed), resets `currentTime` to `0` and programmatically plays the video again to loop seamlessly.
 * **Achievement**: An incredibly smooth, high-end creative landing intro where the video is never interrupted mid-playback, loops as long as resources load, satisfies a mandatory 10-second preview, and fades out only upon visual completion.
 
+### Step 80: Loader Video Sizing Optimization
+* **Goal**: Optimize the splash screen loader video dimensions, reducing visual clutter and footprint while keeping the video uncropped and beautifully centered on a solid black background.
+* **Changes**:
+  - Modified [Loader.tsx](file:///home/jolab/websites/shalom-music/src/components/layout/Loader.tsx).
+  - Scaled down the visual constraints from `maxWidth: '560px'` / `width: '80%'` to **`maxWidth: '280px'`** / **`width: '70%'`**.
+  - Retained natural aspect ratios via `height: 'auto'` to ensure absolutely zero cropping or stretching.
+* **Achievement**: An ultra-sleek, premium, and refined splash loading presentation that respects user screen space while remaining visually centered, crisp, and high-impact.
+
+### Step 81: Sub-Navbar Tab Transition Video Loader Integration
+* **Goal**: Eradicate blank image states and visual lag when navigating between the six sub-navbar featured services tabs by integrating an ambient loading fallback.
+* **Changes**:
+  - Implemented a custom, reusable component `TabImageWithLoader` in [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx).
+  - Designed the loader to be extremely low-profile, occupying only a small part of the container instead of a full black block, by setting **`bgcolor: 'transparent'`** and a compact responsive height of **`100px` to `180px`**.
+  - Scaled down the inner video loader to a maximum width of **`100px`** for a highly refined, premium presentation.
+  - Enforced a minimum **1.0-second display duration** of the loader video to prevent visual flickering and guarantee a premium, ultra-smooth transition before the loaded image fades in.
+  - Replaced the standard `<Box component="img" />` elements inside all six featured service tab renders with `<TabImageWithLoader />`.
+* **Achievement**: Fluid, luxury transitions between featured services with an ultra-subtle, clean, and low-profile video loader.
+
+### Step 82: Why Shalom Music Branding Elevation
+* **Goal**: Elevate the visual styling of the "Why Shalom Music?" section to achieve complete design integration with the rest of the homepage.
+* **Changes**:
+  - Replaced the simple solid black background in [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx) with the brand's premium dark radial gradients (cloudy mist) blended with high-fidelity fractal noise (sandy texture) background.
+  - Upgraded the section title "Why Shalom Music?" to utilize the custom outlined **`AerodomeRegular-2vMGK`** brand typography, styled with a transparent fill, white stroke, uppercase text, and matching tracking.
+  - Set the body copy font family to the lightweight **`Linear`** typography, and introduced hot pink (`#ff2a74`) check circles to style the benefits list.
+  - Aligned the right-hand studio image container's border-radius to `1` (subtle 4px curve) to perfectly match the site's sleek design system.
+* **Achievement**: A gorgeously integrated, high-fidelity promotional block that fits perfectly within the homepage flow.
+
+### Step 83: Homepage Section Background Unification & Testimonial Styling Elevation
+* **Goal**: Ensure absolute visual consistency across all adjacent dark sections on the homepage by matching all background gradients, and elevate the Testimonials section to the same premium dark standard.
+* **Changes**:
+  - Unified the gradient definitions for the Featured Services (Section 3), Why Choose Us (Section 4), and Testimonials (Section 5) sections in [Home.tsx](file:///home/jolab/websites/shalom-music/src/pages/Home.tsx), utilizing the exact same premium two-point gradient configuration (circle at 80% 30% and circle at 20% 70% with #000000) paired with the SVG fractal noise texture.
+  - Wrapped the Testimonials section in the unified textured gradient Box.
+  - Elevated the Testimonials header "What Our Clients Say" to use the custom outlined **`AerodomeRegular-2vMGK`** brand font.
+  - Redesigned the Testimonial Cards to use modern dark glassmorphic cards (`rgba(255,255,255,0.03)` base background, `1px solid rgba(255, 255, 255, 0.08)` border, hot-pink active stars and avatar bases, lightweight `Linear` typography, and micro-hover lift transitions).
+* **Achievement**: A fully cohesive, premium, and uninterrupted flow across the entire homepage, eliminating all visual gaps and design inconsistencies.
+
 ---
 
 ## 🏆 Project Achievements

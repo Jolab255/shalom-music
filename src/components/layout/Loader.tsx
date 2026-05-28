@@ -93,9 +93,8 @@ const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
         onLoadedData={handleVideoCanPlay}
         onEnded={handleVideoEnded}
         style={{
-          maxWidth: '100%',
-          maxHeight: '100%',
-          width: 'auto',
+          maxWidth: '280px',
+          width: '70%',
           height: 'auto',
           opacity: videoReady ? 1 : 0,
           transition: 'opacity 0.6s ease-out'
