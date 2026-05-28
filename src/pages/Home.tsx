@@ -1,6 +1,5 @@
 import { Container, Typography, Box, Button, Card, CardContent, Grid2 as Grid, Avatar } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
-import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import PianoIcon from '@mui/icons-material/Piano';
 import MicIcon from '@mui/icons-material/Mic';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -11,7 +10,7 @@ const Home: React.FC = () => {
     <>
       <Helmet>
         <title>Shalom Music | Premium Music Production & Lessons</title>
-        <meta name="description" content="Elevate your sound with Shalom Music. Professional music production, piano lessons, voice training, and piano services." />
+        <meta name="description" content="Elevate your sound with Shalom Music. Professional music production, piano lessons, and piano services." />
       </Helmet>
 
       {/* Hero Section */}
@@ -125,13 +124,12 @@ const Home: React.FC = () => {
         <Typography variant="h6" align="center" color="text.secondary" sx={{ mb: 8, fontWeight: 400 }}>
           Comprehensive musical solutions tailored to your unique vision.
         </Typography>
-        <Grid container spacing={4}>
+        <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
           {[
             { title: 'Music Production', icon: <MicIcon sx={{ fontSize: 40 }} />, desc: 'From initial recording to final mastering, we provide a complete production cycle for artists of all genres.' },
-            { title: 'Piano Lessons', icon: <PianoIcon sx={{ fontSize: 40 }} />, desc: 'Expert piano instruction for all ages, focusing on technique, theory, and performance excellence.' },
-            { title: 'Voice Training', icon: <MusicNoteIcon sx={{ fontSize: 40 }} />, desc: 'Professional vocal coaching to help you find your unique sound and master your vocal range.' }
+            { title: 'Piano Lessons', icon: <PianoIcon sx={{ fontSize: 40 }} />, desc: 'Expert piano instruction for all ages, focusing on technique, theory, and performance excellence.' }
           ].map((service, idx) => (
-            <Grid size={{ xs: 12, md: 4 }} key={idx}>
+            <Grid size={{ xs: 12, md: 6 }} key={idx} sx={{ maxWidth: 500 }}>
               <Card elevation={0} sx={{ height: '100%', textAlign: 'center', p: 4, border: '1px solid #f0f0f0', transition: '0.3s', '&:hover': { transform: 'translateY(-10px)', boxShadow: '0 20px 40px rgba(0,0,0,0.05)' } }}>
                 <CardContent>
                   <Box sx={{ mb: 3, color: 'primary.main' }}>{service.icon}</Box>
@@ -202,7 +200,7 @@ const Home: React.FC = () => {
       </Box>
 
       {/* Testimonials */}
-      <Container maxWidth="lg" sx={{ py: 15 }}>
+      <Container id="testimonials" maxWidth="lg" sx={{ py: 15 }}>
         <Typography variant="h2" align="center" sx={{ mb: 10, fontWeight: 800 }}>
           What Our Clients Say
         </Typography>

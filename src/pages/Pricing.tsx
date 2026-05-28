@@ -58,7 +58,7 @@ const Pricing: React.FC = () => {
           Music Lessons
         </Typography>
         <Typography variant="h6" align="center" color="text.secondary" sx={{ mb: 8 }}>
-          Piano and Voice training for all skill levels.
+          Piano training for all skill levels.
         </Typography>
         <Grid container spacing={4} sx={{ mb: 15 }}>
           {[

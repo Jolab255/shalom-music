@@ -1,4 +1,4 @@
-import { Container, Typography, Box, Card, CardContent, Button, List, ListItem, ListItemIcon, ListItemText, Grid2 as Grid, Paper } from '@mui/material';
+import { Container, Typography, Box, Button, List, ListItem, ListItemIcon, ListItemText, Grid2 as Grid, Paper, Divider } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';

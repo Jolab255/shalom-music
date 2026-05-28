@@ -35,7 +35,6 @@ const Footer: React.FC = () => {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <Link component={RouterLink} to="/production" color="inherit" underline="hover">Music Production</Link>
               <Link component={RouterLink} to="/lessons" color="inherit" underline="hover">Piano Lessons</Link>
-              <Link component={RouterLink} to="/voice" color="inherit" underline="hover">Voice Training</Link>
               <Link component={RouterLink} to="/pricing" color="inherit" underline="hover">Pricing Plans</Link>
               <Link component={RouterLink} to="/contact" color="inherit" underline="hover">Contact Us</Link>
             </Box>

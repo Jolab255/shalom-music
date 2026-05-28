@@ -19,16 +19,35 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"Space Grotesk", "Inter", "Helvetica", "Arial", sans-serif',
     h1: {
+      fontFamily: '"Syne", sans-serif',
       fontWeight: 800,
       letterSpacing: '-0.02em',
     },
     h2: {
+      fontFamily: '"Syne", sans-serif',
       fontWeight: 700,
       letterSpacing: '-0.01em',
     },
+    h3: {
+      fontFamily: '"Syne", sans-serif',
+      fontWeight: 700,
+    },
+    h4: {
+      fontFamily: '"Syne", sans-serif',
+      fontWeight: 700,
+    },
+    h5: {
+      fontFamily: '"Syne", sans-serif',
+      fontWeight: 600,
+    },
+    h6: {
+      fontFamily: '"Space Grotesk", sans-serif',
+      fontWeight: 600,
+    },
     button: {
+      fontFamily: '"Space Grotesk", sans-serif',
       textTransform: 'none',
       fontWeight: 600,
     },
@@ -53,11 +72,11 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          backgroundColor: '#161616', // Blackish
           backdropFilter: 'blur(8px)',
-          color: '#000000',
+          color: '#ffffff', // White
           boxShadow: 'none',
-          borderBottom: '1px solid #e0e0e0',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
         },
       },
     },

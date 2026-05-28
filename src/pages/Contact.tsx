@@ -7,7 +7,6 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 const services = [
   'Music Production',
   'Piano Lessons',
-  'Voice Training',
   'Studio Rental',
   'Piano Service',
   'Other Inquiries'
