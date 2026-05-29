@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Button, Box, IconButton, Drawer, List, ListItem, ListItemText, InputBase, useMediaQuery, useTheme } from '@mui/material';
+import { AppBar, Toolbar, Button, Box, IconButton, Drawer, List, ListItem, ListItemText, InputBase, useMediaQuery, useTheme, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
@@ -7,14 +7,13 @@ import logo from '../../assets/logo.png';
 
 // Categories in the top slim bar
 const navItems = [
-  { label: 'Home', path: '/' },
-  { label: 'Recording', path: '/#recording' },
-  { label: 'Capturing', path: '/#capturing' },
-  { label: 'Mixing', path: '/#mixing' },
-  { label: 'Mastering', path: '/#mastering' },
-  { label: 'Instrumental', path: '/#instrumental' },
+  { label: 'Audio Recording', path: '/#recording' },
+  { label: 'Audio Capturing', path: '/#capturing' },
+  { label: 'Audio Mixing', path: '/#mixing' },
+  { label: 'Audio Mastering', path: '/#mastering' },
+  { label: 'Instrumental Creation', path: '/#instrumental' },
   { label: 'Studio Rental', path: '/#rental' },
-  { label: 'About', path: '/about' },
+  { label: 'About', path: '/#about' },
 ];
 
 // Expanded navigation items for mobile drawer
@@ -26,21 +25,49 @@ const drawerNavItems = [
   { label: 'Audio Mastering', path: '/#mastering' },
   { label: 'Instrumental Creation', path: '/#instrumental' },
   { label: 'Studio Rental', path: '/#rental' },
-  { label: 'About', path: '/about' },
-  { label: "Today's", path: '/offers' },
-  { label: 'View Plans', path: '/pricing' },
-  { label: 'Testimonies', path: '/#testimonials' },
+  { label: 'About', path: '/#about' },
+  { label: 'Piano Lessons', path: '/lessons' },
+  { label: 'Piano Services', path: '/piano-services' },
+  { label: 'Pricing', path: '/pricing' },
+  { label: 'Testimonials', path: '/#testimonials' },
   { label: 'Contact Us', path: '/contact' },
+];
+
+const searchDatabase = [
+  { title: 'Audio Recording', description: 'Pristine multi-track studio recording', path: '/#recording', category: 'Services' },
+  { title: 'Audio Capturing', description: 'High-fidelity ambient sound capture', path: '/#capturing', category: 'Services' },
+  { title: 'Audio Mixing', description: 'Multi-dimensional audio mixing', path: '/#mixing', category: 'Services' },
+  { title: 'Audio Mastering', description: 'Industry-standard mastering', path: '/#mastering', category: 'Services' },
+  { title: 'Instrumental Creation', description: 'Custom beats, arrangements & composition', path: '/#instrumental', category: 'Services' },
+  { title: 'Complete Recording Package', description: 'All-in-one recording, mixing, and mastering', path: '/pricing', category: 'Pricing' },
+  { title: 'Studio Rental', description: 'Book premium studio spaces & rooms', path: '/#rental', category: 'Studios' },
+  { title: 'Piano Lessons', description: 'Personalized piano & music instruction', path: '/lessons', category: 'Lessons' },
+  { title: 'Piano Services', description: 'Accompanist and performance bookings', path: '/piano-services', category: 'Services' },
+  { title: 'Pricing & Plans', description: 'Explore rates and packages', path: '/pricing', category: 'Pricing' },
+  { title: 'Testimonials', description: 'Client feedback and reviews', path: '/#testimonials', category: 'About' },
+  { title: 'About Shalom Music', description: 'Our history and legacy', path: '/#about', category: 'About' },
+  { title: 'Contact Us', description: 'Get in touch with our team', path: '/contact', category: 'Contact' }
 ];
 
 const Navbar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [isFocused, setIsFocused] = React.useState(false);
+  
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const location = useLocation();
   const [hideTopBar, setHideTopBar] = React.useState(false);
   const [isFeaturedActive, setIsFeaturedActive] = React.useState(false);
   const lastScrollY = React.useRef(0);
+
+  const filteredResults = searchQuery.trim() === ''
+    ? []
+    : searchDatabase.filter(item =>
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.category.toLowerCase().includes(searchQuery.toLowerCase())
+      );
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -180,7 +207,7 @@ const Navbar: React.FC = () => {
           <Toolbar 
             disableGutters 
             sx={{ 
-              justifyContent: 'flex-start', 
+              justifyContent: 'center', 
               minHeight: '40px !important', 
               height: 40,
               padding: 0,
@@ -205,7 +232,7 @@ const Navbar: React.FC = () => {
                 sx={{ 
                   display: 'flex', 
                   gap: { md: 0.5, lg: 1 }, 
-                  justifyContent: 'flex-start', 
+                  justifyContent: 'center', 
                   flexWrap: 'nowrap', 
                   width: '100%', 
                   height: 40, 
@@ -307,6 +334,7 @@ const Navbar: React.FC = () => {
               width: { xs: '120px', sm: '180px', md: '280px' },
               transition: 'all 0.3s ease',
               border: '1px solid transparent',
+              position: 'relative', // Relative position for matching autocomplete dropdown positioning
               '&:focus-within': {
                 bgcolor: '#121212',
                 borderColor: '#ff2a74',
@@ -316,7 +344,11 @@ const Navbar: React.FC = () => {
           >
             <SearchIcon sx={{ color: '#aaa', mr: 1, fontSize: '1.2rem' }} />
             <InputBase 
-              placeholder="Discover your sound..." 
+              placeholder="Search services, lessons, pricing..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setTimeout(() => setIsFocused(false), 200)}
               sx={{ 
                 fontSize: '1.05rem', 
                 fontFamily: '"Space Grotesk", sans-serif',
@@ -328,6 +360,123 @@ const Navbar: React.FC = () => {
                 }
               }} 
             />
+
+            {/* Live Autocomplete Dropdown List */}
+            {isFocused && searchQuery.trim() !== '' && (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 'calc(100% + 8px)',
+                  left: { xs: '-80px', sm: 0 },
+                  width: { xs: '280px', sm: '320px', md: '360px' },
+                  bgcolor: 'rgba(15, 15, 18, 0.96)',
+                  backdropFilter: 'blur(25px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(25px) saturate(180%)',
+                  border: '1px solid rgba(255, 42, 116, 0.25)',
+                  borderRadius: '6px',
+                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.95), 0 0 15px rgba(255, 42, 116, 0.15)',
+                  zIndex: 9999,
+                  maxHeight: '340px',
+                  overflowY: 'auto',
+                  p: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 0.5,
+                  '&::-webkit-scrollbar': {
+                    width: '6px',
+                  },
+                  '&::-webkit-scrollbar-thumb': {
+                    bgcolor: 'rgba(255, 42, 116, 0.3)',
+                    borderRadius: '3px',
+                  }
+                }}
+              >
+                {filteredResults.length === 0 ? (
+                  <Box sx={{ p: 2, textAlign: 'center' }}>
+                    <Typography
+                      sx={{
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        fontFamily: '"Space Grotesk", sans-serif',
+                        fontSize: '0.9rem',
+                      }}
+                    >
+                      No matching sounds found...
+                    </Typography>
+                  </Box>
+                ) : (
+                  filteredResults.map((item, idx) => (
+                    <Button
+                      key={idx}
+                      component={RouterLink}
+                      to={item.path}
+                      onClick={() => {
+                        setSearchQuery('');
+                        setIsFocused(false);
+                      }}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        textAlign: 'left',
+                        p: 1.5,
+                        width: '100%',
+                        borderRadius: '4px',
+                        textTransform: 'none',
+                        bgcolor: 'transparent',
+                        color: '#ffffff',
+                        borderBottom: idx === filteredResults.length - 1 ? 'none' : '1px solid rgba(255, 255, 255, 0.05)',
+                        '&:hover': {
+                          bgcolor: 'rgba(255, 42, 116, 0.08)',
+                          color: '#ff2a74',
+                        },
+                        transition: 'all 0.2s ease',
+                      }}
+                    >
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mb: 0.5 }}>
+                        <Typography
+                          sx={{
+                            fontFamily: '"Space Grotesk", sans-serif',
+                            fontWeight: 700,
+                            fontSize: '0.95rem',
+                            lineHeight: 1.2
+                          }}
+                        >
+                          {item.title}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            fontFamily: '"Space Grotesk", sans-serif',
+                            fontSize: '0.65rem',
+                            fontWeight: 900,
+                            letterSpacing: '0.05em',
+                            textTransform: 'uppercase',
+                            bgcolor: 'rgba(255, 42, 116, 0.15)',
+                            color: '#ff2a74',
+                            px: 1,
+                            py: 0.2,
+                            borderRadius: '3px',
+                            lineHeight: 1.2
+                          }}
+                        >
+                          {item.category}
+                        </Typography>
+                      </Box>
+                      <Typography
+                        sx={{
+                          fontFamily: '"Linear", sans-serif',
+                          fontSize: '0.8rem',
+                          color: 'rgba(255, 255, 255, 0.6)',
+                          fontWeight: 300,
+                          lineHeight: 1.4,
+                        }}
+                      >
+                        {item.description}
+                      </Typography>
+                    </Button>
+                  ))
+                )}
+              </Box>
+            )}
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />
@@ -362,9 +511,9 @@ const Navbar: React.FC = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: { md: 0.5, lg: 0.75 } }}>
               <Button
                 component={RouterLink}
-                to="/offers"
+                to="/lessons"
                 sx={{
-                  color: location.pathname === '/offers' ? '#ff2a74' : '#ffffff',
+                  color: location.pathname === '/lessons' ? '#ff2a74' : '#ffffff',
                   fontFamily: '"Space Grotesk", sans-serif',
                   fontWeight: 600,
                   fontSize: '0.95rem', // Increased font size from 0.85rem
@@ -377,7 +526,7 @@ const Navbar: React.FC = () => {
                   '&::after': {
                     content: '""',
                     position: 'absolute',
-                    width: location.pathname === '/offers' ? '60%' : '0%',
+                    width: location.pathname === '/lessons' ? '60%' : '0%',
                     height: '1.5px',
                     bottom: '-4px', 
                     left: '50%',
@@ -390,38 +539,39 @@ const Navbar: React.FC = () => {
                   }
                 }}
               >
-                Today's
-                <Box 
-                  component="span" 
-                  sx={{ 
-                    ml: 0.8, 
-                    bgcolor: '#ff2a74', 
-                    color: '#ffffff', 
-                    fontSize: '0.62rem', 
-                    px: 0.6, 
-                    py: 0.15, 
-                    borderRadius: '2px', 
-                    fontWeight: 900,
-                    letterSpacing: '0.03em',
-                    textTransform: 'uppercase',
-                    lineHeight: 1.2,
-                    animation: 'blink 1.5s infinite ease-in-out',
-                    '@keyframes blink': {
-                      '0%, 100%': { 
-                        opacity: 1,
-                        backgroundColor: '#ff2a74',
-                        boxShadow: '0 0 4px #ff2a74'
-                      },
-                      '50%': { 
-                        opacity: 0.3,
-                        backgroundColor: 'rgba(255, 42, 116, 0.4)',
-                        boxShadow: 'none'
-                      }
-                    }
-                  }}
-                >
-                  OFFER
-                </Box>
+                Piano Lessons
+              </Button>
+              <Button
+                component={RouterLink}
+                to="/piano-services"
+                sx={{
+                  color: location.pathname === '/piano-services' ? '#ff2a74' : '#ffffff',
+                  fontFamily: '"Space Grotesk", sans-serif',
+                  fontWeight: 600,
+                  fontSize: '0.95rem',
+                  textTransform: 'none',
+                  whiteSpace: 'nowrap',
+                  position: 'relative',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  px: 0.75,
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    width: location.pathname === '/piano-services' ? '60%' : '0%',
+                    height: '1.5px',
+                    bottom: '-4px', 
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    backgroundColor: '#ff2a74',
+                    transition: 'width 0.3s ease',
+                  },
+                  '&:hover': { 
+                    bgcolor: 'transparent'
+                  }
+                }}
+              >
+                Piano Services
               </Button>
               <Button
                 component={RouterLink}
@@ -451,7 +601,7 @@ const Navbar: React.FC = () => {
                   }
                 }}
               >
-                View Plans
+                Pricing
               </Button>
               <Button
                 component={RouterLink}
@@ -481,7 +631,7 @@ const Navbar: React.FC = () => {
                   }
                 }}
               >
-                Testimonies
+                Testimonials
               </Button>
               <Button
                 component={RouterLink}

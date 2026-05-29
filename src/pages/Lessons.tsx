@@ -1,5 +1,6 @@
 import { Container, Typography, Box, Button, List, ListItem, ListItemIcon, ListItemText, Grid2 as Grid, Paper, Divider } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
+import { Link as RouterLink } from 'react-router-dom';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import PersonIcon from '@mui/icons-material/Person';
@@ -13,7 +14,99 @@ const Lessons: React.FC = () => {
         <meta name="description" content="Professional piano lessons for all ages and levels at Shalom Music. Master the keys with expert instructors." />
       </Helmet>
 
-      <Box sx={{ bgcolor: 'black', color: 'white', py: { xs: 8, md: 15 } }}>
+      <Box sx={{ position: 'relative', overflow: 'hidden' }}>
+        {/* Full-Page Under Development Overlay */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            bgcolor: 'rgba(0, 0, 0, 0.88)',
+            backdropFilter: 'blur(35px)',
+            WebkitBackdropFilter: 'blur(35px)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            p: 4,
+            minHeight: '80vh',
+            textAlign: 'center'
+          }}
+        >
+          <Box 
+            sx={{ 
+              bgcolor: '#ff2a74', 
+              color: 'white', 
+              fontFamily: '"Space Grotesk", sans-serif',
+              fontWeight: 800,
+              fontSize: '0.8rem',
+              letterSpacing: '0.15em',
+              px: 3,
+              py: 1,
+              borderRadius: 0, // Sharp!
+              textTransform: 'uppercase',
+              mb: 3,
+              boxShadow: '0 4px 15px rgba(255, 42, 116, 0.4)'
+            }}
+          >
+            Coming Soon
+          </Box>
+          <Typography 
+            sx={{ 
+              fontFamily: '"AerodomeRegular-2vMGK", sans-serif', 
+              fontSize: { xs: '2rem', sm: '3rem', md: '3.6rem' }, 
+              fontWeight: 800, 
+              letterSpacing: '0.04em',
+              mb: 2,
+              color: 'white',
+              lineHeight: 1.1
+            }}
+          >
+            PIANO LESSONS ACADEMY
+          </Typography>
+          <Typography 
+            sx={{ 
+              fontFamily: '"Linear", sans-serif', 
+              fontSize: { xs: '0.95rem', sm: '1.1rem' }, 
+              color: 'rgba(255, 255, 255, 0.65)', 
+              maxWidth: '480px',
+              mx: 'auto',
+              lineHeight: 1.6,
+              mb: 5
+            }}
+          >
+            Our expert private keyboard training academy is undergoing final curriculum configuration. Booking systems will open shortly.
+          </Typography>
+          <Button
+            component={RouterLink}
+            to="/"
+            variant="outlined"
+            sx={{
+              borderColor: '#ff2a74',
+              color: '#ff2a74',
+              fontFamily: '"Space Grotesk", sans-serif',
+              fontWeight: 700,
+              px: 4,
+              py: 1.5,
+              borderRadius: 0, // Sharp!
+              textTransform: 'none',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                bgcolor: '#ff2a74',
+                color: 'white',
+                borderColor: '#ff2a74',
+                transform: 'translateY(-2px)'
+              }
+            }}
+          >
+            Return to Homepage
+          </Button>
+        </Box>
+
+        <Box sx={{ bgcolor: 'black', color: 'white', py: { xs: 8, md: 15 } }}>
         <Container maxWidth="lg">
           <Grid container spacing={6} sx={{ alignItems: 'center' }}>
             <Grid size={{ xs: 12, md: 6 }}>
@@ -170,6 +263,7 @@ const Lessons: React.FC = () => {
           Book Your Introductory Lesson
         </Button>
       </Container>
+      </Box>
     </>
   );
 };
