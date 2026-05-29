@@ -1654,7 +1654,7 @@ const Home: React.FC = () => {
                   {/* Explanatory Grid of Recording Features */}
                   <Grid 
                     container 
-                    spacing={3} 
+                    spacing={{ xs: 1.5, sm: 3 }} 
                     sx={{ 
                       maxWidth: '1100px', 
                       mx: 'auto', 
@@ -1680,7 +1680,7 @@ const Home: React.FC = () => {
                         desc: 'Pristine analog-to-digital conversion operating at ultra-high sample rates to capture every sonic detail.' 
                       }
                     ].map((item, i) => (
-                      <Grid size={{ xs: 12, sm: 6, md: 3 }} key={i}>
+                      <Grid size={{ xs: 6, sm: 6, md: 3 }} key={i}>
                         <Box 
                           sx={{ 
                             p: 1.5, 
@@ -1822,7 +1822,7 @@ const Home: React.FC = () => {
                   {/* Explanatory Grid of Capturing Features */}
                   <Grid 
                     container 
-                    spacing={3} 
+                    spacing={{ xs: 1.5, sm: 3 }} 
                     sx={{ 
                       maxWidth: '1100px', 
                       mx: 'auto', 
@@ -1848,7 +1848,7 @@ const Home: React.FC = () => {
                         desc: 'Multi-microphone stage capture recording live performances with immaculate separation and direct lines.' 
                       }
                     ].map((item, i) => (
-                      <Grid size={{ xs: 12, sm: 6, md: 3 }} key={i}>
+                      <Grid size={{ xs: 6, sm: 6, md: 3 }} key={i}>
                         <Box 
                           sx={{ 
                             p: 1.5, 
@@ -1990,7 +1990,7 @@ const Home: React.FC = () => {
                   {/* Explanatory Grid of Mixing Features */}
                   <Grid 
                     container 
-                    spacing={3} 
+                    spacing={{ xs: 1.5, sm: 3 }} 
                     sx={{ 
                       maxWidth: '1100px', 
                       mx: 'auto', 
@@ -2016,7 +2016,7 @@ const Home: React.FC = () => {
                         desc: 'Deliver crystal-clear vocal presence and robust level balancing using dynamic volume and phase control.' 
                       }
                     ].map((item, i) => (
-                      <Grid size={{ xs: 12, sm: 6, md: 3 }} key={i}>
+                      <Grid size={{ xs: 6, sm: 6, md: 3 }} key={i}>
                         <Box 
                           sx={{ 
                             p: 1.5, 
@@ -2158,7 +2158,7 @@ const Home: React.FC = () => {
                   {/* Explanatory Grid of Mastering Features */}
                   <Grid 
                     container 
-                    spacing={3} 
+                    spacing={{ xs: 1.5, sm: 3 }} 
                     sx={{ 
                       maxWidth: '1100px', 
                       mx: 'auto', 
@@ -2184,7 +2184,7 @@ const Home: React.FC = () => {
                         desc: 'Generate industry-standard redbook DDP files, metadata tagging, and high-fidelity output archives.' 
                       }
                     ].map((item, i) => (
-                      <Grid size={{ xs: 12, sm: 6, md: 3 }} key={i}>
+                      <Grid size={{ xs: 6, sm: 6, md: 3 }} key={i}>
                         <Box 
                           sx={{ 
                             p: 1.5, 
@@ -2327,7 +2327,7 @@ const Home: React.FC = () => {
                   {/* Explanatory Grid of Instrumental Creation Features */}
                   <Grid 
                     container 
-                    spacing={3} 
+                    spacing={{ xs: 1.5, sm: 3 }} 
                     sx={{ 
                       maxWidth: '1100px', 
                       mx: 'auto', 
@@ -2353,7 +2353,7 @@ const Home: React.FC = () => {
                         desc: 'Develop highly tailored, customized background soundbeds to set the perfect mood for your media productions.' 
                       }
                     ].map((item, i) => (
-                      <Grid size={{ xs: 12, sm: 6, md: 3 }} key={i}>
+                      <Grid size={{ xs: 6, sm: 6, md: 3 }} key={i}>
                         <Box 
                           sx={{ 
                             p: 1.5, 
@@ -2496,7 +2496,7 @@ const Home: React.FC = () => {
                   {/* Explanatory Grid of Studio Rental Features */}
                   <Grid 
                     container 
-                    spacing={3} 
+                    spacing={{ xs: 1.5, sm: 3 }} 
                     sx={{ 
                       maxWidth: '1100px', 
                       mx: 'auto', 
@@ -2522,7 +2522,7 @@ const Home: React.FC = () => {
                         desc: 'Relax between takes inside highly comfortable creative lounges equipped with high-speed Wi-Fi and refreshments.' 
                       }
                     ].map((item, i) => (
-                      <Grid size={{ xs: 12, sm: 6, md: 3 }} key={i}>
+                      <Grid size={{ xs: 6, sm: 6, md: 3 }} key={i}>
                         <Box 
                           sx={{ 
                             p: 1.5, 
