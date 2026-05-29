@@ -1570,15 +1570,9 @@ const Home: React.FC = () => {
           <Box
             sx={{
               display: { xs: 'flex', md: 'block' },
-              flexDirection: { xs: 'row', md: 'column' },
-              overflowX: { xs: 'auto', md: 'visible' },
-              scrollSnapType: { xs: 'x mandatory', md: 'none' },
+              flexDirection: 'column',
               width: '100%',
-              pb: { xs: 4, md: 0 },
-              gap: { xs: 4, md: 0 },
-              '&::-webkit-scrollbar': { display: 'none' },
-              msOverflowStyle: 'none',
-              scrollbarWidth: 'none'
+              gap: { xs: 8, md: 0 }
             }}
           >
             {featuredServices.map((service, index) => {
@@ -2604,9 +2598,8 @@ const Home: React.FC = () => {
               id={`featured-service-${index}`}
               sx={{
                 display: active ? 'block' : { xs: 'block', md: 'none' },
-                width: { xs: '100%', md: '100%' },
-                flexShrink: { xs: 0, md: 1 },
-                scrollSnapAlign: { xs: 'center', md: 'none' }
+                width: '100%',
+                scrollMarginTop: { xs: '80px', md: '0px' }
               }}
             >
               {renderContent()}
