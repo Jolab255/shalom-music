@@ -1533,7 +1533,13 @@ const Home: React.FC = () => {
               return (
                 <Button
                   key={index}
-                  onClick={() => setActiveTab(index)}
+                  onClick={() => {
+                    setActiveTab(index);
+                    const el = document.getElementById(`featured-service-${index}`);
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    }
+                  }}
                   sx={{
                     fontFamily: '"Space Grotesk", sans-serif',
                     fontSize: { xs: '0.72rem', sm: '0.8rem', md: '0.86rem' },
@@ -1561,8 +1567,23 @@ const Home: React.FC = () => {
           </Box>
 
           {/* Dynamic Tab Content with Smooth Transitions */}
-          {featuredServices.map((service, index) => {
-            if (activeTab !== index) return null;
+          <Box
+            sx={{
+              display: { xs: 'flex', md: 'block' },
+              flexDirection: { xs: 'row', md: 'column' },
+              overflowX: { xs: 'auto', md: 'visible' },
+              scrollSnapType: { xs: 'x mandatory', md: 'none' },
+              width: '100%',
+              pb: { xs: 4, md: 0 },
+              gap: { xs: 4, md: 0 },
+              '&::-webkit-scrollbar': { display: 'none' },
+              msOverflowStyle: 'none',
+              scrollbarWidth: 'none'
+            }}
+          >
+            {featuredServices.map((service, index) => {
+              const active = activeTab === index;
+              const renderContent = () => {
 
             if (index === 0) {
               return (
@@ -2575,7 +2596,24 @@ const Home: React.FC = () => {
             }
 
             return null;
-          })}
+          };
+
+          return (
+            <Box
+              key={index}
+              id={`featured-service-${index}`}
+              sx={{
+                display: active ? 'block' : { xs: 'block', md: 'none' },
+                width: { xs: '100%', md: '100%' },
+                flexShrink: { xs: 0, md: 1 },
+                scrollSnapAlign: { xs: 'center', md: 'none' }
+              }}
+            >
+              {renderContent()}
+            </Box>
+          );
+        })}
+      </Box>
         </Container>
       </Box>
 
