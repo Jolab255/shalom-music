@@ -1163,9 +1163,8 @@ const Home: React.FC = () => {
           {/* Active Card Container (Mobile/Tablet only - displayed below the video box) */}
           <Box
             sx={{
-              display: { xs: 'grid', md: 'none' },
-              gridTemplateColumns: '1fr',
-              gap: '20px',
+              display: { xs: 'flex', md: 'none' },
+              flexDirection: 'column',
               mt: 3
             }}
           >
@@ -1179,17 +1178,20 @@ const Home: React.FC = () => {
                   key={idx}
                   sx={{
                     bgcolor: 'rgba(25, 25, 30, 0.6)',
-                    border: '1px solid rgba(212, 175, 55, 0.25)',
-                    borderRadius: 0, // Removed border radius
-                    padding: '24px 28px', // Increased padding
+                    border: isStarted ? '1px solid rgba(212, 175, 55, 0.25)' : '0px solid transparent',
+                    borderRadius: 0,
                     boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.02)',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 1.5,
-                    minHeight: '130px', // Mobile baseline
+                    gap: isStarted ? 1.5 : 0,
+                    minHeight: isStarted ? '130px' : '0px',
+                    maxHeight: isStarted ? '300px' : '0px',
+                    padding: isStarted ? '24px 28px' : '0px 28px',
+                    mb: isStarted ? 2.5 : 0,
                     opacity: isStarted ? 1 : 0,
                     transform: isStarted ? 'translateY(0)' : 'translateY(16px)',
-                    transition: 'opacity 0.6s ease-in-out, transform 0.6s ease-in-out',
+                    transition: 'opacity 0.6s ease-in-out, transform 0.6s ease-in-out, max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), min-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding 0.6s cubic-bezier(0.4, 0, 0.2, 1), mb 0.6s cubic-bezier(0.4, 0, 0.2, 1), border 0.6s ease-in-out',
+                    overflow: 'hidden',
                   }}
                 >
                   {/* Title */}
@@ -1227,10 +1229,10 @@ const Home: React.FC = () => {
           <Box
             sx={{
               display: 'flex',
-              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1.5, sm: 2 },
+              flexWrap: 'nowrap',
               justifyContent: 'center',
               alignItems: 'center',
-              gap: { xs: 2, sm: 3 },
               mt: { xs: 2.5, sm: 3 },
               width: '100%',
               // Force hardware acceleration to keep smooth scrolling
@@ -1244,16 +1246,17 @@ const Home: React.FC = () => {
               variant="outlined"
               size="large"
               sx={{
-                width: { xs: '100%', sm: 'auto' },
+                width: 'auto',
                 border: '2px solid #ff2a74',
                 color: '#ff2a74',
                 borderRadius: '4px',
-                px: { xs: 4, sm: 5 },
-                py: 1.5,
-                fontSize: { xs: '15px', sm: '16px' },
+                px: { xs: 1.2, sm: 2.2 },
+                py: { xs: 0.6, sm: 0.6 },
+                fontSize: { xs: '12px', sm: '15px', md: '18px' },
                 fontWeight: 700,
                 textTransform: 'none',
                 fontFamily: '"Space Grotesk", sans-serif',
+                whiteSpace: 'nowrap',
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 '&:hover': {
                   border: '2px solid #ff2a74',
@@ -1272,16 +1275,17 @@ const Home: React.FC = () => {
               variant="contained"
               size="large"
               sx={{
-                width: { xs: '100%', sm: 'auto' },
+                width: 'auto',
                 bgcolor: '#ff2a74',
                 color: '#ffffff',
                 borderRadius: '4px',
-                px: { xs: 4, sm: 5 },
-                py: 1.5,
-                fontSize: { xs: '15px', sm: '16px' },
+                px: { xs: 1.2, sm: 2.2 },
+                py: { xs: 0.6, sm: 0.6 },
+                fontSize: { xs: '12px', sm: '15px', md: '18px' },
                 fontWeight: 700,
                 textTransform: 'none',
                 fontFamily: '"Space Grotesk", sans-serif',
+                whiteSpace: 'nowrap',
                 boxShadow: '0 8px 25px rgba(255, 42, 116, 0.25)',
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 '&:hover': {
