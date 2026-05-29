@@ -591,7 +591,7 @@ const Home: React.FC = () => {
             <Box 
               sx={{ 
                 display: 'flex', 
-                gap: { xs: 1.5, sm: 2 }, 
+                gap: { xs: 1, sm: 2 }, 
                 flexWrap: 'nowrap', 
                 width: { xs: '100%', md: 'auto' },
                 maxWidth: '540px',
@@ -606,9 +606,9 @@ const Home: React.FC = () => {
                 sx={{ 
                   bgcolor: '#ff2a74', 
                   color: 'white', 
-                  px: { xs: 1.2, sm: 2.2 }, 
-                  py: { xs: 0.6, sm: 0.6 }, 
-                  fontSize: { xs: '12px', sm: '15px', md: '18px' },
+                  px: { xs: 1.6, sm: 2.2 }, 
+                  py: { xs: 0.8, sm: 0.6 }, 
+                  fontSize: { xs: '13.5px', sm: '15.5px', md: '18px' },
                   fontWeight: 700,
                   borderRadius: 1,
                   boxShadow: 'none',
@@ -629,9 +629,9 @@ const Home: React.FC = () => {
                 sx={{ 
                   borderColor: 'rgba(255, 255, 255, 0.2)', 
                   color: 'white', 
-                  px: { xs: 1.2, sm: 2.2 }, 
-                  py: { xs: 0.6, sm: 0.6 }, 
-                  fontSize: { xs: '12px', sm: '15px', md: '18px' },
+                  px: { xs: 1.6, sm: 2.2 }, 
+                  py: { xs: 0.8, sm: 0.6 }, 
+                  fontSize: { xs: '13.5px', sm: '15.5px', md: '18px' },
                   fontWeight: 700,
                   borderRadius: 1,
                   '&:hover': { borderColor: 'white', bgcolor: 'rgba(255, 255, 255, 0.05)', transform: 'translateY(-2px)' },
