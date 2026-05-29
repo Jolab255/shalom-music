@@ -543,7 +543,8 @@ const Home: React.FC = () => {
               alignItems: { xs: 'center', md: 'flex-start' },
               pl: { xs: 3, sm: 6, md: 8, lg: 12 }, 
               pr: { xs: 3, sm: 4, md: 4, lg: 6 }, 
-              py: { xs: 10, md: 6 },
+              pt: { xs: 4, md: 6 },
+              pb: { xs: 10, md: 6 },
               bgcolor: 'transparent',
               zIndex: 2,
             }}
@@ -551,7 +552,7 @@ const Home: React.FC = () => {
             <Typography 
               variant="h1" 
               sx={{ 
-                fontSize: { xs: '4.2rem', sm: '5.8rem', md: '6.8rem', lg: '8.2rem' }, 
+                fontSize: { xs: '4.8rem', sm: '6.0rem', md: '6.8rem', lg: '8.2rem' }, 
                 mb: 3, 
                 fontWeight: 900, 
                 lineHeight: 0.82, 
