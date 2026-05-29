@@ -1305,7 +1305,7 @@ const Home: React.FC = () => {
       <Box 
         sx={{ 
           color: 'white', 
-          pt: { xs: 8, sm: 10 },
+          pt: { xs: 4, sm: 10 },
           pb: 4,
           position: 'relative',
           overflow: 'hidden',
