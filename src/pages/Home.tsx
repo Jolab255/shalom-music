@@ -591,11 +591,11 @@ const Home: React.FC = () => {
             <Box 
               sx={{ 
                 display: 'flex', 
-                gap: { xs: 1, sm: 2 }, 
+                gap: { xs: 1.5, sm: 2 }, 
                 flexWrap: 'nowrap', 
                 width: { xs: '100%', md: 'auto' },
                 maxWidth: '540px',
-                justifyContent: { xs: 'space-between', md: 'flex-start' }
+                justifyContent: { xs: 'center', md: 'flex-start' }
               }}
             >
               <Button 
