@@ -1036,6 +1036,7 @@ const Home: React.FC = () => {
                 bgcolor: 'rgba(0, 0, 0, 0.45)', // Guaranteed high-contrast dark overlay
                 zIndex: 8,
                 pointerEvents: 'none',
+                display: { xs: 'none', md: 'block' }
               }}
             />
 
