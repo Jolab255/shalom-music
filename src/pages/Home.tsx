@@ -540,6 +540,7 @@ const Home: React.FC = () => {
               display: 'flex', 
               flexDirection: 'column', 
               justifyContent: 'center', 
+              alignItems: { xs: 'center', md: 'flex-start' },
               pl: { xs: 3, sm: 6, md: 8, lg: 12 }, 
               pr: { xs: 3, sm: 4, md: 4, lg: 6 }, 
               py: { xs: 10, md: 6 },
@@ -555,7 +556,8 @@ const Home: React.FC = () => {
                 fontWeight: 900, 
                 lineHeight: 0.82, 
                 letterSpacing: '0.02em',
-                fontFamily: '"Sans Superellipse Ragan 2", sans-serif'
+                fontFamily: '"Sans Superellipse Ragan 2", sans-serif',
+                textAlign: { xs: 'center', md: 'left' }
               }}
             >
               <Box component="span" sx={{ display: 'block', whiteSpace: { xs: 'normal', sm: 'nowrap' } }}>
@@ -577,13 +579,15 @@ const Home: React.FC = () => {
                 maxWidth: '540px', 
                 lineHeight: 1.6,
                 fontFamily: '"Linear", sans-serif',
-                fontSize: { xs: '1.1rem', sm: '1.25rem' }
+                fontSize: { xs: '1.1rem', sm: '1.25rem' },
+                textAlign: { xs: 'center', md: 'left' },
+                mx: { xs: 'auto', md: 0 }
               }}
             >
               Elite music production, studio rentals, and piano lessons.
             </Typography>
 
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: { xs: 'center', md: 'flex-start' } }}>
               <Button 
                 component={RouterLink}
                 to="/lessons"
