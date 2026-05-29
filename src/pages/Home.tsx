@@ -195,6 +195,57 @@ const Home: React.FC = () => {
     }
   };
 
+  // Scroll spy to highlight active service tab in the sticky sub-navbar on mobile
+  useEffect(() => {
+    const handleResizeOrScrollSpy = () => {
+      const isMobile = window.innerWidth < 900;
+      if (!isMobile) return null;
+
+      const observerOptions = {
+        root: null, // viewport
+        rootMargin: '-180px 0px -50% 0px', // check when item is in the top-middle part of the viewport
+        threshold: 0
+      };
+
+      const observerCallback = (entries: IntersectionObserverEntry[]) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            const match = id.match(/featured-service-(\d+)/);
+            if (match) {
+              const index = parseInt(match[1], 10);
+              setActiveTab(index);
+            }
+          }
+        });
+      };
+
+      const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+      // Observe each of the 6 service sections
+      for (let i = 0; i < 6; i++) {
+        const el = document.getElementById(`featured-service-${i}`);
+        if (el) observer.observe(el);
+      }
+
+      return observer;
+    };
+
+    let observer = handleResizeOrScrollSpy();
+
+    const handleResize = () => {
+      if (observer) observer.disconnect();
+      observer = handleResizeOrScrollSpy();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      if (observer) observer.disconnect();
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   useEffect(() => {
     if (activeAboutVideo === 2 && video2Ref.current) {
       video2Ref.current.play().catch((err) => {
