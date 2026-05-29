@@ -2721,7 +2721,10 @@ const Home: React.FC = () => {
                 width: '100%', 
                 height: '100%', 
                 objectFit: 'cover',
-                objectPosition: index === 2 ? 'center 25%' : index === 3 ? 'center 75%' : 'top',
+                objectPosition: {
+                  xs: index === 0 ? 'right' : index === 1 ? 'left' : index === 2 ? 'right' : 'left',
+                  md: index === 2 ? 'center 25%' : index === 3 ? 'center 75%' : 'top'
+                },
                 opacity: index === activeWhySlide ? 1 : 0,
                 transition: 'opacity 1s ease-in-out, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
                 transform: index === activeWhySlide ? 'scale(1.03)' : 'scale(1.0)',
