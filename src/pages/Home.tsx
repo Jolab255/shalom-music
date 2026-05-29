@@ -541,8 +541,8 @@ const Home: React.FC = () => {
               flexDirection: 'column', 
               justifyContent: 'center', 
               alignItems: { xs: 'center', md: 'flex-start' },
-              pl: { xs: 3, sm: 6, md: 8, lg: 12 }, 
-              pr: { xs: 3, sm: 4, md: 4, lg: 6 }, 
+              pl: { xs: 2, sm: 6, md: 8, lg: 12 }, 
+              pr: { xs: 2, sm: 4, md: 4, lg: 6 }, 
               pt: { xs: 4, md: 6 },
               pb: { xs: 10, md: 6 },
               bgcolor: 'transparent',
@@ -588,7 +588,16 @@ const Home: React.FC = () => {
               Elite music production, studio rentals, and piano lessons.
             </Typography>
 
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: { xs: 'center', md: 'flex-start' } }}>
+            <Box 
+              sx={{ 
+                display: 'flex', 
+                gap: { xs: 1, sm: 2 }, 
+                flexWrap: 'nowrap', 
+                width: { xs: '100%', md: 'auto' },
+                maxWidth: '540px',
+                justifyContent: { xs: 'space-between', md: 'flex-start' }
+              }}
+            >
               <Button 
                 component={RouterLink}
                 to="/lessons"
@@ -597,9 +606,9 @@ const Home: React.FC = () => {
                 sx={{ 
                   bgcolor: '#ff2a74', 
                   color: 'white', 
-                  px: 2.2, 
-                  py: 0.6, 
-                  fontSize: '18px',
+                  px: { xs: 1.2, sm: 2.2 }, 
+                  py: { xs: 0.6, sm: 0.6 }, 
+                  fontSize: { xs: '12px', sm: '15px', md: '18px' },
                   fontWeight: 700,
                   borderRadius: 1,
                   boxShadow: 'none',
@@ -607,6 +616,7 @@ const Home: React.FC = () => {
                   transition: 'all 0.3s ease',
                   textTransform: 'none',
                   fontFamily: '"Space Grotesk", sans-serif',
+                  whiteSpace: 'nowrap'
                 }}
               >
                 Start Piano Lessons
@@ -619,15 +629,16 @@ const Home: React.FC = () => {
                 sx={{ 
                   borderColor: 'rgba(255, 255, 255, 0.2)', 
                   color: 'white', 
-                  px: 2.2, 
-                  py: 0.6, 
-                  fontSize: '18px',
+                  px: { xs: 1.2, sm: 2.2 }, 
+                  py: { xs: 0.6, sm: 0.6 }, 
+                  fontSize: { xs: '12px', sm: '15px', md: '18px' },
                   fontWeight: 700,
                   borderRadius: 1,
                   '&:hover': { borderColor: 'white', bgcolor: 'rgba(255, 255, 255, 0.05)', transform: 'translateY(-2px)' },
                   transition: 'all 0.3s ease',
                   textTransform: 'none',
                   fontFamily: '"Space Grotesk", sans-serif',
+                  whiteSpace: 'nowrap'
                 }}
               >
                 Request Studio Service
