@@ -2803,11 +2803,29 @@ const Home: React.FC = () => {
             />
           ))}
 
-          {/* Left-Aligned Overlaid Content - Squeezed at the top of the image with few paddings, aligned with page grid */}
+          {/* Premium Ambient Dark Overlay for ultimate text readability */}
           <Box 
             sx={{ 
               position: 'absolute',
-              top: { xs: '32px', sm: '48px' }, // Squeezed down a bit
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              background: {
+                xs: 'linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.85) 100%)',
+                sm: 'linear-gradient(to right, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.65) 100%)',
+                md: 'linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.7) 100%)'
+              },
+              zIndex: 3,
+              pointerEvents: 'none'
+            }}
+          />
+
+          {/* Left-Aligned Overlaid Content - Repositioned to the lower half on mobile devices, aligned with page grid */}
+          <Box 
+            sx={{ 
+              position: 'absolute',
+              top: { xs: '50%', sm: '48px' }, // Squeezed down to 50% on mobile
               left: 0,
               right: 0,
               zIndex: 4,
@@ -2815,7 +2833,7 @@ const Home: React.FC = () => {
           >
             <Container maxWidth="lg">
               {/* Text Slide Cross-Fade Wrapper */}
-              <Box sx={{ position: 'relative', minHeight: { xs: '380px', sm: '320px', md: '280px' } }}>
+              <Box sx={{ position: 'relative', minHeight: { xs: '240px', sm: '320px', md: '280px' } }}>
                 {whyShalomSlides.map((slide, index) => {
                   const isRightSlide = index === 1 || index === 3; // Slide 2 (index 1) and Slide 4 (index 3) are right-aligned!
                   return (
@@ -2843,12 +2861,12 @@ const Home: React.FC = () => {
                         variant="h3" 
                         sx={{ 
                           fontWeight: 900, 
-                          fontSize: { xs: '2.4rem', sm: '3.6rem', md: '4.6rem', lg: '5.2rem' },
-                          lineHeight: 1.0,
+                          fontSize: { xs: '1.9rem', sm: '3.6rem', md: '4.6rem', lg: '5.2rem' },
+                          lineHeight: 1.1,
                           letterSpacing: '0.02em',
                           fontFamily: '"Sans Superellipse Ragan 2", sans-serif',
                           color: '#ffffff',
-                          textShadow: '0 2px 10px rgba(0,0,0,0.5)',
+                          textShadow: '0 2px 10px rgba(0,0,0,0.8)',
                           textAlign: { xs: 'left', md: isRightSlide ? 'right' : 'left' }, // Right-aligned title
                           whiteSpace: { xs: 'normal', md: 'nowrap' }
                         }}
@@ -2860,7 +2878,7 @@ const Home: React.FC = () => {
                       <Box 
                         sx={{ 
                           width: '1px', 
-                          height: { xs: '30px', sm: '40px' }, 
+                          height: { xs: '20px', sm: '40px' }, 
                           bgcolor: 'rgba(255, 255, 255, 0.25)',
                           my: 1,
                           ml: { xs: 1, md: isRightSlide ? 0 : 1 },
@@ -2872,12 +2890,12 @@ const Home: React.FC = () => {
                       <Typography 
                         variant="body1" 
                         sx={{ 
-                          color: 'rgba(255, 255, 255, 0.85)', 
-                          fontSize: { xs: '0.9rem', sm: '1rem' }, 
-                          lineHeight: 1.7,
+                          color: 'rgba(255, 255, 255, 0.95)', 
+                          fontSize: { xs: '0.85rem', sm: '1rem' }, 
+                          lineHeight: 1.6,
                           fontFamily: '"Linear", sans-serif',
                           fontWeight: 300,
-                          textShadow: '0 2px 8px rgba(0,0,0,0.6)',
+                          textShadow: '0 2px 8px rgba(0,0,0,0.8)',
                           textAlign: { xs: 'left', md: isRightSlide ? 'justify' : 'left' }, // Justified text
                           maxWidth: { xs: '100%', md: '50%' } // restricts summary to 50% width on desktop
                         }}
@@ -2890,7 +2908,7 @@ const Home: React.FC = () => {
               </Box>
 
               {/* Premium Progress/Navigation Indicator Bars */}
-              <Box sx={{ display: 'flex', gap: 1.5, mt: { xs: 4, sm: 3, md: 2 } }}>
+              <Box sx={{ display: 'flex', gap: 1.5, mt: { xs: 2.5, sm: 3, md: 2 } }}>
                 {whyShalomSlides.map((_, i) => (
                   <Box 
                     key={i}
