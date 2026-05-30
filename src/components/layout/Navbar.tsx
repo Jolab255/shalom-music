@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Button, Box, IconButton, Drawer, List, ListItem, ListI
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.webp';
 
 // Categories in the top slim bar
 const navItems = [

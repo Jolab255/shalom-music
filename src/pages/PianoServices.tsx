@@ -13,8 +13,9 @@ const PianoServices: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Professional Piano Services & Performance | Shalom Music</title>
-        <meta name="description" content="Concert-grade piano performance and accompanist services for holy Sabbath, elegant weddings, classical recitals, church worship, and professional events." />
+        <title>Professional Piano Accompanist & Services in Tanzania | Shalom Music</title>
+        <meta name="description" content="Concert-grade piano performance and accompanist services in Tanzania for holy Sabbath, elegant weddings, classical recitals, and church worship." />
+        <link rel="canonical" href="https://shalommusic.com/piano-services" />
       </Helmet>
 
       <Box sx={{ position: 'relative', overflow: 'hidden' }}>

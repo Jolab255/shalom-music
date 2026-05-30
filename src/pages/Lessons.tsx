@@ -10,8 +10,9 @@ const Lessons: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Piano Lessons | Shalom Music</title>
-        <meta name="description" content="Professional piano lessons for all ages and levels at Shalom Music. Master the keys with expert instructors." />
+        <title>Professional Piano Lessons in Tanzania | Shalom Music</title>
+        <meta name="description" content="Elite piano lessons for all ages and skill levels in Tanzania. Master classical and contemporary keys under expert instructors." />
+        <link rel="canonical" href="https://shalommusic.com/lessons" />
       </Helmet>
 
       <Box sx={{ position: 'relative', overflow: 'hidden' }}>
