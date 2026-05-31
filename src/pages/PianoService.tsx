@@ -1,3 +1,4 @@
+import { Link as RouterLink } from 'react-router-dom';
 import { Container, Typography, Box, Paper, Grid2 as Grid, Button, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import BuildIcon from '@mui/icons-material/Build';
@@ -9,7 +10,7 @@ const PianoService: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Piano Service | Shalom Music</title>
+        <title>Piano Service | Shalom Music Studios</title>
         <meta name="description" content="Professional piano tuning, maintenance, and repair services at Shalom Music. Keep your instrument in perfect harmony." />
       </Helmet>
 
@@ -22,7 +23,13 @@ const PianoService: React.FC = () => {
           <Typography variant="h5" sx={{ mb: 4, opacity: 0.8, fontWeight: 300, lineHeight: 1.6 }}>
             Preserve the value and voice of your piano with our certified technical services. From concert tuning to complete regulation, we handle every instrument with precision and care.
           </Typography>
-          <Button variant="contained" size="large" sx={{ bgcolor: 'white', color: 'black', px: 6, py: 1.5, '&:hover': { bgcolor: '#e0e0e0' } }}>
+          <Button 
+            component={RouterLink}
+            to="/contact?service=service"
+            variant="contained" 
+            size="large" 
+            sx={{ bgcolor: 'white', color: 'black', px: 6, py: 1.5, '&:hover': { bgcolor: '#e0e0e0' } }}
+          >
             Book a Service
           </Button>
         </Container>

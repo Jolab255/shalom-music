@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Container, Typography, Box, TextField, Button, MenuItem, Paper, Grid2 as Grid, CircularProgress } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Container, Typography, Box, TextField, Button, MenuItem, Paper, Grid2 as Grid, CircularProgress, Link } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -15,6 +16,42 @@ const services = [
   'Other Inquiries'
 ];
 
+const textFieldStyles = {
+  '& .MuiOutlinedInput-root': {
+    color: '#ffffff',
+    fontFamily: '"Space Grotesk", sans-serif',
+    fontSize: '0.92rem',
+    backgroundColor: 'rgba(255, 255, 255, 0.02)',
+    '& fieldset': {
+      borderColor: 'rgba(255, 255, 255, 0.08)',
+      borderRadius: 0, // Sharp!
+      transition: 'all 0.25s ease'
+    },
+    '&:hover fieldset': {
+      borderColor: 'rgba(255, 255, 255, 0.2)',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#ff2a74',
+      borderWidth: '1px'
+    },
+  },
+  '& .MuiInputLabel-root': {
+    color: 'rgba(255, 255, 255, 0.45)',
+    fontFamily: '"Space Grotesk", sans-serif',
+    fontSize: '0.9rem',
+    '&.Mui-focused': {
+      color: '#ff2a74',
+    }
+  },
+  '& .MuiSelect-icon': {
+    color: 'rgba(255, 255, 255, 0.5)',
+  },
+  '& .MuiFormHelperText-root': {
+    fontFamily: '"Linear", sans-serif',
+    fontSize: '0.72rem'
+  }
+};
+
 const Contact: React.FC = () => {
   const { showSuccess, showError, showWarning } = useNotification();
   
@@ -23,6 +60,26 @@ const Contact: React.FC = () => {
   const [email, setEmail] = useState('');
   const [service, setService] = useState('Music Production');
   const [message, setMessage] = useState('');
+  
+  const [searchParams] = useSearchParams();
+  const serviceParam = searchParams.get('service');
+
+  useEffect(() => {
+    if (serviceParam) {
+      const query = serviceParam.toLowerCase().trim();
+      if (query.includes('production') || query === 'music') {
+        setService('Music Production');
+      } else if (query.includes('lesson') || query === 'piano') {
+        setService('Piano Lessons');
+      } else if (query.includes('rental') || query === 'studio') {
+        setService('Studio Rental');
+      } else if (query.includes('service') || query === 'tuning') {
+        setService('Piano Service');
+      } else if (query.includes('other') || query.includes('inquiry')) {
+        setService('Other Inquiries');
+      }
+    }
+  }, [serviceParam]);
   
   // Field validation error states
   const [nameError, setNameError] = useState('');
@@ -103,49 +160,180 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <>
+    <Box 
+      sx={{ 
+        bgcolor: '#000000', 
+        color: 'white', 
+        minHeight: '100vh',
+        position: 'relative',
+        overflow: 'hidden',
+        pt: { xs: 15, md: 20 },
+        pb: 18,
+        // Cloudy background matching other pages exactly
+        background: `
+          radial-gradient(circle at 15% 25%, rgba(45, 45, 55, 0.4) 0%, transparent 50%),
+          radial-gradient(circle at 85% 75%, rgba(35, 35, 45, 0.35) 0%, transparent 60%),
+          radial-gradient(circle at 50% 50%, rgba(25, 25, 30, 0.25) 0%, transparent 80%),
+          #000000
+        `,
+        // Sandy noise overlay matching other pages exactly
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0, left: 0, right: 0, bottom: 0,
+          width: '100%', height: '100%',
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          opacity: 0.035, 
+          pointerEvents: 'none',
+          zIndex: 1
+        }
+      }}
+    >
       <Helmet>
-        <title>Contact Us | Shalom Music</title>
+        <title>Contact Us | Shalom Music Studios</title>
         <meta name="description" content="Get in touch with Shalom Music for music production, lessons, or studio rental inquiries." />
       </Helmet>
 
-      <Container maxWidth="lg" sx={{ py: 10 }}>
-        <Grid container spacing={8}>
+      {/* Ambient Pink Glow Overlay */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '30%',
+          left: '75%',
+          transform: 'translate(-50%, -50%)',
+          width: { xs: '320px', sm: '600px', md: '800px' },
+          height: { xs: '320px', sm: '600px', md: '800px' },
+          background: 'radial-gradient(circle, rgba(255, 42, 116, 0.08) 0%, transparent 70%)',
+          filter: 'blur(90px)',
+          pointerEvents: 'none',
+          zIndex: 1
+        }}
+      />
+
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+        <Grid container spacing={8} alignItems="center">
+          {/* Left Column: Heading and info details */}
           <Grid size={{ xs: 12, md: 5 }}>
-            <Typography variant="h3" sx={{ fontWeight: 800, mb: 4 }}>Get in Touch</Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 6 }}>
-              Have a project in mind or want to start your musical journey? Fill out the form, and our team will get back to you within 24 hours.
+            <Typography 
+              variant="h3" 
+              sx={{ 
+                fontWeight: 900, 
+                fontFamily: '"Space Grotesk", sans-serif', 
+                fontSize: { xs: '2.2rem', sm: '2.8rem', md: '3.2rem' }, 
+                letterSpacing: '0.04em',
+                lineHeight: 1.1,
+                mb: 3, 
+                color: 'white',
+                textTransform: 'uppercase'
+              }}
+            >
+              SECURE YOUR SESSION
+            </Typography>
+            <Typography 
+              variant="body1" 
+              sx={{ 
+                fontFamily: '"Linear", sans-serif', 
+                fontWeight: 300, 
+                color: 'rgba(255, 255, 255, 0.65)', 
+                lineHeight: 1.8, 
+                mb: 6,
+                fontSize: '1rem',
+                maxWidth: '480px'
+              }}
+            >
+              Let's collaborate on your next masterpiece. Fill out the reservation portal to secure your studio space lockout, piano course enrollment, or professional concert accompaniment.
             </Typography>
 
-            <Box sx={{ display: 'flex', gap: 3, mb: 4 }}>
-              <EmailIcon color="primary" />
-              <Box>
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>Email</Typography>
-                <Typography variant="body2" color="text.secondary">info@shalommusic.com</Typography>
-              </Box>
-            </Box>
-
-            <Box sx={{ display: 'flex', gap: 3, mb: 4 }}>
-              <PhoneIcon color="primary" />
-              <Box>
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>Phone</Typography>
-                <Typography variant="body2" color="text.secondary">+1 (234) 567-890</Typography>
-              </Box>
-            </Box>
-
-            <Box sx={{ display: 'flex', gap: 3 }}>
-              <LocationOnIcon color="primary" />
-              <Box>
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>Office</Typography>
-                <Typography variant="body2" color="text.secondary">123 Music Lane, Harmony City</Typography>
-              </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              {[
+                { icon: <EmailIcon sx={{ color: '#ff2a74', fontSize: '1.25rem' }} />, label: 'Email Enquiries', val: 'info@shalommusic.com', type: 'link', link: 'mailto:info@shalommusic.com' },
+                { icon: <PhoneIcon sx={{ color: '#ff2a74', fontSize: '1.25rem' }} />, label: 'Direct Phone', val: '0620 319 635', type: 'link', link: 'tel:+255620319635' },
+                { icon: <LocationOnIcon sx={{ color: '#ff2a74', fontSize: '1.25rem' }} />, label: 'Studio Address', val: 'Msikiti wa udongo, Dar es Salaam, Tanzania', type: 'text' }
+              ].map((item, i) => (
+                <Box key={i} sx={{ display: 'flex', gap: 2.5, alignItems: 'flex-start' }}>
+                  <Box 
+                    sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      width: 44, 
+                      height: 44, 
+                      bgcolor: 'rgba(255, 42, 116, 0.04)', 
+                      border: '1px solid rgba(255, 42, 116, 0.15)',
+                      borderRadius: 0, // Sharp!
+                      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                      color: 'white',
+                      '&:hover': {
+                        bgcolor: '#ff2a74',
+                        borderColor: '#ff2a74',
+                        color: 'white',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 4px 12px rgba(255, 42, 116, 0.3)'
+                      }
+                    }}
+                  >
+                    {item.icon}
+                  </Box>
+                  <Box>
+                    <Typography sx={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.45)', textTransform: 'uppercase', letterSpacing: '0.08em', mb: 0.5 }}>
+                      {item.label}
+                    </Typography>
+                    {item.type === 'link' ? (
+                      <Link 
+                        href={item.link} 
+                        color="inherit" 
+                        underline="none"
+                        sx={{ 
+                          fontFamily: '"Linear", sans-serif', 
+                          fontSize: '0.9rem', 
+                          fontWeight: 300,
+                          color: 'rgba(255, 255, 255, 0.8)',
+                          transition: 'all 0.2s',
+                          '&:hover': { color: '#ff2a74' }
+                        }}
+                      >
+                        {item.val}
+                      </Link>
+                    ) : (
+                      <Typography 
+                        sx={{ 
+                          fontFamily: '"Linear", sans-serif', 
+                          fontSize: '0.9rem', 
+                          fontWeight: 300,
+                          color: 'rgba(255, 255, 255, 0.8)',
+                          lineHeight: 1.5
+                        }}
+                      >
+                        {item.val}
+                      </Typography>
+                    )}
+                  </Box>
+                </Box>
+              ))}
             </Box>
           </Grid>
 
+          {/* Right Column: Interactive Booking Form */}
           <Grid size={{ xs: 12, md: 7 }}>
-            <Paper elevation={0} sx={{ p: { xs: 3, md: 6 }, border: '1px solid #eee', borderRadius: 4 }}>
+            <Paper 
+              elevation={0} 
+              sx={{ 
+                p: { xs: 4, sm: 6 }, 
+                backdropFilter: 'blur(20px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                bgcolor: 'rgba(12, 12, 15, 0.84)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                borderRadius: 0, // Sharp!
+                boxShadow: '0 30px 60px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                '&:hover': {
+                  borderColor: 'rgba(255, 42, 116, 0.25)',
+                  boxShadow: '0 35px 80px rgba(0, 0, 0, 0.98), 0 0 20px rgba(255, 42, 116, 0.05)'
+                }
+              }}
+            >
               <form onSubmit={handleSubmit} noValidate>
-                <Grid container spacing={3}>
+                <Grid container spacing={3.5}>
                   <Grid size={{ xs: 12, sm: 6 }}>
                     <TextField
                       fullWidth
@@ -160,6 +348,7 @@ const Contact: React.FC = () => {
                       error={!!nameError}
                       helperText={nameError}
                       disabled={isSubmitting}
+                      sx={textFieldStyles}
                     />
                   </Grid>
                   <Grid size={{ xs: 12, sm: 6 }}>
@@ -177,6 +366,7 @@ const Contact: React.FC = () => {
                       error={!!emailError}
                       helperText={emailError}
                       disabled={isSubmitting}
+                      sx={textFieldStyles}
                     />
                   </Grid>
                   <Grid size={{ xs: 12 }}>
@@ -188,6 +378,40 @@ const Contact: React.FC = () => {
                       value={service}
                       onChange={(e) => setService(e.target.value)}
                       disabled={isSubmitting}
+                      sx={textFieldStyles}
+                      slotProps={{
+                        select: {
+                          MenuProps: {
+                            slotProps: {
+                              paper: {
+                                sx: {
+                                  bgcolor: '#0c0c0f',
+                                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                                  borderRadius: 0,
+                                  '& .MuiMenuItem-root': {
+                                    color: 'rgba(255, 255, 255, 0.8)',
+                                    fontFamily: '"Space Grotesk", sans-serif',
+                                    fontSize: '0.9rem',
+                                    py: 1.5,
+                                    transition: 'all 0.2s',
+                                    '&:hover': {
+                                      bgcolor: 'rgba(255, 42, 116, 0.1)',
+                                      color: 'white'
+                                    },
+                                    '&.Mui-selected': {
+                                      bgcolor: '#ff2a74',
+                                      color: 'white',
+                                      '&:hover': {
+                                        bgcolor: '#e01f61',
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }}
                     >
                       {services.map((option) => (
                         <MenuItem key={option} value={option}>
@@ -202,7 +426,7 @@ const Contact: React.FC = () => {
                       label="Your Message"
                       variant="outlined"
                       multiline
-                      rows={4}
+                      rows={5}
                       required
                       value={message}
                       onChange={(e) => {
@@ -213,12 +437,14 @@ const Contact: React.FC = () => {
                       helperText={messageError || "Tip: Type 'error' or 'fail' in your message to test our error handlers!"}
                       FormHelperTextProps={{
                         sx: {
-                          color: messageError ? 'error.main' : 'text.secondary',
+                          color: messageError ? 'error.main' : 'rgba(255, 255, 255, 0.4)',
                           fontStyle: messageError ? 'normal' : 'italic',
-                          opacity: messageError ? 1 : 0.8
+                          opacity: messageError ? 1 : 0.8,
+                          fontFamily: '"Linear", sans-serif'
                         }
                       }}
                       disabled={isSubmitting}
+                      sx={textFieldStyles}
                     />
                   </Grid>
                   <Grid size={{ xs: 12 }}>
@@ -227,14 +453,33 @@ const Contact: React.FC = () => {
                       variant="contained"
                       size="large"
                       fullWidth
-                      sx={{ py: 2, position: 'relative' }}
+                      sx={{ 
+                        py: 2, 
+                        bgcolor: '#ff2a74',
+                        color: 'white',
+                        fontWeight: 700,
+                        fontFamily: '"Space Grotesk", sans-serif',
+                        letterSpacing: '0.04em',
+                        borderRadius: 0, // Sharp!
+                        boxShadow: '0 6px 20px rgba(255, 42, 116, 0.25)',
+                        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                        '&:hover': {
+                          bgcolor: '#e01f61',
+                          boxShadow: '0 8px 25px rgba(255, 42, 116, 0.4)',
+                          transform: 'translateY(-1px)'
+                        },
+                        '&:disabled': {
+                          bgcolor: 'rgba(255, 42, 116, 0.3)',
+                          color: 'rgba(255, 255, 255, 0.5)'
+                        }
+                      }}
                       disabled={isSubmitting}
                       endIcon={!isSubmitting && <SendIcon />}
                     >
                       {isSubmitting ? (
-                        <CircularProgress size={24} sx={{ color: 'primary.contrastText' }} />
+                        <CircularProgress size={24} sx={{ color: 'white' }} />
                       ) : (
-                        'Send Message'
+                        'Submit Reservation Request'
                       )}
                     </Button>
                   </Grid>
@@ -244,7 +489,7 @@ const Contact: React.FC = () => {
           </Grid>
         </Grid>
       </Container>
-    </>
+    </Box>
   );
 };
 

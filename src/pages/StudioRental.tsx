@@ -1,3 +1,4 @@
+import { Link as RouterLink } from 'react-router-dom';
 import { Container, Typography, Box, Button, List, ListItem, ListItemIcon, ListItemText, Grid2 as Grid, Paper, Divider } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import DoneIcon from '@mui/icons-material/Done';
@@ -9,7 +10,7 @@ const StudioRental: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Studio Rental | Shalom Music</title>
+        <title>Studio Rental | Shalom Music Studios</title>
         <meta name="description" content="Rent our professional recording studio space at Shalom Music. Perfect for independent artists, podcasts, and rehearsals." />
       </Helmet>
 
@@ -24,7 +25,13 @@ const StudioRental: React.FC = () => {
               <Typography variant="h5" sx={{ mb: 4, opacity: 0.8, fontWeight: 300, lineHeight: 1.6 }}>
                 Our studio is more than just a room—it's a sanctuary for sound. Designed by acoustic experts, we provide the perfect environment for artists to focus, create, and capture excellence.
               </Typography>
-              <Button variant="contained" size="large" sx={{ bgcolor: 'white', color: 'black', px: 6, py: 1.5, '&:hover': { bgcolor: '#e0e0e0' } }}>
+              <Button 
+                component={RouterLink}
+                to="/contact?service=rental"
+                variant="contained" 
+                size="large" 
+                sx={{ bgcolor: 'white', color: 'black', px: 6, py: 1.5, '&:hover': { bgcolor: '#e0e0e0' } }}
+              >
                 Book Your Session
               </Button>
             </Grid>

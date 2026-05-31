@@ -13,7 +13,7 @@ const PianoServices: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Professional Piano Accompanist & Services in Tanzania | Shalom Music</title>
+        <title>Professional Piano Accompanist & Services in Tanzania | Shalom Music Studios</title>
         <meta name="description" content="Concert-grade piano performance and accompanist services in Tanzania for holy Sabbath, elegant weddings, classical recitals, and church worship." />
         <link rel="canonical" href="https://shalommusic.com/piano-services" />
       </Helmet>
@@ -186,7 +186,7 @@ const PianoServices: React.FC = () => {
               <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                 <Button 
                   component={RouterLink}
-                  to="/contact"
+                  to="/contact?service=service"
                   variant="contained" 
                   size="large" 
                   sx={{ 
@@ -651,7 +651,7 @@ const PianoServices: React.FC = () => {
           </Typography>
           <Button 
             component={RouterLink}
-            to="/contact"
+            to="/contact?service=service"
             variant="contained" 
             size="large" 
             sx={{ 

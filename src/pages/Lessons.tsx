@@ -10,7 +10,7 @@ const Lessons: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Professional Piano Lessons in Tanzania | Shalom Music</title>
+        <title>Professional Piano Lessons in Tanzania | Shalom Music Studios</title>
         <meta name="description" content="Elite piano lessons for all ages and skill levels in Tanzania. Master classical and contemporary keys under expert instructors." />
         <link rel="canonical" href="https://shalommusic.com/lessons" />
       </Helmet>
@@ -118,10 +118,22 @@ const Lessons: React.FC = () => {
                 Unlock your musical potential with tailored piano instruction. We combine classical foundations with modern techniques to help you become the pianist you want to be.
               </Typography>
               <Box sx={{ display: 'flex', gap: 2 }}>
-                <Button variant="contained" size="large" sx={{ bgcolor: 'white', color: 'black', px: 4, '&:hover': { bgcolor: '#e0e0e0' } }}>
+                <Button 
+                  component={RouterLink}
+                  to="/contact?service=lessons"
+                  variant="contained" 
+                  size="large" 
+                  sx={{ bgcolor: 'white', color: 'black', px: 4, '&:hover': { bgcolor: '#e0e0e0' } }}
+                >
                   Book a Trial
                 </Button>
-                <Button variant="outlined" size="large" sx={{ borderColor: 'white', color: 'white', px: 4, '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' } }}>
+                <Button 
+                  component={RouterLink}
+                  to="/pricing"
+                  variant="outlined" 
+                  size="large" 
+                  sx={{ borderColor: 'white', color: 'white', px: 4, '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' } }}
+                >
                   View Pricing
                 </Button>
               </Box>
@@ -260,7 +272,13 @@ const Lessons: React.FC = () => {
         <Typography variant="h6" color="text.secondary" sx={{ mb: 6 }}>
           Join our community of passionate learners and start your musical journey today.
         </Typography>
-        <Button variant="contained" size="large" sx={{ bgcolor: 'black', color: 'white', px: 6, py: 2, '&:hover': { bgcolor: '#333' } }}>
+        <Button 
+          component={RouterLink}
+          to="/contact?service=lessons"
+          variant="contained" 
+          size="large" 
+          sx={{ bgcolor: 'black', color: 'white', px: 6, py: 2, '&:hover': { bgcolor: '#333' } }}
+        >
           Book Your Introductory Lesson
         </Button>
       </Container>

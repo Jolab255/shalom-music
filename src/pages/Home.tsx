@@ -560,38 +560,38 @@ const Home: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Shalom Music | Tanzania's Premier Music Studio & Piano Lessons</title>
-        <meta name="description" content="Tanzania's leading recording studio. Elevate your sound with professional music production, grand piano lessons, and expert accompanist services." />
+        <title>Shalom Music Studios | Tanzania's Premier Music Studio & Piano Lessons</title>
+        <meta name="description" content="Tanzania's premier music sanctuary in Dar es Salaam. Elevate your sound with world-class audio recording, professional music production, grand piano lessons, and master-level accompanist services." />
         <link rel="canonical" href="https://shalommusic.com/" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://shalommusic.com/" />
-        <meta property="og:title" content="Shalom Music | Tanzania's Premier Music Studio" />
-        <meta property="og:description" content="Elevate your sound with Tanzania's leading recording studio, music production, and professional grand piano school." />
-        <meta property="og:image" content="https://shalommusic.com/assets/tz_studio_production.webp" />
+        <meta property="og:title" content="Shalom Music Studios | Tanzania's Premier Music Studio" />
+        <meta property="og:description" content="Tanzania's premier music sanctuary in Dar es Salaam. Elevate your sound with world-class audio recording, professional music production, grand piano lessons, and master-level accompanist services." />
+        <meta property="og:image" content={`https://shalommusic.com${whyShalom1Img}`} />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://shalommusic.com/" />
-        <meta property="twitter:title" content="Shalom Music | Tanzania's Premier Music Studio" />
-        <meta property="twitter:description" content="Elevate your sound with Tanzania's leading recording studio, music production, and professional grand piano school." />
-        <meta property="twitter:image" content="https://shalommusic.com/assets/tz_studio_production.webp" />
+        <meta property="twitter:title" content="Shalom Music Studios | Tanzania's Premier Music Studio" />
+        <meta property="twitter:description" content="Tanzania's premier music sanctuary in Dar es Salaam. Elevate your sound with world-class audio recording, professional music production, grand piano lessons, and master-level accompanist services." />
+        <meta property="twitter:image" content={`https://shalommusic.com${whyShalom1Img}`} />
 
         {/* JSON-LD LocalBusiness / MusicStudio Structured Schema */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "MusicStudio",
-            "name": "Shalom Music Studio",
-            "image": "https://shalommusic.com/assets/logo.webp",
+            "name": "Shalom Music Studios",
+            "image": `https://shalommusic.com${whyShalom1Img}`,
             "url": "https://shalommusic.com",
-            "telephone": "+255700000000",
+            "telephone": "+255620319635",
             "priceRange": "$$",
             "address": {
               "@type": "PostalAddress",
-              "streetAddress": "Chuo Kikuu SDA Road",
-              "addressLocality": "Tanzania",
+              "streetAddress": "Msikiti wa udongo",
+              "addressLocality": "Dar es Salaam",
               "addressCountry": "TZ"
             },
             "geo": {
@@ -4762,25 +4762,25 @@ const Home: React.FC = () => {
               sx={{ 
                 textDecoration: 'line-through', 
                 color: 'rgba(255, 255, 255, 0.4)', 
-                fontSize: '1.1rem',
+                fontSize: '0.78rem',
                 fontFamily: '"Space Grotesk", sans-serif',
                 fontWeight: 500,
                 mb: 0.25,
                 mt: 0.25
               }}
             >
-              80,000 TZS
+              80,000 TZS ($60 USD)
             </Typography>
             <Typography 
               sx={{ 
                 color: '#ff2a74', 
                 fontWeight: 900, 
-                fontSize: { xs: '1.8rem', sm: '2.2rem' },
+                fontSize: { xs: '1.05rem', sm: '1.2rem' },
                 fontFamily: '"Space Grotesk", sans-serif',
                 lineHeight: 1
               }}
             >
-              79,999 TZS
+              79,999 TZS ($50 USD)
             </Typography>
             <Typography 
               sx={{ 
@@ -4822,7 +4822,7 @@ const Home: React.FC = () => {
 
           <Button
             component={RouterLink}
-            to="/contact"
+            to="/contact?service=production"
             onClick={() => setIsRecordPopupOpen(false)}
             variant="contained"
             fullWidth
@@ -4973,25 +4973,25 @@ const Home: React.FC = () => {
               sx={{ 
                 textDecoration: 'line-through', 
                 color: 'rgba(255, 255, 255, 0.4)', 
-                fontSize: '1.1rem',
+                fontSize: '0.78rem',
                 fontFamily: '"Space Grotesk", sans-serif',
                 fontWeight: 500,
                 mb: 0.25,
                 mt: 0.25
               }}
             >
-              400,000 TZS
+              400,000 TZS ($280 USD)
             </Typography>
             <Typography 
               sx={{ 
                 color: '#ff2a74', 
                 fontWeight: 900, 
-                fontSize: { xs: '1.8rem', sm: '2.2rem' },
+                fontSize: { xs: '1.05rem', sm: '1.2rem' },
                 fontFamily: '"Space Grotesk", sans-serif',
                 lineHeight: 1
               }}
             >
-              399,999 TZS
+              399,999 TZS ($250 USD)
             </Typography>
             <Typography 
               sx={{ 
@@ -5033,7 +5033,7 @@ const Home: React.FC = () => {
 
           <Button
             component={RouterLink}
-            to="/contact"
+            to="/contact?service=production"
             onClick={() => setIsCapturingPopupOpen(false)}
             variant="contained"
             fullWidth
@@ -5184,25 +5184,25 @@ const Home: React.FC = () => {
               sx={{ 
                 textDecoration: 'line-through', 
                 color: 'rgba(255, 255, 255, 0.4)', 
-                fontSize: '1.1rem',
+                fontSize: '0.78rem',
                 fontFamily: '"Space Grotesk", sans-serif',
                 fontWeight: 500,
                 mb: 0.25,
                 mt: 0.25
               }}
             >
-              100,000 TZS
+              100,000 TZS ($70 USD)
             </Typography>
             <Typography 
               sx={{ 
                 color: '#ff2a74', 
                 fontWeight: 900, 
-                fontSize: { xs: '1.8rem', sm: '2.2rem' },
+                fontSize: { xs: '1.05rem', sm: '1.2rem' },
                 fontFamily: '"Space Grotesk", sans-serif',
                 lineHeight: 1
               }}
             >
-              99,999 TZS
+              99,999 TZS ($60 USD)
             </Typography>
             <Typography 
               sx={{ 
@@ -5244,7 +5244,7 @@ const Home: React.FC = () => {
 
           <Button
             component={RouterLink}
-            to="/contact"
+            to="/contact?service=mixing"
             onClick={() => setIsMixingPopupOpen(false)}
             variant="contained"
             fullWidth
@@ -5395,25 +5395,25 @@ const Home: React.FC = () => {
               sx={{ 
                 textDecoration: 'line-through', 
                 color: 'rgba(255, 255, 255, 0.4)', 
-                fontSize: '1.1rem',
+                fontSize: '0.78rem',
                 fontFamily: '"Space Grotesk", sans-serif',
                 fontWeight: 500,
                 mb: 0.25,
                 mt: 0.25
               }}
             >
-              100,000 TZS
+              100,000 TZS ($70 USD)
             </Typography>
             <Typography 
               sx={{ 
                 color: '#ff2a74', 
                 fontWeight: 900, 
-                fontSize: { xs: '1.8rem', sm: '2.2rem' },
+                fontSize: { xs: '1.05rem', sm: '1.2rem' },
                 fontFamily: '"Space Grotesk", sans-serif',
                 lineHeight: 1
               }}
             >
-              99,999 TZS
+              99,999 TZS ($60 USD)
             </Typography>
             <Typography 
               sx={{ 
@@ -5455,7 +5455,7 @@ const Home: React.FC = () => {
 
           <Button
             component={RouterLink}
-            to="/contact"
+            to="/contact?service=mastering"
             onClick={() => setIsMasteringPopupOpen(false)}
             variant="contained"
             fullWidth
@@ -5606,25 +5606,25 @@ const Home: React.FC = () => {
               sx={{ 
                 textDecoration: 'line-through', 
                 color: 'rgba(255, 255, 255, 0.4)', 
-                fontSize: '1.1rem',
+                fontSize: '0.78rem',
                 fontFamily: '"Space Grotesk", sans-serif',
                 fontWeight: 500,
                 mb: 0.25,
                 mt: 0.25
               }}
             >
-              300,000 TZS
+              300,000 TZS ($220 USD)
             </Typography>
             <Typography 
               sx={{ 
                 color: '#ff2a74', 
                 fontWeight: 900, 
-                fontSize: { xs: '1.8rem', sm: '2.2rem' },
+                fontSize: { xs: '1.05rem', sm: '1.2rem' },
                 fontFamily: '"Space Grotesk", sans-serif',
                 lineHeight: 1
               }}
             >
-              299,999 TZS
+              299,999 TZS ($180 USD)
             </Typography>
             <Typography 
               sx={{ 
@@ -5666,7 +5666,7 @@ const Home: React.FC = () => {
 
           <Button
             component={RouterLink}
-            to="/contact"
+            to="/contact?service=production"
             onClick={() => setIsInstrumentalPopupOpen(false)}
             variant="contained"
             fullWidth
@@ -5817,25 +5817,25 @@ const Home: React.FC = () => {
               sx={{ 
                 textDecoration: 'line-through', 
                 color: 'rgba(255, 255, 255, 0.4)', 
-                fontSize: '1.1rem',
+                fontSize: '0.78rem',
                 fontFamily: '"Space Grotesk", sans-serif',
                 fontWeight: 500,
                 mb: 0.25,
                 mt: 0.25
               }}
             >
-              150,000 TZS
+              150,000 TZS ($120 USD)
             </Typography>
             <Typography 
               sx={{ 
                 color: '#ff2a74', 
                 fontWeight: 900, 
-                fontSize: { xs: '1.8rem', sm: '2.2rem' },
+                fontSize: { xs: '1.05rem', sm: '1.2rem' },
                 fontFamily: '"Space Grotesk", sans-serif',
                 lineHeight: 1
               }}
             >
-              149,999 TZS
+              149,999 TZS ($99 USD)
             </Typography>
             <Typography 
               sx={{ 
@@ -5877,7 +5877,7 @@ const Home: React.FC = () => {
 
           <Button
             component={RouterLink}
-            to="/contact"
+            to="/contact?service=rental"
             onClick={() => setIsRentalPopupOpen(false)}
             variant="contained"
             fullWidth

@@ -43,7 +43,7 @@ const Production: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Music Production | Shalom Music</title>
+        <title>Music Production | Shalom Music Studios</title>
         <meta name="description" content="Professional audio recording, mixing, mastering, and song composition at Shalom Music." />
       </Helmet>
 

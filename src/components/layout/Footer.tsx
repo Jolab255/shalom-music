@@ -1,11 +1,41 @@
+import React, { useEffect, useRef } from 'react';
 import { Box, Container, Typography, IconButton, Divider, Link, Grid2 as Grid } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { Link as RouterLink } from 'react-router-dom';
-import logo from '../../assets/logo.webp';
 
 const Footer: React.FC = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (videoRef.current) {
+            videoRef.current.currentTime = 0;
+            videoRef.current.play().catch((err) => {
+              console.log("Error playing video on scroll intersection:", err);
+            });
+          }
+        } else {
+          if (videoRef.current) {
+            videoRef.current.pause();
+          }
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <Box 
       sx={{ 
@@ -38,28 +68,21 @@ const Footer: React.FC = () => {
         <Grid container spacing={5}>
           {/* Brand/Logo Column */}
           <Grid size={{ xs: 12, md: 5 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3.5 }}>
-              <Box 
-                component="img" 
-                src={logo} 
-                alt="Shalom Music Logo" 
-                sx={{ 
-                  height: 44, 
+            <Box sx={{ mb: 3.5 }}>
+              <video 
+                ref={videoRef}
+                src="/loader-video.mp4" 
+                muted
+                playsInline
+                style={{ 
+                  height: '90px', 
                   width: 'auto',
-                  filter: 'brightness(1)' 
+                  objectFit: 'contain',
+                  borderRadius: '6px',
+                  display: 'block',
+                  mixBlendMode: 'screen'
                 }} 
               />
-              <Typography 
-                sx={{ 
-                  fontFamily: '"Sans Superellipse Ragan 2", sans-serif', 
-                  fontWeight: 900, 
-                  fontSize: '1.25rem',
-                  letterSpacing: '0.04em',
-                  color: 'white'
-                }}
-              >
-                SHALOM MUSIC
-              </Typography>
             </Box>
             <Typography 
               variant="body2" 
@@ -197,7 +220,7 @@ const Footer: React.FC = () => {
                   Direct Phone
                 </Typography>
                 <Link 
-                  href="tel:+255700000000" 
+                  href="tel:+255620319635" 
                   color="inherit" 
                   underline="none"
                   sx={{ 
@@ -209,7 +232,7 @@ const Footer: React.FC = () => {
                     '&:hover': { color: '#ff2a74' }
                   }}
                 >
-                  +255 700 000 000
+                  0620 319 635
                 </Link>
               </Box>
               <Box>
@@ -225,7 +248,7 @@ const Footer: React.FC = () => {
                     lineHeight: 1.5
                   }}
                 >
-                  Chuo Kikuu SDA Road, <br />
+                  Msikiti wa udongo, <br />
                   Dar es Salaam, Tanzania
                 </Typography>
               </Box>
@@ -253,7 +276,7 @@ const Footer: React.FC = () => {
               fontWeight: 300 
             }}
           >
-            © {new Date().getFullYear()} Shalom Music. All rights reserved.
+            © {new Date().getFullYear()} Shalom Music Studios. All rights reserved.
           </Typography>
           <Typography 
             sx={{ 
@@ -264,7 +287,34 @@ const Footer: React.FC = () => {
               textAlign: { xs: 'center', sm: 'right' }
             }}
           >
-            Designed & Crafted with Passion in Dar es Salaam, Tanzania.
+            Designed & Crafted by{' '}
+            <Link 
+              href="mailto:yonahmatete@gmail.com" 
+              sx={{ 
+                color: '#ff2a74', 
+                textDecoration: 'none',
+                fontWeight: 500,
+                transition: 'color 0.25s ease',
+                '&:hover': { color: 'white', textDecoration: 'underline' }
+              }}
+            >
+              Jolab
+            </Link>
+            {' '}•{' '}
+            <Link 
+              href="https://wa.me/255765929374" 
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ 
+                color: '#ff2a74', 
+                textDecoration: 'none',
+                fontWeight: 500,
+                transition: 'color 0.25s ease',
+                '&:hover': { color: 'white', textDecoration: 'underline' }
+              }}
+            >
+              WhatsApp
+            </Link>
           </Typography>
         </Box>
       </Container>

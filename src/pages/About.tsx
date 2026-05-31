@@ -9,7 +9,7 @@ const About: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>About Us | Shalom Music</title>
+        <title>About Us | Shalom Music Studios</title>
         <meta name="description" content="Discover the story behind Shalom Music. Our mission is to provide excellence in music production and education." />
       </Helmet>
 

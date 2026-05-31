@@ -13,8 +13,8 @@ const pricingData = {
     plans: [
       { 
         title: 'Audio Recording', 
-        originalPrice: '80,000 TZS',
-        promoPrice: '79,999 TZS', 
+        originalPrice: '80,000 TZS ($60 USD)',
+        promoPrice: '79,999 TZS ($50 USD)', 
         unit: 'per studio tracking session',
         desc: 'Professional multi-track studio recording utilizing premium valve preamps and custom microphones.',
         features: ['Acoustically calibrated recording rooms', 'Premium valve & condenser microphone vault', 'Ultra-low noise analog console signal path', 'Dedicated tech setup assistant & runner'],
@@ -22,8 +22,8 @@ const pricingData = {
       },
       { 
         title: 'Audio Mixing', 
-        originalPrice: '100,000 TZS',
-        promoPrice: '99,999 TZS', 
+        originalPrice: '100,000 TZS ($70 USD)',
+        promoPrice: '99,999 TZS ($60 USD)', 
         unit: 'per multi-track song',
         desc: 'Balance your tracks with an elite three-dimensional soundstage and deep frequency separation.',
         features: ['Hybrid analog/digital board console mixing', 'Warm, rich frequency separation & panning', 'Stereo imaging & high-definition calibration', 'Bespoke hardware effects sends routing'],
@@ -31,8 +31,8 @@ const pricingData = {
       },
       { 
         title: 'Complete Recording Package', 
-        originalPrice: '250,000 TZS',
-        promoPrice: '249,999 TZS', 
+        originalPrice: '250,000 TZS ($180 USD)',
+        promoPrice: '249,999 TZS ($150 USD)', 
         unit: 'per full song project',
         desc: 'Our premier all-in-one package comprising recording, professional mixing, and high-fidelity mastering.',
         features: ['Complete multi-track studio recording (up to 8 hours)', 'Multi-dimensional audio mixing with elite console panning', 'Pristine industry-standard stereo mastering', 'Full access to concert grand piano & high-end microphone vault', '2 complimentary project revision cycles'],
@@ -40,8 +40,8 @@ const pricingData = {
       },
       { 
         title: 'Audio Mastering', 
-        originalPrice: '100,000 TZS',
-        promoPrice: '99,999 TZS', 
+        originalPrice: '100,000 TZS ($70 USD)',
+        promoPrice: '99,999 TZS ($60 USD)', 
         unit: 'per mixed stereo master',
         desc: 'Industry-standard loudness, transient preservation, and sonic balance for global streaming.',
         features: ['Loudness maximization for Spotify & Apple', 'Subtle harmonic saturation & high-end air', 'Full analog signal processing path', 'Distribution-ready DDP and WAV formats'],
@@ -49,8 +49,8 @@ const pricingData = {
       },
       { 
         title: 'Instrumental Creation', 
-        originalPrice: '300,000 TZS',
-        promoPrice: '299,999 TZS', 
+        originalPrice: '300,000 TZS ($220 USD)',
+        promoPrice: '299,999 TZS ($180 USD)', 
         unit: 'per custom composition',
         desc: 'Bespoke custom beats, arrangements, and multi-track song arrangements.',
         features: ['Custom rhythmic arrangements', 'Vintage synthesizers & grand piano tracking', 'Exclusive full commercial rights licensing', 'Tailored to your specific vocal range'],
@@ -58,8 +58,8 @@ const pricingData = {
       },
       { 
         title: 'Audio Capturing', 
-        originalPrice: '400,000 TZS',
-        promoPrice: '399,999 TZS', 
+        originalPrice: '400,000 TZS ($280 USD)',
+        promoPrice: '399,999 TZS ($250 USD)', 
         unit: 'per location recording project',
         desc: 'High-fidelity ambient sound capture and location sound for film overlays.',
         features: ['Specialized field recording modules', 'Stereo microphone array configurations', 'Organic background soundscape documenting', 'High-definition raw multitrack delivery'],
@@ -73,8 +73,8 @@ const pricingData = {
     plans: [
       { 
         title: 'Casual Learner', 
-        originalPrice: '60,000 TZS',
-        promoPrice: '49,999 TZS', 
+        originalPrice: '60,000 TZS ($45 USD)',
+        promoPrice: '49,999 TZS ($35 USD)', 
         unit: 'per single private session',
         desc: 'Flexible booking tailored for busy modern schedules and recreational goals.',
         features: ['45-Minute privategrand piano lesson', 'No rigid long-term commitments', 'Custom digitized practice assignments', 'All age and skill levels welcome', 'Acoustic concert grand practice access'],
@@ -82,8 +82,8 @@ const pricingData = {
       },
       { 
         title: 'Weekly Progress', 
-        originalPrice: '220,000 TZS',
-        promoPrice: '179,999 TZS', 
+        originalPrice: '220,000 TZS ($150 USD)',
+        promoPrice: '179,999 TZS ($120 USD)', 
         unit: 'per 4-session monthly package',
         desc: 'Consistent guidance to establish robust technique foundations and reading habits.',
         features: ['4 x 45-Minute weekly Grand lessons', 'Accelerated scale & velocity exercises', 'Personalized homework check portfolios', 'Bi-weekly virtual practice consultations', 'Recital performance program eligibility'],
@@ -91,8 +91,8 @@ const pricingData = {
       },
       { 
         title: 'Performance Path', 
-        originalPrice: '600,000 TZS',
-        promoPrice: '499,999 TZS', 
+        originalPrice: '600,000 TZS ($400 USD)',
+        promoPrice: '499,999 TZS ($320 USD)', 
         unit: 'per 12-session course bundle',
         desc: 'Bespoke advanced curriculum targeted for board exams, auditions, and recitals.',
         features: ['12 x 45-Minute flexible lessons', 'Advanced grand repertoire voicing', 'Board exam, audition & recital prep', '24/7 direct instructor messaging channel', 'Complex music theory & harmony modules'],
@@ -106,8 +106,8 @@ const pricingData = {
     plans: [
       { 
         title: '4-Hour Half-Day Lockout', 
-        originalPrice: '150,000 TZS',
-        promoPrice: '149,999 TZS', 
+        originalPrice: '150,000 TZS ($120 USD)',
+        promoPrice: '149,999 TZS ($99 USD)', 
         unit: 'per 4-hour creative lockout',
         desc: 'Exclusive half-day session lockout block for tracking vocals or grand piano.',
         features: ['400 sq ft main live room tracking space', 'Control Room A Genelec monitor routing', 'Yamaha C7 concert grand piano access', 'Luxury artist lounges with high-speed Wi-Fi', 'Dedicated on-site tech setup assistant'],
@@ -115,8 +115,8 @@ const pricingData = {
       },
       { 
         title: 'Full Day Lockout', 
-        originalPrice: '400,000 TZS',
-        promoPrice: '349,999 TZS', 
+        originalPrice: '400,000 TZS ($280 USD)',
+        promoPrice: '349,999 TZS ($230 USD)', 
         unit: 'per 10-hour full lockout',
         desc: 'Unleash your creative projects with zero timing or session interruptions.',
         features: ['10-Hour complete lockout pass', 'Unrestricted live & control room access', 'Assigned in-house recording engineer', 'Complimentary VIP studio refreshments', 'Full multi-track session files bounce'],
@@ -124,8 +124,8 @@ const pricingData = {
       },
       { 
         title: 'Monthly Resident Pack', 
-        originalPrice: '1,500,000 TZS',
-        promoPrice: '1,299,999 TZS', 
+        originalPrice: '1,500,000 TZS ($980 USD)',
+        promoPrice: '1,299,999 TZS ($800 USD)', 
         unit: 'per 40-hour monthly resident package',
         desc: 'Your creative home with locked-in priority lockout rates and equipment.',
         features: ['40 Hours of priority studio booking', 'Private secure locker equipment storage', 'Priority overnight multi-project backups', 'Control Desk preamp routing customization', '4 complimentary guest session hours'],
@@ -139,8 +139,8 @@ const pricingData = {
     plans: [
       { 
         title: 'Standard Tuning', 
-        originalPrice: '200,000 TZS',
-        promoPrice: '149,999 TZS', 
+        originalPrice: '200,000 TZS ($150 USD)',
+        promoPrice: '149,999 TZS ($120 USD)', 
         unit: 'per standard grand tuning service',
         desc: 'Keep your instrument pitch-perfect and structurally calibrated.',
         features: ['Professional Pitch Raise and Tuning', 'Comprehensive action mechanism inspection', 'Soundboard, bridge & pinblock checks', 'Relative humidity consulting', '2-Hour dedicated concert grand work'],
@@ -148,8 +148,8 @@ const pricingData = {
       },
       { 
         title: 'Touch Regulation', 
-        originalPrice: '480,000 TZS',
-        promoPrice: '399,999 TZS', 
+        originalPrice: '480,000 TZS ($350 USD)',
+        promoPrice: '399,999 TZS ($280 USD)', 
         unit: 'per key regulation overhaul',
         desc: 'Calibrate key responsiveness, velocity touch, and velocity balance.',
         features: ['Complete grand key mechanism calibration', 'Key leveling & key dip depth adjustments', 'Hammer blow & escapement alignments', 'Highly recommended every 2 years', 'Complete damper action alignments'],
@@ -157,8 +157,8 @@ const pricingData = {
       },
       { 
         title: 'Hammer Voicing', 
-        originalPrice: '300,000 TZS',
-        promoPrice: '249,999 TZS', 
+        originalPrice: '300,000 TZS ($220 USD)',
+        promoPrice: '249,999 TZS ($180 USD)', 
         unit: 'per concert voicing service',
         desc: 'Unlock deep mellow warmth or brilliant concert power from your hammers.',
         features: ['Needle hammer felt voicing adjust', 'Concert tone balance key-by-key alignment', 'String seating & string leveling', 'Highly recommended before sessions', 'Acoustic voicing to specific room profile'],
@@ -203,7 +203,7 @@ const Pricing: React.FC = () => {
       }}
     >
       <Helmet>
-        <title>Pricing Plans & Rates | Shalom Music</title>
+        <title>Pricing Plans & Rates | Shalom Music Studios</title>
         <meta name="description" content="Transparent, glassmorphic pricing options for music production, professional piano lessons, concert tuning, and high-end studio room rentals." />
       </Helmet>
 
@@ -439,7 +439,7 @@ const Pricing: React.FC = () => {
                     sx={{ 
                       textDecoration: 'line-through', 
                       color: 'rgba(255, 255, 255, 0.45)', 
-                      fontSize: '1.05rem',
+                      fontSize: '0.78rem',
                       fontFamily: '"Space Grotesk", sans-serif',
                       fontWeight: 500,
                       mb: 0.25,
@@ -454,7 +454,7 @@ const Pricing: React.FC = () => {
                     sx={{ 
                       color: '#ff2a74', 
                       fontWeight: 900, 
-                      fontSize: { xs: '1.6rem', sm: '1.9rem', md: '2.1rem' },
+                      fontSize: { xs: '1.05rem', sm: '1.2rem', md: '1.3rem' },
                       fontFamily: '"Space Grotesk", sans-serif',
                       lineHeight: 1
                     }}
@@ -500,7 +500,7 @@ const Pricing: React.FC = () => {
                 {/* Custom Branded Tab Action Button */}
                 <Button 
                   component={RouterLink}
-                  to="/contact"
+                  to={`/contact?service=${activeCategory}`}
                   variant={plan.popular ? "contained" : "outlined"} 
                   fullWidth 
                   sx={{ 
