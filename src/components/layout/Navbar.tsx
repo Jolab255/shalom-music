@@ -329,8 +329,8 @@ const Navbar: React.FC = () => {
               borderRadius: '4px', 
               px: 2, 
               py: 0.5,
-              ml: { xs: 2, md: 4 },
-              width: { xs: '120px', sm: '180px', md: '280px' },
+              ml: { xs: 1.5, sm: 2, md: 3 },
+              width: { xs: '90px', sm: '130px', md: '180px' },
               transition: 'all 0.3s ease',
               border: '1px solid transparent',
               position: 'relative', // Relative position for matching autocomplete dropdown positioning
@@ -343,7 +343,7 @@ const Navbar: React.FC = () => {
           >
             <SearchIcon sx={{ color: '#aaa', mr: 1, fontSize: '1.2rem' }} />
             <InputBase 
-              placeholder="Search services, lessons, pricing..." 
+              placeholder="Search..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setIsFocused(true)}
