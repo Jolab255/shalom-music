@@ -463,19 +463,34 @@ const Home: React.FC = () => {
   }, [hash]);
 
   useEffect(() => {
-    // 1. Manage the visit count (using sessionStorage to avoid counting refreshes in the same session)
-    const hasBeenCounted = sessionStorage.getItem('countedThisSession');
-    let currentVisits = parseInt(localStorage.getItem('visitCount') || '0', 10);
+    let hasBeenCounted = false;
+    let currentVisits = 0;
+    let hasSeenThisVisit = false;
+
+    try {
+      hasBeenCounted = !!sessionStorage.getItem('countedThisSession');
+      currentVisits = parseInt(localStorage.getItem('visitCount') || '0', 10);
+    } catch (e) {
+      console.warn("Storage access not allowed or insecure in this browser environment:", e);
+    }
     
     if (!hasBeenCounted) {
       currentVisits += 1;
-      localStorage.setItem('visitCount', currentVisits.toString());
-      sessionStorage.setItem('countedThisSession', 'true');
+      try {
+        localStorage.setItem('visitCount', currentVisits.toString());
+        sessionStorage.setItem('countedThisSession', 'true');
+      } catch (e) {
+        console.warn("Storage writing blocked by browser settings:", e);
+      }
     }
 
     // 2. Check if this is an odd-numbered visit (1st, 3rd, 5th, etc.) and they haven't seen it this visit
     const isOddVisit = currentVisits % 2 !== 0;
-    const hasSeenThisVisit = sessionStorage.getItem('hasSeenScrollPopupThisVisit');
+    try {
+      hasSeenThisVisit = !!sessionStorage.getItem('hasSeenScrollPopupThisVisit');
+    } catch (e) {
+      console.warn("Storage reading blocked by browser settings:", e);
+    }
 
     if (!isOddVisit || hasSeenThisVisit) {
       return;
@@ -497,7 +512,11 @@ const Home: React.FC = () => {
       // B. Check if they have scrolled past/below the section
       if (reached && rect.bottom < -100) {
         setIsScrollPopupOpen(true);
-        sessionStorage.setItem('hasSeenScrollPopupThisVisit', 'true');
+        try {
+          sessionStorage.setItem('hasSeenScrollPopupThisVisit', 'true');
+        } catch (e) {
+          console.warn("Storage writing blocked by browser settings:", e);
+        }
         window.removeEventListener('scroll', handleScroll);
       }
     };
