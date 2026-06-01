@@ -569,14 +569,14 @@ const Home: React.FC = () => {
         <meta property="og:url" content="https://shalommusic.co.tz/" />
         <meta property="og:title" content="Shalom Music Studios | Tanzania's Premier Music Studio" />
         <meta property="og:description" content="Tanzania's premier music sanctuary in Dar es Salaam. Elevate your sound with world-class audio recording, professional music production, grand piano lessons, and master-level accompanist services." />
-        <meta property="og:image" content={`https://shalommusic.co.tz${whyShalom1Img}`} />
+        <meta property="og:image" content="https://shalommusic.co.tz/why-shalom-1.webp" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://shalommusic.co.tz/" />
         <meta property="twitter:title" content="Shalom Music Studios | Tanzania's Premier Music Studio" />
         <meta property="twitter:description" content="Tanzania's premier music sanctuary in Dar es Salaam. Elevate your sound with world-class audio recording, professional music production, grand piano lessons, and master-level accompanist services." />
-        <meta property="twitter:image" content={`https://shalommusic.co.tz${whyShalom1Img}`} />
+        <meta property="twitter:image" content="https://shalommusic.co.tz/why-shalom-1.webp" />
 
         {/* JSON-LD LocalBusiness / MusicStudio Structured Schema */}
         <script type="application/ld+json">
@@ -584,7 +584,7 @@ const Home: React.FC = () => {
             "@context": "https://schema.org",
             "@type": "MusicStudio",
             "name": "Shalom Music Studios",
-            "image": `https://shalommusic.co.tz${whyShalom1Img}`,
+            "image": "https://shalommusic.co.tz/why-shalom-1.webp",
             "url": "https://shalommusic.co.tz",
             "telephone": "+255620319635",
             "priceRange": "$$",
