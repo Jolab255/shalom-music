@@ -126,7 +126,7 @@ const Contact: React.FC = () => {
     e.preventDefault();
     
     if (!validate()) {
-      showWarning('Please correct the validation errors in the form.', 'Validation Alert');
+      showWarning('Please check the form for any missing information.', 'Form Correction');
       return;
     }
 
@@ -136,7 +136,7 @@ const Contact: React.FC = () => {
       // Simulate server error when requested (typing 'error' or 'fail')
       if (message.toLowerCase().includes('fail') || message.toLowerCase().includes('error')) {
         await new Promise((resolve) => setTimeout(resolve, 800));
-        throw new Error('Internal Server Error (500): The mail dispatch service is temporarily unavailable.');
+        throw new Error('Our mail server is temporarily busy. Please try again shortly.');
       }
 
       // 1. Try custom PHP SMTP gateway first (active on PHP-enabled hosting)
@@ -170,7 +170,7 @@ const Contact: React.FC = () => {
       }
 
       if (phpSuccess) {
-        showSuccess('Your inquiry has been successfully transmitted via our secure SMTP gateway. Our team will contact you shortly!', 'Message Dispatched');
+        showSuccess('Thank you! Your message has been sent successfully. Our team will contact you shortly!', 'Message Sent');
       } else {
         // 2. Fallback to FormSubmit AJAX API
         const response = await fetch('https://formsubmit.co/ajax/info@shalommusic.co.tz', {
@@ -190,16 +190,16 @@ const Contact: React.FC = () => {
         });
 
         if (!response.ok) {
-          throw new Error(`Server returned status code ${response.status}: Failed to transmit message.`);
+          throw new Error(`Could not send your message. Server returned code: ${response.status}`);
         }
 
         const result = await response.json();
         
         if (result.success === 'false' || result.success === false) {
-          throw new Error(result.message || 'The mail submission service failed to process the message.');
+          throw new Error(result.message || 'Could not process your message. Please try again.');
         }
 
-        showSuccess('Your inquiry has been successfully transmitted. Our team will contact you shortly!', 'Message Dispatched');
+        showSuccess('Thank you! Your message has been sent successfully. Our team will contact you shortly!', 'Message Sent');
       }
       
       // Reset form on success
@@ -210,13 +210,13 @@ const Contact: React.FC = () => {
     } catch (err: any) {
       // If it was a manually simulated error (contains 'error' or 'fail'), show it standardly and do not redirect
       if (message.toLowerCase().includes('fail') || message.toLowerCase().includes('error')) {
-        showError(err.message || 'An error occurred during communication with the server.', 'Transmission Failed');
+        showError(err.message || 'We encountered a connection issue. Please try again.', 'Message Not Sent');
         setIsSubmitting(false);
         return;
       }
 
       // Otherwise, trigger the bulletproof standard form post fallback
-      showWarning('Initiating secure direct form transmission gateway...', 'Secure Dispatch Fallback');
+      showWarning('Preparing backup form to send your message directly...', 'Backup Sending');
       
       setTimeout(() => {
         const form = document.createElement('form');
