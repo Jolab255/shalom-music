@@ -52,10 +52,11 @@ if (empty($data)) {
 // 4. Validate and Sanitize Inputs
 $name = isset($data['name']) ? strip_tags(trim($data['name'])) : '';
 $email = isset($data['email']) ? filter_var(trim($data['email']), FILTER_SANITIZE_EMAIL) : '';
+$phone = isset($data['phone']) ? strip_tags(trim($data['phone'])) : '';
 $service = isset($data['service']) ? strip_tags(trim($data['service'])) : '';
 $message = isset($data['message']) ? strip_tags(trim($data['message'])) : '';
 
-if (empty($name) || empty($email) || empty($service) || empty($message)) {
+if (empty($name) || empty($email) || empty($phone) || empty($service) || empty($message)) {
     http_response_code(400); // Bad Request
     echo json_encode([
         "success" => false,
@@ -76,6 +77,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 // Prevent header injection attacks
 $name = str_replace(array("\r", "\n"), '', $name);
 $email = str_replace(array("\r", "\n"), '', $email);
+$phone = str_replace(array("\r", "\n"), '', $phone);
 $service = str_replace(array("\r", "\n"), '', $service);
 
 // 5. Compose Premium Symmetrical HTML Email Template
@@ -177,6 +179,11 @@ $email_body = "
         <div class='field-group'>
             <div class='field-label'>Email Address</div>
             <div class='field-value'>".htmlspecialchars($email)."</div>
+        </div>
+        
+        <div class='field-group'>
+            <div class='field-label'>Phone Number</div>
+            <div class='field-value'>".htmlspecialchars($phone)."</div>
         </div>
         
         <div class='field-group'>

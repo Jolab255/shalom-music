@@ -58,6 +58,7 @@ const Contact: React.FC = () => {
   // Controlled form states
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [service, setService] = useState('Music Production');
   const [message, setMessage] = useState('');
   
@@ -84,6 +85,7 @@ const Contact: React.FC = () => {
   // Field validation error states
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
   const [messageError, setMessageError] = useState('');
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -107,6 +109,13 @@ const Contact: React.FC = () => {
       isValid = false;
     } else {
       setEmailError('');
+    }
+
+    if (!phone.trim()) {
+      setPhoneError('Phone number is required');
+      isValid = false;
+    } else {
+      setPhoneError('');
     }
 
     if (!message.trim()) {
@@ -152,6 +161,7 @@ const Contact: React.FC = () => {
           body: JSON.stringify({
             name: name,
             email: email,
+            phone: phone,
             service: service,
             message: message
           })
@@ -183,6 +193,7 @@ const Contact: React.FC = () => {
           body: JSON.stringify({
             name: name,
             email: email,
+            phone: phone,
             service: service,
             message: message,
             _subject: `New Shalom Music Enquiry - ${service} from ${name}`,
@@ -206,6 +217,7 @@ const Contact: React.FC = () => {
       // Reset form on success
       setName('');
       setEmail('');
+      setPhone('');
       setService('Music Production');
       setMessage('');
     } catch (err: any) {
@@ -228,6 +240,7 @@ const Contact: React.FC = () => {
         const fields = {
           name: name,
           email: email,
+          phone: phone,
           service: service,
           message: message,
           _subject: `New Shalom Music Enquiry - ${service} from ${name}`,
@@ -462,7 +475,24 @@ const Contact: React.FC = () => {
                       sx={textFieldStyles}
                     />
                   </Grid>
-                  <Grid size={{ xs: 12 }}>
+                  <Grid size={{ xs: 12, sm: 6 }}>
+                    <TextField
+                      fullWidth
+                      label="Phone Number"
+                      variant="outlined"
+                      required
+                      value={phone}
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                        if (e.target.value.trim()) setPhoneError('');
+                      }}
+                      error={!!phoneError}
+                      helperText={phoneError}
+                      disabled={isSubmitting}
+                      sx={textFieldStyles}
+                    />
+                  </Grid>
+                  <Grid size={{ xs: 12, sm: 6 }}>
                     <TextField
                       fullWidth
                       select
