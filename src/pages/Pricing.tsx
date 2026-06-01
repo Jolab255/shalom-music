@@ -48,12 +48,30 @@ const pricingData = {
         popular: false 
       },
       { 
-        title: 'Instrumental Creation', 
-        originalPrice: '300,000 TZS ($220 USD)',
-        promoPrice: '299,999 TZS ($180 USD)', 
-        unit: 'per custom composition',
-        desc: 'Bespoke custom beats, arrangements, and multi-track song arrangements.',
-        features: ['Custom rhythmic arrangements', 'Vintage synthesizers & grand piano tracking', 'Exclusive full commercial rights licensing', 'Tailored to your specific vocal range'],
+        title: 'Simple Track Instrumental', 
+        originalPrice: '80,000 TZS ($60 USD)',
+        promoPrice: '70,000 TZS ($50 USD)', 
+        unit: 'per custom simple beat / track',
+        desc: 'High-quality custom electronic beatmaking and straightforward rhythm arrangements.',
+        features: ['Custom basic drum patterns & percussion', 'HQ stereo audio wave output', 'Standard commercial rights licensing', 'Up to 2 dynamic instrumentation layers'],
+        popular: false 
+      },
+      { 
+        title: 'Classical Instrumental', 
+        originalPrice: '120,000 TZS ($90 USD)',
+        promoPrice: '100,000 TZS ($70 USD)', 
+        unit: 'per custom classical composition',
+        desc: 'Traditional arrangement including acoustic grand piano, strings, and solo instruments.',
+        features: ['Acoustic grand piano recording session', 'High-definition multitrack WAV delivery', 'Extended commercial licensing rights', 'Custom velocity dynamic touch balance'],
+        popular: false 
+      },
+      { 
+        title: 'Orchestral Instrumental', 
+        originalPrice: '250,000 TZS ($180 USD)',
+        promoPrice: '200,000 TZS ($140 USD)', 
+        unit: 'per cinematic orchestral score',
+        desc: 'Epic multi-layered symphonic scores, dramatic pads, brass sections, and complex polyphonic dynamics.',
+        features: ['Colossal symphonic orchestral arrangement', 'Comprehensive string, brass & woodwind matrix', 'Exclusive full buyout commercial rights', 'Complete track files session folder bounce'],
         popular: false 
       },
       { 
@@ -73,38 +91,38 @@ const pricingData = {
     plans: [
       { 
         title: 'Young Keys Academy', 
-        originalPrice: '180,000 TZS ($120 USD)',
-        promoPrice: '149,999 TZS ($100 USD)', 
-        unit: 'per 4-session monthly package',
-        desc: 'Interactive private keyboard adventures custom-tailored for younger attention spans.',
-        features: ['4 x 30-Minute private grand piano lessons', 'Complimentary Faber Adventures method books', 'Gamified visual notation & rhythmic cards', 'Acoustic grand practice room access (1 hr/week)', 'Secure student progress portfolio & practice logs', 'Monthly junior progress achievement certificate', 'Performance slot in seasonal recitals & showcases'],
+        originalPrice: '240,000 TZS ($170 USD)',
+        promoPrice: '200,000 TZS ($140 USD)', 
+        unit: 'per month (8 sessions / 25k per session)',
+        desc: 'Interactive private keyboard adventures custom-tailored for younger attention spans. 8 sessions per month.',
+        features: ['8 x 30-Minute private grand piano lessons', 'Complimentary Faber Adventures method books', 'Gamified visual notation & rhythmic cards', 'Acoustic grand practice room access (1 hr/week)', 'Secure student progress portfolio & practice logs', 'Monthly junior progress achievement certificate', 'Performance slot in seasonal recitals & showcases'],
         popular: false 
       },
       { 
         title: 'Beginner Foundations', 
-        originalPrice: '60,000 TZS ($45 USD)',
-        promoPrice: '49,999 TZS ($35 USD)', 
-        unit: 'per single private session',
-        desc: 'Flexible booking tailored for busy modern schedules and recreational goals.',
-        features: ['45-Minute private grand piano coaching', 'Pay-as-you-go / No long-term commitments', 'Custom digitized practice goals & lesson notes', 'All age and skill levels welcome', 'Single acoustic grand practice session access', '24/7 direct chat support with your instructor'],
+        originalPrice: '320,000 TZS ($220 USD)',
+        promoPrice: '280,000 TZS ($195 USD)', 
+        unit: 'per month (8 sessions / 35k per session)',
+        desc: 'Comprehensive starting point for teens and adults to master piano basics with solid techniques. 8 sessions per month.',
+        features: ['8 x 50-Minute private grand piano lessons', 'Professional hand posture & finger articulation basics', 'Dual-clef note reading & common time signatures', 'Introductory repertoire including basic classical & pop', 'Single acoustic grand practice session access', '24/7 direct chat support with your instructor'],
         popular: false 
       },
       { 
         title: 'Intermediate Artistry', 
-        originalPrice: '220,000 TZS ($150 USD)',
-        promoPrice: '179,999 TZS ($120 USD)', 
-        unit: 'per 4-session monthly package',
-        desc: 'Consistent guidance to establish robust technique foundations and reading habits.',
-        features: ['4 x 45-Minute weekly Grand lessons', 'ABRSM / Trinity graded syllabus integrated', 'Complimentary core lesson books & sheet music', 'Acoustic grand practice room access (2 hrs/week)', 'Secure student progress portfolio & practice tracker', 'Direct 24/7 instructor messaging support', '2 makeup lesson rollover credits per semester', 'Performance slot in seasonal showcases (including HD video recording of your play)'],
+        originalPrice: '400,000 TZS ($280 USD)',
+        promoPrice: '360,000 TZS ($250 USD)', 
+        unit: 'per month (8 sessions / 45k per session)',
+        desc: 'Consistent guidance to establish robust technique foundations and reading habits. 8 sessions per month.',
+        features: ['8 x 1-Hour weekly grand piano lessons', 'ABRSM / Trinity graded syllabus integrated', 'Complimentary core lesson books & sheet music', 'Acoustic grand practice room access (2 hrs/week)', 'Secure student progress portfolio & practice tracker', 'Direct 24/7 instructor messaging support', '2 makeup lesson rollover credits per semester', 'Performance slot in seasonal showcases (including HD video recording of your play)'],
         popular: true 
       },
       { 
         title: 'Advanced Concert Mastery', 
-        originalPrice: '600,000 TZS ($400 USD)',
-        promoPrice: '499,999 TZS ($320 USD)', 
-        unit: 'per 12-session course bundle',
-        desc: 'Bespoke advanced curriculum targeted for board exams, auditions, and recitals.',
-        features: ['12 x 45-Minute flexible private lessons', 'Elite board exam preparation (ABRSM Grades 1-8)', 'All advanced curriculum books & materials included', 'Acoustic grand practice room access (4 hrs/week)', 'Secure student progress portfolio & physical performance feedback', 'Priority scheduling for all lessons', 'Unlimited makeup lesson self-rescheduling', 'VIP recital performance slot with multi-camera HD recording', 'Advanced music theory & multi-voice harmony workshops'],
+        originalPrice: '480,000 TZS ($340 USD)',
+        promoPrice: '400,000 TZS ($280 USD)', 
+        unit: 'per month (8 sessions / 50k per session)',
+        desc: 'Bespoke advanced curriculum targeted for board exams, auditions, and recitals. 8 sessions per month.',
+        features: ['8 x 1-Hour flexible private lessons', 'Elite board exam preparation (ABRSM Grades 1-8)', 'All advanced curriculum books & materials included', 'Acoustic grand practice room access (4 hrs/week)', 'Secure student progress portfolio & physical performance feedback', 'Priority scheduling for all lessons', 'Unlimited makeup lesson self-rescheduling', 'VIP recital performance slot with multi-camera HD recording', 'Advanced music theory & multi-voice harmony workshops'],
         popular: false 
       }
     ]
@@ -114,30 +132,30 @@ const pricingData = {
     subtitle: 'Rent our world-class acoustically calibrated tracking rooms for your private sessions.',
     plans: [
       { 
-        title: '4-Hour Half-Day Lockout', 
-        originalPrice: '150,000 TZS ($120 USD)',
-        promoPrice: '149,999 TZS ($99 USD)', 
-        unit: 'per 4-hour creative lockout',
-        desc: 'Exclusive half-day session lockout block for tracking vocals or grand piano.',
-        features: ['400 sq ft main live room tracking space', 'Control Room A Genelec monitor routing', 'Yamaha C7 concert grand piano access', 'Luxury artist lounges with high-speed Wi-Fi', 'Dedicated on-site tech setup assistant'],
-        popular: true 
-      },
-      { 
-        title: 'Full Day Lockout', 
-        originalPrice: '400,000 TZS ($280 USD)',
-        promoPrice: '349,999 TZS ($230 USD)', 
-        unit: 'per 10-hour full lockout',
-        desc: 'Unleash your creative projects with zero timing or session interruptions.',
-        features: ['10-Hour complete lockout pass', 'Unrestricted live & control room access', 'Assigned in-house recording engineer', 'Complimentary VIP studio refreshments', 'Full multi-track session files bounce'],
+        title: 'Hourly Lockout', 
+        originalPrice: '35,000 TZS ($25 USD)',
+        promoPrice: '25,000 TZS ($18 USD)', 
+        unit: 'per hour of studio time',
+        desc: 'Flexible hourly room rental block for tracking, rehearsals, or practicing.',
+        features: ['Acoustically calibrated room access', 'Yamaha C7 concert grand piano access', 'High-speed guest Wi-Fi connection', 'Dedicated tech setup assistant'],
         popular: false 
       },
       { 
-        title: 'Monthly Resident Pack', 
-        originalPrice: '1,500,000 TZS ($980 USD)',
-        promoPrice: '1,299,999 TZS ($800 USD)', 
-        unit: 'per 40-hour monthly resident package',
-        desc: 'Your creative home with locked-in priority lockout rates and equipment.',
-        features: ['40 Hours of priority studio booking', 'Private secure locker equipment storage', 'Priority overnight multi-project backups', 'Control Desk preamp routing customization', '4 complimentary guest session hours'],
+        title: 'Daily Lockout', 
+        originalPrice: '250,000 TZS ($180 USD)',
+        promoPrice: '200,000 TZS ($140 USD)', 
+        unit: 'per day of studio time (10-hr block)',
+        desc: 'Exclusive full-day lockout block with zero timing or session interruptions.',
+        features: ['10-Hour complete lockout pass', 'Unrestricted live & control room access', 'Assigned in-house recording engineer', 'Complimentary VIP studio refreshments', 'Full multi-track session files bounce'],
+        popular: true 
+      },
+      { 
+        title: 'Weekly Lockout', 
+        originalPrice: '900,000 TZS ($640 USD)',
+        promoPrice: '700,000 TZS ($490 USD)', 
+        unit: 'per week of studio time (6-day block)',
+        desc: 'Unleash your creative projects with complete weekly priority access.',
+        features: ['6 Full days of priority studio booking', 'Private secure locker equipment storage', 'Control Desk preamp routing customization', 'Priority overnight multi-project backups', '24/7 building access privileges'],
         popular: false 
       }
     ]

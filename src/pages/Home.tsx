@@ -5602,40 +5602,32 @@ const Home: React.FC = () => {
               LIMITED OFFER
             </Box>
 
-            <Typography 
-              sx={{ 
-                textDecoration: 'line-through', 
-                color: 'rgba(255, 255, 255, 0.4)', 
-                fontSize: '0.78rem',
-                fontFamily: '"Space Grotesk", sans-serif',
-                fontWeight: 500,
-                mb: 0.25,
-                mt: 0.25
-              }}
-            >
-              300,000 TZS ($220 USD)
-            </Typography>
-            <Typography 
-              sx={{ 
-                color: '#ff2a74', 
-                fontWeight: 900, 
-                fontSize: { xs: '1.05rem', sm: '1.2rem' },
-                fontFamily: '"Space Grotesk", sans-serif',
-                lineHeight: 1
-              }}
-            >
-              299,999 TZS ($180 USD)
-            </Typography>
-            <Typography 
-              sx={{ 
-                fontSize: '0.75rem',
-                color: 'rgba(255, 255, 255, 0.5)',
-                fontFamily: '"Linear", sans-serif',
-                mt: 0.75
-              }}
-            >
-              Full session production & orchestration track files included.
-            </Typography>
+            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 1.5, my: 1 }}>
+              {[
+                { name: 'Simple Track', promo: '70,000 TZS ($50 USD)', orig: '80,000 TZS', unit: 'per simple beat' },
+                { name: 'Classical Composition', promo: '100,000 TZS ($70 USD)', orig: '120,000 TZS', unit: 'acoustic & grand piano' },
+                { name: 'Orchestral Score', promo: '200,000 TZS ($140 USD)', orig: '250,000 TZS', unit: 'cinematic polyphonic scores' }
+              ].map((tier, idx) => (
+                <Box key={idx} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 1, borderBottom: idx < 2 ? '1px dashed rgba(255, 255, 255, 0.08)' : 'none' }}>
+                  <Box sx={{ textAlign: 'left' }}>
+                    <Typography sx={{ fontFamily: '"Space Grotesk", sans-serif', fontWeight: 600, fontSize: '0.82rem', color: '#ffffff' }}>
+                      {tier.name}
+                    </Typography>
+                    <Typography sx={{ fontFamily: '"Linear", sans-serif', fontWeight: 300, fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.45)' }}>
+                      {tier.unit}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ textAlign: 'right' }}>
+                    <Typography sx={{ textDecoration: 'line-through', color: 'rgba(255, 255, 255, 0.35)', fontSize: '0.68rem', fontFamily: '"Space Grotesk", sans-serif', mb: 0.1 }}>
+                      {tier.orig}
+                    </Typography>
+                    <Typography sx={{ color: '#ff2a74', fontWeight: 800, fontSize: '0.88rem', fontFamily: '"Space Grotesk", sans-serif' }}>
+                      {tier.promo}
+                    </Typography>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
           </Box>
 
           {/* Inclusions List */}
@@ -5813,40 +5805,32 @@ const Home: React.FC = () => {
               LIMITED OFFER
             </Box>
 
-            <Typography 
-              sx={{ 
-                textDecoration: 'line-through', 
-                color: 'rgba(255, 255, 255, 0.4)', 
-                fontSize: '0.78rem',
-                fontFamily: '"Space Grotesk", sans-serif',
-                fontWeight: 500,
-                mb: 0.25,
-                mt: 0.25
-              }}
-            >
-              150,000 TZS ($120 USD)
-            </Typography>
-            <Typography 
-              sx={{ 
-                color: '#ff2a74', 
-                fontWeight: 900, 
-                fontSize: { xs: '1.05rem', sm: '1.2rem' },
-                fontFamily: '"Space Grotesk", sans-serif',
-                lineHeight: 1
-              }}
-            >
-              149,999 TZS ($99 USD)
-            </Typography>
-            <Typography 
-              sx={{ 
-                fontSize: '0.75rem',
-                color: 'rgba(255, 255, 255, 0.5)',
-                fontFamily: '"Linear", sans-serif',
-                mt: 0.75
-              }}
-            >
-              Price applies for 4-hour half-day creative studio session block.
-            </Typography>
+            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 1.5, my: 1 }}>
+              {[
+                { name: 'Hourly Lockout', promo: '25,000 TZS ($18 USD)', orig: '35,000 TZS', unit: 'per hour of studio time' },
+                { name: 'Daily Lockout', promo: '200,000 TZS ($140 USD)', orig: '250,000 TZS', unit: 'per 10-hour day lockout' },
+                { name: 'Weekly Lockout', promo: '700,000 TZS ($490 USD)', orig: '900,000 TZS', unit: 'per 6-day complete week' }
+              ].map((tier, idx) => (
+                <Box key={idx} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 1, borderBottom: idx < 2 ? '1px dashed rgba(255, 255, 255, 0.08)' : 'none' }}>
+                  <Box sx={{ textAlign: 'left' }}>
+                    <Typography sx={{ fontFamily: '"Space Grotesk", sans-serif', fontWeight: 600, fontSize: '0.82rem', color: '#ffffff' }}>
+                      {tier.name}
+                    </Typography>
+                    <Typography sx={{ fontFamily: '"Linear", sans-serif', fontWeight: 300, fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.45)' }}>
+                      {tier.unit}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ textAlign: 'right' }}>
+                    <Typography sx={{ textDecoration: 'line-through', color: 'rgba(255, 255, 255, 0.35)', fontSize: '0.68rem', fontFamily: '"Space Grotesk", sans-serif', mb: 0.1 }}>
+                      {tier.orig}
+                    </Typography>
+                    <Typography sx={{ color: '#ff2a74', fontWeight: 800, fontSize: '0.88rem', fontFamily: '"Space Grotesk", sans-serif' }}>
+                      {tier.promo}
+                    </Typography>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
           </Box>
 
           {/* Inclusions List */}

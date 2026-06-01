@@ -24,7 +24,7 @@ const packagesData = [
     image: pianoKidsImg,
     description: 'Introduce children aged 6–12 to the joy of piano through engaging, interactive, and gamified music learning. Our junior curriculum combines fun musical games, visual flashcards, and popular children\'s melodies to capture attention and nurture a lifelong love for the keys.',
     inclusions: [
-      '4 x 30-Minute private grand piano lessons',
+      '8 x 30-Minute private grand piano lessons',
       'Complimentary Faber Adventures method books',
       'Gamified visual notation & rhythmic cards',
       'Acoustic grand practice room access (1 hr/week)',
@@ -40,7 +40,7 @@ const packagesData = [
     image: pianoBeginnerImg,
     description: 'A comprehensive starting point for teens and adults to master piano basics with solid techniques. We focus on relaxed hand posture, sight-reading, and dual-staff note reading, enabling you to play simple classical themes and popular songs in your first month.',
     inclusions: [
-      '45-Minute private grand piano coaching',
+      '8 x 50-Minute private grand piano lessons',
       'Professional hand posture & finger articulation basics',
       'Dual-clef note reading & common time signatures',
       'Introductory repertoire including basic classical & pop',
@@ -56,7 +56,7 @@ const packagesData = [
     image: pianoIntermediateImg,
     description: 'Transition your technical fluency into personal musical expression. We introduce advanced arpeggio routines, coordinate touch dynamics, and teach intermediate chord harmony, giving you the tools to confidently perform classical, pop, and introductory jazz.',
     inclusions: [
-      '4 x 45-Minute weekly Grand lessons',
+      '8 x 1-Hour weekly grand piano lessons',
       'ABRSM / Trinity graded syllabus integrated',
       'Advanced scale routines & dynamic expression',
       'Chord theory & basic keyboard harmony learning',
@@ -72,7 +72,7 @@ const packagesData = [
     image: pianoAdvancedImg,
     description: 'Intensive training for advanced pianists aiming for ultimate keyboard control, concert recitals, or board certification (ABRSM/Trinity). Master complex keyboard voicings, speed arpeggios, polyrhythms, and virtuoso literature under expert guidance.',
     inclusions: [
-      '12 x 45-Minute flexible private lessons',
+      '8 x 1-Hour flexible private lessons',
       'Elite board exam preparation (ABRSM Grades 1-8)',
       'All advanced curriculum books & materials included',
       'Acoustic grand practice room access (4 hrs/week)',
