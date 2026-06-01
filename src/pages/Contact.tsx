@@ -194,7 +194,7 @@ const Contact: React.FC = () => {
           service: service,
           message: message,
           _subject: `New Shalom Music Enquiry - ${service} from ${name}`,
-          _next: window.location.href
+          _captcha: 'false'
         };
         
         for (const [key, value] of Object.entries(fields)) {
