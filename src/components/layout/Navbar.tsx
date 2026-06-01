@@ -11,7 +11,6 @@ const navItems = [
   { label: 'Audio Capturing', path: '/#capturing' },
   { label: 'Audio Mixing', path: '/#mixing' },
   { label: 'Audio Mastering', path: '/#mastering' },
-  { label: 'Instrumental Creation', path: '/#instrumental' },
   { label: 'Studio Rental', path: '/#rental' },
   { label: 'About', path: '/#about' },
 ];
@@ -23,7 +22,7 @@ const drawerNavItems = [
   { label: 'Audio Capturing', path: '/#capturing' },
   { label: 'Audio Mixing', path: '/#mixing' },
   { label: 'Audio Mastering', path: '/#mastering' },
-  { label: 'Instrumental Creation', path: '/#instrumental' },
+  { label: 'Instrumental Creation', path: '/production' },
   { label: 'Studio Rental', path: '/#rental' },
   { label: 'About', path: '/#about' },
   { label: 'Piano Lessons', path: '/lessons' },
@@ -38,7 +37,7 @@ const searchDatabase = [
   { title: 'Audio Capturing', description: 'High-fidelity ambient sound capture', path: '/#capturing', category: 'Services' },
   { title: 'Audio Mixing', description: 'Multi-dimensional audio mixing', path: '/#mixing', category: 'Services' },
   { title: 'Audio Mastering', description: 'Industry-standard mastering', path: '/#mastering', category: 'Services' },
-  { title: 'Instrumental Creation', description: 'Custom beats, arrangements & composition', path: '/#instrumental', category: 'Services' },
+  { title: 'Instrumental Creation', description: 'Custom beats, arrangements & composition', path: '/production', category: 'Services' },
   { title: 'Complete Recording Package', description: 'All-in-one recording, mixing, and mastering', path: '/pricing', category: 'Pricing' },
   { title: 'Studio Rental', description: 'Book premium studio spaces & rooms', path: '/#rental', category: 'Studios' },
   { title: 'Piano Lessons', description: 'Personalized piano & music instruction', path: '/lessons', category: 'Lessons' },
@@ -572,6 +571,38 @@ const Navbar: React.FC = () => {
                 }}
               >
                 Piano Services
+              </Button>
+              <Button
+                component={RouterLink}
+                to="/production"
+                sx={{
+                  color: location.pathname === '/production' ? '#ff2a74' : '#ffffff',
+                  fontFamily: '"Space Grotesk", sans-serif',
+                  fontWeight: 600,
+                  fontSize: '0.95rem',
+                  textTransform: 'none',
+                  whiteSpace: 'nowrap',
+                  position: 'relative',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  px: 0.75,
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    width: location.pathname === '/production' ? '60%' : '0%',
+                    height: '1.5px',
+                    bottom: '-4px', 
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    backgroundColor: '#ff2a74',
+                    transition: 'width 0.3s ease',
+                  },
+                  '&:hover': { 
+                    bgcolor: 'transparent'
+                  }
+                }}
+              >
+                Instrumental Creation
               </Button>
               <Button
                 component={RouterLink}

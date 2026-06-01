@@ -17,7 +17,6 @@ import audioRecordingImg from '../assets/audio-recording.webp';
 import audioCapturingImg from '../assets/audio-capturing.webp';
 import audioEditingImg from '../assets/audio-editing.webp';
 import audioMasteringImg from '../assets/audio-mastering.webp';
-import instrumentalCreationImg from '../assets/instrumental-creation.webp';
 import studioRentalImg from '../assets/studio-rental.webp';
 import whyShalom1Img from '../assets/why-shalom-1.webp';
 import whyShalom2Img from '../assets/why-shalom-2.webp';
@@ -187,7 +186,6 @@ const Home: React.FC = () => {
   const [isCapturingPopupOpen, setIsCapturingPopupOpen] = useState(false);
   const [isMixingPopupOpen, setIsMixingPopupOpen] = useState(false);
   const [isMasteringPopupOpen, setIsMasteringPopupOpen] = useState(false);
-  const [isInstrumentalPopupOpen, setIsInstrumentalPopupOpen] = useState(false);
   const [isRentalPopupOpen, setIsRentalPopupOpen] = useState(false);
   const [isScrollPopupOpen, setIsScrollPopupOpen] = useState(false);
 
@@ -418,14 +416,13 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (hash) {
-      const tabHashes = ['#recording', '#capturing', '#mixing', '#mastering', '#instrumental', '#rental'];
+      const tabHashes = ['#recording', '#capturing', '#mixing', '#mastering', '#rental'];
       if (tabHashes.includes(hash)) {
         if (hash === '#recording') setActiveTab(0);
         else if (hash === '#capturing') setActiveTab(1);
         else if (hash === '#mixing') setActiveTab(2);
         else if (hash === '#mastering') setActiveTab(3);
-        else if (hash === '#instrumental') setActiveTab(4);
-        else if (hash === '#rental') setActiveTab(5);
+        else if (hash === '#rental') setActiveTab(4);
         
         // Smooth scroll directly to the sub-navbar tabs container with sticky offset and extra depth
         setTimeout(() => {
@@ -558,14 +555,7 @@ const Home: React.FC = () => {
       link: '/contact',
       largeIcon: <StarIcon sx={{ fontSize: 48 }} />
     },
-    {
-      title: 'Instrumental Creation',
-      headline: 'Bespoke Beatmaking & Orchestration',
-      desc: 'Co-create a completely unique sonic identity. We compose bespoke instrumentals, full orchestral arrangements, and custom electronic beats from scratch. Access premium sample synthesis engines and custom songwriting structures.',
-      features: ['Custom Beatmaking & Synth Compositions', 'Full Cinematic Orchestral Scores', 'Bespoke Commercial Jingle Writing', 'Unique Sonic Branding & Soundbeds'],
-      link: '/contact',
-      largeIcon: <MusicNoteIcon sx={{ fontSize: 48 }} />
-    },
+
     {
       title: 'Studio Rental',
       headline: 'Elite Creative Production Spaces',
@@ -2390,175 +2380,6 @@ const Home: React.FC = () => {
             }
 
             if (index === 4) {
-              return (
-                <Box
-                  key={index}
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    animation: 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                    '@keyframes fadeInUp': {
-                      '0%': { opacity: 0, transform: 'translateY(20px)' },
-                      '100%': { opacity: 1, transform: 'translateY(0)' }
-                    }
-                  }}
-                >
-                  <Typography 
-                    variant="h3" 
-                    sx={{ 
-                      mb: 3, 
-                      fontWeight: 700, 
-                      fontFamily: '"Space Grotesk", sans-serif',
-                      fontSize: { xs: '2rem', sm: '2.5rem', md: '3.2rem' },
-                      color: 'white',
-                      lineHeight: 1.2
-                    }}
-                  >
-                    {service.headline}
-                  </Typography>
-                   <Typography 
-                    sx={{ 
-                      mb: 0, 
-                      color: 'rgba(255, 255, 255, 0.7)', 
-                      fontSize: '1.1rem', 
-                      lineHeight: 1.8,
-                      fontFamily: '"Linear", sans-serif',
-                      fontWeight: 300,
-                      maxWidth: '900px',
-                      mx: 'auto'
-                    }}
-                  >
-                    {service.desc}
-                  </Typography>
-
-                  {/* Instrumental Creation Tab Image */}
-                  <Box 
-                    sx={{ 
-                      display: 'flex', 
-                      justifyContent: 'center', 
-                      mt: -5.5,
-                      mb: 1, 
-                      width: '100%',
-                      maxWidth: '680px',
-                      mx: 'auto'
-                    }}
-                  >
-                    <TabImageWithLoader 
-                      src={instrumentalCreationImg} 
-                      alt="Instrumental Creation studio workspace" 
-                      sx={{ 
-                        width: '100%', 
-                        height: 'auto', 
-                        borderRadius: 1
-                      }} 
-                    />
-                  </Box>
-
-                  {/* Explanatory Grid of Instrumental Creation Features */}
-                  <Grid 
-                    container 
-                    spacing={{ xs: 1.5, sm: 3 }} 
-                    sx={{ 
-                      maxWidth: '1100px', 
-                      mx: 'auto', 
-                      mb: 6,
-                      textAlign: 'left'
-                    }}
-                  >
-                    {[
-                      { 
-                        title: 'Custom Beatmaking & Synth Compositions', 
-                        desc: 'Access premium sound synthesis matrices, dynamic MIDI keyboards, and multi-layered electronic beats.' 
-                      },
-                      { 
-                        title: 'Full Cinematic Orchestral Scores', 
-                        desc: 'Arrange majestic cinematic string sections, woodwind ensembles, and high-fidelity custom orchestral soundscapes.' 
-                      },
-                      { 
-                        title: 'Bespoke Commercial Jingle Writing', 
-                        desc: 'Co-create catchy melodic hooks and unique music signatures crafted specifically for corporate brand identification.' 
-                      },
-                      { 
-                        title: 'Unique Sonic Branding & Soundbeds', 
-                        desc: 'Develop highly tailored, customized background soundbeds to set the perfect mood for your media productions.' 
-                      }
-                    ].map((item, i) => (
-                      <Grid size={{ xs: 6, sm: 6, md: 3 }} key={i}>
-                        <Box 
-                          sx={{ 
-                            p: 1.5, 
-                            bgcolor: 'transparent', 
-                            height: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                            gap: 1.5
-                          }}
-                        >
-                          <CheckCircleOutlineIcon sx={{ color: '#ff2a74', fontSize: 20 }} />
-                          <Box>
-                            <Typography 
-                              sx={{ 
-                                fontFamily: '"Linear", sans-serif', 
-                                fontWeight: 700, 
-                                fontSize: { xs: '1.1rem', md: '1.2rem' }, 
-                                color: 'white',
-                                mb: 0.75,
-                                letterSpacing: '0.01em'
-                              }}
-                            >
-                              {item.title}
-                            </Typography>
-                            <Typography 
-                              sx={{ 
-                                fontFamily: '"Linear", sans-serif', 
-                                fontWeight: 300, 
-                                fontSize: { xs: '0.9rem', md: '0.95rem' }, 
-                                color: 'rgba(255, 255, 255, 0.6)',
-                                lineHeight: 1.4
-                              }}
-                            >
-                              {item.desc}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                    ))}
-                  </Grid>
-
-                  <Button
-                    onClick={() => setIsInstrumentalPopupOpen(true)}
-                    variant="outlined"
-                    size="large"
-                    sx={{
-                      border: '2px solid #ff2a74',
-                      color: '#ff2a74',
-                      px: 5,
-                      py: 1.3,
-                      fontSize: '16px',
-                      fontWeight: 700,
-                      borderRadius: '4px',
-                      '&:hover': { 
-                        border: '2px solid #ff2a74',
-                        bgcolor: '#ff2a74',
-                        color: 'white',
-                        transform: 'translateY(-2px)' 
-                      },
-                      transition: 'all 0.3s ease',
-                      textTransform: 'none',
-                      fontFamily: '"Space Grotesk", sans-serif',
-                    }}
-                  >
-                    Request Instrumental Creation Session
-                  </Button>
-                </Box>
-              );
-            }
-
-            if (index === 5) {
               return (
                 <Box
                   key={index}
@@ -5494,210 +5315,7 @@ const Home: React.FC = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Instrumental Creation Request Pricing Popup */}
-      <Dialog
-        open={isInstrumentalPopupOpen}
-        onClose={() => setIsInstrumentalPopupOpen(false)}
-        TransitionComponent={Grow}
-        transitionDuration={{ enter: 400, exit: 250 }}
-        scroll="paper"
-        PaperProps={{
-          sx: {
-            bgcolor: '#0a0a0a',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '4px',
-            maxWidth: '420px',
-            width: '100%',
-            maxHeight: 'calc(100vh - 48px)',
-            py: { xs: 1.5, sm: 2 },
-            px: { xs: 2.5, sm: 3 },
-            position: 'relative',
-            boxShadow: '0 20px 45px rgba(0, 0, 0, 0.95)',
-            backgroundImage: 'none',
-            display: 'flex',
-            flexDirection: 'column'
-          }
-        }}
-        sx={{
-          backdropFilter: 'blur(10px)',
-          '& .MuiBackdrop-root': {
-            bgcolor: 'rgba(0, 0, 0, 0.85)'
-          }
-        }}
-      >
-        <IconButton 
-          onClick={() => setIsInstrumentalPopupOpen(false)} 
-          aria-label="close"
-          sx={{ 
-            position: 'absolute', 
-            top: 12, 
-            right: 12, 
-            zIndex: 10,
-            color: 'rgba(255, 255, 255, 0.6)', 
-            '&:hover': { color: 'white', bgcolor: 'rgba(255, 255, 255, 0.05)' } 
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-
-        <DialogContent 
-          sx={{ 
-            p: 0, 
-            textAlign: 'center', 
-            color: 'white', 
-            overflowY: 'auto',
-            '&::-webkit-scrollbar': {
-              display: 'none'
-            },
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none'
-          }}
-        >
-          <Typography 
-            variant="h4" 
-            sx={{ 
-              fontFamily: '"Space Grotesk", sans-serif', 
-              fontWeight: 700, 
-              fontSize: { xs: '1.3rem', sm: '1.6rem' },
-              mb: 1,
-              mt: 2.5,
-              px: 4
-            }}
-          >
-            Bespoke Beatmaking & Orchestration
-          </Typography>
-          <Typography 
-            sx={{ 
-              fontFamily: '"Linear", sans-serif',
-              fontWeight: 300,
-              fontSize: '0.9rem',
-              color: 'rgba(255, 255, 255, 0.65)',
-              mb: 2.5,
-              lineHeight: 1.4
-            }}
-          >
-            Co-create a completely unique sonic identity with elite beatmaking and majestic cinematic orchestration.
-          </Typography>
-
-          {/* Pricing Panel */}
-          <Box 
-            sx={{ 
-              bgcolor: 'rgba(255, 42, 116, 0.05)',
-              border: '1px dashed rgba(255, 42, 116, 0.25)',
-              borderRadius: '4px',
-              py: 2,
-              px: 2,
-              mb: 2.5,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'relative'
-            }}
-          >
-            {/* Offer Badge */}
-            <Box 
-              sx={{ 
-                position: 'absolute',
-                top: -10,
-                bgcolor: '#ff2a74',
-                color: 'white',
-                fontFamily: '"Space Grotesk", sans-serif',
-                fontWeight: 700,
-                fontSize: '0.68rem',
-                letterSpacing: '0.1em',
-                px: 1.5,
-                py: 0.2,
-                borderRadius: '4px',
-                animation: 'pulseGlow 2s infinite alternate',
-                '@keyframes pulseGlow': {
-                  '0%': { boxShadow: '0 0 10px rgba(255, 42, 116, 0.4)' },
-                  '100%': { boxShadow: '0 0 20px rgba(255, 42, 116, 0.8)' }
-                }
-              }}
-            >
-              LIMITED OFFER
-            </Box>
-
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 1.5, my: 1 }}>
-              {[
-                { name: 'Simple Track', promo: '70,000 TZS ($50 USD)', orig: '80,000 TZS', unit: 'per simple beat' },
-                { name: 'Classical Composition', promo: '100,000 TZS ($70 USD)', orig: '120,000 TZS', unit: 'acoustic & grand piano' },
-                { name: 'Orchestral Score', promo: '200,000 TZS ($140 USD)', orig: '250,000 TZS', unit: 'cinematic polyphonic scores' }
-              ].map((tier, idx) => (
-                <Box key={idx} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 1, borderBottom: idx < 2 ? '1px dashed rgba(255, 255, 255, 0.08)' : 'none' }}>
-                  <Box sx={{ textAlign: 'left' }}>
-                    <Typography sx={{ fontFamily: '"Space Grotesk", sans-serif', fontWeight: 600, fontSize: '0.82rem', color: '#ffffff' }}>
-                      {tier.name}
-                    </Typography>
-                    <Typography sx={{ fontFamily: '"Linear", sans-serif', fontWeight: 300, fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.45)' }}>
-                      {tier.unit}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ textAlign: 'right' }}>
-                    <Typography sx={{ textDecoration: 'line-through', color: 'rgba(255, 255, 255, 0.35)', fontSize: '0.68rem', fontFamily: '"Space Grotesk", sans-serif', mb: 0.1 }}>
-                      {tier.orig}
-                    </Typography>
-                    <Typography sx={{ color: '#ff2a74', fontWeight: 800, fontSize: '0.88rem', fontFamily: '"Space Grotesk", sans-serif' }}>
-                      {tier.promo}
-                    </Typography>
-                  </Box>
-                </Box>
-              ))}
-            </Box>
-          </Box>
-
-          {/* Inclusions List */}
-          <Box sx={{ textAlign: 'left', mb: 3, display: 'flex', flexDirection: 'column', gap: 1, px: 1 }}>
-            {[
-              'Full custom electronic beatmaker & synth programming matrices',
-              'Multi-layered cinematic orchestral arrangement & instrumentation',
-              'Tailored corporate advertising jingles & sound branding',
-              'Access to advanced elite analog/digital sound synthesis systems',
-              'Creative songwriting structure & composition consultation included'
-            ].map((text, i) => (
-              <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
-                <CheckCircleOutlineIcon sx={{ color: '#ff2a74', fontSize: 16 }} />
-                <Typography 
-                  sx={{ 
-                    fontFamily: '"Linear", sans-serif', 
-                    fontWeight: 300, 
-                    fontSize: '0.84rem', 
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    lineHeight: 1.3
-                  }}
-                >
-                  {text}
-                </Typography>
-              </Box>
-            ))}
-          </Box>
-
-          <Button
-            component={RouterLink}
-            to="/contact?service=production"
-            onClick={() => setIsInstrumentalPopupOpen(false)}
-            variant="contained"
-            fullWidth
-            sx={{
-              bgcolor: '#ff2a74',
-              color: 'white',
-              py: 1.2,
-              fontSize: '15px',
-              fontWeight: 700,
-              borderRadius: '4px',
-              boxShadow: 'none',
-              '&:hover': { bgcolor: '#e01b5d', boxShadow: 'none' },
-              fontFamily: '"Space Grotesk", sans-serif',
-              textTransform: 'none'
-            }}
-          >
-            Proceed to Book Session
-          </Button>
-        </DialogContent>
-      </Dialog>
-
-      {/* Studio Space Rental Request Pricing Popup */}
+{/* Studio Space Rental Request Pricing Popup */}
       <Dialog
         open={isRentalPopupOpen}
         onClose={() => setIsRentalPopupOpen(false)}
