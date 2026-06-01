@@ -32,8 +32,21 @@ const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
       setMinTimeReached(true);
     }, 10000); // 10 seconds
 
-    return () => clearTimeout(timer);
-  }, []);
+    // Bulletproof Fallback: Auto-fade and complete loading screen after 11.5 seconds under all circumstances
+    // (e.g. if the video fails to load, is blocked from autoplaying, or gets stuck in Safari)
+    const fallbackTimer = setTimeout(() => {
+      setFade(true);
+      const completeTimer = setTimeout(() => {
+        onComplete();
+      }, 800);
+      return () => clearTimeout(completeTimer);
+    }, 11500);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(fallbackTimer);
+    };
+  }, [onComplete]);
 
   const handleVideoCanPlay = () => {
     setVideoReady(true);
@@ -46,6 +59,7 @@ const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
   };
 
   const handleVideoEnded = () => {
+    if (fade) return;
     // 3. When video ends, verify if resources have finished loading AND 10s timer is complete
     if (resourcesLoaded && minTimeReached) {
       setFade(true);

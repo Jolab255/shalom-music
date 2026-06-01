@@ -646,8 +646,6 @@ const Home: React.FC = () => {
           position: 'relative',
           overflow: 'hidden',
           minHeight: { xs: 'auto', md: 'calc(100vh - 112px)' },
-          display: 'flex',
-          alignItems: 'center',
           // Cloudy background matching Section 2 exactly
           background: `
             radial-gradient(circle at 20% 30%, rgba(45, 45, 55, 0.45) 0%, transparent 50%),
