@@ -110,16 +110,12 @@ $email_body = "
             padding-bottom: 20px;
             margin-bottom: 30px;
         }
-        .logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 24px;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-        .logo span {
-            color: #ff2a74;
+        .logo-img {
+            height: 52px;
+            max-height: 52px;
+            width: auto;
+            margin-bottom: 12px;
+            display: inline-block;
         }
         .title {
             font-size: 18px;
@@ -169,7 +165,7 @@ $email_body = "
 <body>
     <div class='container'>
         <div class='header'>
-            <div class='logo'>SHALOM<span>MUSIC</span></div>
+            <img src='https://shalommusic.co.tz/logo.webp' alt='Shalom Music Studios' class='logo-img' />
             <div class='title'>Session Reservation Inquiry</div>
         </div>
         

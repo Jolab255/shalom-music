@@ -131,6 +131,7 @@ const Contact: React.FC = () => {
     }
 
     setIsSubmitting(true);
+    let isRedirecting = false;
 
     try {
       // Simulate server error when requested (typing 'error' or 'fail')
@@ -216,6 +217,7 @@ const Contact: React.FC = () => {
       }
 
       // Otherwise, trigger the bulletproof standard form post fallback
+      isRedirecting = true;
       showWarning('Preparing backup form to send your message directly...', 'Backup Sending');
       
       setTimeout(() => {
@@ -244,10 +246,7 @@ const Contact: React.FC = () => {
         form.submit();
       }, 1500);
     } finally {
-      // If we are redirecting, keep isSubmitting true so the button stays in progress state
-      if (!message.toLowerCase().includes('fail') && !message.toLowerCase().includes('error')) {
-        // Let form submit navigate away/submit natively
-      } else {
+      if (!isRedirecting) {
         setIsSubmitting(false);
       }
     }
