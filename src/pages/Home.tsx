@@ -65,7 +65,7 @@ const leftImages = [
 
 const rightImages = [
   '/assets/tz_piano_performance.webp',
-  '/assets/tz_voice_training.webp',
+  '/assets/tz_studio_production.webp',
   '/assets/tz_piano_lessons.webp',
   '/assets/studio_interior.png',
 ];
