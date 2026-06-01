@@ -1,10 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { Container, Typography, Box, Button, List, ListItem, ListItemIcon, ListItemText, Grid2 as Grid, Paper, Divider, Fade } from '@mui/material';
+import { Container, Typography, Box, Button, List, ListItem, ListItemIcon, ListItemText, Grid2 as Grid, Divider, Fade } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink } from 'react-router-dom';
-import MusicNoteIcon from '@mui/icons-material/MusicNote';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import PersonIcon from '@mui/icons-material/Person';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import pianoHeroVideo from '../assets/piano_hero_video.mp4';
@@ -98,7 +95,6 @@ const Lessons: React.FC = () => {
   const [activePkg, setActivePkg] = useState(0);
   const [displayPkg, setDisplayPkg] = useState(0);
   const [isFadingOut, setIsFadingOut] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     if (activePkg !== displayPkg) {
@@ -496,8 +492,8 @@ const Lessons: React.FC = () => {
             `}</style>
             <Box
               ref={containerRef}
-              onMouseEnter={() => { isPausedRef.current = true; setIsPaused(true); }}
-              onMouseLeave={() => { isPausedRef.current = false; setIsPaused(false); }}
+              onMouseEnter={() => { isPausedRef.current = true; }}
+              onMouseLeave={() => { isPausedRef.current = false; }}
               sx={{
                 display: 'flex',
                 gap: { xs: '16px', md: '24px' }, // Tight, gorgeous cinematic gap!
