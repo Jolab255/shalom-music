@@ -113,10 +113,10 @@ $email_body = "
             margin-bottom: 30px;
         }
         .logo-img {
-            height: 52px;
-            max-height: 52px;
+            height: 90px;
+            max-height: 90px;
             width: auto;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             display: inline-block;
         }
         .title {
