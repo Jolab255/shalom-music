@@ -72,16 +72,7 @@ const pricingData = {
     subtitle: 'Unlock your potential at the keyboard with tailored private instruction for all levels.',
     plans: [
       { 
-        title: 'Casual Learner', 
-        originalPrice: '60,000 TZS ($45 USD)',
-        promoPrice: '49,999 TZS ($35 USD)', 
-        unit: 'per single private session',
-        desc: 'Flexible booking tailored for busy modern schedules and recreational goals.',
-        features: ['45-Minute private grand piano coaching', 'Pay-as-you-go / No long-term commitments', 'Custom digitized practice goals & lesson notes', 'All age and skill levels welcome', 'Single acoustic grand practice session access', '24/7 direct chat support with your instructor'],
-        popular: false 
-      },
-      { 
-        title: 'Young Keys (Ages 6-12)', 
+        title: 'Young Keys Academy', 
         originalPrice: '180,000 TZS ($120 USD)',
         promoPrice: '149,999 TZS ($100 USD)', 
         unit: 'per 4-session monthly package',
@@ -90,7 +81,16 @@ const pricingData = {
         popular: false 
       },
       { 
-        title: 'Weekly Progress', 
+        title: 'Beginner Foundations', 
+        originalPrice: '60,000 TZS ($45 USD)',
+        promoPrice: '49,999 TZS ($35 USD)', 
+        unit: 'per single private session',
+        desc: 'Flexible booking tailored for busy modern schedules and recreational goals.',
+        features: ['45-Minute private grand piano coaching', 'Pay-as-you-go / No long-term commitments', 'Custom digitized practice goals & lesson notes', 'All age and skill levels welcome', 'Single acoustic grand practice session access', '24/7 direct chat support with your instructor'],
+        popular: false 
+      },
+      { 
+        title: 'Intermediate Artistry', 
         originalPrice: '220,000 TZS ($150 USD)',
         promoPrice: '179,999 TZS ($120 USD)', 
         unit: 'per 4-session monthly package',
@@ -99,7 +99,7 @@ const pricingData = {
         popular: true 
       },
       { 
-        title: 'Performance Path', 
+        title: 'Advanced Concert Mastery', 
         originalPrice: '600,000 TZS ($400 USD)',
         promoPrice: '499,999 TZS ($320 USD)', 
         unit: 'per 12-session course bundle',
