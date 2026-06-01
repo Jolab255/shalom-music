@@ -139,33 +139,68 @@ const Contact: React.FC = () => {
         throw new Error('Internal Server Error (500): The mail dispatch service is temporarily unavailable.');
       }
 
-      // Live submission using FormSubmit AJAX API
-      const response = await fetch('https://formsubmit.co/ajax/info@shalommusic.co.tz', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          service: service,
-          message: message,
-          _subject: `New Shalom Music Enquiry - ${service} from ${name}`
-        })
-      });
+      // 1. Try custom PHP SMTP gateway first (active on PHP-enabled hosting)
+      let phpSuccess = false;
+      try {
+        const phpResponse = await fetch('/send-email.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            service: service,
+            message: message
+          })
+        });
 
-      if (!response.ok) {
-        throw new Error(`Server returned status code ${response.status}: Failed to transmit message.`);
+        if (phpResponse.ok) {
+          const contentType = phpResponse.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const phpResult = await phpResponse.json();
+            if (phpResult.success === true) {
+              phpSuccess = true;
+            }
+          }
+        }
+      } catch (e) {
+        // Fall back to FormSubmit if PHP endpoint is unreachable (e.g. during local static serving)
       }
 
-      const result = await response.json();
-      
-      if (result.success === 'false' || result.success === false) {
-        throw new Error(result.message || 'The mail submission service failed to process the message.');
-      }
+      if (phpSuccess) {
+        showSuccess('Your inquiry has been successfully transmitted via our secure SMTP gateway. Our team will contact you shortly!', 'Message Dispatched');
+      } else {
+        // 2. Fallback to FormSubmit AJAX API
+        const response = await fetch('https://formsubmit.co/ajax/info@shalommusic.co.tz', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            service: service,
+            message: message,
+            _subject: `New Shalom Music Enquiry - ${service} from ${name}`,
+            _captcha: 'false'
+          })
+        });
 
-      showSuccess('Your inquiry has been successfully transmitted. Our team will contact you shortly!', 'Message Dispatched');
+        if (!response.ok) {
+          throw new Error(`Server returned status code ${response.status}: Failed to transmit message.`);
+        }
+
+        const result = await response.json();
+        
+        if (result.success === 'false' || result.success === false) {
+          throw new Error(result.message || 'The mail submission service failed to process the message.');
+        }
+
+        showSuccess('Your inquiry has been successfully transmitted. Our team will contact you shortly!', 'Message Dispatched');
+      }
       
       // Reset form on success
       setName('');
