@@ -133,17 +133,37 @@ const Contact: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate network API request with potential mock error triggers
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          // If message contains the word 'fail' or 'error', simulate a server error to demonstrate error boundary / toast error handling!
-          if (message.toLowerCase().includes('fail') || message.toLowerCase().includes('error')) {
-            reject(new Error('Internal Server Error (500): The mail dispatch service is temporarily unavailable.'));
-          } else {
-            resolve(true);
-          }
-        }, 1500);
+      // Simulate server error when requested (typing 'error' or 'fail')
+      if (message.toLowerCase().includes('fail') || message.toLowerCase().includes('error')) {
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        throw new Error('Internal Server Error (500): The mail dispatch service is temporarily unavailable.');
+      }
+
+      // Live submission using FormSubmit AJAX API
+      const response = await fetch('https://formsubmit.co/ajax/info@shalommusic.co.tz', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          service: service,
+          message: message,
+          _subject: `New Shalom Music Enquiry - ${service} from ${name}`
+        })
       });
+
+      if (!response.ok) {
+        throw new Error(`Server returned status code ${response.status}: Failed to transmit message.`);
+      }
+
+      const result = await response.json();
+      
+      if (result.success === 'false' || result.success === false) {
+        throw new Error(result.message || 'The mail submission service failed to process the message.');
+      }
 
       showSuccess('Your inquiry has been successfully transmitted. Our team will contact you shortly!', 'Message Dispatched');
       
@@ -246,7 +266,7 @@ const Contact: React.FC = () => {
 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
               {[
-                { icon: <EmailIcon sx={{ color: '#ff2a74', fontSize: '1.25rem' }} />, label: 'Email Enquiries', val: 'info@shalommusic.com', type: 'link', link: 'mailto:info@shalommusic.com' },
+                { icon: <EmailIcon sx={{ color: '#ff2a74', fontSize: '1.25rem' }} />, label: 'Email Enquiries', val: 'info@shalommusic.co.tz', type: 'link', link: 'mailto:info@shalommusic.co.tz' },
                 { icon: <PhoneIcon sx={{ color: '#ff2a74', fontSize: '1.25rem' }} />, label: 'Direct Phone', val: '0620 319 635', type: 'link', link: 'tel:+255620319635' },
                 { icon: <LocationOnIcon sx={{ color: '#ff2a74', fontSize: '1.25rem' }} />, label: 'Studio Address', val: 'Msikiti wa udongo, Dar es Salaam, Tanzania', type: 'text' }
               ].map((item, i) => (

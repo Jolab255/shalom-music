@@ -77,7 +77,16 @@ const pricingData = {
         promoPrice: '49,999 TZS ($35 USD)', 
         unit: 'per single private session',
         desc: 'Flexible booking tailored for busy modern schedules and recreational goals.',
-        features: ['45-Minute privategrand piano lesson', 'No rigid long-term commitments', 'Custom digitized practice assignments', 'All age and skill levels welcome', 'Acoustic concert grand practice access'],
+        features: ['45-Minute private grand piano coaching', 'Pay-as-you-go / No long-term commitments', 'Custom digitized practice goals & lesson notes', 'All age and skill levels welcome', 'Single acoustic grand practice session access', '24/7 direct chat support with your instructor'],
+        popular: false 
+      },
+      { 
+        title: 'Young Keys (Ages 6-12)', 
+        originalPrice: '180,000 TZS ($120 USD)',
+        promoPrice: '149,999 TZS ($100 USD)', 
+        unit: 'per 4-session monthly package',
+        desc: 'Interactive private keyboard adventures custom-tailored for younger attention spans.',
+        features: ['4 x 30-Minute private grand piano lessons', 'Complimentary Faber Adventures method books', 'Gamified visual notation & rhythmic cards', 'Acoustic grand practice room access (1 hr/week)', 'Secure student progress portfolio & practice logs', 'Monthly junior progress achievement certificate', 'Performance slot in seasonal recitals & showcases'],
         popular: false 
       },
       { 
@@ -86,7 +95,7 @@ const pricingData = {
         promoPrice: '179,999 TZS ($120 USD)', 
         unit: 'per 4-session monthly package',
         desc: 'Consistent guidance to establish robust technique foundations and reading habits.',
-        features: ['4 x 45-Minute weekly Grand lessons', 'Accelerated scale & velocity exercises', 'Personalized homework check portfolios', 'Bi-weekly virtual practice consultations', 'Recital performance program eligibility'],
+        features: ['4 x 45-Minute weekly Grand lessons', 'ABRSM / Trinity graded syllabus integrated', 'Complimentary core lesson books & sheet music', 'Acoustic grand practice room access (2 hrs/week)', 'Secure student progress portfolio & practice tracker', 'Direct 24/7 instructor messaging support', '2 makeup lesson rollover credits per semester', 'Performance slot in seasonal showcases (including HD video recording of your play)'],
         popular: true 
       },
       { 
@@ -95,7 +104,7 @@ const pricingData = {
         promoPrice: '499,999 TZS ($320 USD)', 
         unit: 'per 12-session course bundle',
         desc: 'Bespoke advanced curriculum targeted for board exams, auditions, and recitals.',
-        features: ['12 x 45-Minute flexible lessons', 'Advanced grand repertoire voicing', 'Board exam, audition & recital prep', '24/7 direct instructor messaging channel', 'Complex music theory & harmony modules'],
+        features: ['12 x 45-Minute flexible private lessons', 'Elite board exam preparation (ABRSM Grades 1-8)', 'All advanced curriculum books & materials included', 'Acoustic grand practice room access (4 hrs/week)', 'Secure student progress portfolio & physical performance feedback', 'Priority scheduling for all lessons', 'Unlimited makeup lesson self-rescheduling', 'VIP recital performance slot with multi-camera HD recording', 'Advanced music theory & multi-voice harmony workshops'],
         popular: false 
       }
     ]
@@ -549,7 +558,7 @@ const Pricing: React.FC = () => {
           {[
             { q: 'Can I cancel or pause my monthly lessons package?', a: 'Yes. You can cancel or pause your weekly lessons subscription at any time with a 2-week written notice. Unused sessions in a billing cycle can be rescheduled with 24-hour advance warning.' },
             { q: 'Is professional studio gear and engineering included in the production cost?', a: 'Absolutely. All pricing packages include access to our complete high-end microphone vault, calibrated tracking environments, analog/digital hardware desks, and a dedicated in-house professional audio engineer.' },
-            { q: 'Do you offer hybrid or completely remote online lessons?', a: 'Yes. We provide high-definition, multi-camera virtual piano and music theory instruction via Zoom or Google Meet. Students globally can study using our custom digitized sheet modules.' },
+            { q: 'Do you offer remote or online virtual classes?', a: 'No, all piano lessons are held physically in our world-class studio classrooms. We believe in the power of direct physical guidance, hands-on hand posture alignment, and direct mechanical experience on our real acoustic grand pianos.' },
             { q: 'What is the turnaround time for mixing and mastering projects?', a: 'A standard single track production takes 5-7 business days from the final recording date. Complete EPs take approximately 2-3 weeks, depending on review and revision speed.' },
             { q: 'How often should a grand or upright piano receive tuning services?', a: 'To maintain the best soundboard health and tuning stability, residential pianos should be calibrated twice a year. High-use teaching grand pianos or recording studio grand pianos receive monthly maintenance tunings.' }
           ].map((faq, i) => (

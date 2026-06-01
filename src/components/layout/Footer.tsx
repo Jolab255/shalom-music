@@ -200,7 +200,7 @@ const Footer: React.FC = () => {
                   Enquiries
                 </Typography>
                 <Link 
-                  href="mailto:info@shalommusic.com" 
+                  href="mailto:info@shalommusic.co.tz" 
                   color="inherit" 
                   underline="none"
                   sx={{ 
@@ -212,7 +212,7 @@ const Footer: React.FC = () => {
                     '&:hover': { color: '#ff2a74' }
                   }}
                 >
-                  info@shalommusic.com
+                  info@shalommusic.co.tz
                 </Link>
               </Box>
               <Box>
