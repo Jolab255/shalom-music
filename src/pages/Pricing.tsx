@@ -214,6 +214,7 @@ const Pricing: React.FC = () => {
       <Helmet>
         <title>Pricing Plans & Rates | Shalom Music Studios</title>
         <meta name="description" content="Transparent, glassmorphic pricing options for music production, professional piano lessons, concert tuning, and high-end studio room rentals." />
+        <link rel="canonical" href="https://shalommusic.co.tz/pricing" />
       </Helmet>
 
       {/* Ambient Pink Glow Overlay */}

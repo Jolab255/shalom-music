@@ -10,7 +10,8 @@ const About: React.FC = () => {
     <>
       <Helmet>
         <title>About Us | Shalom Music Studios</title>
-        <meta name="description" content="Discover the story behind Shalom Music. Our mission is to provide excellence in music production and education." />
+        <meta name="description" content="Discover the story behind Shalom Music Studios. Our mission is to provide excellence in music production and education in Tanzania." />
+        <link rel="canonical" href="https://shalommusic.co.tz/about" />
       </Helmet>
 
       {/* Hero Section */}

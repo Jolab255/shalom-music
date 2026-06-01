@@ -10,8 +10,9 @@ const PianoService: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Piano Service | Shalom Music Studios</title>
-        <meta name="description" content="Professional piano tuning, maintenance, and repair services at Shalom Music. Keep your instrument in perfect harmony." />
+        <title>Professional Piano Tuning & Repair | Shalom Music Studios</title>
+        <meta name="description" content="Expert piano tuning, mechanical regulation, voicing, and certified technical repair services in Dar es Salaam, Tanzania." />
+        <link rel="canonical" href="https://shalommusic.co.tz/piano-service" />
       </Helmet>
 
       {/* Hero Section */}

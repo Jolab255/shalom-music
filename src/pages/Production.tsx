@@ -43,8 +43,9 @@ const Production: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Music Production | Shalom Music Studios</title>
-        <meta name="description" content="Professional audio recording, mixing, mastering, and song composition at Shalom Music." />
+        <title>Music Production & Recording | Shalom Music Studios</title>
+        <meta name="description" content="Professional audio recording, multi-track capture, mixing, mastering, and song composition at Shalom Music Studios." />
+        <link rel="canonical" href="https://shalommusic.co.tz/production" />
       </Helmet>
 
       {/* Hero Section */}

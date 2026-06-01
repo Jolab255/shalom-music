@@ -7,3 +7,41 @@
   RewriteCond %{REQUEST_FILENAME} !-l
   RewriteRule . /index.html [L]
 </IfModule>
+
+# ====================================================================
+# NATIVE SECURITY HARDENING (Zero Third-Party Dependencies)
+# ====================================================================
+
+# 1. Disable directory listing (prevents hackers from browsing folders/files)
+Options -Indexes
+
+# 2. Block access to sensitive system/configuration files
+<FilesMatch "^\.">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+<FilesMatch "^(package\.json|package-lock\.json|tsconfig\.json|vite\.config\.ts|eslint\.config\.js|README\.md)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# 3. Enforce Secure HTTP Response Headers
+<IfModule mod_headers.c>
+  # Clickjacking Prevention (instructs browser not to embed the page in external frames/iframes)
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # MIME Sniffing Prevention (prevents the browser from running non-scripts as scripts)
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Enable XSS Protection filter in older browsers
+  Header always set X-XSS-Protection "1; mode=block"
+
+  # Referrer Policy (limits referrer data sent to third parties)
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Strict-Transport-Security HSTS (Forces HTTPS - active for 1 year, including subdomains)
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # Permissions Policy (restricts access to dangerous browser APIs)
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=()"
+</IfModule>

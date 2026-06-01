@@ -1,0 +1,15 @@
+# ====================================================================
+# SHALOM MUSIC STUDIOS - ROBOTS.TXT
+# ====================================================================
+
+User-agent: *
+Allow: /
+
+# Exclude internal/system files from crawling
+Disallow: /send-email.php
+Disallow: /node_modules/
+Disallow: /dist/
+Disallow: /src/
+
+# Point Google to our complete site structure
+Sitemap: https://shalommusic.co.tz/sitemap.xml

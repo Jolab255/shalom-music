@@ -10,8 +10,9 @@ const StudioRental: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Studio Rental | Shalom Music Studios</title>
-        <meta name="description" content="Rent our professional recording studio space at Shalom Music. Perfect for independent artists, podcasts, and rehearsals." />
+        <title>Studio Space Rental | Shalom Music Studios</title>
+        <meta name="description" content="Rent our professional recording studio spaces in Dar es Salaam. Optimized acoustics, premium instrument vaults, and creative suites." />
+        <link rel="canonical" href="https://shalommusic.co.tz/rental" />
       </Helmet>
 
       {/* Hero Section */}

@@ -296,8 +296,9 @@ const Contact: React.FC = () => {
       }}
     >
       <Helmet>
-        <title>Contact Us | Shalom Music Studios</title>
-        <meta name="description" content="Get in touch with Shalom Music for music production, lessons, or studio rental inquiries." />
+        <title>Contact Us & Session Reservation | Shalom Music Studios</title>
+        <meta name="description" content="Secure your session reservation at Shalom Music Studios. Contact our Dar es Salaam sanctuary for booking & inquiries." />
+        <link rel="canonical" href="https://shalommusic.co.tz/contact" />
       </Helmet>
 
       {/* Ambient Pink Glow Overlay */}
