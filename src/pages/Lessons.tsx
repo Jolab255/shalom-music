@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { Container, Typography, Box, Button, List, ListItem, ListItemIcon, ListItemText, Grid2 as Grid, Divider, Fade } from '@mui/material';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import pianoHeroVideo from '../assets/piano_hero_video.mp4';
 import shalomCtaVideo from '../assets/shalom-cta.mp4';
 import pianoLessonSect2Img from '../assets/piano-lesson-sect-2.png';
 
@@ -13,6 +13,12 @@ import pianoBeginnerImg from '../assets/piano-beginner.webp';
 import pianoIntermediateImg from '../assets/piano-intermediate.webp';
 import pianoKidsImg from '../assets/piano-kids.webp';
 import pianoAdvancedImg from '../assets/piano-lesson-advanced.webp';
+
+import kidsLevelImg from '../assets/kids-level.webp';
+import intermediaryLevelImg from '../assets/intermediary-level.webp';
+import advancedLevel2Img from '../assets/advanced-level2.webp';
+import advancedLevelImg from '../assets/advanced-level.webp';
+import beginnerLevelImg from '../assets/beginner-level.webp';
 
 // Google-research-backed elite training packages data for Shalom Music Studios
 const packagesData = [
@@ -82,6 +88,43 @@ const packagesData = [
   }
 ];
 
+const heroImages = [
+  beginnerLevelImg,
+  kidsLevelImg,
+  intermediaryLevelImg,
+  advancedLevelImg,
+  advancedLevel2Img
+];
+
+// Specific descriptions for each hero image level
+const levelDescriptions = [
+  {
+    title: 'Junior Discovery',
+    description: 'We use gamified tools like visual notation flashcards, rhythmic clapping games, and colorful stickers to make piano intuitive for kids aged 6-12.',
+    tools: ['Visual Flashcards', 'Gamified Notation', 'Rhythmic Games']
+  },
+  {
+    title: 'Beginner Launchpad',
+    description: 'Focusing on relaxed hand posture and dual-staff reading from day one. We use contemporary pieces to build confidence and coordination.',
+    tools: ['Posture Correction', 'Dual-Staff Reading', 'Modern Repertoire']
+  },
+  {
+    title: 'Artistry & Flow',
+    description: 'Transitioning to advanced arpeggio routines and dynamic touch. We introduce chord harmony to help students find their own musical voice.',
+    tools: ['Dynamic Shading', 'Chord Harmony', 'ABRSM / Trinity']
+  },
+  {
+    title: 'Concert Precision',
+    description: 'Mastering complex keyboard voicings and speed arpeggios. Elite preparation for board certifications and professional performance.',
+    tools: ['Polyrhythmic Mastery', 'Virtuoso Literature', 'Exam Prep']
+  },
+  {
+    title: 'Elite Performance',
+    description: 'Deep dive into performance psychology and advanced interpretation. Cultivating professional-grade control for concert recitals.',
+    tools: ['Performance Psychology', 'HD Recital Recording', 'Advanced Theory']
+  }
+];
+
 const Lessons: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const XRef = useRef<number>(0);
@@ -92,7 +135,19 @@ const Lessons: React.FC = () => {
   const hasInitializedRef = useRef<boolean>(false);
   const lastTimeRef = useRef<number | null>(null);
 
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      lastScrollY.current = currentScrollY;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const [activePkg, setActivePkg] = useState(0);
+  const [activeHeroIdx, setActiveHeroIdx] = useState(0);
   const [displayPkg, setDisplayPkg] = useState(0);
   const [isFadingOut, setIsFadingOut] = useState(false);
 
@@ -111,9 +166,9 @@ const Lessons: React.FC = () => {
   useEffect(() => {
     lastTimeRef.current = null;
 
-    const animate = (timestamp: number) => {
+    const animateMarquee = (timestamp: number) => {
       if (!containerRef.current || containerRef.current.children.length === 0) {
-        requestRef.current = requestAnimationFrame(animate);
+        requestRef.current = requestAnimationFrame(animateMarquee);
         return;
       }
 
@@ -125,9 +180,10 @@ const Lessons: React.FC = () => {
 
       const firstChild = containerRef.current.children[0] as HTMLElement;
       const cardWidth = firstChild.getBoundingClientRect().width;
-      
+
       const computedStyle = window.getComputedStyle(containerRef.current);
-      const gap = parseFloat(computedStyle.gap) || 24;
+      const rawGap = parseFloat(computedStyle.gap);
+      const gap = isNaN(rawGap) ? 24 : rawGap;
 
       const cycleWidth = 4 * (cardWidth + gap);
       const isDesktop = window.innerWidth >= 900;
@@ -143,7 +199,7 @@ const Lessons: React.FC = () => {
       if (isAnimatingToTargetRef.current) {
         const dx = targetXRef.current - XRef.current;
         XRef.current += dx * 0.08;
-        
+
         if (Math.abs(dx) < 0.5) {
           XRef.current = targetXRef.current;
           isAnimatingToTargetRef.current = false;
@@ -152,7 +208,7 @@ const Lessons: React.FC = () => {
         // High-fidelity delta-time based scrolling (exact 40s duration per image cycle, Hz independent!)
         const pixelsPerSecond = (cardWidth + gap) / 40;
         XRef.current -= pixelsPerSecond * deltaTime;
-        
+
         if (-XRef.current >= cycleWidth) {
           XRef.current += cycleWidth;
         }
@@ -174,10 +230,10 @@ const Lessons: React.FC = () => {
         });
       }
 
-      requestRef.current = requestAnimationFrame(animate);
+      requestRef.current = requestAnimationFrame(animateMarquee);
     };
 
-    requestRef.current = requestAnimationFrame(animate);
+    requestRef.current = requestAnimationFrame(animateMarquee);
     return () => {
       if (requestRef.current) {
         cancelAnimationFrame(requestRef.current);
@@ -191,7 +247,8 @@ const Lessons: React.FC = () => {
     const firstChild = containerRef.current.children[0] as HTMLElement;
     const cardWidth = firstChild.getBoundingClientRect().width;
     const computedStyle = window.getComputedStyle(containerRef.current);
-    const gap = parseFloat(computedStyle.gap) || 24;
+    const rawGap = parseFloat(computedStyle.gap);
+    const gap = isNaN(rawGap) ? 24 : rawGap;
 
     const cycleWidth = 4 * (cardWidth + gap);
     const isDesktop = window.innerWidth >= 900;
@@ -204,7 +261,7 @@ const Lessons: React.FC = () => {
       if (i % 4 === targetPkg) {
         // Target translation to align the left edge of the image exactly at triggerX (40% from right)
         const targetX = triggerX - i * (cardWidth + gap);
-        
+
         // Keep targetX within [-cycleWidth, 0] to avoid blank spaces on the left
         let normalizedTargetX = targetX;
         while (normalizedTargetX > 0) {
@@ -228,6 +285,7 @@ const Lessons: React.FC = () => {
   };
 
   return (
+
     <>
       <Helmet>
         <title>Professional Piano Lessons in Tanzania | Shalom Music Studios</title>
@@ -235,229 +293,210 @@ const Lessons: React.FC = () => {
         <link rel="canonical" href="https://shalommusic.co.tz/lessons" />
       </Helmet>
 
-      <Box 
-        sx={{ 
-          bgcolor: '#000000', 
-          color: 'white', 
+      <Box
+        sx={{
+          bgcolor: '#000000',
+          color: 'white',
           minHeight: '100vh',
           position: 'relative',
-          overflow: 'hidden',
-          pt: { xs: 12, md: 16 }, // Space for navigation offset
+          pt: 0,
           pb: 0,
-          // Cloudy background matching Home page exactly
+          overflowX: 'hidden', // Contain horizontal overflow without breaking sticky (no overflowY: hidden)
           background: `
             radial-gradient(circle at 20% 30%, rgba(45, 45, 55, 0.45) 0%, transparent 50%),
             radial-gradient(circle at 80% 70%, rgba(35, 35, 45, 0.4) 0%, transparent 60%),
             radial-gradient(circle at 50% 50%, rgba(25, 25, 30, 0.3) 0%, transparent 80%),
             #000000
           `,
-          // Sandy texture overlay matching Home page exactly
           '&::before': {
             content: '""',
             position: 'absolute',
             top: 0, left: 0, right: 0, bottom: 0,
             width: '100%', height: '100%',
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-            opacity: 0.045, 
+            opacity: 0.045,
             pointerEvents: 'none',
             zIndex: 3
           }
         }}
       >
-        {/* Cinematic Background Video - Starts at the very top! */}
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: { xs: '650px', md: '750px' }, // Covers the top hero area perfectly
-            width: '100%',
-            zIndex: 1,
-            pointerEvents: 'none',
-            overflow: 'hidden',
-            transform: 'translateZ(0)',
-            willChange: 'transform',
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden'
-          }}
-        >
-          <video
-            src={pianoHeroVideo}
-            muted
-            playsInline
-            autoPlay
-            loop
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: 0.42,
-              willChange: 'transform',
-              transform: 'translateZ(0)'
-            }}
-          />
-          <Box 
-            sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: {
-                xs: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.98) 100%)',
-                md: 'linear-gradient(to right, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 35%, rgba(0, 0, 0, 0.9) 45%, rgba(0, 0, 0, 0.5) 60%, transparent 80%)'
-              },
-              zIndex: 2
-            }}
-          />
-        </Box>
 
-        {/* Ambient Pink Glows */}
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '15%',
-            right: '-10%',
-            width: { xs: '300px', md: '600px' },
-            height: { xs: '300px', md: '600px' },
-            background: 'radial-gradient(circle, rgba(255, 42, 116, 0.06) 0%, transparent 70%)',
-            filter: 'blur(80px)',
-            pointerEvents: 'none',
-            zIndex: 1,
-            transform: 'translateZ(0)',
-            willChange: 'transform'
-          }}
-        />
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: '20%',
-            left: '-10%',
-            width: { xs: '300px', md: '600px' },
-            height: { xs: '300px', md: '600px' },
-            background: 'radial-gradient(circle, rgba(255, 42, 116, 0.05) 0%, transparent 70%)',
-            filter: 'blur(80px)',
-            pointerEvents: 'none',
-            zIndex: 1,
-            transform: 'translateZ(0)',
-            willChange: 'transform'
-          }}
-        />
 
-        <Box 
-          sx={{ 
-            py: { xs: 8, md: 14 }, 
-            position: 'relative', 
-            zIndex: 2,
-            overflow: 'hidden'
-          }}
-        >
+        <Box sx={{ position: 'relative', bgcolor: '#000000' }}>
+          
+          <Box sx={{ position: 'relative', width: '100%' }}>
+            {/* Persistent Fixed Red Overlay (Static relative to viewport) */}
+            <Box
+              sx={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                height: '100vh',
+                width: { md: '35%', lg: '30%' },
+                background: 'linear-gradient(to right, rgba(150, 0, 0, 0.95) 0%, rgba(150, 0, 0, 0.95) 40%, rgba(150, 0, 0, 0.85) 70%, rgba(150, 0, 0, 0) 100%)',
+                zIndex: 10,
+                pointerEvents: 'none',
+                display: { xs: 'none', md: 'block' },
+                // Artistic Sandy Texture Overlay
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  top: 0, left: 0, right: 0, bottom: 0,
+                  width: '100%', height: '100%',
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                  opacity: 0.045,
+                  pointerEvents: 'none',
+                  zIndex: 1
+                }
+              }}
+            />
 
-          <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 3 }}>
-            <Grid container spacing={6} sx={{ alignItems: 'center' }}>
-              <Grid size={{ xs: 12, md: 8 }}>
-                <Typography 
-                  variant="h2" 
-                  sx={{ 
-                    fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
-                    fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4rem' },
-                    fontWeight: 900, 
-                    lineHeight: 1.1,
-                    mb: 3,
-                    color: 'white',
-                    letterSpacing: '0.02em'
+            {/* ── Hero Section: CSS Fixed-Background Reveal Sequence ── */}
+            {heroImages.map((imgSrc, idx) => (
+              <Box
+                key={idx}
+                sx={{
+                  position: 'relative',
+                  height: '65vh', 
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  bgcolor: '#000000',
+                }}
+              >
+                {/* Content that scrolls OVER the fixed sidebar (Scroll-triggered animation) */}
+                <Box
+                  component={motion.div}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: false, amount: 0.5 }}
+                  transition={{ duration: 2, ease: "easeInOut" }}
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    width: { md: '35%', lg: '30%' },
+                    zIndex: 11,
+                    pointerEvents: 'none',
+                    display: { xs: 'none', md: 'flex' },
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    pl: { md: 5, lg: 8, xl: 12 },
+                    pr: 4
                   }}
                 >
-                  Master the Art of Piano
-                </Typography>
-                <Typography 
-                  variant="h5" 
-                  sx={{ 
-                    fontFamily: '"Linear", sans-serif',
-                    fontSize: { xs: '1rem', sm: '1.15rem' },
-                    mb: 5, 
-                    color: 'rgba(255, 255, 255, 0.7)', 
-                    fontWeight: 300, 
-                    lineHeight: 1.6 
-                  }}
-                >
-                  Unlock your musical potential with tailored piano instruction. We combine classical foundations with modern techniques to help you become the pianist you want to be.
-                </Typography>
-                <Box 
-                  sx={{ 
-                    display: 'flex', 
-                    gap: { xs: 1.5, sm: 2 }, 
-                    flexWrap: 'nowrap', 
-                    width: { xs: '100%', md: 'auto' },
-                    maxWidth: '540px',
-                    justifyContent: { xs: 'center', md: 'flex-start' }
-                  }}
-                >
-                  <Button 
-                    component={RouterLink}
-                    to="/contact?service=lessons"
-                    variant="contained" 
-                    size="large" 
-                    sx={{ 
-                      bgcolor: '#ff2a74', 
-                      color: 'white', 
-                      px: { xs: 2.2, sm: 3.5, md: 4.5 }, 
-                      py: { xs: 1.2, sm: 1.6, md: 1.8 }, 
-                      fontSize: { xs: '13.5px', sm: '15.5px', md: '18px' },
-                      fontWeight: 700,
-                      borderRadius: 1,
-                      boxShadow: 'none',
-                      '&:hover': { bgcolor: '#e01b5d', transform: 'translateY(-2px)', boxShadow: 'none' },
-                      transition: 'all 0.3s ease',
-                      textTransform: 'none',
-                      fontFamily: '"Space Grotesk", sans-serif',
-                      whiteSpace: 'nowrap'
-                    }}
-                  >
-                    Book a Trial
-                  </Button>
-                  <Button 
-                    component={RouterLink}
-                    to="/pricing"
-                    variant="outlined" 
-                    size="large" 
-                    sx={{ 
-                      borderColor: 'rgba(255, 255, 255, 0.2)', 
-                      color: 'white', 
-                      px: { xs: 2.2, sm: 3.5, md: 4.5 }, 
-                      py: { xs: 1.2, sm: 1.6, md: 1.8 }, 
-                      fontSize: { xs: '13.5px', sm: '15.5px', md: '18px' },
-                      fontWeight: 700,
-                      borderRadius: 1,
-                      '&:hover': { borderColor: 'white', bgcolor: 'rgba(255, 255, 255, 0.05)', transform: 'translateY(-2px)' },
-                      transition: 'all 0.3s ease',
-                      textTransform: 'none',
-                      fontFamily: '"Space Grotesk", sans-serif',
-                      whiteSpace: 'nowrap'
-                    }}
-                  >
-                    View Pricing
-                  </Button>
+                    <Box>
+                      <Typography 
+                        variant="overline" 
+                        sx={{ 
+                          color: 'white',
+                          fontWeight: 800, 
+                          letterSpacing: '0.3em', 
+                          fontFamily: '"Space Grotesk", sans-serif',
+                          mb: 1.5, 
+                          display: 'block',
+                          opacity: 0.8
+                        }}
+                      >
+                        LEVEL 0{idx + 1}
+                      </Typography>
+                      <Typography 
+                        variant="h3" 
+                        sx={{ 
+                          fontFamily: '"Space Grotesk", sans-serif', 
+                          fontWeight: 800, 
+                          color: 'white', 
+                          mb: 3,
+                          fontSize: { md: '1.6rem', lg: '2.2rem', xl: '2.6rem' },
+                          lineHeight: 1.1,
+                          textTransform: 'uppercase'
+                        }}
+                      >
+                        {levelDescriptions[idx].title}
+                      </Typography>
+                      <Typography 
+                        sx={{ 
+                          fontFamily: '"Linear", sans-serif', 
+                          color: 'rgba(255,255,255,0.9)', 
+                          fontSize: { md: '0.85rem', lg: '0.92rem' }, 
+                          lineHeight: 1.7, 
+                          maxWidth: '380px'
+                        }}
+                      >
+                        {levelDescriptions[idx].description}
+                      </Typography>
+                    </Box>
                 </Box>
-              </Grid>
-            </Grid>
-          </Container>
-        </Box>
 
-        {/* Section 2: Interactive Packages Pathways */}
-        <Box 
-          sx={{ 
-            py: 0, 
-            position: 'relative', 
-            zIndex: 2,
-            overflow: 'hidden',
-            height: { xs: 'auto', md: '110vh' },
-            minHeight: { xs: '750px', md: '700px' },
-            display: 'flex',
-            alignItems: 'center'
-          }}
-        >
+              {/* The Image Window: 50% width, aspect ratio locked. The reveal happens ONLY here. */}
+              <Box
+                sx={{
+                  width: { xs: '90%', sm: '70%', md: '50%' },
+                  aspectRatio: '1542 / 1020',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  clipPath: 'inset(0)', // clip-path is the ONLY way to clip background-attachment:fixed
+                  zIndex: 1,
+                  mt: 0,
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0, left: 0, right: 0, bottom: 0,
+                    backgroundImage: `url(${imgSrc})`,
+                    backgroundAttachment: 'fixed',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: { xs: 'contain', md: '50% auto' },
+                    zIndex: -1,
+                  }
+                }}
+              />
+
+              {/* Ambient Pink Glows on first image */}
+              {idx === 0 && (
+                <>
+                  <Box sx={{ position: 'absolute', top: '15%', right: '-10%', width: { xs: '300px', md: '600px' }, height: { xs: '300px', md: '600px' }, background: 'radial-gradient(circle, rgba(255, 42, 116, 0.06) 0%, transparent 70%)', filter: 'blur(80px)', pointerEvents: 'none', zIndex: 0 }} />
+                  <Box sx={{ position: 'absolute', bottom: '20%', left: '-10%', width: { xs: '300px', md: '600px' }, height: { xs: '300px', md: '600px' }, background: 'radial-gradient(circle, rgba(255, 42, 116, 0.05) 0%, transparent 70%)', filter: 'blur(80px)', pointerEvents: 'none', zIndex: 0 }} />
+                </>
+              )}
+            </Box>
+          ))}
+        </Box>
+      </Box>
+
+      {/* Section 2: Interactive Packages Pathways */}
+      <Box
+        sx={{
+          py: 0,
+          position: 'relative',
+          zIndex: 15, // Sit above the fixed red overlay (zIndex: 10)
+          overflow: 'hidden',
+          height: { xs: 'auto', md: '110vh' },
+          minHeight: { xs: '750px', md: '700px' },
+          display: 'flex',
+          alignItems: 'center',
+          // Cloudy background for atmospheric depth
+          background: `
+            radial-gradient(circle at 80% 30%, rgba(45, 45, 55, 0.45) 0%, transparent 72%),
+            radial-gradient(circle at 20% 70%, rgba(35, 35, 45, 0.4) 0%, transparent 82%),
+            transparent
+          `,
+          // Sandy texture overlay
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0, left: 0, right: 0, bottom: 0,
+            width: '100%', height: '100%',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            opacity: 0.045,
+            pointerEvents: 'none',
+            zIndex: 1
+          }
+        }}
+      >
+
           {/* Continuous Infinite Scrolling Marquee */}
           <Box
             sx={{
@@ -496,7 +535,7 @@ const Lessons: React.FC = () => {
               onMouseLeave={() => { isPausedRef.current = false; }}
               sx={{
                 display: 'flex',
-                gap: { xs: '16px', md: '24px' }, // Tight, gorgeous cinematic gap!
+                gap: 0, // Removed gap completely to 0!
                 alignItems: 'center', // Vertically center the cards!
                 width: 'max-content',
                 height: '100%',
@@ -607,78 +646,78 @@ const Lessons: React.FC = () => {
                         position: 'relative'
                       }}
                     >
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        fontFamily: '"Space Grotesk", sans-serif',
-                        fontWeight: 800,
-                        fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.4rem' },
-                        mb: { xs: 2.5, md: 1.5 },
-                        color: 'white',
-                        lineHeight: 1.2
-                      }}
-                    >
-                      {packagesData[displayPkg].title}
-                    </Typography>
-                    
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        fontFamily: '"Linear", sans-serif',
-                        color: 'rgba(255, 255, 255, 0.75)',
-                        fontSize: '0.98rem',
-                        lineHeight: 1.7,
-                        mb: { xs: 3, md: 2 },
-                        minHeight: { xs: 'auto', sm: 'auto', md: '120px' }
-                      }}
-                    >
-                      {packagesData[displayPkg].description}
-                    </Typography>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          fontFamily: '"Space Grotesk", sans-serif',
+                          fontWeight: 800,
+                          fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.4rem' },
+                          mb: { xs: 2.5, md: 1.5 },
+                          color: 'white',
+                          lineHeight: 1.2
+                        }}
+                      >
+                        {packagesData[displayPkg].title}
+                      </Typography>
 
-                    <Divider sx={{ mb: { xs: 3, md: 2 }, borderColor: 'rgba(255,255,255,0.08)' }} />
-                    
-                    <Typography
-                      variant="subtitle2"
-                      sx={{
-                        fontFamily: '"Space Grotesk", sans-serif',
-                        fontWeight: 700,
-                        color: 'white',
-                        letterSpacing: '0.05em',
-                        mb: 1.5,
-                        textTransform: 'uppercase'
-                      }}
-                    >
-                      Key Inclusions:
-                    </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontFamily: '"Linear", sans-serif',
+                          color: 'rgba(255, 255, 255, 0.75)',
+                          fontSize: '0.98rem',
+                          lineHeight: 1.7,
+                          mb: { xs: 3, md: 2 },
+                          minHeight: { xs: 'auto', sm: 'auto', md: '120px' }
+                        }}
+                      >
+                        {packagesData[displayPkg].description}
+                      </Typography>
 
-                    <Grid container spacing={2} sx={{ mb: { xs: 4, md: 3.5 } }}>
-                      {packagesData[displayPkg].inclusions.map((item, i) => (
-                        <Grid size={{ xs: 12, sm: 6 }} key={i}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <CheckCircleIcon sx={{ fontSize: '1.1rem', color: '#ff2a74', flexShrink: 0 }} />
-                            <Typography 
-                              fontFamily='"Linear", sans-serif'
-                              fontSize="0.88rem"
-                              color="rgba(255, 255, 255, 0.85)"
-                              sx={{ lineHeight: 1.3 }}
-                            >
-                              {item}
-                            </Typography>
-                          </Box>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Box>
-                </Fade>
+                      <Divider sx={{ mb: { xs: 3, md: 2 }, borderColor: 'rgba(255,255,255,0.08)' }} />
+
+                      <Typography
+                        variant="subtitle2"
+                        sx={{
+                          fontFamily: '"Space Grotesk", sans-serif',
+                          fontWeight: 700,
+                          color: 'white',
+                          letterSpacing: '0.05em',
+                          mb: 1.5,
+                          textTransform: 'uppercase'
+                        }}
+                      >
+                        Key Inclusions:
+                      </Typography>
+
+                      <Grid container spacing={2} sx={{ mb: { xs: 4, md: 3.5 } }}>
+                        {packagesData[displayPkg].inclusions.map((item, i) => (
+                          <Grid size={{ xs: 12, sm: 6 }} key={i}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                              <CheckCircleIcon sx={{ fontSize: '1.1rem', color: '#ff2a74', flexShrink: 0 }} />
+                              <Typography
+                                fontFamily='"Linear", sans-serif'
+                                fontSize="0.88rem"
+                                color="rgba(255, 255, 255, 0.85)"
+                                sx={{ lineHeight: 1.3 }}
+                              >
+                                {item}
+                              </Typography>
+                            </Box>
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </Box>
+                  </Fade>
 
                   <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 3, alignItems: 'center' }}>
-                    <Button 
+                    <Button
                       component={RouterLink}
                       to="/contact?service=lessons"
-                      variant="contained" 
-                      sx={{ 
-                        bgcolor: '#ff2a74', 
-                        color: 'white', 
+                      variant="contained"
+                      sx={{
+                        bgcolor: '#ff2a74',
+                        color: 'white',
                         fontFamily: '"Space Grotesk", sans-serif',
                         fontWeight: 800,
                         borderRadius: 0,
@@ -690,18 +729,18 @@ const Lessons: React.FC = () => {
                         fontSize: '1rem',
                         whiteSpace: 'nowrap',
                         width: { xs: '100%', sm: 'auto' },
-                        '&:hover': { 
+                        '&:hover': {
                           bgcolor: '#e01b5d',
                           transform: 'translateY(-2px)'
-                        } 
+                        }
                       }}
                     >
                       Enroll in This Program
                     </Button>
 
-                    <Box 
-                      sx={{ 
-                        display: 'flex', 
+                    <Box
+                      sx={{
+                        display: 'flex',
                         gap: 2.5,
                         width: { xs: '100%', sm: 'auto' },
                         justifyContent: { xs: 'center', sm: 'flex-start' }
@@ -752,14 +791,16 @@ const Lessons: React.FC = () => {
           </Container>
         </Box>
 
-        <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 }, position: 'relative', zIndex: 2 }}>
-          <Typography 
-            variant="h3" 
-            align="center" 
-            sx={{ 
+        {/* ── Content Sections (Opaque wrapper to cover fixed hero overlay from Section 3 onwards) ── */}
+        <Box sx={{ position: 'relative', zIndex: 20, bgcolor: '#000000' }}>
+          <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 }, position: 'relative', zIndex: 20 }}>
+            <Typography
+              variant="h3"
+            align="center"
+            sx={{
               fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
               fontSize: { xs: '2.2rem', sm: '3rem' },
-              mb: 2, 
+              mb: 2,
               fontWeight: 800,
               color: 'white',
               letterSpacing: '0.02em'
@@ -767,14 +808,14 @@ const Lessons: React.FC = () => {
           >
             What You'll Learn
           </Typography>
-          <Typography 
-            variant="h6" 
-            align="center" 
-            sx={{ 
+          <Typography
+            variant="h6"
+            align="center"
+            sx={{
               fontFamily: '"Linear", sans-serif',
-              color: 'rgba(255, 255, 255, 0.6)', 
-              mb: 10, 
-              maxWidth: 700, 
+              color: 'rgba(255, 255, 255, 0.6)',
+              mb: 10,
+              maxWidth: 700,
               mx: 'auto',
               fontSize: { xs: '0.95rem', sm: '1.1rem' },
               lineHeight: 1.6
@@ -784,34 +825,34 @@ const Lessons: React.FC = () => {
           </Typography>
           <Grid container spacing={4} alignItems="stretch">
             {[
-              { 
-                level: 'Young Keys', 
+              {
+                level: 'Young Keys',
                 focus: 'Ages 6-12 Play & Discover',
                 items: ['Hand Posture & Finger Shape', 'Basic Note Names & Keys', 'Fun Melodies & Cartoon Themes', 'Rhythmic Clapping & Ear Play'],
                 popular: false
               },
-              { 
-                level: 'Beginner', 
+              {
+                level: 'Beginner',
                 focus: 'Foundations & Keyboard Joy',
                 items: ['Dual-Staff Reading Basics', 'Rested Hand Posture & Touch', 'Essential Major Scale Shapes', 'Playing Classical & Pop Themes'],
                 popular: false
               },
-              { 
-                level: 'Intermediate', 
+              {
+                level: 'Intermediate',
                 focus: 'Technique & Personal Style',
                 items: ['Graded Syllabus Repertoire', 'Chord Theory & Harmonies', 'Dynamic Shading & Articulation', 'Sight-Reading Fluency'],
                 popular: false
               },
-              { 
-                level: 'Advanced', 
+              {
+                level: 'Advanced',
                 focus: 'Artistry & Concert Mastery',
                 items: ['Virtuoso Concert Repertoire', 'Technical Speed & Polyrhythms', 'Board Exam Preparation', 'Performance Psychology'],
                 popular: false
               }
             ].map((program, idx) => (
               <Grid size={{ xs: 12, sm: 6, md: 3 }} key={idx} sx={{ display: 'flex' }}>
-                <Box 
-                  sx={{ 
+                <Box
+                  sx={{
                     width: '100%',
                     display: 'flex',
                     flexDirection: 'column',
@@ -823,16 +864,16 @@ const Lessons: React.FC = () => {
                     borderRadius: 0, // Sharp corners!
                     borderTop: program.popular ? '3px solid #ff2a74' : '1px solid rgba(255, 255, 255, 0.08)',
                     boxShadow: '0 30px 60px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-                    position: 'relative', 
+                    position: 'relative',
                     overflow: 'visible',
                     p: { xs: 4, sm: 5 }
                   }}
                 >
 
-                  <Typography 
-                    variant="h4" 
-                    sx={{ 
-                      fontWeight: 800, 
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: 800,
                       fontFamily: '"Space Grotesk", sans-serif',
                       fontSize: '1.8rem',
                       letterSpacing: '0.02em',
@@ -842,10 +883,10 @@ const Lessons: React.FC = () => {
                   >
                     {program.level}
                   </Typography>
-                  <Typography 
-                    variant="subtitle1" 
-                    sx={{ 
-                      mb: 4, 
+                  <Typography
+                    variant="subtitle1"
+                    sx={{
+                      mb: 4,
                       color: program.popular ? '#ff2a74' : 'rgba(255, 255, 255, 0.5)',
                       fontWeight: 600,
                       fontFamily: '"Space Grotesk", sans-serif'
@@ -860,13 +901,13 @@ const Lessons: React.FC = () => {
                         <ListItemIcon sx={{ minWidth: 32, color: '#ff2a74' }}>
                           <CheckCircleIcon fontSize="small" />
                         </ListItemIcon>
-                        <ListItemText 
-                          primary={item} 
-                          primaryTypographyProps={{ 
+                        <ListItemText
+                          primary={item}
+                          primaryTypographyProps={{
                             fontFamily: '"Linear", sans-serif',
                             fontSize: '0.95rem',
                             color: 'rgba(255, 255, 255, 0.85)'
-                          }} 
+                          }}
                         />
                       </ListItem>
                     ))}
@@ -877,14 +918,14 @@ const Lessons: React.FC = () => {
           </Grid>
         </Container>
 
-        <Box sx={{ pt: { xs: 0.5, md: 1.5 }, pb: { xs: 8, md: 12 }, position: 'relative', zIndex: 2 }}>
+        <Box sx={{ pt: { xs: 0.5, md: 1.5 }, pb: { xs: 8, md: 12 }, position: 'relative', zIndex: 20 }}>
           <Container maxWidth="lg" sx={{ textAlign: 'center' }}>
             {/* Centered Headline - Exact match to Home Page tab active headline */}
-            <Typography 
-              variant="h3" 
-              sx={{ 
-                mb: 3, 
-                fontWeight: 700, 
+            <Typography
+              variant="h3"
+              sx={{
+                mb: 3,
+                fontWeight: 700,
                 fontFamily: '"Space Grotesk", sans-serif',
                 fontSize: { xs: '2rem', sm: '2.5rem', md: '3.2rem' },
                 color: 'white',
@@ -894,11 +935,11 @@ const Lessons: React.FC = () => {
               Master the Art of Piano
             </Typography>
             {/* Centered Paragraph - Exact match to Home Page tab active description */}
-            <Typography 
-              sx={{ 
-                mb: 5, 
-                color: 'rgba(255, 255, 255, 0.7)', 
-                fontSize: '1.1rem', 
+            <Typography
+              sx={{
+                mb: 5,
+                color: 'rgba(255, 255, 255, 0.7)',
+                fontSize: '1.1rem',
                 lineHeight: 1.8,
                 fontFamily: '"Linear", sans-serif',
                 fontWeight: 300,
@@ -910,11 +951,11 @@ const Lessons: React.FC = () => {
             </Typography>
 
             {/* Central Centered Widescreen Showcase Image - Enlarged and Glassless */}
-            <Box 
-              sx={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                mb: 6, 
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                mb: 6,
                 width: '100%',
                 maxWidth: '960px', // Refined mid-size for perfect visual proportions!
                 mx: 'auto',
@@ -928,13 +969,13 @@ const Lessons: React.FC = () => {
                 WebkitBackfaceVisibility: 'hidden'
               }}
             >
-              <Box 
+              <Box
                 component="img"
                 src={pianoLessonSect2Img}
                 alt="Students practicing piano technique"
-                sx={{ 
-                  width: '100%', 
-                  height: 'auto', 
+                sx={{
+                  width: '100%',
+                  height: 'auto',
                   objectFit: 'cover',
                   transform: 'translateZ(0)',
                   willChange: 'transform'
@@ -943,47 +984,47 @@ const Lessons: React.FC = () => {
             </Box>
 
             {/* Symmetrical Centered Grid of Core Skills - Exact match to Home Page active tab features grid */}
-            <Grid 
-              container 
-              spacing={{ xs: 1.5, sm: 3 }} 
-              sx={{ 
-                maxWidth: '1100px', 
-                mx: 'auto', 
+            <Grid
+              container
+              spacing={{ xs: 1.5, sm: 3 }}
+              sx={{
+                maxWidth: '1100px',
+                mx: 'auto',
                 mb: 6,
                 textAlign: 'left'
               }}
             >
               {[
-                { 
-                  title: 'Theory', 
+                {
+                  title: 'Theory',
                   desc: 'Master music notation, key signatures, and chord harmonies to unlock the architecture of sound.',
                 },
-                { 
-                  title: 'Technique', 
+                {
+                  title: 'Technique',
                   desc: 'Build independent finger control, correct arm weight distribution, speed, and fluid articulation.',
                 },
-                { 
-                  title: 'Performance', 
+                {
+                  title: 'Performance',
                   desc: 'Develop stage presence, manage performance anxiety, and master beautiful artistic interpretation.',
                 },
-                { 
-                  title: 'Improvisation', 
+                {
+                  title: 'Improvisation',
                   desc: 'Learn scale patterns to play by ear, create gorgeous melodic variations, and jam confidently.',
                 },
-                { 
-                  title: 'Composition', 
+                {
+                  title: 'Composition',
                   desc: 'Transform your musical ideas into beautiful original sheet music and tailored arrangements.',
                 },
-                { 
-                  title: 'Ear Training', 
+                {
+                  title: 'Ear Training',
                   desc: 'Train your ears to recognize chord types, pitch intervals, and dictate melodies instantly.',
                 }
               ].map((item, i) => (
                 <Grid size={{ xs: 6, sm: 6, md: 4 }} key={i}>
-                  <Box 
-                    sx={{ 
-                      p: 1.5, 
-                      bgcolor: 'transparent', 
+                  <Box
+                    sx={{
+                      p: 1.5,
+                      bgcolor: 'transparent',
                       height: '100%',
                       display: 'flex',
                       flexDirection: 'column',
@@ -994,11 +1035,11 @@ const Lessons: React.FC = () => {
                   >
                     <CheckCircleOutlineIcon sx={{ color: '#ff2a74', fontSize: 20 }} />
                     <Box>
-                      <Typography 
-                        sx={{ 
-                          fontFamily: '"Linear", sans-serif', 
-                          fontWeight: 700, 
-                          fontSize: { xs: '1.1rem', md: '1.2rem' }, 
+                      <Typography
+                        sx={{
+                          fontFamily: '"Linear", sans-serif',
+                          fontWeight: 700,
+                          fontSize: { xs: '1.1rem', md: '1.2rem' },
                           color: 'white',
                           mb: 0.75,
                           letterSpacing: '0.01em'
@@ -1006,11 +1047,11 @@ const Lessons: React.FC = () => {
                       >
                         {item.title}
                       </Typography>
-                      <Typography 
-                        sx={{ 
-                          fontFamily: '"Linear", sans-serif', 
-                          fontWeight: 300, 
-                          fontSize: { xs: '0.9rem', md: '0.95rem' }, 
+                      <Typography
+                        sx={{
+                          fontFamily: '"Linear", sans-serif',
+                          fontWeight: 300,
+                          fontSize: { xs: '0.9rem', md: '0.95rem' },
                           color: 'rgba(255, 255, 255, 0.6)',
                           lineHeight: 1.4
                         }}
@@ -1057,14 +1098,15 @@ const Lessons: React.FC = () => {
         </Box>
 
         {/* Common Site-Wide CTA Section */}
-        <Box 
+        <Box
           id="cta-section"
-          sx={{ 
+          sx={{
             bgcolor: '#000000',
-            color: 'white', 
+            color: 'white',
             minHeight: { xs: 'auto', md: '620px' },
             py: { xs: 10, sm: 15 },
             position: 'relative',
+            zIndex: 20,
             overflow: 'hidden',
             display: 'flex',
             alignItems: 'center',
@@ -1090,7 +1132,7 @@ const Lessons: React.FC = () => {
               width: '100%',
               height: '100%',
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-              opacity: 0.045, 
+              opacity: 0.045,
               pointerEvents: 'none',
               zIndex: 2
             }
@@ -1151,7 +1193,7 @@ const Lessons: React.FC = () => {
 
           <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 3 }}>
             <Grid container>
-              <Grid 
+              <Grid
                 size={{ xs: 12, md: 6 }}
                 sx={{
                   display: 'flex',
@@ -1164,10 +1206,10 @@ const Lessons: React.FC = () => {
               >
 
                 {/* Heading */}
-                <Typography 
-                  variant="h2" 
-                  sx={{ 
-                    mb: 4, 
+                <Typography
+                  variant="h2"
+                  sx={{
+                    mb: 4,
                     fontWeight: 900,
                     fontFamily: '"Sans Superellipse Ragan 2", sans-serif',
                     letterSpacing: '0.02em',
@@ -1181,11 +1223,11 @@ const Lessons: React.FC = () => {
                 </Typography>
 
                 {/* Description */}
-                <Typography 
-                  variant="body1" 
-                  sx={{ 
-                    mb: 5, 
-                    color: 'rgba(255, 255, 255, 0.72)', 
+                <Typography
+                  variant="body1"
+                  sx={{
+                    mb: 5,
+                    color: 'rgba(255, 255, 255, 0.72)',
                     fontWeight: 300,
                     fontFamily: '"Linear", sans-serif',
                     fontSize: { xs: '0.92rem', sm: '1.02rem' },
@@ -1268,6 +1310,7 @@ const Lessons: React.FC = () => {
           </Container>
         </Box>
       </Box>
+    </Box>
     </>
   );
 };

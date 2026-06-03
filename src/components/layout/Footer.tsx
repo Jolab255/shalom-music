@@ -45,6 +45,7 @@ const Footer: React.FC = () => {
         pb: 4, 
         mt: 'auto',
         position: 'relative',
+        zIndex: 20,
         overflow: 'hidden',
         borderTop: '1px solid rgba(255, 42, 116, 0.15)',
         // Sandy texture overlay matching other sections exactly

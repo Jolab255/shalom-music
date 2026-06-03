@@ -48,6 +48,21 @@ const pricingData = {
         popular: false 
       },
       { 
+        title: 'Audio Capturing', 
+        originalPrice: '400,000 TZS ($280 USD)',
+        promoPrice: '399,999 TZS ($250 USD)', 
+        unit: 'per location recording project',
+        desc: 'High-fidelity ambient sound capture and location sound for film overlays.',
+        features: ['Specialized field recording modules', 'Stereo microphone array configurations', 'Organic background soundscape documenting', 'High-definition raw multitrack delivery'],
+        popular: false 
+      }
+    ]
+  },
+  instrumental: {
+    headline: 'INSTRUMENTAL CREATION',
+    subtitle: 'Custom beatmaking, classical arrangements, and cinematic orchestral compositions.',
+    plans: [
+      { 
         title: 'Simple Track Instrumental', 
         originalPrice: '80,000 TZS ($60 USD)',
         promoPrice: '70,000 TZS ($50 USD)', 
@@ -72,16 +87,7 @@ const pricingData = {
         unit: 'per cinematic orchestral score',
         desc: 'Epic multi-layered symphonic scores, dramatic pads, brass sections, and complex polyphonic dynamics.',
         features: ['Colossal symphonic orchestral arrangement', 'Comprehensive string, brass & woodwind matrix', 'Exclusive full buyout commercial rights', 'Complete track files session folder bounce'],
-        popular: false 
-      },
-      { 
-        title: 'Audio Capturing', 
-        originalPrice: '400,000 TZS ($280 USD)',
-        promoPrice: '399,999 TZS ($250 USD)', 
-        unit: 'per location recording project',
-        desc: 'High-fidelity ambient sound capture and location sound for film overlays.',
-        features: ['Specialized field recording modules', 'Stereo microphone array configurations', 'Organic background soundscape documenting', 'High-definition raw multitrack delivery'],
-        popular: false 
+        popular: true 
       }
     ]
   },
@@ -196,7 +202,7 @@ const pricingData = {
 };
 
 const Pricing: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<'production' | 'lessons' | 'rental' | 'pianoServices'>('production');
+  const [activeCategory, setActiveCategory] = useState<'production' | 'instrumental' | 'lessons' | 'rental' | 'pianoServices'>('production');
 
   const currentCategory = pricingData[activeCategory];
 
@@ -267,6 +273,7 @@ const Pricing: React.FC = () => {
         >
           {[
             { id: 'production', label: 'Music Production' },
+            { id: 'instrumental', label: 'Instrumental Creation' },
             { id: 'lessons', label: 'Piano Lessons' },
             { id: 'rental', label: 'Studio Rental' },
             { id: 'pianoServices', label: 'Piano Services' }
