@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Typography, Box, Button, Divider, Grid2 as Grid, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useSearchParams } from 'react-router-dom';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -167,34 +167,61 @@ const pricingData = {
     ]
   },
   pianoServices: {
-    headline: 'CONCERT PIANO SERVICES',
-    subtitle: 'Preserve the action mechanism accuracy and soundboard depth of grand instruments.',
+    headline: 'PIANO ACCOMPANIST & PERFORMANCE BOOKINGS',
+    subtitle: 'Book concert-grade grand piano performances and professional accompaniment for your special events.',
     plans: [
       { 
-        title: 'Standard Tuning', 
-        originalPrice: '200,000 TZS ($150 USD)',
-        promoPrice: '149,999 TZS ($120 USD)', 
-        unit: 'per standard grand tuning service',
-        desc: 'Keep your instrument pitch-perfect and structurally calibrated.',
-        features: ['Professional Pitch Raise and Tuning', 'Comprehensive action mechanism inspection', 'Soundboard, bridge & pinblock checks', 'Relative humidity consulting', '2-Hour dedicated concert grand work'],
+        title: 'Church Service Booking', 
+        originalPrice: '150,000 TZS ($110 USD)',
+        promoPrice: '120,000 TZS ($85 USD)', 
+        unit: 'per service session',
+        desc: 'Professional live piano accompaniment for worship services, Sabbath convocations, and choir rehearsals.',
+        features: ['Liturgical worship accompaniment', 'Hymnal harmonizations & service playing', 'Choir support & rehearsal guidance', 'Prelude & postlude sacred music playing'],
         popular: false 
       },
       { 
-        title: 'Touch Regulation', 
-        originalPrice: '480,000 TZS ($350 USD)',
+        title: 'Camp Meeting Booking', 
+        originalPrice: '500,000 TZS ($360 USD)',
         promoPrice: '399,999 TZS ($280 USD)', 
-        unit: 'per key regulation overhaul',
-        desc: 'Calibrate key responsiveness, velocity touch, and velocity balance.',
-        features: ['Complete grand key mechanism calibration', 'Key leveling & key dip depth adjustments', 'Hammer blow & escapement alignments', 'Highly recommended every 2 years', 'Complete damper action alignments'],
+        unit: 'per day (multi-session)',
+        desc: 'Dedicated all-day performance and accompaniment coverage for camp meetings, spiritual conventions, and outdoor retreats.',
+        features: ['Up to 8 hours of live performance', 'Accompaniment for mass choirs & solos', 'Real-time transposition flexibility', 'Backup digital keyboard setup option'],
         popular: true 
       },
       { 
-        title: 'Hammer Voicing', 
-        originalPrice: '300,000 TZS ($220 USD)',
-        promoPrice: '249,999 TZS ($180 USD)', 
-        unit: 'per concert voicing service',
-        desc: 'Unlock deep mellow warmth or brilliant concert power from your hammers.',
-        features: ['Needle hammer felt voicing adjust', 'Concert tone balance key-by-key alignment', 'String seating & string leveling', 'Highly recommended before sessions', 'Acoustic voicing to specific room profile'],
+        title: 'Music Concert Booking', 
+        originalPrice: '800,000 TZS ($580 USD)',
+        promoPrice: '699,999 TZS ($490 USD)', 
+        unit: 'per concert event',
+        desc: 'Concert-grade piano recitals, collaborative classical accompanying for soloists, and chamber ensemble backing.',
+        features: ['Virtuoso solo piano recitals', 'Collaborative sonata & aria performance', 'Chamber orchestra/ensemble backing', 'Direct stage setup & sound coordination'],
+        popular: false 
+      },
+      { 
+        title: 'Wedding Ceremony Booking', 
+        originalPrice: '250,000 TZS ($180 USD)',
+        promoPrice: '199,999 TZS ($140 USD)', 
+        unit: 'per wedding event',
+        desc: 'Score the special moments of your union with gorgeous live piano music for your processional, registry, and cocktail hour.',
+        features: ['Custom bridal march processional', 'Registry signing background underscores', 'Elegant cocktail hour jazz/pop standards', 'Custom romantic song arrangements'],
+        popular: false 
+      },
+      { 
+        title: 'Function Booking', 
+        originalPrice: '350,000 TZS ($250 USD)',
+        promoPrice: '299,999 TZS ($210 USD)', 
+        unit: 'per event session',
+        desc: 'Polished background piano standards and walk-up fanfare playing for corporate banquets, award ceremonies, and grand launches.',
+        features: ['Sophisticated ambient piano music', 'Official walk-up/theme fanfares', 'Flexible playlist curation', 'Seamless high-fidelity sound coordination'],
+        popular: false 
+      },
+      { 
+        title: 'Other Places Booking', 
+        originalPrice: '200,000 TZS ($150 USD)',
+        promoPrice: '149,999 TZS ($110 USD)', 
+        unit: 'per booking session',
+        desc: 'Versatile piano accompaniment for funerals, private home gatherings, academic masterclasses, and community events.',
+        features: ['Solemn memorial service hymns', 'Academic masterclass demonstrations', 'High-end private home sessions', 'Flexible time block allocation'],
         popular: false 
       }
     ]
@@ -202,7 +229,20 @@ const pricingData = {
 };
 
 const Pricing: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<'production' | 'instrumental' | 'lessons' | 'rental' | 'pianoServices'>('production');
+  const [searchParams] = useSearchParams();
+  const categoryParam = searchParams.get('category') || 'production';
+  const initialCategory = ['production', 'instrumental', 'lessons', 'rental', 'pianoServices'].includes(categoryParam)
+    ? (categoryParam as any)
+    : 'production';
+
+  const [activeCategory, setActiveCategory] = useState<'production' | 'instrumental' | 'lessons' | 'rental' | 'pianoServices'>(initialCategory);
+
+  React.useEffect(() => {
+    const cat = searchParams.get('category');
+    if (cat && ['production', 'instrumental', 'lessons', 'rental', 'pianoServices'].includes(cat)) {
+      setActiveCategory(cat as any);
+    }
+  }, [searchParams]);
 
   const currentCategory = pricingData[activeCategory];
 
@@ -262,13 +302,19 @@ const Pricing: React.FC = () => {
         <Box 
           sx={{ 
             display: 'flex', 
-            justifyContent: 'center', 
-            flexWrap: 'wrap',
+            justifyContent: { xs: 'flex-start', sm: 'center' }, 
+            flexWrap: 'nowrap',
             gap: 1.5,
             borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
             pb: 2,
-            maxWidth: '820px',
-            mx: 'auto'
+            maxWidth: '100%',
+            mx: 'auto',
+            overflowX: 'auto',
+            '-ms-overflow-style': 'none',
+            'scrollbarWidth': 'none',
+            '&::-webkit-scrollbar': {
+              display: 'none'
+            }
           }}
         >
           {[
@@ -285,6 +331,7 @@ const Pricing: React.FC = () => {
                 onClick={() => setActiveCategory(cat.id as any)}
                 variant="contained"
                 sx={{
+                  flexShrink: 0,
                   bgcolor: active ? '#ff2a74' : 'rgba(255, 255, 255, 0.04)',
                   color: 'white',
                   fontWeight: 700,

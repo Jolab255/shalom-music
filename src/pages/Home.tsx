@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Container, Typography, Box, Button, Grid2 as Grid, Dialog, DialogContent, IconButton, Grow } from '@mui/material';
+import { Container, Typography, Box, Button, Grid2 as Grid, Dialog, DialogContent, IconButton, Grow, Fade } from '@mui/material';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PianoIcon from '@mui/icons-material/Piano';
@@ -179,6 +179,1007 @@ const typingSegments = [
   }
 ];
 
+const teamMembers = [
+  {
+    name: "Lukas Joshua",
+    position: "Founder & Lead Producer",
+    image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=400&h=400&q=80",
+    description: "Multi-instrumentalist and award-winning engineer who has crafted Dar es Salaam's finest acoustic works."
+  },
+  {
+    name: "Sarah Mwangi",
+    position: "Head of Piano Education",
+    image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=400&h=400&q=80",
+    description: "ABRSM Graded Specialist & concert pianist with a passion for cultivating expressive keyboard mastery."
+  },
+  {
+    name: "David Kilonzo",
+    position: "Senior Mixing & Mastering Engineer",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&h=400&q=80",
+    description: "Sound physics expert specialized in capturing vocal warmth and delivering pristine, radio-ready masters."
+  }
+];
+
+const KnowUsSectionComponent: React.FC = () => {
+  const [activeAboutVideo, setActiveAboutVideo] = useState<1 | 2>(1);
+  const video1Ref = useRef<HTMLVideoElement>(null);
+  const video2Ref = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const handleAboutVideoEnded = () => {
+    if (activeAboutVideo === 1) {
+      setActiveAboutVideo(2);
+    }
+  };
+
+  useEffect(() => {
+    if (activeAboutVideo === 2 && video2Ref.current) {
+      video2Ref.current.play().catch((err) => {
+        console.warn("Video 2 autoplay failed:", err);
+      });
+    }
+  }, [activeAboutVideo]);
+
+  const [typingSegmentIdx, setTypingSegmentIdx] = useState(0);
+  const [typedTitle0, setTypedTitle0] = useState("");
+  const [typedTitle1, setTypedTitle1] = useState("");
+  const [typedTitle2, setTypedTitle2] = useState("");
+  const [typedText0, setTypedText0] = useState("");
+  const [typedText1, setTypedText1] = useState("");
+  const [typedText2, setTypedText2] = useState("");
+  const [isTypingTitle, setIsTypingTitle] = useState(true);
+  const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
+  const [startStaggeredFadeOut, setStartStaggeredFadeOut] = useState(false);
+  const [showTeam, setShowTeam] = useState(false);
+
+  useEffect(() => {
+    if (!hasEnteredViewport) return;
+
+    let timer: any;
+    
+    if (typingSegmentIdx === 0) {
+      const segment = typingSegments[0];
+      if (isTypingTitle) {
+        if (typedTitle0.length < segment.title.length) {
+          timer = setTimeout(() => {
+            setTypedTitle0(segment.title.substring(0, typedTitle0.length + 2));
+          }, 1);
+        } else {
+          timer = setTimeout(() => setIsTypingTitle(false), 5);
+        }
+      } else {
+        if (typedText0.length < segment.text.length) {
+          timer = setTimeout(() => {
+            setTypedText0(segment.text.substring(0, typedText0.length + 5));
+          }, 1);
+        } else {
+          timer = setTimeout(() => {
+            setTypingSegmentIdx(1);
+            setIsTypingTitle(true);
+          }, 10);
+        }
+      }
+    } else if (typingSegmentIdx === 1) {
+      const segment = typingSegments[1];
+      if (isTypingTitle) {
+        if (typedTitle1.length < segment.title.length) {
+          timer = setTimeout(() => {
+            setTypedTitle1(segment.title.substring(0, typedTitle1.length + 2));
+          }, 1);
+        } else {
+          timer = setTimeout(() => setIsTypingTitle(false), 5);
+        }
+      } else {
+        if (typedText1.length < segment.text.length) {
+          timer = setTimeout(() => {
+            setTypedText1(segment.text.substring(0, typedText1.length + 5));
+          }, 1);
+        } else {
+          timer = setTimeout(() => {
+            setTypingSegmentIdx(2);
+            setIsTypingTitle(true);
+          }, 10);
+        }
+      }
+    } else if (typingSegmentIdx === 2) {
+      const segment = typingSegments[2];
+      if (isTypingTitle) {
+        if (typedTitle2.length < segment.title.length) {
+          timer = setTimeout(() => {
+            setTypedTitle2(segment.title.substring(0, typedTitle2.length + 2));
+          }, 1);
+        } else {
+          timer = setTimeout(() => setIsTypingTitle(false), 5);
+        }
+      } else {
+        if (typedText2.length < segment.text.length) {
+          timer = setTimeout(() => {
+            setTypedText2(segment.text.substring(0, typedText2.length + 5));
+          }, 1);
+        } else {
+          setTypingSegmentIdx(3);
+        }
+      }
+    }
+
+    return () => clearTimeout(timer);
+  }, [
+    hasEnteredViewport,
+    typingSegmentIdx,
+    isTypingTitle,
+    typedTitle0,
+    typedTitle1,
+    typedTitle2,
+    typedText0,
+    typedText1,
+    typedText2
+  ]);
+
+  useEffect(() => {
+    if (typingSegmentIdx === 3) {
+      // 1. Wait 3.0s after typing finishes, then start the fade out of self-typing text
+      const fadeOutTimer = setTimeout(() => {
+        setStartStaggeredFadeOut(true);
+      }, 3000);
+
+      // 2. Wait 4.0s (3s pause + 1.0s transition duration) to mount team members view
+      const showTeamTimer = setTimeout(() => {
+        setShowTeam(true);
+      }, 4000);
+
+      return () => {
+        clearTimeout(fadeOutTimer);
+        clearTimeout(showTeamTimer);
+      };
+    }
+  }, [typingSegmentIdx]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasEnteredViewport(true);
+        } else {
+          // If the section leaves the viewport, immediately reset animations
+          setTypedTitle0("");
+          setTypedTitle1("");
+          setTypedTitle2("");
+          setTypedText0("");
+          setTypedText1("");
+          setTypedText2("");
+          setTypingSegmentIdx(0);
+          setIsTypingTitle(true);
+          setHasEnteredViewport(false);
+          setStartStaggeredFadeOut(false);
+          setShowTeam(false);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [typingSegmentIdx]);
+
+  return (
+    <Box 
+      id="about"
+      ref={sectionRef}
+      sx={{ 
+        bgcolor: '#000000',
+        color: 'white', 
+        pt: 8, // Reduced top padding
+        pb: { xs: 8, sm: 10 },
+        position: 'relative',
+        overflow: 'hidden',
+        // Force hardware acceleration to prevent flickering while scrolling
+        transform: 'translate3d(0, 0, 0)',
+        willChange: 'transform',
+        WebkitBackfaceVisibility: 'hidden',
+        backfaceVisibility: 'hidden',
+        // Cloudy background using radial-gradients blending into pure black
+        background: `
+          radial-gradient(circle at 50% 10%, rgba(45, 45, 55, 0.35) 0%, transparent 60%),
+          radial-gradient(circle at 10% 80%, rgba(35, 35, 45, 0.3) 0%, transparent 70%),
+          #000000
+        `,
+        // Sandy texture overlay using data URI SVG noise with low opacity
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          opacity: 0.035, 
+          pointerEvents: 'none',
+          zIndex: 1,
+          // Hardware acceleration
+          transform: 'translate3d(0, 0, 0)',
+          willChange: 'transform',
+          WebkitBackfaceVisibility: 'hidden',
+          backfaceVisibility: 'hidden',
+        }
+      }}
+    >
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+        {/* Section Heading */}
+        <Typography 
+          variant="h2" 
+          align="center" 
+          sx={{ 
+            mb: 2, 
+            fontWeight: 800,
+            fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
+            fontSize: { xs: '2rem', sm: '2.5rem', md: '3.2rem' },
+            letterSpacing: '0.06em',
+            color: 'transparent',
+            WebkitTextStroke: '1.5px #ffffff',
+            textTransform: 'uppercase'
+          }}
+        >
+          Know Us
+        </Typography>
+
+        <Typography
+          variant="body1"
+          align="center"
+          sx={{
+            mb: 6,
+            color: 'rgba(255, 255, 255, 0.6)',
+            fontFamily: '"Space Grotesk", sans-serif',
+            fontSize: { xs: '0.85rem', sm: '1rem' },
+            letterSpacing: '0.05em',
+            maxWidth: '650px',
+            mx: 'auto'
+          }}
+        >
+          Step inside our sanctuary of sound. Watch our journey unfold as we craft acoustic excellence and share the heart behind Shalom Music.
+        </Typography>
+
+        {/* Interactive Cinema Video Board */}
+        <Box 
+          sx={{ 
+            position: 'relative',
+            width: '100%',
+            aspectRatio: showTeam ? { xs: 'auto', md: '16/9' } : '16/9',
+            height: showTeam ? 'auto' : 'auto',
+            minHeight: showTeam ? { md: '520px', lg: '620px' } : 'auto',
+            maxHeight: '80vh',
+            borderRadius: { xs: '8px', sm: '16px' },
+            overflow: showTeam ? 'visible' : 'hidden',
+            border: 'none',
+            boxShadow: '0 30px 60px rgba(0, 0, 0, 0.8)',
+            bgcolor: '#000000',
+            // Force hardware acceleration to prevent flickering while scrolling
+            transform: 'translate3d(0, 0, 0)',
+            willChange: 'transform',
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+          }}
+        >
+          {/* First Video */}
+          <video 
+            ref={video1Ref}
+            src={aboutUsVideo1}
+            muted
+            playsInline
+            autoPlay
+            onEnded={handleAboutVideoEnded}
+            style={{ 
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%', 
+              height: '100%', 
+              objectFit: 'cover',
+              display: 'block',
+              transition: 'opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1)',
+              opacity: activeAboutVideo === 1 ? 1 : 0,
+              zIndex: activeAboutVideo === 1 ? 2 : 1,
+              transform: 'translate3d(0, 0, 0)',
+              willChange: 'opacity',
+            }}
+          />
+          {/* Second Video */}
+          <video 
+            ref={video2Ref}
+            src={aboutUsVideo2}
+            muted
+            playsInline
+            loop
+            preload="none"
+            style={{ 
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%', 
+              height: '100%', 
+              objectFit: 'cover',
+              display: 'block',
+              transition: 'opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1)',
+              opacity: activeAboutVideo === 2 ? 1 : 0,
+              zIndex: activeAboutVideo === 2 ? 2 : 1,
+              transform: 'translate3d(0, 0, 0)',
+              willChange: 'opacity',
+            }}
+          />
+
+          {/* Dark Cinematic Vignette Overlay */}
+          <Box 
+            sx={{ 
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.75) 100%)',
+              bgcolor: 'rgba(0, 0, 0, 0.45)', // Guaranteed high-contrast dark overlay
+              zIndex: 8,
+              pointerEvents: 'none',
+              display: { xs: 'none', md: 'block' }
+            }}
+          />
+
+          {/* Grid Container for Cards Overlay (Desktop only) */}
+          {!showTeam && (
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                left: { xs: '16px', sm: '20px', md: '28px' },
+                right: { xs: '16px', sm: '20px', md: '28px' },
+                display: { xs: 'none', md: 'grid' },
+                gridTemplateColumns: '1fr 1fr 1fr',
+                gap: '28px',
+                alignItems: 'center', // Centers cards vertically
+                zIndex: 10,
+                pointerEvents: 'none'
+              }}
+            >
+              {typingSegments.map((segment, idx) => {
+                const isCurrent = typingSegmentIdx === idx;
+                const isStarted = typingSegmentIdx >= idx;
+                const typedTitle = idx === 0 ? typedTitle0 : idx === 1 ? typedTitle1 : typedTitle2;
+                const typedText = idx === 0 ? typedText0 : idx === 1 ? typedText1 : typedText2;
+                
+                return (
+                  <Box
+                    key={idx}
+                    sx={{
+                      backdropFilter: 'blur(20px) saturate(180%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                      bgcolor: 'rgba(12, 12, 15, 0.84)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: 0,
+                      padding: '28px 32px',
+                      boxShadow: '0 30px 60px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+                      transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                      transitionDelay: startStaggeredFadeOut 
+                        ? (idx === 0 ? '0ms' : idx === 1 ? '300ms' : '600ms') 
+                        : '0ms',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 2,
+                      minHeight: '120px', // Baseline height, expands equally upwards and downwards
+                      pointerEvents: isStarted && !startStaggeredFadeOut ? 'auto' : 'none',
+                      opacity: startStaggeredFadeOut ? 0 : (isStarted ? 1 : 0),
+                      transform: startStaggeredFadeOut ? 'translateY(-16px)' : (isStarted ? 'translateY(0)' : 'translateY(24px)'),
+                      gridColumn: idx + 1,
+                      '&:hover': {
+                        border: '1px solid rgba(255, 255, 255, 0.16)',
+                        boxShadow: '0 35px 70px rgba(0, 0, 0, 0.98)',
+                        bgcolor: 'rgba(14, 14, 18, 0.9)',
+                      }
+                    }}
+                  >
+                    {/* Title */}
+                    <Typography
+                      sx={{
+                        fontFamily: '"Linear", sans-serif',
+                        fontSize: '20px',
+                        fontWeight: 700,
+                        color: '#ff2d55', // Pinky!
+                        letterSpacing: '0.04em',
+                        textTransform: 'uppercase',
+                        display: 'flex',
+                        alignItems: 'center',
+                        minHeight: '28px'
+                      }}
+                    >
+                      {typedTitle}
+                      {isCurrent && isTypingTitle && (
+                        <Box
+                          component="span"
+                          sx={{
+                            display: 'inline-block',
+                            width: '2px',
+                            height: '18px',
+                            bgcolor: '#ff2d55', // Pinky cursor
+                            marginLeft: '6px',
+                            animation: 'blinkCursor 0.8s infinite',
+                            '@keyframes blinkCursor': {
+                              '0%, 100%': { opacity: 0 },
+                              '50%': { opacity: 1 }
+                            }
+                          }}
+                        />
+                      )}
+                    </Typography>
+
+                    {/* Text */}
+                    <Typography
+                      sx={{
+                        fontFamily: '"Linear", sans-serif',
+                        fontSize: '16px',
+                        fontWeight: 300,
+                        color: 'rgba(255, 255, 255, 0.88)',
+                        lineHeight: 1.75,
+                        position: 'relative'
+                      }}
+                    >
+                      {typedText}
+                      {isCurrent && !isTypingTitle && typedText.length < segment.text.length && (
+                        <Box
+                          component="span"
+                          sx={{
+                            display: 'inline-block',
+                            width: '2px',
+                            height: '13px',
+                            bgcolor: '#ffffff',
+                            marginLeft: '3px',
+                            verticalAlign: 'middle',
+                            animation: 'blinkCursor 0.8s infinite',
+                            '@keyframes blinkCursor': {
+                              '0%, 100%': { opacity: 0 },
+                              '50%': { opacity: 1 }
+                            }
+                          }}
+                        />
+                      )}
+                    </Typography>
+                  </Box>
+                );
+              })}
+            </Box>
+          )}
+
+          {/* Desktop Team Overlay */}
+          {showTeam && (
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                left: { xs: '16px', sm: '20px', md: '28px' },
+                right: { xs: '16px', sm: '20px', md: '28px' },
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: { md: 2, lg: 3 },
+                zIndex: 12,
+                animation: 'fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+                '@keyframes fadeIn': {
+                  '0%': { opacity: 0 },
+                  '100%': { opacity: 1 }
+                }
+              }}
+            >
+              {/* Title Meet Our Team */}
+              <Typography
+                sx={{
+                  fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
+                  fontSize: { md: '26px', lg: '32px' },
+                  fontWeight: 800,
+                  letterSpacing: '0.06em',
+                  color: '#ffffff', // Clean white
+                  textShadow: '0 0 12px rgba(255, 45, 85, 0.95), 0 0 24px rgba(255, 45, 85, 0.4), 0 2px 4px rgba(0, 0, 0, 0.9)', // Glowing pink shadow
+                  textTransform: 'uppercase',
+                  textAlign: 'center',
+                  mb: 3,
+                  position: 'relative',
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    bottom: -8,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '80px',
+                    height: '2px',
+                    bgcolor: '#ff2d55',
+                    boxShadow: '0 0 8px #ff2d55, 0 0 15px rgba(255, 45, 85, 0.5)'
+                  }
+                }}
+              >
+                Meet Our Team
+              </Typography>
+
+              {/* Team Grid */}
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr 1fr',
+                  gap: '24px',
+                  width: '100%'
+                }}
+              >
+                {teamMembers.map((member, idx) => (
+                  <Box
+                    key={idx}
+                    sx={{
+                      backdropFilter: 'blur(25px) saturate(190%)',
+                      WebkitBackdropFilter: 'blur(25px) saturate(190%)',
+                      background: 'linear-gradient(135deg, rgba(18, 18, 26, 0.85) 0%, rgba(8, 8, 12, 0.95) 100%)',
+                      border: '1px solid rgba(255, 255, 255, 0.07)',
+                      borderRadius: '0px', // Reverted to sharp corners
+                      padding: { md: '24px 20px', lg: '28px 24px' }, // Spacious padding
+                      minHeight: { md: '280px', lg: '310px' }, // Tall card layout
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                      boxShadow: '0 30px 60px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+                      opacity: 0,
+                      transform: 'scale(0.7) translateY(20px)',
+                      animation: 'teamPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+                      animationDelay: `${idx * 0.2}s`,
+                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                      '@keyframes teamPop': {
+                        '0%': {
+                          transform: 'scale(0.7) translateY(20px)',
+                          opacity: 0
+                        },
+                        '70%': {
+                          transform: 'scale(1.05) translateY(-5px)'
+                        },
+                        '100%': {
+                          transform: 'scale(1) translateY(0)',
+                          opacity: 1
+                        }
+                      },
+                      '&:hover': {
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        bgcolor: 'rgba(14, 14, 20, 0.98)',
+                        transform: 'translateY(-6px)',
+                        boxShadow: '0 35px 70px rgba(0, 0, 0, 0.98)',
+                        '& .team-img-container': {
+                          transform: 'scale(1.06) rotate(-2deg)',
+                          borderColor: 'rgba(255, 255, 255, 0.35)',
+                        },
+                        '& .team-img': {
+                          transform: 'scale(1.1) rotate(2deg)',
+                        }
+                      }
+                    }}
+                  >
+                    {/* Clean Square Image Container (No border radius) */}
+                    <Box
+                      className="team-img-container"
+                      sx={{
+                        width: { md: '80px', lg: '95px' },
+                        height: { md: '80px', lg: '95px' },
+                        borderRadius: '0px',
+                        overflow: 'hidden',
+                        border: '2px solid rgba(255, 255, 255, 0.15)',
+                        mb: 2.2,
+                        boxShadow: '0 8px 20px rgba(0,0,0,0.4)',
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        bgcolor: 'rgba(255, 255, 255, 0.04)'
+                      }}
+                    >
+                      <Box
+                        className="team-img"
+                        component="img"
+                        src={member.image}
+                        alt={member.name}
+                        sx={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                        }}
+                      />
+                    </Box>
+
+                    {/* Name */}
+                    <Typography
+                      sx={{
+                        fontFamily: '"Space Grotesk", sans-serif',
+                        fontSize: { md: '16px', lg: '18px' },
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        mb: 0.8,
+                        letterSpacing: '-0.02em'
+                      }}
+                    >
+                      {member.name}
+                    </Typography>
+
+                    {/* Position Label (No border/background) */}
+                    <Box
+                      sx={{
+                        mb: 1.5,
+                        display: 'block'
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontFamily: '"Space Grotesk", sans-serif',
+                          fontSize: '10px',
+                          fontWeight: 700,
+                          color: '#ff2d55',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.08em',
+                          lineHeight: 1
+                        }}
+                      >
+                        {member.position}
+                      </Typography>
+                    </Box>
+
+                    {/* Short description */}
+                    <Typography
+                      sx={{
+                        fontFamily: '"Inter", sans-serif',
+                        fontSize: { md: '12px', lg: '13px' },
+                        fontWeight: 300,
+                        color: 'rgba(255, 255, 255, 0.65)',
+                        lineHeight: 1.5
+                      }}
+                    >
+                      {member.description}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+          )}
+        </Box>
+
+        {/* Active Card Container (Mobile/Tablet only - displayed below the video box) */}
+        {!showTeam ? (
+          <Box
+            sx={{
+              display: { xs: 'flex', md: 'none' },
+              flexDirection: 'column',
+              mt: 3
+            }}
+          >
+            {typingSegments.map((_segment, idx) => {
+              const isStarted = typingSegmentIdx >= idx;
+              const typedTitle = idx === 0 ? typedTitle0 : idx === 1 ? typedTitle1 : typedTitle2;
+              const typedText = idx === 0 ? typedText0 : idx === 1 ? typedText1 : typedText2;
+              
+              return (
+                <Box
+                  key={idx}
+                  sx={{
+                    bgcolor: 'rgba(25, 25, 30, 0.6)',
+                    border: isStarted ? '1px solid rgba(212, 175, 55, 0.25)' : '0px solid transparent',
+                    borderRadius: 0,
+                    boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.02)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: isStarted ? 1.5 : 0,
+                    minHeight: isStarted ? (startStaggeredFadeOut ? '0px' : '130px') : '0px',
+                    maxHeight: isStarted ? (startStaggeredFadeOut ? '0px' : '300px') : '0px',
+                    padding: isStarted ? (startStaggeredFadeOut ? '0px 28px' : '24px 28px') : '0px 28px',
+                    mb: isStarted ? (startStaggeredFadeOut ? 0 : 2.5) : 0,
+                    opacity: startStaggeredFadeOut ? 0 : (isStarted ? 1 : 0),
+                    transform: startStaggeredFadeOut ? 'translateY(-12px)' : (isStarted ? 'translateY(0)' : 'translateY(16px)'),
+                    transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                    transitionDelay: startStaggeredFadeOut 
+                      ? (idx === 0 ? '0ms' : idx === 1 ? '200ms' : '400ms') 
+                      : '0ms',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {/* Title */}
+                  <Typography
+                    sx={{
+                      fontFamily: '"Linear", sans-serif',
+                      fontSize: '18px',
+                      fontWeight: 700,
+                      color: '#ff2d55', // Pinky!
+                      letterSpacing: '0.04em',
+                      textTransform: 'uppercase'
+                    }}
+                  >
+                    {typedTitle}
+                  </Typography>
+
+                  {/* Text */}
+                  <Typography
+                    sx={{
+                      fontFamily: '"Linear", sans-serif',
+                      fontSize: '14.5px',
+                      fontWeight: 300,
+                      color: 'rgba(255, 255, 255, 0.85)',
+                      lineHeight: 1.7
+                    }}
+                  >
+                    {typedText}
+                  </Typography>
+                </Box>
+              );
+            })}
+          </Box>
+        ) : (
+          /* Mobile Team Members Section */
+          <Box
+            sx={{
+              display: { xs: 'flex', md: 'none' },
+              flexDirection: 'column',
+              gap: 2.5,
+              mt: 3,
+              animation: 'fadeIn 0.6s ease-in-out forwards'
+            }}
+          >
+            {/* Title Meet Our Team */}
+            <Typography
+              sx={{
+                fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
+                fontSize: '24px',
+                fontWeight: 800,
+                letterSpacing: '0.06em',
+                color: '#ffffff', // Clean white
+                textShadow: '0 0 12px rgba(255, 45, 85, 0.95), 0 0 24px rgba(255, 45, 85, 0.4), 0 2px 4px rgba(0, 0, 0, 0.9)', // Glowing pink shadow
+                textTransform: 'uppercase',
+                textAlign: 'center',
+                mb: 3,
+                position: 'relative',
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  bottom: -8,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '60px',
+                  height: '2px',
+                  bgcolor: '#ff2d55',
+                  boxShadow: '0 0 8px #ff2d55, 0 0 15px rgba(255, 45, 85, 0.5)'
+                }
+              }}
+            >
+              Meet Our Team
+            </Typography>
+
+            {teamMembers.map((member, idx) => (
+              <Box
+                key={idx}
+                sx={{
+                  background: 'linear-gradient(135deg, rgba(20, 20, 25, 0.85) 0%, rgba(12, 12, 15, 0.95) 100%)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  borderRadius: '0px', // Reverted to sharp corners
+                  padding: '28px 20px', // Spacious padding
+                  minHeight: '280px', // Tall card layout
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.7)',
+                  opacity: 0,
+                  transform: 'scale(0.7) translateY(20px)',
+                  animation: 'teamPopMobile 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+                  animationDelay: `${idx * 0.2}s`,
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  '@keyframes teamPopMobile': {
+                    '0%': {
+                      transform: 'scale(0.7) translateY(20px)',
+                      opacity: 0
+                    },
+                    '70%': {
+                      transform: 'scale(1.05) translateY(-5px)'
+                    },
+                    '100%': {
+                      transform: 'scale(1) translateY(0)',
+                      opacity: 1
+                    }
+                  },
+                  '@media (hover: hover)': {
+                    '&:hover': {
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      bgcolor: 'rgba(14, 14, 20, 0.98)',
+                      transform: 'translateY(-4px)',
+                      boxShadow: '0 25px 50px rgba(0, 0, 0, 0.85)',
+                      '& .team-img-container': {
+                        transform: 'scale(1.06) rotate(-2deg)',
+                        borderColor: 'rgba(255, 255, 255, 0.35)',
+                      },
+                      '& .team-img': {
+                        transform: 'scale(1.1) rotate(2deg)',
+                      }
+                    }
+                  },
+                  '&:active': {
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    bgcolor: 'rgba(14, 14, 20, 0.98)',
+                    '& .team-img-container': {
+                      transform: 'scale(1.06) rotate(-2deg)',
+                      borderColor: 'rgba(255, 255, 255, 0.35)',
+                    },
+                    '& .team-img': {
+                      transform: 'scale(1.1) rotate(2deg)',
+                    }
+                  }
+                }}
+              >
+                {/* Clean Square Image Container (No border radius) */}
+                <Box
+                  className="team-img-container"
+                  sx={{
+                    width: '90px',
+                    height: '90px',
+                    borderRadius: '0px',
+                    overflow: 'hidden',
+                    border: '2px solid rgba(255, 255, 255, 0.15)',
+                    boxShadow: '0 6px 15px rgba(0,0,0,0.4)',
+                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    bgcolor: 'rgba(255, 255, 255, 0.04)',
+                    mb: 2.2,
+                  }}
+                >
+                  <Box
+                    className="team-img"
+                    component="img"
+                    src={member.image}
+                    alt={member.name}
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                    }}
+                  />
+                </Box>
+
+                {/* Name */}
+                <Typography
+                  sx={{
+                    fontFamily: '"Space Grotesk", sans-serif',
+                    fontSize: '18px',
+                    fontWeight: 700,
+                    color: '#ffffff',
+                    mb: 0.8,
+                    letterSpacing: '-0.02em'
+                  }}
+                >
+                  {member.name}
+                </Typography>
+
+                {/* Position Label (No border/background) */}
+                <Box
+                  sx={{
+                    mb: 1.5,
+                    display: 'block'
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontFamily: '"Space Grotesk", sans-serif',
+                      fontSize: '10px',
+                      fontWeight: 700,
+                      color: '#ff2d55',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.08em',
+                      lineHeight: 1
+                    }}
+                  >
+                    {member.position}
+                  </Typography>
+                </Box>
+
+                {/* Description */}
+                <Typography
+                  sx={{
+                    fontFamily: '"Inter", sans-serif',
+                    fontSize: '13px',
+                    fontWeight: 300,
+                    color: 'rgba(255, 255, 255, 0.65)',
+                    lineHeight: 1.5
+                  }}
+                >
+                  {member.description}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        )}
+
+        {/* Action Buttons: Production Plans & Piano Lessons */}
+        <Box
+          sx={{
+            display: 'flex',
+            gap: { xs: 1.5, sm: 2 },
+            flexWrap: 'nowrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+            mt: { xs: 2.5, sm: 3 },
+            width: '100%',
+            // Force hardware acceleration to keep smooth scrolling
+            transform: 'translate3d(0, 0, 0)',
+            willChange: 'transform',
+          }}
+        >
+          <Button
+            component={RouterLink}
+            to="/pricing"
+            variant="outlined"
+            size="large"
+            sx={{
+              width: 'auto',
+              border: '2px solid #ff2a74',
+              color: '#ff2a74',
+              borderRadius: '4px',
+              px: { xs: 1.2, sm: 2.2 },
+              py: { xs: 0.6, sm: 0.6 },
+              fontSize: { xs: '12px', sm: '15px', md: '18px' },
+              fontWeight: 700,
+              textTransform: 'none',
+              fontFamily: '"Space Grotesk", sans-serif',
+              whiteSpace: 'nowrap',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              '&:hover': {
+                border: '2px solid #ff2a74',
+                bgcolor: '#ff2a74',
+                color: 'white',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 12px 30px rgba(255, 42, 116, 0.25)',
+              }
+            }}
+          >
+            Discover Production Plans
+          </Button>
+          <Button
+            component={RouterLink}
+            to="/lessons"
+            variant="contained"
+            size="large"
+            sx={{
+              width: 'auto',
+              bgcolor: '#ff2a74',
+              color: '#ffffff',
+              borderRadius: '4px',
+              px: { xs: 1.2, sm: 2.2 },
+              py: { xs: 0.6, sm: 0.6 },
+              fontSize: { xs: '12px', sm: '15px', md: '18px' },
+              fontWeight: 700,
+              textTransform: 'none',
+              fontFamily: '"Space Grotesk", sans-serif',
+              whiteSpace: 'nowrap',
+              boxShadow: '0 8px 25px rgba(255, 42, 116, 0.25)',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              '&:hover': {
+                bgcolor: '#e01f61',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 12px 35px rgba(255, 42, 116, 0.45)',
+              }
+            }}
+          >
+            Request Piano Lesson
+          </Button>
+        </Box>
+      </Container>
+    </Box>
+  );
+};
+
 const Home: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
   const { hash } = useLocation();
@@ -196,16 +1197,6 @@ const Home: React.FC = () => {
   const [overlayVideo, setOverlayVideo] = useState<string | null>(null);
   const videoTimeoutRef = useRef<any>(null);
   const overlayTimeoutRef = useRef<any>(null);
-  const [activeAboutVideo, setActiveAboutVideo] = useState<1 | 2>(1);
-  const video1Ref = useRef<HTMLVideoElement>(null);
-  const video2Ref = useRef<HTMLVideoElement>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  const handleAboutVideoEnded = () => {
-    if (activeAboutVideo === 1) {
-      setActiveAboutVideo(2);
-    }
-  };
 
   // Scroll spy to highlight active service tab in the sticky sub-navbar on mobile
   useEffect(() => {
@@ -258,131 +1249,7 @@ const Home: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (activeAboutVideo === 2 && video2Ref.current) {
-      video2Ref.current.play().catch((err) => {
-        console.warn("Video 2 autoplay failed:", err);
-      });
-    }
-  }, [activeAboutVideo]);
 
-  const [typingSegmentIdx, setTypingSegmentIdx] = useState(0);
-  const [typedTitle0, setTypedTitle0] = useState("");
-  const [typedTitle1, setTypedTitle1] = useState("");
-  const [typedTitle2, setTypedTitle2] = useState("");
-  const [typedText0, setTypedText0] = useState("");
-  const [typedText1, setTypedText1] = useState("");
-  const [typedText2, setTypedText2] = useState("");
-  const [isTypingTitle, setIsTypingTitle] = useState(true);
-
-  useEffect(() => {
-    let timer: any;
-    
-    if (typingSegmentIdx === 0) {
-      const segment = typingSegments[0];
-      if (isTypingTitle) {
-        if (typedTitle0.length < segment.title.length) {
-          timer = setTimeout(() => {
-            setTypedTitle0(segment.title.substring(0, typedTitle0.length + 1));
-          }, 30);
-        } else {
-          timer = setTimeout(() => setIsTypingTitle(false), 150);
-        }
-      } else {
-        if (typedText0.length < segment.text.length) {
-          timer = setTimeout(() => {
-            setTypedText0(segment.text.substring(0, typedText0.length + 1));
-          }, 10);
-        } else {
-          timer = setTimeout(() => {
-            setTypingSegmentIdx(1);
-            setIsTypingTitle(true);
-          }, 200);
-        }
-      }
-    } else if (typingSegmentIdx === 1) {
-      const segment = typingSegments[1];
-      if (isTypingTitle) {
-        if (typedTitle1.length < segment.title.length) {
-          timer = setTimeout(() => {
-            setTypedTitle1(segment.title.substring(0, typedTitle1.length + 1));
-          }, 30);
-        } else {
-          timer = setTimeout(() => setIsTypingTitle(false), 150);
-        }
-      } else {
-        if (typedText1.length < segment.text.length) {
-          timer = setTimeout(() => {
-            setTypedText1(segment.text.substring(0, typedText1.length + 1));
-          }, 10);
-        } else {
-          timer = setTimeout(() => {
-            setTypingSegmentIdx(2);
-            setIsTypingTitle(true);
-          }, 200);
-        }
-      }
-    } else if (typingSegmentIdx === 2) {
-      const segment = typingSegments[2];
-      if (isTypingTitle) {
-        if (typedTitle2.length < segment.title.length) {
-          timer = setTimeout(() => {
-            setTypedTitle2(segment.title.substring(0, typedTitle2.length + 1));
-          }, 30);
-        } else {
-          timer = setTimeout(() => setIsTypingTitle(false), 150);
-        }
-      } else {
-        if (typedText2.length < segment.text.length) {
-          timer = setTimeout(() => {
-            setTypedText2(segment.text.substring(0, typedText2.length + 1));
-          }, 10);
-        } else {
-          setTypingSegmentIdx(3);
-        }
-      }
-    }
-
-    return () => clearTimeout(timer);
-  }, [
-    typingSegmentIdx,
-    isTypingTitle,
-    typedTitle0,
-    typedTitle1,
-    typedTitle2,
-    typedText0,
-    typedText1,
-    typedText2
-  ]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) {
-          // Only reset when scrolled away if ALL cards have successfully finished typing
-          if (typingSegmentIdx === 3) {
-            setTypedTitle0("");
-            setTypedTitle1("");
-            setTypedTitle2("");
-            setTypedText0("");
-            setTypedText1("");
-            setTypedText2("");
-            setTypingSegmentIdx(0);
-            setIsTypingTitle(true);
-          }
-        }
-      },
-      { threshold: 0.05 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [typingSegmentIdx]);
 
   const handlePlayVideo = (videoId: string) => {
     if (videoTimeoutRef.current) clearTimeout(videoTimeoutRef.current);
@@ -1009,425 +1876,7 @@ const Home: React.FC = () => {
       </Box>
 
       {/* Know us Section */}
-      <Box 
-        id="about"
-        ref={sectionRef}
-        sx={{ 
-          bgcolor: '#000000',
-          color: 'white', 
-          pt: 8, // Reduced top padding
-          pb: { xs: 8, sm: 10 },
-          position: 'relative',
-          overflow: 'hidden',
-          // Force hardware acceleration to prevent flickering while scrolling
-          transform: 'translate3d(0, 0, 0)',
-          willChange: 'transform',
-          WebkitBackfaceVisibility: 'hidden',
-          backfaceVisibility: 'hidden',
-          // Cloudy background using radial-gradients blending into pure black
-          background: `
-            radial-gradient(circle at 50% 10%, rgba(45, 45, 55, 0.35) 0%, transparent 60%),
-            radial-gradient(circle at 10% 80%, rgba(35, 35, 45, 0.3) 0%, transparent 70%),
-            #000000
-          `,
-          // Sandy texture overlay using data URI SVG noise with low opacity
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            width: '100%',
-            height: '100%',
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-            opacity: 0.035, 
-            pointerEvents: 'none',
-            zIndex: 1,
-            // Hardware acceleration
-            transform: 'translate3d(0, 0, 0)',
-            willChange: 'transform',
-            WebkitBackfaceVisibility: 'hidden',
-            backfaceVisibility: 'hidden',
-          }
-        }}
-      >
-        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
-          {/* Section Heading */}
-          <Typography 
-            variant="h2" 
-            align="center" 
-            sx={{ 
-              mb: 2, 
-              fontWeight: 800,
-              fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
-              fontSize: { xs: '2rem', sm: '2.5rem', md: '3.2rem' },
-              letterSpacing: '0.06em',
-              color: 'transparent',
-              WebkitTextStroke: '1.5px #ffffff',
-              textTransform: 'uppercase'
-            }}
-          >
-            Know Us
-          </Typography>
-
-          <Typography
-            variant="body1"
-            align="center"
-            sx={{
-              mb: 6,
-              color: 'rgba(255, 255, 255, 0.6)',
-              fontFamily: '"Space Grotesk", sans-serif',
-              fontSize: { xs: '0.85rem', sm: '1rem' },
-              letterSpacing: '0.05em',
-              maxWidth: '650px',
-              mx: 'auto'
-            }}
-          >
-            Step inside our sanctuary of sound. Watch our journey unfold as we craft acoustic excellence and share the heart behind Shalom Music.
-          </Typography>
-
-          {/* Interactive Cinema Video Board */}
-          <Box 
-            sx={{ 
-              position: 'relative',
-              width: '100%',
-              aspectRatio: '16/9',
-              height: 'auto',
-              maxHeight: '80vh',
-              borderRadius: { xs: '8px', sm: '16px' },
-              overflow: 'hidden',
-              border: 'none',
-              boxShadow: '0 30px 60px rgba(0, 0, 0, 0.8)',
-              bgcolor: '#000000',
-              // Force hardware acceleration to prevent flickering while scrolling
-              transform: 'translate3d(0, 0, 0)',
-              willChange: 'transform',
-              backfaceVisibility: 'hidden',
-              WebkitBackfaceVisibility: 'hidden',
-            }}
-          >
-            {/* First Video */}
-            <video 
-              ref={video1Ref}
-              src={aboutUsVideo1}
-              muted
-              playsInline
-              autoPlay
-              onEnded={handleAboutVideoEnded}
-              style={{ 
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%', 
-                height: '100%', 
-                objectFit: 'cover',
-                display: 'block',
-                transition: 'opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                opacity: activeAboutVideo === 1 ? 1 : 0,
-                zIndex: activeAboutVideo === 1 ? 2 : 1,
-                transform: 'translate3d(0, 0, 0)',
-                willChange: 'opacity',
-              }}
-            />
-            {/* Second Video */}
-            <video 
-              ref={video2Ref}
-              src={aboutUsVideo2}
-              muted
-              playsInline
-              loop
-              preload="none"
-              style={{ 
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%', 
-                height: '100%', 
-                objectFit: 'cover',
-                display: 'block',
-                transition: 'opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                opacity: activeAboutVideo === 2 ? 1 : 0,
-                zIndex: activeAboutVideo === 2 ? 2 : 1,
-                transform: 'translate3d(0, 0, 0)',
-                willChange: 'opacity',
-              }}
-            />            {/* Dark Cinematic Vignette Overlay */}
-            <Box 
-              sx={{ 
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.75) 100%)',
-                bgcolor: 'rgba(0, 0, 0, 0.45)', // Guaranteed high-contrast dark overlay
-                zIndex: 8,
-                pointerEvents: 'none',
-                display: { xs: 'none', md: 'block' }
-              }}
-            />
-
-            {/* Grid Container for Cards Overlay (Desktop only) */}
-            <Box
-              sx={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: { xs: '16px', sm: '20px', md: '28px' },
-                right: { xs: '16px', sm: '20px', md: '28px' },
-                display: { xs: 'none', md: 'grid' },
-                gridTemplateColumns: '1fr 1fr 1fr',
-                gap: '28px',
-                alignItems: 'center', // Centers cards vertically
-                zIndex: 10,
-                pointerEvents: 'none'
-              }}
-            >
-              {typingSegments.map((segment, idx) => {
-                const isCurrent = typingSegmentIdx === idx;
-                const isStarted = typingSegmentIdx >= idx;
-                const typedTitle = idx === 0 ? typedTitle0 : idx === 1 ? typedTitle1 : typedTitle2;
-                const typedText = idx === 0 ? typedText0 : idx === 1 ? typedText1 : typedText2;
-                
-                return (
-                  <Box
-                    key={idx}
-                    sx={{
-                      backdropFilter: 'blur(20px) saturate(180%)',
-                      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                      bgcolor: 'rgba(12, 12, 15, 0.84)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
-                      borderRadius: 0,
-                      padding: '28px 32px',
-                      boxShadow: '0 30px 60px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-                      transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 2,
-                      minHeight: '120px', // Baseline height, expands equally upwards and downwards
-                      pointerEvents: isStarted ? 'auto' : 'none',
-                      opacity: isStarted ? 1 : 0,
-                      transform: isStarted ? 'translateY(0)' : 'translateY(24px)',
-                      gridColumn: idx + 1,
-                      '&:hover': {
-                        border: '1px solid rgba(255, 255, 255, 0.16)',
-                        boxShadow: '0 35px 70px rgba(0, 0, 0, 0.98)',
-                        bgcolor: 'rgba(14, 14, 18, 0.9)',
-                      }
-                    }}
-                  >
-                    {/* Title */}
-                    <Typography
-                      sx={{
-                        fontFamily: '"Linear", sans-serif',
-                        fontSize: '20px',
-                        fontWeight: 700,
-                        color: '#ff2d55', // Pinky!
-                        letterSpacing: '0.04em',
-                        textTransform: 'uppercase',
-                        display: 'flex',
-                        alignItems: 'center',
-                        minHeight: '28px'
-                      }}
-                    >
-                      {typedTitle}
-                      {isCurrent && isTypingTitle && (
-                        <Box
-                          component="span"
-                          sx={{
-                            display: 'inline-block',
-                            width: '2px',
-                            height: '18px',
-                            bgcolor: '#ff2d55', // Pinky cursor
-                            marginLeft: '6px',
-                            animation: 'blinkCursor 0.8s infinite',
-                            '@keyframes blinkCursor': {
-                              '0%, 100%': { opacity: 0 },
-                              '50%': { opacity: 1 }
-                            }
-                          }}
-                        />
-                      )}
-                    </Typography>
-
-                    {/* Text */}
-                    <Typography
-                      sx={{
-                        fontFamily: '"Linear", sans-serif',
-                        fontSize: '16px',
-                        fontWeight: 300,
-                        color: 'rgba(255, 255, 255, 0.88)',
-                        lineHeight: 1.75,
-                        position: 'relative'
-                      }}
-                    >
-                      {typedText}
-                      {isCurrent && !isTypingTitle && typedText.length < segment.text.length && (
-                        <Box
-                          component="span"
-                          sx={{
-                            display: 'inline-block',
-                            width: '2px',
-                            height: '13px',
-                            bgcolor: '#ffffff',
-                            marginLeft: '3px',
-                            verticalAlign: 'middle',
-                            animation: 'blinkCursor 0.8s infinite',
-                            '@keyframes blinkCursor': {
-                              '0%, 100%': { opacity: 0 },
-                              '50%': { opacity: 1 }
-                            }
-                          }}
-                        />
-                      )}
-                    </Typography>
-                  </Box>
-                );
-              })}
-            </Box>
-          </Box>
-
-          {/* Active Card Container (Mobile/Tablet only - displayed below the video box) */}
-          <Box
-            sx={{
-              display: { xs: 'flex', md: 'none' },
-              flexDirection: 'column',
-              mt: 3
-            }}
-          >
-            {typingSegments.map((_segment, idx) => {
-              const isStarted = typingSegmentIdx >= idx;
-              const typedTitle = idx === 0 ? typedTitle0 : idx === 1 ? typedTitle1 : typedTitle2;
-              const typedText = idx === 0 ? typedText0 : idx === 1 ? typedText1 : typedText2;
-              
-              return (
-                <Box
-                  key={idx}
-                  sx={{
-                    bgcolor: 'rgba(25, 25, 30, 0.6)',
-                    border: isStarted ? '1px solid rgba(212, 175, 55, 0.25)' : '0px solid transparent',
-                    borderRadius: 0,
-                    boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.02)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: isStarted ? 1.5 : 0,
-                    minHeight: isStarted ? '130px' : '0px',
-                    maxHeight: isStarted ? '300px' : '0px',
-                    padding: isStarted ? '24px 28px' : '0px 28px',
-                    mb: isStarted ? 2.5 : 0,
-                    opacity: isStarted ? 1 : 0,
-                    transform: isStarted ? 'translateY(0)' : 'translateY(16px)',
-                    transition: 'opacity 0.6s ease-in-out, transform 0.6s ease-in-out, max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), min-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding 0.6s cubic-bezier(0.4, 0, 0.2, 1), mb 0.6s cubic-bezier(0.4, 0, 0.2, 1), border 0.6s ease-in-out',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {/* Title */}
-                  <Typography
-                    sx={{
-                      fontFamily: '"Linear", sans-serif',
-                      fontSize: '18px',
-                      fontWeight: 700,
-                      color: '#ff2d55', // Pinky!
-                      letterSpacing: '0.04em',
-                      textTransform: 'uppercase'
-                    }}
-                  >
-                    {typedTitle}
-                  </Typography>
-
-                  {/* Text */}
-                  <Typography
-                    sx={{
-                      fontFamily: '"Linear", sans-serif',
-                      fontSize: '14.5px',
-                      fontWeight: 300,
-                      color: 'rgba(255, 255, 255, 0.85)',
-                      lineHeight: 1.7
-                    }}
-                  >
-                    {typedText}
-                  </Typography>
-                </Box>
-              );
-            })}
-          </Box>
-
-          {/* Action Buttons: Production Plans & Piano Lessons */}
-          <Box
-            sx={{
-              display: 'flex',
-              gap: { xs: 1.5, sm: 2 },
-              flexWrap: 'nowrap',
-              justifyContent: 'center',
-              alignItems: 'center',
-              mt: { xs: 2.5, sm: 3 },
-              width: '100%',
-              // Force hardware acceleration to keep smooth scrolling
-              transform: 'translate3d(0, 0, 0)',
-              willChange: 'transform',
-            }}
-          >
-            <Button
-              component={RouterLink}
-              to="/pricing"
-              variant="outlined"
-              size="large"
-              sx={{
-                width: 'auto',
-                border: '2px solid #ff2a74',
-                color: '#ff2a74',
-                borderRadius: '4px',
-                px: { xs: 1.2, sm: 2.2 },
-                py: { xs: 0.6, sm: 0.6 },
-                fontSize: { xs: '12px', sm: '15px', md: '18px' },
-                fontWeight: 700,
-                textTransform: 'none',
-                fontFamily: '"Space Grotesk", sans-serif',
-                whiteSpace: 'nowrap',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                '&:hover': {
-                  border: '2px solid #ff2a74',
-                  bgcolor: '#ff2a74',
-                  color: 'white',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 12px 30px rgba(255, 42, 116, 0.25)',
-                }
-              }}
-            >
-              Discover Production Plans
-            </Button>
-            <Button
-              component={RouterLink}
-              to="/lessons"
-              variant="contained"
-              size="large"
-              sx={{
-                width: 'auto',
-                bgcolor: '#ff2a74',
-                color: '#ffffff',
-                borderRadius: '4px',
-                px: { xs: 1.2, sm: 2.2 },
-                py: { xs: 0.6, sm: 0.6 },
-                fontSize: { xs: '12px', sm: '15px', md: '18px' },
-                fontWeight: 700,
-                textTransform: 'none',
-                fontFamily: '"Space Grotesk", sans-serif',
-                whiteSpace: 'nowrap',
-                boxShadow: '0 8px 25px rgba(255, 42, 116, 0.25)',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                '&:hover': {
-                  bgcolor: '#e01f61',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 12px 35px rgba(255, 42, 116, 0.45)',
-                }
-              }}
-            >
-              Request Piano Lesson
-            </Button>
-          </Box>
-        </Container>
-      </Box>
+      <KnowUsSectionComponent />
 
       {/* Core Services Overview */}
       <Box 
@@ -5529,7 +5978,7 @@ const Home: React.FC = () => {
             bgcolor: 'rgba(12, 12, 14, 0.95)',
             backdropFilter: 'blur(20px)',
             border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '16px',
+            borderRadius: '0px', // Sharp corners
             maxWidth: '660px',
             width: 'calc(100% - 32px)',
             m: 2,
@@ -5585,7 +6034,7 @@ const Home: React.FC = () => {
               letterSpacing: '0.15em',
               px: 2.2,
               py: 0.6,
-              borderRadius: '20px',
+              borderRadius: '0px', // Sharp corners
               textTransform: 'uppercase',
               mb: 2,
               boxShadow: '0 4px 15px rgba(255, 42, 116, 0.3)'
@@ -5647,7 +6096,7 @@ const Home: React.FC = () => {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   gap: { xs: 1.5, sm: 2.5 },
-                  borderRadius: '12px',
+                  borderRadius: '0px', // Sharp corners
                   textAlign: { xs: 'left', sm: 'center' },
                   '&:hover': {
                     borderColor: 'rgba(255, 42, 116, 0.35)',
@@ -5670,7 +6119,7 @@ const Home: React.FC = () => {
                       width: { xs: 36, sm: 44 }, 
                       height: { xs: 36, sm: 44 }, 
                       minWidth: { xs: 36, sm: 44 },
-                      borderRadius: '50%', 
+                      borderRadius: '0px', // Sharp corners
                       display: 'flex', 
                       alignItems: 'center', 
                       justifyContent: 'center',
@@ -5702,7 +6151,7 @@ const Home: React.FC = () => {
                     fontFamily: '"Space Grotesk", sans-serif',
                     fontWeight: 700,
                     fontSize: { xs: '0.72rem', sm: '0.78rem' },
-                    borderRadius: '6px',
+                    borderRadius: '0px', // Sharp corners
                     px: { xs: 2, sm: 3 },
                     py: { xs: 0.8, sm: 1 },
                     width: { xs: 'auto', sm: '100%' },
@@ -5712,7 +6161,7 @@ const Home: React.FC = () => {
                     '&:hover': { bgcolor: '#e01f61', boxShadow: '0 4px 12px rgba(255, 42, 116, 0.2)' }
                   }}
                 >
-                  Learn Keys
+                  Book a Lesson
                 </Button>
               </Box>
             </Grid>
@@ -5730,7 +6179,7 @@ const Home: React.FC = () => {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   gap: { xs: 1.5, sm: 2.5 },
-                  borderRadius: '12px',
+                  borderRadius: '0px', // Sharp corners
                   textAlign: { xs: 'left', sm: 'center' },
                   '&:hover': {
                     borderColor: 'rgba(255, 42, 116, 0.35)',
@@ -5753,7 +6202,7 @@ const Home: React.FC = () => {
                       width: { xs: 36, sm: 44 }, 
                       height: { xs: 36, sm: 44 }, 
                       minWidth: { xs: 36, sm: 44 },
-                      borderRadius: '50%', 
+                      borderRadius: '0px', // Sharp corners
                       display: 'flex', 
                       alignItems: 'center', 
                       justifyContent: 'center',
@@ -5785,7 +6234,7 @@ const Home: React.FC = () => {
                     fontFamily: '"Space Grotesk", sans-serif',
                     fontWeight: 700,
                     fontSize: { xs: '0.72rem', sm: '0.78rem' },
-                    borderRadius: '6px',
+                    borderRadius: '0px', // Sharp corners
                     px: { xs: 2, sm: 3 },
                     py: { xs: 0.8, sm: 1 },
                     width: { xs: 'auto', sm: '100%' },
@@ -5795,7 +6244,7 @@ const Home: React.FC = () => {
                     '&:hover': { bgcolor: '#e01f61', boxShadow: '0 4px 12px rgba(255, 42, 116, 0.2)' }
                   }}
                 >
-                  Book Player
+                  Book an Accompanist
                 </Button>
               </Box>
             </Grid>
