@@ -284,20 +284,20 @@ const Home: React.FC = () => {
         if (typedTitle0.length < segment.title.length) {
           timer = setTimeout(() => {
             setTypedTitle0(segment.title.substring(0, typedTitle0.length + 1));
-          }, 60);
+          }, 30);
         } else {
-          timer = setTimeout(() => setIsTypingTitle(false), 300);
+          timer = setTimeout(() => setIsTypingTitle(false), 150);
         }
       } else {
         if (typedText0.length < segment.text.length) {
           timer = setTimeout(() => {
             setTypedText0(segment.text.substring(0, typedText0.length + 1));
-          }, 20);
+          }, 10);
         } else {
           timer = setTimeout(() => {
             setTypingSegmentIdx(1);
             setIsTypingTitle(true);
-          }, 400);
+          }, 200);
         }
       }
     } else if (typingSegmentIdx === 1) {
@@ -306,20 +306,20 @@ const Home: React.FC = () => {
         if (typedTitle1.length < segment.title.length) {
           timer = setTimeout(() => {
             setTypedTitle1(segment.title.substring(0, typedTitle1.length + 1));
-          }, 60);
+          }, 30);
         } else {
-          timer = setTimeout(() => setIsTypingTitle(false), 300);
+          timer = setTimeout(() => setIsTypingTitle(false), 150);
         }
       } else {
         if (typedText1.length < segment.text.length) {
           timer = setTimeout(() => {
             setTypedText1(segment.text.substring(0, typedText1.length + 1));
-          }, 20);
+          }, 10);
         } else {
           timer = setTimeout(() => {
             setTypingSegmentIdx(2);
             setIsTypingTitle(true);
-          }, 400);
+          }, 200);
         }
       }
     } else if (typingSegmentIdx === 2) {
@@ -328,15 +328,15 @@ const Home: React.FC = () => {
         if (typedTitle2.length < segment.title.length) {
           timer = setTimeout(() => {
             setTypedTitle2(segment.title.substring(0, typedTitle2.length + 1));
-          }, 60);
+          }, 30);
         } else {
-          timer = setTimeout(() => setIsTypingTitle(false), 300);
+          timer = setTimeout(() => setIsTypingTitle(false), 150);
         }
       } else {
         if (typedText2.length < segment.text.length) {
           timer = setTimeout(() => {
             setTypedText2(segment.text.substring(0, typedText2.length + 1));
-          }, 20);
+          }, 10);
         } else {
           setTypingSegmentIdx(3);
         }

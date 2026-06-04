@@ -64,39 +64,6 @@ const packagesData = [
   }
 ];
 
-const services = [
-  {
-    title: 'Audio Recording',
-    description: 'High-fidelity multi-track recording in an acoustically treated environment using world-class microphones and preamps.',
-    icon: <MicExternalOnIcon />
-  },
-  {
-    title: 'Mixing & Editing',
-    description: 'Professional balance, surgical editing, and creative processing to ensure every element of your track has its own space.',
-    icon: <SettingsInputComponentIcon />
-  },
-  {
-    title: 'Mastering',
-    description: 'The final sonic polish to ensure your music sounds consistent and professional across all playback systems.',
-    icon: <CheckCircleIcon />
-  },
-  {
-    title: 'Song Composition',
-    description: 'Collaborative songwriting and arrangement support to help you structure your musical ideas into a coherent masterpiece.',
-    icon: <MusicNoteIcon />
-  },
-  {
-    title: 'Full Production',
-    description: 'A complete end-to-end service where we take your demo or idea and build a fully produced, radio-ready track.',
-    icon: <AlbumIcon />
-  },
-  {
-    title: 'Post-Production',
-    description: 'Specialized services including pitch correction, drum replacement, and sound design for film or media.',
-    icon: <SettingsInputComponentIcon />
-  }
-];
-
 const Production: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const XRef = useRef<number>(0);

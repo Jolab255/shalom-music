@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Container, Typography, Box, Button, List, ListItem, ListItemIcon, ListItemText, Grid2 as Grid, Divider, Fade } from '@mui/material';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -28,10 +28,10 @@ const packagesData = [
     title: 'Young Keys Academy',
     subtitle: 'Ages 6-12 Play & Discover',
     image: pianoKidsImg,
-    description: 'Introduce children aged 6–12 to the joy of piano through engaging, interactive, and gamified music learning. Our junior curriculum combines fun musical games, visual flashcards, and popular children\'s melodies to capture attention and nurture a lifelong love for the keys.',
+    description: 'Introduce children aged 6–12 to the joy of piano through the world-renowned John Thompson\'s Easiest Piano Course. Our junior curriculum combines melodic reading, visual flashcards, and popular children\'s songs to nurture a lifelong love for the keys.',
     inclusions: [
       '8 x 30-Minute private grand piano lessons',
-      'Complimentary Faber Adventures method books',
+      'John Thompson\'s Easiest Piano Course books',
       'Gamified visual notation & rhythmic cards',
       'Acoustic grand practice room access (1 hr/week)',
       'Secure student progress portfolio & practice logs',
@@ -44,12 +44,12 @@ const packagesData = [
     title: 'Beginner Foundations',
     subtitle: 'Teens & Adults Starting Fresh',
     image: pianoBeginnerImg,
-    description: 'A comprehensive starting point for teens and adults to master piano basics with solid techniques. We focus on relaxed hand posture, sight-reading, and dual-staff note reading, enabling you to play simple classical themes and popular songs in your first month.',
+    description: 'A comprehensive starting point for teens and adults using ABRSM foundations and "Hymns Made Easy." We focus on sight-reading and dual-staff note reading, enabling you to play your favorite hymns and classical themes in your first month.',
     inclusions: [
       '8 x 50-Minute private grand piano lessons',
+      'Hymns Made Easy & ABRSM method books',
       'Professional hand posture & finger articulation basics',
       'Dual-clef note reading & common time signatures',
-      'Introductory repertoire including basic classical & pop',
       'Single acoustic grand practice session access',
       '24/7 direct chat support with your instructor'
     ]
@@ -60,12 +60,12 @@ const packagesData = [
     title: 'Intermediate Artistry',
     subtitle: 'Technique & Personal Style',
     image: pianoIntermediateImg,
-    description: 'Transition your technical fluency into personal musical expression. We introduce advanced arpeggio routines, coordinate touch dynamics, and teach intermediate chord harmony, giving you the tools to confidently perform classical, pop, and introductory jazz.',
+    description: 'Transition your technical fluency into personal musical expression using ABRSM Grade 1-3 syllabi and intermediate Hymn arrangements. We introduce advanced scale routines and teach keyboard harmony, giving you the tools to perform with professional style.',
     inclusions: [
       '8 x 1-Hour weekly grand piano lessons',
       'ABRSM / Trinity graded syllabus integrated',
-      'Advanced scale routines & dynamic expression',
-      'Chord theory & basic keyboard harmony learning',
+      'Technical studies and ABRSM theory materials',
+      'Chord theory & intermediate keyboard harmony',
       'Acoustic grand practice room access (2 hrs/week)',
       '2 makeup lesson rollover credits per semester'
     ]
@@ -76,11 +76,11 @@ const packagesData = [
     title: 'Advanced Concert Mastery',
     subtitle: 'Artistry & Board Exam Prep',
     image: pianoAdvancedImg,
-    description: 'Intensive training for advanced pianists aiming for ultimate keyboard control, concert recitals, or board certification (ABRSM/Trinity). Master complex keyboard voicings, speed arpeggios, polyrhythms, and virtuoso literature under expert guidance.',
+    description: 'Intensive training for advanced pianists aiming for ultimate keyboard control using the full ABRSM Grades 4-8 curriculum. Master complex keyboard voicings, speed arpeggios, and virtuoso literature under expert guidance for professional concert recitals.',
     inclusions: [
       '8 x 1-Hour flexible private lessons',
       'Elite board exam preparation (ABRSM Grades 1-8)',
-      'All advanced curriculum books & materials included',
+      'Advanced repertoire (Bach, Czerny, Chopin)',
       'Acoustic grand practice room access (4 hrs/week)',
       'VIP recital performance slot with HD recording',
       'Advanced music theory & multi-voice harmony workshops'
@@ -89,39 +89,39 @@ const packagesData = [
 ];
 
 const heroImages = [
-  beginnerLevelImg,
   kidsLevelImg,
+  beginnerLevelImg,
   intermediaryLevelImg,
   advancedLevelImg,
   advancedLevel2Img
 ];
 
-// Specific descriptions for each hero image level
+// Specific descriptions for each hero image grade (aligned with heroImages order)
 const levelDescriptions = [
   {
     title: 'Junior Discovery',
-    description: 'We use gamified tools like visual notation flashcards, rhythmic clapping games, and colorful stickers to make piano intuitive for kids aged 6-12.',
-    tools: ['Visual Flashcards', 'Gamified Notation', 'Rhythmic Games']
+    description: 'We use the classic John Thompson\'s Easiest Piano Course for kids aged 6-12. This method builds a solid foundation through melodic reading and engaging visual cues that make learning intuitive.',
+    tools: ['John Thompson\'s Course', 'Visual Flashcards', 'Gamified Notation']
   },
   {
     title: 'Beginner Launchpad',
-    description: 'Focusing on relaxed hand posture and dual-staff reading from day one. We use contemporary pieces to build confidence and coordination.',
-    tools: ['Posture Correction', 'Dual-Staff Reading', 'Modern Repertoire']
+    description: 'Focusing on dual-staff reading and foundational technique. We incorporate "Hymns Made Easy" alongside ABRSM beginner materials to build confidence and coordination in new pianists.',
+    tools: ['Hymns Made Easy', 'ABRSM Foundations', 'Dual-Staff Reading']
   },
   {
     title: 'Artistry & Flow',
-    description: 'Transitioning to advanced arpeggio routines and dynamic touch. We introduce chord harmony to help students find their own musical voice.',
-    tools: ['Dynamic Shading', 'Chord Harmony', 'ABRSM / Trinity']
+    description: 'Transitioning to technical routines using ABRSM Grade 1-3 materials and intermediate Hymn arrangements. We introduce chord harmony to help students find their own unique musical voice.',
+    tools: ['ABRSM Grade 1-3', 'Hymn Arrangements', 'Chord Harmony']
   },
   {
     title: 'Concert Precision',
-    description: 'Mastering complex keyboard voicings and speed arpeggios. Elite preparation for board certifications and professional performance.',
-    tools: ['Polyrhythmic Mastery', 'Virtuoso Literature', 'Exam Prep']
+    description: 'Mastering complex keyboard voicings and speed through ABRSM Grade 4-6 syllabi. Elite preparation for board certifications and high-level professional performance.',
+    tools: ['ABRSM Grade 4-6', 'Czerny Velocity', 'Bach Inventions']
   },
   {
     title: 'Elite Performance',
-    description: 'Deep dive into performance psychology and advanced interpretation. Cultivating professional-grade control for concert recitals.',
-    tools: ['Performance Psychology', 'HD Recital Recording', 'Advanced Theory']
+    description: 'Deep dive into performance psychology using ABRSM Grade 7-8 repertoire and advanced classical literature. Cultivating professional-grade interpretation for master-class concert recitals.',
+    tools: ['ABRSM Grade 7-8', 'Chopin Etudes', 'Performance Psychology']
   }
 ];
 
@@ -147,7 +147,6 @@ const Lessons: React.FC = () => {
   }, []);
 
   const [activePkg, setActivePkg] = useState(0);
-  const [activeHeroIdx, setActiveHeroIdx] = useState(0);
   const [displayPkg, setDisplayPkg] = useState(0);
   const [isFadingOut, setIsFadingOut] = useState(false);
 
@@ -289,7 +288,7 @@ const Lessons: React.FC = () => {
     <>
       <Helmet>
         <title>Professional Piano Lessons in Tanzania | Shalom Music Studios</title>
-        <meta name="description" content="Elite piano lessons for all ages and skill levels in Tanzania. Master classical and contemporary keys under expert instructors." />
+        <meta name="description" content="Elite piano lessons for all ages and grades in Tanzania. Master classical and contemporary keys under expert instructors." />
         <link rel="canonical" href="https://shalommusic.co.tz/lessons" />
       </Helmet>
 
@@ -400,8 +399,9 @@ const Lessons: React.FC = () => {
                           opacity: 0.8
                         }}
                       >
-                        LEVEL 0{idx + 1}
+                        GRADE 0{idx + 1}
                       </Typography>
+
                       <Typography 
                         variant="h3" 
                         sx={{ 
@@ -821,32 +821,32 @@ const Lessons: React.FC = () => {
               lineHeight: 1.6
             }}
           >
-            Our specialized curriculums are custom-tailored for each student cohort, ensuring rapid and solid progress at every stage of your musical journey.
+            Our specialized curriculums are custom-tailored for each student cohort, ensuring rapid and solid progress at every grade of your musical journey.
           </Typography>
           <Grid container spacing={4} alignItems="stretch">
             {[
               {
-                level: 'Young Keys',
+                level: 'Young Keys Grade',
                 focus: 'Ages 6-12 Play & Discover',
-                items: ['Hand Posture & Finger Shape', 'Basic Note Names & Keys', 'Fun Melodies & Cartoon Themes', 'Rhythmic Clapping & Ear Play'],
+                items: ['John Thompson\'s Piano Course', 'Basic Note Names & Keys', 'Fun Melodies & Cartoon Themes', 'Rhythmic Clapping & Ear Play'],
                 popular: false
               },
               {
-                level: 'Beginner',
+                level: 'Beginner Grade',
                 focus: 'Foundations & Keyboard Joy',
-                items: ['Dual-Staff Reading Basics', 'Rested Hand Posture & Touch', 'Essential Major Scale Shapes', 'Playing Classical & Pop Themes'],
+                items: ['Hymns Made Easy for Piano', 'ABRSM Foundation Materials', 'Rested Hand Posture & Touch', 'Dual-Staff Reading Basics'],
                 popular: false
               },
               {
-                level: 'Intermediate',
+                level: 'Intermediate Grade',
                 focus: 'Technique & Personal Style',
-                items: ['Graded Syllabus Repertoire', 'Chord Theory & Harmonies', 'Dynamic Shading & Articulation', 'Sight-Reading Fluency'],
+                items: ['ABRSM Grade 1-3 Repertoire', 'Intermediate Hymn Settings', 'Chord Theory & Harmonies', 'Dynamic Shading & Articulation'],
                 popular: false
               },
               {
-                level: 'Advanced',
+                level: 'Advanced Grade',
                 focus: 'Artistry & Concert Mastery',
-                items: ['Virtuoso Concert Repertoire', 'Technical Speed & Polyrhythms', 'Board Exam Preparation', 'Performance Psychology'],
+                items: ['ABRSM Grade 4-8 Syllabus', 'Advanced Classical Literature', 'Technical Speed & Polyrhythms', 'Performance Psychology'],
                 popular: false
               }
             ].map((program, idx) => (
