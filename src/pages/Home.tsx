@@ -181,19 +181,19 @@ const typingSegments = [
 
 const teamMembers = [
   {
-    name: "Lukas Joshua",
-    position: "Founder & Lead Producer",
+    name: "Shalom Mkombozi",
+    position: "CEO & Founder",
     image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=400&h=400&q=80",
-    description: "Multi-instrumentalist and award-winning engineer who has crafted Dar es Salaam's finest acoustic works."
+    description: "Founder of Shalom Music Studio, leading the vision to bring world-class acoustic recording and musical training to Tanzania."
   },
   {
-    name: "Sarah Mwangi",
-    position: "Head of Piano Education",
+    name: "Alvin Mfudu",
+    position: "Head of Piano Education & Production",
     image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=400&h=400&q=80",
-    description: "ABRSM Graded Specialist & concert pianist with a passion for cultivating expressive keyboard mastery."
+    description: "ABRSM Graded Specialist & concert pianist with a passion for cultivating expressive keyboard mastery and composition."
   },
   {
-    name: "David Kilonzo",
+    name: "Anna Mbwambo",
     position: "Senior Mixing & Mastering Engineer",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&h=400&q=80",
     description: "Sound physics expert specialized in capturing vocal warmth and delivering pristine, radio-ready masters."
