@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Container, Typography, Box, Button, Grid2 as Grid, Dialog, DialogContent, IconButton, Grow, Fade } from '@mui/material';
+import { Container, Typography, Box, Button, Grid2 as Grid, Dialog, DialogContent, IconButton, Grow } from '@mui/material';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PianoIcon from '@mui/icons-material/Piano';
