@@ -3,6 +3,12 @@ import { Container, Typography, Box, Button, List, ListItem, ListItemIcon, ListI
 import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { motion } from 'framer-motion';
+import shalomCtaVideo from '../assets/shalom-cta.mp4';
+import shalomPlayingHero from '../assets/shalom-playing-hero.jpeg';
+import campMeetingImg from '../assets/camp-meeting.jpeg';
+import concertImg from '../assets/concert.png';
+import pianoImg from '../assets/piano.jpeg';
 
 const PianoServices: React.FC = () => {
   return (
@@ -17,186 +23,173 @@ const PianoServices: React.FC = () => {
         {/* Hero Section */}
         <Box 
           sx={{ 
-            py: { xs: 12, md: 18 },
+            height: { xs: 'auto', md: '80vh' },
+            minHeight: { xs: '550px', md: '80vh' },
+            pt: { xs: 8, sm: 10, md: 12 },
+            pb: { xs: 10, sm: 12, md: 14 },
             position: 'relative',
-            // Cloudy background matching Home page exactly
-            background: `
-              radial-gradient(circle at 20% 30%, rgba(45, 45, 55, 0.45) 0%, transparent 50%),
-              radial-gradient(circle at 80% 70%, rgba(35, 35, 45, 0.4) 0%, transparent 60%),
-              radial-gradient(circle at 50% 50%, rgba(25, 25, 30, 0.3) 0%, transparent 80%),
-              #000000
-            `,
-            // Sandy texture overlay matching Home page exactly
+            overflow: 'hidden', // clips the slowly zooming background image
+            display: 'flex',
+            alignItems: 'center',
             '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: 0, left: 0, right: 0, bottom: 0,
+              // Dark gradient mask overlay for legibility
+              background: {
+                xs: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.95) 100%)',
+                md: 'linear-gradient(to right, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.4) 100%)'
+              },
+              zIndex: 1
+            },
+            // Sandy noise texture overlay
+            '&::after': {
               content: '""',
               position: 'absolute',
               top: 0, left: 0, right: 0, bottom: 0,
               width: '100%', height: '100%',
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-              opacity: 0.045, 
+              opacity: 0.035, 
               pointerEvents: 'none',
-              zIndex: 1
+              zIndex: 2
             }
           }}
         >
-          {/* Ambient Pink Glow Overlay */}
+          {/* Slowly zooming background image */}
+          <motion.img
+            src={shalomPlayingHero}
+            alt="Shalom playing piano"
+            initial={{ scale: 1.0 }}
+            animate={{ scale: 1.16 }}
+            transition={{
+              duration: 4,
+              ease: 'easeInOut', // smoother transition at the zoom limits
+              repeat: Infinity,
+              repeatType: 'reverse'
+            }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 0,
+              pointerEvents: 'none'
+            }}
+          />
+          {/* Ambient Glows */}
           <Box
             sx={{
               position: 'absolute',
-              top: '40%',
-              left: '50%',
+              top: '50%',
+              left: '20%',
               transform: 'translate(-50%, -50%)',
               width: { xs: '300px', sm: '500px', md: '700px' },
               height: { xs: '300px', sm: '500px', md: '700px' },
-              background: 'radial-gradient(circle, rgba(255, 42, 116, 0.08) 0%, transparent 75%)',
-              filter: 'blur(70px)',
+              background: 'radial-gradient(circle, rgba(255, 42, 116, 0.1) 0%, transparent 75%)',
+              filter: 'blur(80px)',
               pointerEvents: 'none',
-              zIndex: 1
+              zIndex: 2
             }}
           />
 
           <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 3 }}>
-            <Grid container spacing={6} sx={{ alignItems: 'center' }}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <Typography 
-                  variant="h2" 
+            <Box sx={{ maxWidth: { xs: '100%', md: '750px', lg: '850px' } }}>
+              {/* Spacing placeholder to maintain layout positions */}
+              <Box sx={{ pt: { xs: 6, md: 8 } }} />
+
+              <Typography 
+                variant="h1" 
+                sx={{ 
+                  fontWeight: 900, 
+                  fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
+                  fontSize: { xs: '2rem', sm: '2.8rem', md: '3.5rem' },
+                  letterSpacing: '0.04em',
+                  lineHeight: 1.05,
+                  color: '#ffffff',
+                  mb: 3.5,
+                  textShadow: '0 4px 15px rgba(0,0,0,0.5)'
+                }}
+              >
+                Concert-Grade Piano Performance Bookings
+              </Typography>
+
+              <Typography 
+                variant="h5" 
+                sx={{ 
+                  mb: 6, 
+                  opacity: 0.8, 
+                  fontWeight: 300, 
+                  lineHeight: 1.65,
+                  fontFamily: '"Linear", sans-serif',
+                  fontSize: { xs: '1rem', sm: '1.2rem' },
+                  maxWidth: '700px',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  textShadow: '0 2px 10px rgba(0,0,0,0.5)'
+                }}
+              >
+                Elevate your sacred worship, elegant weddings, classical recitals, and prestigious functions with master-level live piano performances. Experience a masterful touch that blends absolute keyboard precision with deep emotional expression.
+              </Typography>
+
+              <Box sx={{ display: 'flex', gap: 2.5, flexWrap: 'wrap' }}>
+                <Button 
+                  component={RouterLink}
+                  to="/contact?service=accompanist"
+                  variant="contained" 
+                  size="large" 
                   sx={{ 
-                    fontWeight: 900, 
-                    fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
-                    fontSize: { xs: '2.2rem', sm: '3rem', md: '3.6rem' },
-                    letterSpacing: '0.04em',
-                    lineHeight: 1.1,
-                    color: '#ffffff', // Clean white
-                    mb: 3 
+                    bgcolor: '#ff2a74', 
+                    color: 'white', 
+                    fontWeight: 700,
+                    fontFamily: '"Space Grotesk", sans-serif',
+                    px: 5, 
+                    py: 1.8,
+                    borderRadius: '0px',
+                    boxShadow: '0 8px 30px rgba(255, 42, 116, 0.3)',
+                    textTransform: 'none',
+                    letterSpacing: '0.02em',
+                    '&:hover': { 
+                      bgcolor: '#e01f61',
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 12px 35px rgba(255, 42, 116, 0.4)'
+                    },
+                    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
                   }}
                 >
-                  Concert-Grade Piano Performance Bookings
-                </Typography>
-                <Typography 
-                  variant="h5" 
+                  Book Accompanist
+                </Button>
+                <Button 
+                  onClick={() => {
+                    const element = document.getElementById('pricing-plans');
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  variant="outlined" 
+                  size="large" 
                   sx={{ 
-                    mb: 5, 
-                    opacity: 0.75, 
-                    fontWeight: 300, 
-                    lineHeight: 1.6,
-                    fontFamily: '"Linear", sans-serif',
-                    fontSize: { xs: '1rem', sm: '1.15rem' }
+                    borderColor: 'rgba(255, 255, 255, 0.35)', 
+                    color: 'white', 
+                    fontWeight: 700,
+                    fontFamily: '"Space Grotesk", sans-serif',
+                    px: 4.5, 
+                    py: 1.8,
+                    borderRadius: '0px',
+                    textTransform: 'none',
+                    letterSpacing: '0.02em',
+                    backdropFilter: 'blur(5px)',
+                    WebkitBackdropFilter: 'blur(5px)',
+                    '&:hover': { 
+                      borderColor: 'white', 
+                      bgcolor: 'rgba(255,255,255,0.1)',
+                      transform: 'translateY(-2px)'
+                    },
+                    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
                   }}
                 >
-                  Elevate your sacred worship, elegant weddings, classical recitals, and prestigious functions with master-level live piano performances. Experience a masterful touch that blends absolute keyboard precision with deep emotional expression.
-                </Typography>
-                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                  <Button 
-                    component={RouterLink}
-                    to="/contact?service=accompanist"
-                    variant="contained" 
-                    size="large" 
-                    sx={{ 
-                      bgcolor: '#ff2a74', 
-                      color: 'white', 
-                      fontWeight: 700,
-                      fontFamily: '"Space Grotesk", sans-serif',
-                      px: 4.5, 
-                      py: 1.6,
-                      borderRadius: '0px', // Sharp corners
-                      boxShadow: 'none',
-                      textTransform: 'none',
-                      '&:hover': { 
-                        bgcolor: '#e01f61',
-                        transform: 'translateY(-2px)'
-                      },
-                      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
-                    }}
-                  >
-                    Book Accompanist
-                  </Button>
-                  <Button 
-                    onClick={() => {
-                      const element = document.getElementById('pricing-plans');
-                      element?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    variant="outlined" 
-                    size="large" 
-                    sx={{ 
-                      borderColor: 'rgba(255, 255, 255, 0.2)', 
-                      color: 'white', 
-                      fontWeight: 700,
-                      fontFamily: '"Space Grotesk", sans-serif',
-                      px: 4, 
-                      py: 1.6,
-                      borderRadius: '0px', // Sharp corners
-                      textTransform: 'none',
-                      '&:hover': { 
-                        borderColor: 'white', 
-                        bgcolor: 'rgba(255,255,255,0.06)',
-                        transform: 'translateY(-2px)'
-                      },
-                      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
-                    }}
-                  >
-                    View Rates
-                  </Button>
-                </Box>
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <Box 
-                  sx={{ 
-                    width: '100%', 
-                    height: { xs: 300, sm: 450 }, 
-                    borderRadius: '0px', // Sharp corners
-                    position: 'relative',
-                    overflow: 'hidden',
-                    boxShadow: '0 30px 60px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,255,255,0.1)'
-                  }}
-                >
-                  <Box 
-                    component="img"
-                    src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=800&q=80"
-                    alt="Professional Grand Piano Performance"
-                    sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                  <Box 
-                    sx={{ 
-                      position: 'absolute', 
-                      bottom: 20, 
-                      right: 20, 
-                      bgcolor: 'rgba(10,10,12,0.9)', 
-                      backdropFilter: 'blur(20px)', 
-                      WebkitBackdropFilter: 'blur(20px)',
-                      p: 2.2, 
-                      borderRadius: '0px', // Sharp corners
-                      border: '1px solid rgba(255, 255, 255, 0.08)' 
-                    }}
-                  >
-                    <Typography 
-                      variant="caption" 
-                      sx={{ 
-                        display: 'block', 
-                        fontWeight: 800, 
-                        color: '#ff2a74',
-                        fontFamily: '"Space Grotesk", sans-serif',
-                        letterSpacing: '0.08em',
-                        textTransform: 'uppercase'
-                      }}
-                    >
-                      Performance Standards
-                    </Typography>
-                    <Typography 
-                      variant="h4" 
-                      sx={{ 
-                        fontWeight: 900, 
-                        color: 'white',
-                        fontFamily: '"Space Grotesk", sans-serif',
-                        mt: 0.5
-                      }}
-                    >
-                      100% Live
-                    </Typography>
-                  </Box>
-                </Box>
-              </Grid>
-            </Grid>
+                  View Rates
+                </Button>
+              </Box>
+            </Box>
           </Container>
         </Box>
 
@@ -253,44 +246,49 @@ const PianoServices: React.FC = () => {
                   level: 'Churches', 
                   focus: 'Liturgical Elegance & Worship',
                   desc: 'Reverent accompaniments for divine services, Sabbath convocations, choral support, and special congregational prayer assemblies.',
-                  items: ['Congregational Worship Playing', 'Hymnal Harmonizations', 'Choir Accompanist & Rehearsals', 'Preludes & Quiet Devotional Underscores']
+                  items: ['Congregational Worship Playing', 'Hymnal Harmonizations', 'Choir Accompanist & Rehearsals', 'Preludes & Quiet Devotional Underscores'],
+                  image: 'https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&w=600&h=400&q=80'
                 },
                 { 
                   level: 'Camp Meetings', 
                   focus: 'Spiritual Unity & Leadership',
                   desc: 'Comprehensive performance coverage for multi-day conventions, open-air camps, dynamic choral assemblies, and fellowship services.',
-                  items: ['Multi-Session Continuous Playback', 'Mass Choir Collaboration', 'Real-Time Transpositions', 'Liturgical Devotional Hymnal Standards']
+                  items: ['Multi-Session Continuous Playback', 'Mass Choir Collaboration', 'Real-Time Transpositions', 'Liturgical Devotional Hymnal Standards'],
+                  image: campMeetingImg
                 },
                 { 
                   level: 'Music Concerts', 
                   focus: 'Virtuosity & Collaboration',
                   desc: 'Concert-grade piano recitals, collaborative classical accompanying for soloists, instrumentalists, and chamber ensemble backing.',
-                  items: ['Solo Piano Recitals', 'Collaborative Sonata Accompanying', 'Orchestra/Ensemble Backing', 'HD Recording & Session Playing']
+                  items: ['Solo Piano Recitals', 'Collaborative Sonata Accompanying', 'Orchestra/Ensemble Backing', 'HD Recording & Session Playing'],
+                  image: concertImg
                 },
                 { 
                   level: 'Wedding Ceremonies', 
                   focus: 'Sophistication & Emotion',
                   desc: 'Live grand piano accompaniment to score the milestones of your union. Beautiful entrances, registries, recessions, and cocktail hours.',
-                  items: ['Bridal March Processionals', 'Registry Signing Underscores', 'Elegant Cocktail Hour Jazz & Pop', 'Custom Arrangement Requests']
+                  items: ['Bridal March Processionals', 'Registry Signing Underscores', 'Elegant Cocktail Hour Jazz & Pop', 'Custom Arrangement Requests'],
+                  image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&h=400&q=80'
                 },
                 { 
                   level: 'Functions', 
                   focus: 'Bespoke Ambient Repertoire',
                   desc: 'Polished background standards and performance numbers for banquets, award ceremonies, grand launches, and corporate galas.',
-                  items: ['Sophisticated Ambient Standards', 'Official Walk-up/Theme Fanfares', 'Tailored Genre Selection', 'High-Fidelity Sound Coordination']
+                  items: ['Sophisticated Ambient Standards', 'Official Walk-up/Theme Fanfares', 'Tailored Genre Selection', 'High-Fidelity Sound Coordination'],
+                  image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&h=400&q=80'
                 },
                 { 
                   level: 'Other Places', 
                   focus: 'Versatility & Promptness',
                   desc: 'Available for classical recitals, funerals and memorial services, private parties, academic masterclasses, and community events.',
-                  items: ['Memorial Service Solemn Hymns', 'Masterclass Demonstrations', 'High-End Private Gatherings', 'Flexible Location Setup Options']
+                  items: ['Memorial Service Solemn Hymns', 'Masterclass Demonstrations', 'High-End Private Gatherings', 'Flexible Location Setup Options'],
+                  image: pianoImg
                 }
               ].map((program, idx) => (
                 <Grid size={{ xs: 12, sm: 6, md: 4 }} key={idx} sx={{ display: 'flex' }}>
                   <Paper 
                     elevation={0} 
                     sx={{ 
-                      p: 4, 
                       width: '100%',
                       display: 'flex',
                       flexDirection: 'column',
@@ -298,103 +296,138 @@ const PianoServices: React.FC = () => {
                       color: 'white', 
                       border: '1px solid',
                       borderColor: 'rgba(255, 255, 255, 0.08)',
-                      borderRadius: '0px', // Sharp corners
-                      boxShadow: '0 20px 40px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.02)',
-                      transition: 'all 0.3s ease',
-                      '&:hover': {
-                        borderColor: '#ff2a74',
-                        transform: 'translateY(-4px)',
-                        boxShadow: '0 25px 50px rgba(0, 0, 0, 0.95)'
-                      }
+                      borderRadius: '0px',
+                      overflow: 'hidden',
+                      boxShadow: '0 20px 40px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.02)'
                     }}
                   >
-                    <Typography 
-                      variant="h4" 
-                      sx={{ 
-                        fontWeight: 800, 
-                        fontFamily: '"Space Grotesk", sans-serif',
-                        fontSize: '1.25rem',
-                        letterSpacing: '0.02em',
-                        textTransform: 'uppercase',
-                        color: 'white',
-                        mb: 0.5 
-                      }}
-                    >
-                      {program.level}
-                    </Typography>
-                    <Typography 
-                      variant="subtitle1" 
-                      sx={{ 
-                        mb: 2.5, 
-                        color: '#ff2a74',
-                        fontFamily: '"Space Grotesk", sans-serif',
-                        fontWeight: 600,
-                        fontSize: '0.8rem',
-                        letterSpacing: '0.06em',
-                        textTransform: 'uppercase'
-                      }}
-                    >
-                      {program.focus}
-                    </Typography>
-                    <Typography 
-                      variant="body2"
-                      sx={{
-                        fontFamily: '"Linear", sans-serif',
-                        color: 'rgba(255, 255, 255, 0.65)',
-                        fontWeight: 300,
-                        lineHeight: 1.5,
-                        mb: 4,
-                        minHeight: '72px'
-                      }}
-                    >
-                      {program.desc}
-                    </Typography>
-                    <Divider sx={{ mb: 4, borderColor: 'rgba(255,255,255,0.08)' }} />
-                    <List sx={{ mt: 'auto', p: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                      {program.items.map((item, i) => (
-                        <ListItem key={i} disableGutters sx={{ p: 0 }}>
-                          <ListItemIcon sx={{ minWidth: 28, color: '#ff2a74' }}>
-                            <CheckCircleIcon sx={{ fontSize: '0.95rem' }} />
-                          </ListItemIcon>
-                          <ListItemText 
-                            primary={item} 
-                            primaryTypographyProps={{
-                              sx: {
-                                fontFamily: '"Linear", sans-serif',
-                                color: 'rgba(255, 255, 255, 0.88)',
-                                fontWeight: 300,
-                                fontSize: '0.82rem'
-                              }
-                            }}
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
-                    
-                    <Button 
-                      component={RouterLink}
-                      to="/pricing?category=pianoServices"
-                      variant="text"
-                      sx={{
-                        mt: 4,
-                        color: '#ff2a74',
-                        fontFamily: '"Space Grotesk", sans-serif',
-                        fontWeight: 700,
-                        fontSize: '0.8rem',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.05em',
-                        alignSelf: 'flex-start',
-                        p: 0,
-                        transition: 'all 0.2s ease',
-                        '&:hover': {
-                          color: '#e01f61',
-                          bgcolor: 'transparent',
-                          transform: 'translateX(3px)'
-                        }
-                      }}
-                    >
-                      See Prices →
-                    </Button>
+                    {/* Image Container */}
+                    <Box sx={{ position: 'relative', width: '100%', height: '200px', overflow: 'hidden' }}>
+                      <Box 
+                        component="img"
+                        src={program.image}
+                        alt={program.level}
+                        className="card-image"
+                        sx={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                      />
+                      {/* Dark/color gradient overlay */}
+                      <Box 
+                        className="card-image-overlay"
+                        sx={{
+                          position: 'absolute',
+                          top: 0, right: 0, bottom: 0, left: 0,
+                          background: 'linear-gradient(to bottom, rgba(12, 12, 15, 0.2) 0%, rgba(12, 12, 15, 0.95) 100%)'
+                        }}
+                      />
+                      {/* Title overlay */}
+                      <Box 
+                        sx={{
+                          position: 'absolute',
+                          bottom: '16px',
+                          left: '24px',
+                          zIndex: 3
+                        }}
+                      >
+                        <Typography 
+                          variant="h4" 
+                          sx={{ 
+                            fontWeight: 800, 
+                            fontFamily: '"Space Grotesk", sans-serif',
+                            fontSize: '1.35rem',
+                            letterSpacing: '0.02em',
+                            textTransform: 'uppercase',
+                            textShadow: '0 2px 8px rgba(0,0,0,0.9)',
+                            color: 'white'
+                          }}
+                        >
+                          {program.level}
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    {/* Card Content */}
+                    <Box sx={{ p: 4, pt: 2, display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                      <Typography 
+                        variant="subtitle1" 
+                        sx={{ 
+                          mb: 2, 
+                          color: '#ff2a74',
+                          fontFamily: '"Space Grotesk", sans-serif',
+                          fontWeight: 600,
+                          fontSize: '0.78rem',
+                          letterSpacing: '0.08em',
+                          textTransform: 'uppercase'
+                        }}
+                      >
+                        {program.focus}
+                      </Typography>
+                      
+                      <Typography 
+                        variant="body2"
+                        sx={{
+                          fontFamily: '"Linear", sans-serif',
+                          color: 'rgba(255, 255, 255, 0.65)',
+                          fontWeight: 300,
+                          lineHeight: 1.6,
+                          mb: 3,
+                          minHeight: '72px'
+                        }}
+                      >
+                        {program.desc}
+                      </Typography>
+
+                      <Divider sx={{ mb: 3, borderColor: 'rgba(255,255,255,0.06)' }} />
+
+                      <List sx={{ p: 0, display: 'flex', flexDirection: 'column', gap: 1.2 }}>
+                        {program.items.map((item, i) => (
+                          <ListItem key={i} disableGutters sx={{ p: 0 }}>
+                            <ListItemIcon sx={{ minWidth: 24, color: '#ff2a74' }}>
+                              <CheckCircleIcon sx={{ fontSize: '0.9rem' }} />
+                            </ListItemIcon>
+                            <ListItemText 
+                              primary={item} 
+                              primaryTypographyProps={{
+                                sx: {
+                                  fontFamily: '"Linear", sans-serif',
+                                  color: 'rgba(255, 255, 255, 0.88)',
+                                  fontWeight: 300,
+                                  fontSize: '0.8rem'
+                                }
+                              }}
+                            />
+                          </ListItem>
+                        ))}
+                      </List>
+
+                      <Button 
+                        component={RouterLink}
+                        to="/pricing?category=pianoServices"
+                        variant="text"
+                        sx={{
+                          mt: 4,
+                          color: '#ff2a74',
+                          fontFamily: '"Space Grotesk", sans-serif',
+                          fontWeight: 700,
+                          fontSize: '0.8rem',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.05em',
+                          alignSelf: 'flex-start',
+                          p: 0,
+                          transition: 'all 0.2s ease',
+                          '&:hover': {
+                            color: '#e01f61',
+                            bgcolor: 'transparent',
+                            transform: 'translateX(4px)'
+                          }
+                        }}
+                      >
+                        See Prices & Availability →
+                      </Button>
+                    </Box>
                   </Paper>
                 </Grid>
               ))}
@@ -438,12 +471,57 @@ const PianoServices: React.FC = () => {
             borderTop: '1px solid rgba(255, 255, 255, 0.04)',
             position: 'relative',
             overflow: 'hidden',
-            background: `
-              radial-gradient(circle at 50% 50%, rgba(255, 42, 116, 0.03) 0%, transparent 60%),
-              #000000
-            `
+            // Sandy texture overlay
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: 0, left: 0, right: 0, bottom: 0,
+              width: '100%', height: '100%',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+              opacity: 0.045, 
+              pointerEvents: 'none',
+              zIndex: 2
+            }
           }}
         >
+          {/* Full-width absolute Video background */}
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              width: '100%',
+              height: '100%',
+              overflow: 'hidden',
+              zIndex: 1,
+              pointerEvents: 'none',
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                top: 0, left: 0, right: 0, bottom: 0,
+                // Dark overlay to protect text readability
+                background: 'rgba(0, 0, 0, 0.82)',
+                zIndex: 2
+              }
+            }}
+          >
+            <video
+              src={shalomCtaVideo}
+              muted
+              playsInline
+              autoPlay
+              loop
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                opacity: 0.45
+              }}
+            />
+          </Box>
+
           <Container maxWidth="md" sx={{ py: 15, textAlign: 'center', position: 'relative', zIndex: 2 }}>
             <Typography 
               variant="h3" 
@@ -463,7 +541,7 @@ const PianoServices: React.FC = () => {
               sx={{ 
                 mb: 6, 
                 fontFamily: '"Linear", sans-serif',
-                color: 'rgba(255, 255, 255, 0.6)',
+                color: 'rgba(255, 255, 255, 0.7)',
                 fontWeight: 300,
                 fontSize: { xs: '0.92rem', sm: '1.1rem' }
               }}
@@ -482,14 +560,15 @@ const PianoServices: React.FC = () => {
                 fontFamily: '"Space Grotesk", sans-serif',
                 px: 6, 
                 py: 2,
-                borderRadius: '0px', // Sharp corners
-                boxShadow: 'none',
+                borderRadius: '0px',
+                boxShadow: '0 8px 30px rgba(255, 42, 116, 0.3)',
                 textTransform: 'none',
                 '&:hover': { 
                   bgcolor: '#e01f61',
-                  transform: 'translateY(-2px)'
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 12px 35px rgba(255, 42, 116, 0.4)'
                 },
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
               }}
             >
               Request Performance Booking

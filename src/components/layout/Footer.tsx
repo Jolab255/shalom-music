@@ -4,6 +4,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { Link as RouterLink } from 'react-router-dom';
+import loaderVideo from '../../assets/loader-video.mp4';
 
 const Footer: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -72,7 +73,7 @@ const Footer: React.FC = () => {
             <Box sx={{ mb: 3.5 }}>
               <video 
                 ref={videoRef}
-                src="/loader-video.mp4" 
+                src={loaderVideo} 
                 muted
                 playsInline
                 style={{ 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Box } from '@mui/material';
+import loaderVideo from '../../assets/loader-video.mp4';
 
 interface LoaderProps {
   onComplete: () => void;
@@ -100,7 +101,7 @@ const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
     >
       <video
         ref={videoRef}
-        src="/loader-video.mp4"
+        src={loaderVideo}
         muted
         playsInline
         onCanPlayThrough={handleVideoCanPlay}

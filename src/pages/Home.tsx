@@ -33,6 +33,7 @@ import accendoImg from '../assets/accendo.png';
 import aboutUsVideo1 from '../assets/about-us-1.webm';
 import aboutUsVideo2 from '../assets/about-us-2.webm';
 import shalomCtaVideo from '../assets/shalom-cta.mp4';
+import loaderVideo from '../assets/loader-video.mp4';
 
 const whyShalomSlides = [
   {
@@ -125,7 +126,7 @@ const TabImageWithLoader: React.FC<TabImageWithLoaderProps> = ({ src, alt, sx })
           }}
         >
           <video
-            src="/loader-video.mp4"
+            src={loaderVideo}
             muted
             playsInline
             autoPlay
