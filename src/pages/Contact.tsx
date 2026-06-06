@@ -353,9 +353,82 @@ const Contact: React.FC = () => {
 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
               {[
-                { icon: <EmailIcon sx={{ color: '#ff2a74', fontSize: '1.25rem' }} />, label: 'Email Enquiries', val: 'info@shalommusic.co.tz', type: 'link', link: 'mailto:info@shalommusic.co.tz' },
-                { icon: <PhoneIcon sx={{ color: '#ff2a74', fontSize: '1.25rem' }} />, label: 'Direct Phone', val: '0620 319 635', type: 'link', link: 'tel:+255620319635' },
-                { icon: <LocationOnIcon sx={{ color: '#ff2a74', fontSize: '1.25rem' }} />, label: 'Studio Address', val: 'Msikiti wa udongo, Dar es Salaam, Tanzania', type: 'text' }
+                { 
+                  icon: <EmailIcon sx={{ color: '#ff2a74', fontSize: '1.25rem' }} />, 
+                  label: 'Email Enquiries', 
+                  render: () => (
+                    <Link 
+                      href="mailto:info@shalommusic.co.tz" 
+                      color="inherit" 
+                      underline="none"
+                      sx={{ 
+                        fontFamily: '"Linear", sans-serif', 
+                        fontSize: '0.9rem', 
+                        fontWeight: 300,
+                        color: 'rgba(255, 255, 255, 0.8)',
+                        transition: 'all 0.2s',
+                        '&:hover': { color: '#ff2a74' }
+                      }}
+                    >
+                      info@shalommusic.co.tz
+                    </Link>
+                  )
+                },
+                { 
+                  icon: <PhoneIcon sx={{ color: '#ff2a74', fontSize: '1.25rem' }} />, 
+                  label: 'Direct Phone', 
+                  render: () => (
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                      <Link 
+                        href="tel:+255746180419" 
+                        color="inherit" 
+                        underline="none"
+                        sx={{ 
+                          fontFamily: '"Linear", sans-serif', 
+                          fontSize: '0.9rem', 
+                          fontWeight: 300,
+                          color: 'rgba(255, 255, 255, 0.8)',
+                          transition: 'all 0.2s',
+                          '&:hover': { color: '#ff2a74' }
+                        }}
+                      >
+                        0746 180 419
+                      </Link>
+                      <Link 
+                        href="tel:+255654429035" 
+                        color="inherit" 
+                        underline="none"
+                        sx={{ 
+                          fontFamily: '"Linear", sans-serif', 
+                          fontSize: '0.9rem', 
+                          fontWeight: 300,
+                          color: 'rgba(255, 255, 255, 0.8)',
+                          transition: 'all 0.2s',
+                          '&:hover': { color: '#ff2a74' }
+                        }}
+                      >
+                        0654 429 035
+                      </Link>
+                    </Box>
+                  )
+                },
+                { 
+                  icon: <LocationOnIcon sx={{ color: '#ff2a74', fontSize: '1.25rem' }} />, 
+                  label: 'Studio Address', 
+                  render: () => (
+                    <Typography 
+                      sx={{ 
+                        fontFamily: '"Linear", sans-serif', 
+                        fontSize: '0.9rem', 
+                        fontWeight: 300,
+                        color: 'rgba(255, 255, 255, 0.8)',
+                        lineHeight: 1.5
+                      }}
+                    >
+                      Msikiti wa udongo, Dar es Salaam, Tanzania
+                    </Typography>
+                  )
+                }
               ].map((item, i) => (
                 <Box key={i} sx={{ display: 'flex', gap: 2.5, alignItems: 'flex-start' }}>
                   <Box 
@@ -385,35 +458,7 @@ const Contact: React.FC = () => {
                     <Typography sx={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.45)', textTransform: 'uppercase', letterSpacing: '0.08em', mb: 0.5 }}>
                       {item.label}
                     </Typography>
-                    {item.type === 'link' ? (
-                      <Link 
-                        href={item.link} 
-                        color="inherit" 
-                        underline="none"
-                        sx={{ 
-                          fontFamily: '"Linear", sans-serif', 
-                          fontSize: '0.9rem', 
-                          fontWeight: 300,
-                          color: 'rgba(255, 255, 255, 0.8)',
-                          transition: 'all 0.2s',
-                          '&:hover': { color: '#ff2a74' }
-                        }}
-                      >
-                        {item.val}
-                      </Link>
-                    ) : (
-                      <Typography 
-                        sx={{ 
-                          fontFamily: '"Linear", sans-serif', 
-                          fontSize: '0.9rem', 
-                          fontWeight: 300,
-                          color: 'rgba(255, 255, 255, 0.8)',
-                          lineHeight: 1.5
-                        }}
-                      >
-                        {item.val}
-                      </Typography>
-                    )}
+                    {item.render()}
                   </Box>
                 </Box>
               ))}

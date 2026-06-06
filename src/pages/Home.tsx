@@ -12,6 +12,11 @@ import EqualizerIcon from '@mui/icons-material/Equalizer';
 import CloseIcon from '@mui/icons-material/Close';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import EmailIcon from '@mui/icons-material/Email';
+import XIcon from '@mui/icons-material/X';
 import sect2Img from '../assets/sect_2.webp';
 import audioRecordingImg from '../assets/audio-recording.webp';
 import audioCapturingImg from '../assets/audio-capturing.webp';
@@ -25,8 +30,6 @@ import whyShalom4Img from '../assets/why-shalom-4.webp';
 import harmonyImg from '../assets/harmony.png';
 import livingLightImg from '../assets/living_light.png';
 import accendoImg from '../assets/accendo.png';
-import pianoStudent1Img from '../assets/piano_student_1.png';
-import pianoStudent2Img from '../assets/piano_student_2.png';
 import aboutUsVideo1 from '../assets/about-us-1.webm';
 import aboutUsVideo2 from '../assets/about-us-2.webm';
 import shalomCtaVideo from '../assets/shalom-cta.mp4';
@@ -181,22 +184,56 @@ const typingSegments = [
 
 const teamMembers = [
   {
-    name: "Shalom Mkombozi",
+    name: "Shalom Amani",
     position: "CEO & Founder",
-    image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=400&h=400&q=80",
-    description: "Founder of Shalom Music Studio, leading the vision to bring world-class acoustic recording and musical training to Tanzania."
-  },
-  {
-    name: "Alvin Mfudu",
-    position: "Head of Piano Education & Production",
-    image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=400&h=400&q=80",
-    description: "ABRSM Graded Specialist & concert pianist with a passion for cultivating expressive keyboard mastery and composition."
-  },
-  {
-    name: "Anna Mbwambo",
-    position: "Senior Mixing & Mastering Engineer",
+    additionalRoles: ["Head of Production", "Music Producer", "Piano Tutor"],
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&h=400&q=80",
-    description: "Sound physics expert specialized in capturing vocal warmth and delivering pristine, radio-ready masters."
+    socials: {
+      instagram: "https://instagram.com",
+      x: "https://x.com",
+      gmail: "mailto:shalomamani@gmail.com",
+      facebook: "https://facebook.com",
+      linkedin: "https://linkedin.com"
+    }
+  },
+  {
+    name: "Enoch Mkama",
+    position: "Studio Manager",
+    additionalRoles: ["Piano Tutor"],
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&h=400&q=80",
+    socials: {
+      instagram: "https://instagram.com",
+      x: "https://x.com",
+      gmail: "mailto:enochmkama@gmail.com",
+      facebook: "https://facebook.com",
+      linkedin: "https://linkedin.com"
+    }
+  },
+  {
+    name: "Atupelye Lugala",
+    position: "Finance",
+    additionalRoles: ["Marketing Manager"],
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80",
+    socials: {
+      instagram: "https://instagram.com",
+      x: "https://x.com",
+      gmail: "mailto:atupelyelugala@gmail.com",
+      facebook: "https://facebook.com",
+      linkedin: "https://linkedin.com"
+    }
+  },
+  {
+    name: "Samson Misheto",
+    position: "Audio Engineer",
+    additionalRoles: ["Music Producer", "Recording Assistant"],
+    image: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=400&h=400&q=80",
+    socials: {
+      instagram: "https://instagram.com",
+      x: "https://x.com",
+      gmail: "mailto:samsonmisheto@gmail.com",
+      facebook: "https://facebook.com",
+      linkedin: "https://linkedin.com"
+    }
   }
 ];
 
@@ -704,12 +741,11 @@ const KnowUsSectionComponent: React.FC = () => {
                 Meet Our Team
               </Typography>
 
-              {/* Team Grid */}
               <Box
                 sx={{
                   display: 'grid',
-                  gridTemplateColumns: '1fr 1fr 1fr',
-                  gap: '24px',
+                  gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr 1fr' },
+                  gap: '20px',
                   width: '100%'
                 }}
               >
@@ -722,8 +758,8 @@ const KnowUsSectionComponent: React.FC = () => {
                       background: 'linear-gradient(135deg, rgba(18, 18, 26, 0.85) 0%, rgba(8, 8, 12, 0.95) 100%)',
                       border: '1px solid rgba(255, 255, 255, 0.07)',
                       borderRadius: '0px', // Reverted to sharp corners
-                      padding: { md: '24px 20px', lg: '28px 24px' }, // Spacious padding
-                      minHeight: { md: '280px', lg: '310px' }, // Tall card layout
+                      padding: 0, // Zero padding for full-bleed image
+                      height: '100%', // Stretch to fill row height
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
@@ -734,6 +770,7 @@ const KnowUsSectionComponent: React.FC = () => {
                       animation: 'teamPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
                       animationDelay: `${idx * 0.2}s`,
                       transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                      overflow: 'hidden', // Clips image edges
                       '@keyframes teamPop': {
                         '0%': {
                           transform: 'scale(0.7) translateY(20px)',
@@ -754,7 +791,6 @@ const KnowUsSectionComponent: React.FC = () => {
                         boxShadow: '0 35px 70px rgba(0, 0, 0, 0.98)',
                         '& .team-img-container': {
                           transform: 'scale(1.06) rotate(-2deg)',
-                          borderColor: 'rgba(255, 255, 255, 0.35)',
                         },
                         '& .team-img': {
                           transform: 'scale(1.1) rotate(2deg)',
@@ -766,18 +802,15 @@ const KnowUsSectionComponent: React.FC = () => {
                     <Box
                       className="team-img-container"
                       sx={{
-                        width: { md: '80px', lg: '95px' },
-                        height: { md: '80px', lg: '95px' },
-                        borderRadius: '0px',
+                        width: '100%',
+                        aspectRatio: '1/1',
                         overflow: 'hidden',
-                        border: '2px solid rgba(255, 255, 255, 0.15)',
-                        mb: 2.2,
-                        boxShadow: '0 8px 20px rgba(0,0,0,0.4)',
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
                         transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        bgcolor: 'rgba(255, 255, 255, 0.04)'
+                        bgcolor: 'rgba(255, 255, 255, 0.02)'
                       }}
                     >
                       <Box
@@ -793,6 +826,18 @@ const KnowUsSectionComponent: React.FC = () => {
                         }}
                       />
                     </Box>
+
+                    {/* Content Details Wrapper (Occupies remaining height nicely) */}
+                    <Box
+                      sx={{
+                        padding: { md: '16px 12px 20px 12px', lg: '20px 16px 24px 16px' },
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        width: '100%',
+                        flexGrow: 1
+                      }}
+                    >
 
                     {/* Name */}
                     <Typography
@@ -812,7 +857,10 @@ const KnowUsSectionComponent: React.FC = () => {
                     <Box
                       sx={{
                         mb: 1.5,
-                        display: 'block'
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: 0.5
                       }}
                     >
                       <Typography
@@ -828,20 +876,82 @@ const KnowUsSectionComponent: React.FC = () => {
                       >
                         {member.position}
                       </Typography>
+                      {member.additionalRoles && member.additionalRoles.length > 0 && (
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 0.5, mt: 0.8 }}>
+                          {member.additionalRoles.map((role, rIdx) => (
+                            <Box
+                              key={rIdx}
+                              sx={{
+                                border: '1px solid rgba(255, 45, 85, 0.4)',
+                                px: 1.2,
+                                py: 0.4,
+                                borderRadius: '2px',
+                                bgcolor: 'rgba(255, 45, 85, 0.08)'
+                              }}
+                            >
+                              <Typography
+                                sx={{
+                                  fontFamily: '"Space Grotesk", sans-serif',
+                                  fontSize: '10px',
+                                  fontWeight: 600,
+                                  color: 'rgba(255, 255, 255, 0.95)',
+                                  textTransform: 'uppercase',
+                                  letterSpacing: '0.06em',
+                                  lineHeight: 1
+                                }}
+                              >
+                                {role}
+                              </Typography>
+                            </Box>
+                          ))}
+                        </Box>
+                      )}
                     </Box>
 
-                    {/* Short description */}
-                    <Typography
-                      sx={{
-                        fontFamily: '"Inter", sans-serif',
-                        fontSize: { md: '12px', lg: '13px' },
-                        fontWeight: 300,
-                        color: 'rgba(255, 255, 255, 0.65)',
-                        lineHeight: 1.5
+                    {/* Social Links */}
+                    <Box 
+                      sx={{ 
+                        mt: 'auto', 
+                        pt: 2, 
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        gap: 1,
+                        width: '100%'
                       }}
                     >
-                      {member.description}
-                    </Typography>
+                      {[
+                        { icon: <InstagramIcon fontSize="small" />, url: member.socials.instagram, label: 'Instagram' },
+                        { icon: <XIcon fontSize="small" />, url: member.socials.x, label: 'X' },
+                        { icon: <EmailIcon fontSize="small" />, url: member.socials.gmail, label: 'Gmail' },
+                        { icon: <FacebookIcon fontSize="small" />, url: member.socials.facebook, label: 'Facebook' },
+                        { icon: <LinkedInIcon fontSize="small" />, url: member.socials.linkedin, label: 'LinkedIn' }
+                      ].map((soc, sIdx) => (
+                        <IconButton
+                          key={sIdx}
+                          component="a"
+                          href={soc.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={soc.label}
+                          sx={{
+                            color: 'rgba(255, 255, 255, 0.45)',
+                            p: 0.6,
+                            borderRadius: 0,
+                            border: '1px solid rgba(255, 255, 255, 0.08)',
+                            transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                            '&:hover': {
+                              color: '#ff2d55',
+                              borderColor: 'rgba(255, 45, 85, 0.5)',
+                              bgcolor: 'rgba(255, 45, 85, 0.05)',
+                              transform: 'translateY(-2px)'
+                            }
+                          }}
+                        >
+                          {soc.icon}
+                        </IconButton>
+                      ))}
+                    </Box>
+                    </Box>
                   </Box>
                 ))}
               </Box>
@@ -955,17 +1065,15 @@ const KnowUsSectionComponent: React.FC = () => {
               }}
             >
               Meet Our Team
-            </Typography>
-
-            {teamMembers.map((member, idx) => (
+            </Typography>             {teamMembers.map((member, idx) => (
               <Box
                 key={idx}
                 sx={{
                   background: 'linear-gradient(135deg, rgba(20, 20, 25, 0.85) 0%, rgba(12, 12, 15, 0.95) 100%)',
                   border: '1px solid rgba(255, 255, 255, 0.08)',
                   borderRadius: '0px', // Reverted to sharp corners
-                  padding: '28px 20px', // Spacious padding
-                  minHeight: '280px', // Tall card layout
+                  padding: 0, // Zero padding for full-bleed
+                  minHeight: 'auto', // Auto height
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
@@ -976,6 +1084,7 @@ const KnowUsSectionComponent: React.FC = () => {
                   animation: 'teamPopMobile 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
                   animationDelay: `${idx * 0.2}s`,
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  overflow: 'hidden', // Clips image corners
                   '@keyframes teamPopMobile': {
                     '0%': {
                       transform: 'scale(0.7) translateY(20px)',
@@ -997,7 +1106,6 @@ const KnowUsSectionComponent: React.FC = () => {
                       boxShadow: '0 25px 50px rgba(0, 0, 0, 0.85)',
                       '& .team-img-container': {
                         transform: 'scale(1.06) rotate(-2deg)',
-                        borderColor: 'rgba(255, 255, 255, 0.35)',
                       },
                       '& .team-img': {
                         transform: 'scale(1.1) rotate(2deg)',
@@ -1009,7 +1117,6 @@ const KnowUsSectionComponent: React.FC = () => {
                     bgcolor: 'rgba(14, 14, 20, 0.98)',
                     '& .team-img-container': {
                       transform: 'scale(1.06) rotate(-2deg)',
-                      borderColor: 'rgba(255, 255, 255, 0.35)',
                     },
                     '& .team-img': {
                       transform: 'scale(1.1) rotate(2deg)',
@@ -1021,18 +1128,15 @@ const KnowUsSectionComponent: React.FC = () => {
                 <Box
                   className="team-img-container"
                   sx={{
-                    width: '90px',
-                    height: '90px',
-                    borderRadius: '0px',
+                    width: '100%',
+                    height: '240px', // Fixed bleed image height on mobile
                     overflow: 'hidden',
-                    border: '2px solid rgba(255, 255, 255, 0.15)',
-                    boxShadow: '0 6px 15px rgba(0,0,0,0.4)',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
                     transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    bgcolor: 'rgba(255, 255, 255, 0.04)',
-                    mb: 2.2,
+                    bgcolor: 'rgba(255, 255, 255, 0.02)'
                   }}
                 >
                   <Box
@@ -1048,6 +1152,18 @@ const KnowUsSectionComponent: React.FC = () => {
                     }}
                   />
                 </Box>
+
+                {/* Content Details Wrapper (Mobile) */}
+                <Box
+                  sx={{
+                    padding: '20px 16px 24px 16px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    width: '100%',
+                    flexGrow: 1
+                  }}
+                >
 
                 {/* Name */}
                 <Typography
@@ -1067,7 +1183,10 @@ const KnowUsSectionComponent: React.FC = () => {
                 <Box
                   sx={{
                     mb: 1.5,
-                    display: 'block'
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 0.5
                   }}
                 >
                   <Typography
@@ -1083,24 +1202,86 @@ const KnowUsSectionComponent: React.FC = () => {
                   >
                     {member.position}
                   </Typography>
+                  {member.additionalRoles && member.additionalRoles.length > 0 && (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 0.5, mt: 0.8 }}>
+                      {member.additionalRoles.map((role, rIdx) => (
+                        <Box
+                          key={rIdx}
+                          sx={{
+                            border: '1px solid rgba(255, 45, 85, 0.4)',
+                            px: 1.2,
+                            py: 0.4,
+                            borderRadius: '2px',
+                            bgcolor: 'rgba(255, 45, 85, 0.08)'
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              fontFamily: '"Space Grotesk", sans-serif',
+                              fontSize: '10px',
+                              fontWeight: 600,
+                              color: 'rgba(255, 255, 255, 0.95)',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.06em',
+                              lineHeight: 1
+                            }}
+                          >
+                            {role}
+                          </Typography>
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
                 </Box>
 
-                {/* Description */}
-                <Typography
-                  sx={{
-                    fontFamily: '"Inter", sans-serif',
-                    fontSize: '13px',
-                    fontWeight: 300,
-                    color: 'rgba(255, 255, 255, 0.65)',
-                    lineHeight: 1.5
+                {/* Social Links */}
+                <Box 
+                  sx={{ 
+                    mt: 'auto', 
+                    pt: 2, 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    gap: 1,
+                    width: '100%'
                   }}
                 >
-                  {member.description}
-                </Typography>
+                  {[
+                    { icon: <InstagramIcon fontSize="small" />, url: member.socials.instagram, label: 'Instagram' },
+                    { icon: <XIcon fontSize="small" />, url: member.socials.x, label: 'X' },
+                    { icon: <EmailIcon fontSize="small" />, url: member.socials.gmail, label: 'Gmail' },
+                    { icon: <FacebookIcon fontSize="small" />, url: member.socials.facebook, label: 'Facebook' },
+                    { icon: <LinkedInIcon fontSize="small" />, url: member.socials.linkedin, label: 'LinkedIn' }
+                  ].map((soc, sIdx) => (
+                    <IconButton
+                      key={sIdx}
+                      component="a"
+                      href={soc.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={soc.label}
+                      sx={{
+                        color: 'rgba(255, 255, 255, 0.45)',
+                        p: 0.6,
+                        borderRadius: 0,
+                        border: '1px solid rgba(255, 255, 255, 0.08)',
+                        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                        '&:hover': {
+                          color: '#ff2d55',
+                          borderColor: 'rgba(255, 45, 85, 0.5)',
+                          bgcolor: 'rgba(255, 45, 85, 0.05)',
+                          transform: 'translateY(-2px)'
+                        }
+                      }}
+                    >
+                      {soc.icon}
+                    </IconButton>
+                  ))}
+                </Box>
               </Box>
-            ))}
-          </Box>
-        )}
+            </Box>
+          ))}
+        </Box>
+      )}
 
         {/* Action Buttons: Production Plans & Piano Lessons */}
         <Box
@@ -1191,7 +1372,6 @@ const Home: React.FC = () => {
   const [isScrollPopupOpen, setIsScrollPopupOpen] = useState(false);
 
   const [activeWhySlide, setActiveWhySlide] = useState(0);
-  const [testimonialCategory, setTestimonialCategory] = useState<'production' | 'piano'>('production');
 
   const [playingVideo, setPlayingVideo] = useState<string | null>(null);
   const [overlayVideo, setOverlayVideo] = useState<string | null>(null);
@@ -1461,8 +1641,7 @@ const Home: React.FC = () => {
             "@type": "MusicStudio",
             "name": "Shalom Music Studios",
             "image": "https://shalommusic.co.tz/why-shalom-1.webp",
-            "url": "https://shalommusic.co.tz",
-            "telephone": "+255620319635",
+            "telephone": ["+255746180419", "+255654429035"],
             "priceRange": "$$",
             "address": {
               "@type": "PostalAddress",
@@ -3269,75 +3448,7 @@ const Home: React.FC = () => {
             What Our Clients Say
           </Typography>
 
-          {/* Category Tabs */}
-          <Box 
-            sx={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
-              gap: 1.5, 
-              mb: 5,
-              animation: 'fadeIn 0.8s ease-out'
-            }}
-          >
-            <Button
-              onClick={() => setTestimonialCategory('production')}
-              variant="contained"
-              sx={{
-                bgcolor: testimonialCategory === 'production' ? '#ff2a74' : 'rgba(255, 255, 255, 0.05)',
-                color: 'white',
-                fontWeight: 700,
-                px: { xs: 2.5, sm: 3.5 },
-                py: 1,
-                borderRadius: 0,
-                border: '1px solid',
-                borderColor: testimonialCategory === 'production' ? '#ff2a74' : 'rgba(255, 255, 255, 0.1)',
-                fontFamily: '"Space Grotesk", sans-serif',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                fontSize: { xs: '0.7rem', sm: '0.78rem' },
-                boxShadow: testimonialCategory === 'production' ? '0 6px 20px rgba(255, 42, 116, 0.25)' : 'none',
-                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                '&:hover': {
-                  bgcolor: testimonialCategory === 'production' ? '#e01f61' : 'rgba(255, 255, 255, 0.12)',
-                  borderColor: testimonialCategory === 'production' ? '#e01f61' : 'rgba(255, 255, 255, 0.2)',
-                  transform: 'translateY(-1px)'
-                }
-              }}
-            >
-              Music Production
-            </Button>
-            <Button
-              onClick={() => setTestimonialCategory('piano')}
-              variant="contained"
-              sx={{
-                bgcolor: testimonialCategory === 'piano' ? '#ff2a74' : 'rgba(255, 255, 255, 0.05)',
-                color: 'white',
-                fontWeight: 700,
-                px: { xs: 2.5, sm: 3.5 },
-                py: 1,
-                borderRadius: 0,
-                border: '1px solid',
-                borderColor: testimonialCategory === 'piano' ? '#ff2a74' : 'rgba(255, 255, 255, 0.1)',
-                fontFamily: '"Space Grotesk", sans-serif',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                fontSize: { xs: '0.7rem', sm: '0.78rem' },
-                boxShadow: testimonialCategory === 'piano' ? '0 6px 20px rgba(255, 42, 116, 0.25)' : 'none',
-                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                '&:hover': {
-                  bgcolor: testimonialCategory === 'piano' ? '#e01f61' : 'rgba(255, 255, 255, 0.12)',
-                  borderColor: testimonialCategory === 'piano' ? '#e01f61' : 'rgba(255, 255, 255, 0.2)',
-                  transform: 'translateY(-1px)'
-                }
-              }}
-            >
-              Piano Lessons
-            </Button>
-          </Box>
-
-          {testimonialCategory === 'production' ? (
-            <>
-              <Grid container spacing={6} alignItems="center" sx={{ mt: 2 }}>
+          <Grid container spacing={6} alignItems="center" sx={{ mt: 2 }}>
             {/* Left Column: Interactive Video Thumbnail Card */}
             <Grid size={{ xs: 12, md: 7 }}>
               <Box 
@@ -4152,559 +4263,7 @@ const Home: React.FC = () => {
               </Box>
             </Grid>
           </Grid>
-          </>
-          ) : (
-            <Grow in={testimonialCategory === 'piano'} timeout={500}>
-              <Box sx={{ mt: 4 }}>
-                {/* Piano Testimony 1: Ebenezer Eliamani (Image Left, Content Right) */}
-                <Grid container spacing={6} alignItems="center">
-                  {/* Left Column: Interactive Video Thumbnail Card */}
-                  <Grid size={{ xs: 12, md: 7 }}>
-                    <Box 
-                      onClick={() => playingVideo !== 'piano_student_1' && handlePlayVideo('piano_student_1')}
-                      sx={{ 
-                        display: 'block',
-                        position: 'relative',
-                        width: '100%',
-                        height: { xs: '240px', sm: '380px', md: '440px' },
-                        overflow: 'hidden',
-                        border: '1px solid rgba(255, 255, 255, 0.1)',
-                        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)',
-                        cursor: playingVideo === 'piano_student_1' ? 'default' : 'pointer',
-                        '&:hover .video-cover': {
-                          transform: playingVideo === 'piano_student_1' ? 'none' : 'scale(1.03)',
-                        }
-                      }}
-                    >
-                      {playingVideo === 'piano_student_1' ? (
-                        <Box 
-                          component="iframe"
-                          src="https://www.youtube-nocookie.com/embed/F-hD2C1aQ3U?autoplay=1&mute=0&rel=0&modestbranding=1"
-                          title="Piano Student Recital - Fur Elise"
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          allowFullScreen
-                          referrerPolicy="strict-origin-when-cross-origin"
-                          sx={{
-                            width: '100%',
-                            height: '100%',
-                            border: 0
-                          }}
-                        />
-                      ) : (
-                        <>
-                          {/* Real YouTube Video Thumbnail */}
-                          <Box 
-                            className="video-cover"
-                            component="img"
-                            src={pianoStudent1Img}
-                            alt="Piano Student Cover"
-                            sx={{
-                              width: '100%',
-                              height: '100%',
-                              objectFit: 'cover',
-                              transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
-                            }}
-                          />
 
-                          {/* Modern Pulsing Play Button overlay */}
-                          <Box 
-                            sx={{
-                              position: 'absolute',
-                              top: '50%',
-                              left: '50%',
-                              transform: 'translate(-50%, -50%)',
-                              width: { xs: 60, sm: 80 },
-                              height: { xs: 60, sm: 80 },
-                              borderRadius: '50%',
-                              bgcolor: 'rgba(255, 42, 116, 0.9)',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              zIndex: 3,
-                              boxShadow: '0 0 30px rgba(255, 42, 116, 0.6)',
-                              transition: 'all 0.3s ease',
-                              '&:hover': {
-                                transform: 'translate(-50%, -50%) scale(1.1)',
-                                bgcolor: '#ff2a74',
-                                boxShadow: '0 0 40px rgba(255, 42, 116, 0.8)'
-                              },
-                              '@keyframes pianoPulse1': {
-                                '0%': {
-                                  transform: 'scale(1)',
-                                  opacity: 0.8
-                                },
-                                '100%': {
-                                  transform: 'scale(1.5)',
-                                  opacity: 0
-                                }
-                              },
-                              '&::after': {
-                                content: '""',
-                                position: 'absolute',
-                                width: '100%',
-                                height: '100%',
-                                borderRadius: '50%',
-                                border: '2px solid #ff2a74',
-                                animation: 'pianoPulse1 2s infinite',
-                                opacity: 0.6
-                              }
-                            }}
-                          >
-                            <PlayArrowIcon sx={{ color: 'white', fontSize: { xs: 30, sm: 40 }, ml: 0.5 }} />
-                          </Box>
-
-                          {/* Dark Overlay for depth */}
-                          <Box 
-                            sx={{
-                              position: 'absolute',
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              bottom: 0,
-                              background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%)',
-                              zIndex: 2
-                            }}
-                          />
-                        </>
-                      )}
-
-                      {/* Continue to Watch Glassmorphism Overlay */}
-                      {overlayVideo === 'piano_student_1' && (
-                        <Box 
-                          sx={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            background: 'rgba(0, 0, 0, 0.85)',
-                            backdropFilter: 'blur(12px)',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: { xs: 2, sm: 3 },
-                            zIndex: 10,
-                            textAlign: 'center',
-                            px: { xs: 2, sm: 4 },
-                            '@keyframes pianoFadeIn1': {
-                              from: { opacity: 0 },
-                              to: { opacity: 1 }
-                            },
-                            animation: 'pianoFadeIn1 0.5s ease-out'
-                          }}
-                        >
-                          <Typography 
-                            variant="h4" 
-                            sx={{ 
-                              color: 'white', 
-                              fontWeight: 900,
-                              fontSize: { xs: '2rem', sm: '3.2rem', md: '4rem' },
-                              fontFamily: '"Sans Superellipse Ragan 2", sans-serif',
-                              lineHeight: 1.3
-                            }}
-                          >
-                            Enjoying the Music?
-                          </Typography>
-                          <Typography 
-                            variant="body2" 
-                            sx={{ 
-                              color: 'rgba(255, 255, 255, 0.7)', 
-                              maxWidth: '450px',
-                              fontFamily: '"Space Grotesk", sans-serif',
-                              fontSize: { xs: '0.8rem', sm: '0.95rem' },
-                              letterSpacing: '0.05em'
-                            }}
-                          >
-                            Continue to watch the full video on YouTube to experience their complete masterpiece!
-                          </Typography>
-                          <Button 
-                            component="a"
-                            href="https://www.youtube.com/watch?v=F-hD2C1aQ3U"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            variant="contained"
-                            sx={{
-                              bgcolor: '#ff2a74',
-                              color: 'white',
-                              fontWeight: 700,
-                              px: 4,
-                              py: 1.5,
-                              borderRadius: 0,
-                              fontFamily: '"Space Grotesk", sans-serif',
-                              letterSpacing: '0.1em',
-                              textTransform: 'uppercase',
-                              boxShadow: '0 8px 25px rgba(255, 42, 116, 0.4)',
-                              '&:hover': {
-                                bgcolor: '#e01f61',
-                                boxShadow: '0 8px 30px rgba(255, 42, 116, 0.6)'
-                              }
-                            }}
-                          >
-                            Continue to Watch
-                          </Button>
-                        </Box>
-                      )}
-                    </Box>
-                  </Grid>
-
-                  {/* Right Column: Testimony Content */}
-                  <Grid size={{ xs: 12, md: 5 }} sx={{ display: 'flex', flexDirection: 'column', gap: 3, justifyContent: 'center' }}>
-                    {/* Name Block */}
-                    <Box>
-                      <Typography 
-                        variant="h3" 
-                        sx={{ 
-                          fontWeight: 900,
-                          fontFamily: '"Sans Superellipse Ragan 2", sans-serif',
-                          fontSize: { xs: '1.6rem', sm: '2.8rem', md: '4.8rem' },
-                          color: 'white',
-                          lineHeight: 1.1,
-                          mb: 1
-                        }}
-                      >
-                        Ebenezer Eliamani
-                      </Typography>
-                      <Typography 
-                        variant="subtitle1" 
-                        sx={{ 
-                          fontFamily: '"Linear", sans-serif', 
-                          color: 'rgba(255,255,255,0.4)',
-                          fontWeight: 400
-                        }}
-                      >
-                        Intermediate Classical & Jazz Studies
-                      </Typography>
-                    </Box>
-
-                    {/* Testimony Block */}
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                      <Typography 
-                        variant="body1" 
-                        sx={{ 
-                          fontFamily: '"Linear", sans-serif',
-                          fontWeight: 300,
-                          fontSize: { xs: '1.05rem', sm: '1.15rem' },
-                          color: 'rgba(255, 255, 255, 0.85)',
-                          lineHeight: 1.8,
-                          position: 'relative',
-                          pl: 3,
-                          borderLeft: '2px solid #ff2a74',
-                          textAlign: 'justify'
-                        }}
-                      >
-                        "Learning piano at Shalom Music Studios has completely transformed my musical journey. The instructors combine rigorous classical technique with modern jazz improvisation in a way that is incredibly engaging and fun. Their patience and dedicated mentorship gave me the confidence to play in public."
-                      </Typography>
-                      
-                      {/* Location below testimony */}
-                      <Box 
-                        sx={{ 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          gap: 0.5, 
-                          color: '#ff2a74',
-                          pl: 3,
-                          whiteSpace: 'nowrap'
-                        }}
-                      >
-                        <LocationOnIcon sx={{ fontSize: { xs: '0.95rem', sm: '1.2rem' } }} />
-                        <Typography 
-                          variant="subtitle2" 
-                          sx={{ 
-                            fontFamily: '"Space Grotesk", sans-serif', 
-                            fontWeight: 700, 
-                            letterSpacing: '0.12em',
-                            textTransform: 'uppercase',
-                            fontSize: { xs: '0.7rem', sm: '0.85rem', md: '1rem' }
-                          }}
-                        >
-                          Chuo Kikuu SDA Church
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Grid>
-                </Grid>
-
-                {/* Piano Testimony 2: Grace Kalinga (Content Left, Image Right) */}
-                <Grid container spacing={6} alignItems="center" sx={{ mt: 12 }}>
-                  {/* Left Column: Testimony Content (Swapped) */}
-                  <Grid 
-                    size={{ xs: 12, md: 5 }} 
-                    order={{ xs: 2, md: 1 }}
-                    sx={{ display: 'flex', flexDirection: 'column', gap: 3, justifyContent: 'center' }}
-                  >
-                    {/* Name Block */}
-                    <Box>
-                      <Typography 
-                        variant="h3" 
-                        sx={{ 
-                          fontWeight: 900,
-                          fontFamily: '"Sans Superellipse Ragan 2", sans-serif',
-                          fontSize: { xs: '1.6rem', sm: '2.8rem', md: '4.8rem' },
-                          color: 'white',
-                          lineHeight: 1.1,
-                          mb: 1
-                        }}
-                      >
-                        Grace Kalinga
-                      </Typography>
-                      <Typography 
-                        variant="subtitle1" 
-                        sx={{ 
-                          fontFamily: '"Linear", sans-serif', 
-                          color: 'rgba(255,255,255,0.4)',
-                          fontWeight: 400
-                        }}
-                      >
-                        Beginner Piano & Creative Music Theory
-                      </Typography>
-                    </Box>
-
-                    {/* Testimony Block */}
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                      <Typography 
-                        variant="body1" 
-                        sx={{ 
-                          fontFamily: '"Linear", sans-serif',
-                          fontWeight: 300,
-                          fontSize: { xs: '1.05rem', sm: '1.15rem' },
-                          color: 'rgba(255, 255, 255, 0.85)',
-                          lineHeight: 1.8,
-                          position: 'relative',
-                          pr: { xs: 0, md: 3 },
-                          pl: { xs: 3, md: 0 },
-                          borderRight: { xs: 'none', md: '2px solid #ff2a74' },
-                          borderLeft: { xs: '2px solid #ff2a74', md: 'none' },
-                          textAlign: 'justify'
-                        }}
-                      >
-                        "As a parent, finding a piano program that keeps a child inspired is a gift. Shalom Music Studios has created a warm, incredibly supportive environment where my daughter thrives. Their lessons are structured, yet filled with creative fun. The progress she has made in just six months is truly amazing!"
-                      </Typography>
-                      
-                      {/* Location below testimony */}
-                      <Box 
-                        sx={{ 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          gap: 0.5, 
-                          color: '#ff2a74',
-                          justifyContent: 'flex-start',
-                          pl: { xs: 3, md: 0 },
-                          whiteSpace: 'nowrap'
-                        }}
-                      >
-                        <LocationOnIcon sx={{ fontSize: { xs: '0.95rem', sm: '1.2rem' } }} />
-                        <Typography 
-                          variant="subtitle2" 
-                          sx={{ 
-                            fontFamily: '"Space Grotesk", sans-serif', 
-                            fontWeight: 700, 
-                            letterSpacing: '0.12em',
-                            textTransform: 'uppercase',
-                            fontSize: { xs: '0.7rem', sm: '0.85rem', md: '1rem' }
-                          }}
-                        >
-                          Chuo Kikuu SDA Church
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Grid>
-
-                  {/* Right Column: Interactive Video Thumbnail Card (Swapped) */}
-                  <Grid size={{ xs: 12, md: 7 }} order={{ xs: 1, md: 2 }}>
-                    <Box 
-                      onClick={() => playingVideo !== 'piano_student_2' && handlePlayVideo('piano_student_2')}
-                      sx={{ 
-                        display: 'block',
-                        position: 'relative',
-                        width: '100%',
-                        height: { xs: '240px', sm: '380px', md: '440px' },
-                        overflow: 'hidden',
-                        border: '1px solid rgba(255, 255, 255, 0.1)',
-                        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)',
-                        cursor: playingVideo === 'piano_student_2' ? 'default' : 'pointer',
-                        '&:hover .video-cover': {
-                          transform: playingVideo === 'piano_student_2' ? 'none' : 'scale(1.03)',
-                        }
-                      }}
-                    >
-                      {playingVideo === 'piano_student_2' ? (
-                        <Box 
-                          component="iframe"
-                          src="https://www.youtube-nocookie.com/embed/tC0QnPUsrCk?autoplay=1&mute=0&rel=0&modestbranding=1"
-                          title="Young Pianist Student Recital"
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          allowFullScreen
-                          referrerPolicy="strict-origin-when-cross-origin"
-                          sx={{
-                            width: '100%',
-                            height: '100%',
-                            border: 0
-                          }}
-                        />
-                      ) : (
-                        <>
-                          {/* Real YouTube Video Thumbnail */}
-                          <Box 
-                            className="video-cover"
-                            component="img"
-                            src={pianoStudent2Img}
-                            alt="Young Piano Student Cover"
-                            sx={{
-                              width: '100%',
-                              height: '100%',
-                              objectFit: 'cover',
-                              transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
-                            }}
-                          />
-
-                          {/* Modern Pulsing Play Button overlay */}
-                          <Box 
-                            sx={{
-                              position: 'absolute',
-                              top: '50%',
-                              left: '50%',
-                              transform: 'translate(-50%, -50%)',
-                              width: { xs: 60, sm: 80 },
-                              height: { xs: 60, sm: 80 },
-                              borderRadius: '50%',
-                              bgcolor: 'rgba(255, 42, 116, 0.9)',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              zIndex: 3,
-                              boxShadow: '0 0 30px rgba(255, 42, 116, 0.6)',
-                              transition: 'all 0.3s ease',
-                              '&:hover': {
-                                transform: 'translate(-50%, -50%) scale(1.1)',
-                                bgcolor: '#ff2a74',
-                                boxShadow: '0 0 40px rgba(255, 42, 116, 0.8)'
-                              },
-                              '@keyframes pianoPulse2': {
-                                '0%': {
-                                  transform: 'scale(1)',
-                                  opacity: 0.8
-                                },
-                                '100%': {
-                                  transform: 'scale(1.5)',
-                                  opacity: 0
-                                }
-                              },
-                              '&::after': {
-                                content: '""',
-                                position: 'absolute',
-                                width: '100%',
-                                height: '100%',
-                                borderRadius: '50%',
-                                border: '2px solid #ff2a74',
-                                animation: 'pianoPulse2 2s infinite',
-                                opacity: 0.6
-                              }
-                            }}
-                          >
-                            <PlayArrowIcon sx={{ color: 'white', fontSize: { xs: 30, sm: 40 }, ml: 0.5 }} />
-                          </Box>
-
-                          {/* Dark Overlay for depth */}
-                          <Box 
-                            sx={{
-                              position: 'absolute',
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              bottom: 0,
-                              background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%)',
-                              zIndex: 2
-                            }}
-                          />
-                        </>
-                      )}
-
-                      {/* Continue to Watch Glassmorphism Overlay */}
-                      {overlayVideo === 'piano_student_2' && (
-                        <Box 
-                          sx={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            background: 'rgba(0, 0, 0, 0.85)',
-                            backdropFilter: 'blur(12px)',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: { xs: 2, sm: 3 },
-                            zIndex: 10,
-                            textAlign: 'center',
-                            px: { xs: 2, sm: 4 },
-                            '@keyframes pianoFadeIn2': {
-                              from: { opacity: 0 },
-                              to: { opacity: 1 }
-                            },
-                            animation: 'pianoFadeIn2 0.5s ease-out'
-                          }}
-                        >
-                          <Typography 
-                            variant="h4" 
-                            sx={{ 
-                              color: 'white', 
-                              fontWeight: 900,
-                              fontSize: { xs: '2rem', sm: '3.2rem', md: '4.8rem' },
-                              fontFamily: '"Sans Superellipse Ragan 2", sans-serif',
-                              lineHeight: 1.3
-                            }}
-                          >
-                            Enjoying the Music?
-                          </Typography>
-                          <Typography 
-                            variant="body2" 
-                            sx={{ 
-                              color: 'rgba(255, 255, 255, 0.7)', 
-                              maxWidth: '450px',
-                              fontFamily: '"Space Grotesk", sans-serif',
-                              fontSize: { xs: '0.8rem', sm: '0.95rem' },
-                              letterSpacing: '0.05em'
-                            }}
-                          >
-                            Continue to watch the full video on YouTube to experience their complete masterpiece!
-                          </Typography>
-                          <Button 
-                            component="a"
-                            href="https://www.youtube.com/watch?v=tC0QnPUsrCk"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            variant="contained"
-                            sx={{
-                              bgcolor: '#ff2a74',
-                              color: 'white',
-                              fontWeight: 700,
-                              px: 4,
-                              py: 1.5,
-                              borderRadius: 0,
-                              fontFamily: '"Space Grotesk", sans-serif',
-                              letterSpacing: '0.1em',
-                              textTransform: 'uppercase',
-                              boxShadow: '0 8px 25px rgba(255, 42, 116, 0.4)',
-                              '&:hover': {
-                                bgcolor: '#e01f61',
-                                boxShadow: '0 8px 30px rgba(255, 42, 116, 0.6)'
-                              }
-                            }}
-                          >
-                            Continue to Watch
-                          </Button>
-                        </Box>
-                      )}
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grow>
-          )}
         </Container>
       </Box>
 

@@ -220,21 +220,38 @@ const Footer: React.FC = () => {
                 <Typography sx={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: '0.72rem', color: 'rgba(255, 255, 255, 0.45)', textTransform: 'uppercase', letterSpacing: '0.08em', mb: 0.5 }}>
                   Direct Phone
                 </Typography>
-                <Link 
-                  href="tel:+255620319635" 
-                  color="inherit" 
-                  underline="none"
-                  sx={{ 
-                    fontFamily: '"Linear", sans-serif', 
-                    fontSize: '0.86rem', 
-                    fontWeight: 300,
-                    color: 'rgba(255, 255, 255, 0.75)',
-                    transition: 'all 0.2s',
-                    '&:hover': { color: '#ff2a74' }
-                  }}
-                >
-                  0620 319 635
-                </Link>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                  <Link 
+                    href="tel:+255746180419" 
+                    color="inherit" 
+                    underline="none"
+                    sx={{ 
+                      fontFamily: '"Linear", sans-serif', 
+                      fontSize: '0.86rem', 
+                      fontWeight: 300,
+                      color: 'rgba(255, 255, 255, 0.75)',
+                      transition: 'all 0.2s',
+                      '&:hover': { color: '#ff2a74' }
+                    }}
+                  >
+                    0746 180 419
+                  </Link>
+                  <Link 
+                    href="tel:+255654429035" 
+                    color="inherit" 
+                    underline="none"
+                    sx={{ 
+                      fontFamily: '"Linear", sans-serif', 
+                      fontSize: '0.86rem', 
+                      fontWeight: 300,
+                      color: 'rgba(255, 255, 255, 0.75)',
+                      transition: 'all 0.2s',
+                      '&:hover': { color: '#ff2a74' }
+                    }}
+                  >
+                    0654 429 035
+                  </Link>
+                </Box>
               </Box>
               <Box>
                 <Typography sx={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: '0.72rem', color: 'rgba(255, 255, 255, 0.45)', textTransform: 'uppercase', letterSpacing: '0.08em', mb: 0.5 }}>
