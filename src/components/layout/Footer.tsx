@@ -105,7 +105,7 @@ const Footer: React.FC = () => {
               {[
                 { icon: <FacebookIcon fontSize="small" />, label: 'Facebook', url: '#' },
                 { icon: <InstagramIcon fontSize="small" />, label: 'Instagram', url: 'https://www.instagram.com/_shalom_music?igsh=cTMzMWt2aXV2eHR0&utm_source=qr' },
-                { icon: <YouTubeIcon fontSize="small" />, label: 'YouTube', url: 'https://www.youtube.com/watch?v=tC0QnPUsrCk' }
+                { icon: <YouTubeIcon fontSize="small" />, label: 'YouTube', url: 'https://youtube.com/@shalommusicstudio?si=QJMTL0dpcDqAvGyd' }
               ].map((social, i) => (
                 <IconButton 
                   key={i}
