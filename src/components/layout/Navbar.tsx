@@ -23,6 +23,7 @@ const drawerNavItems = [
   { label: 'Audio Mixing', path: '/#mixing' },
   { label: 'Audio Mastering', path: '/#mastering' },
   { label: 'Instrumental Creation', path: '/production' },
+  { label: 'Production Academy', path: '/academy' },
   { label: 'Studio Rental', path: '/#rental' },
   { label: 'About', path: '/#about' },
   { label: 'Piano Lessons', path: '/lessons' },
@@ -38,6 +39,7 @@ const searchDatabase = [
   { title: 'Audio Mixing', description: 'Multi-dimensional audio mixing', path: '/#mixing', category: 'Services' },
   { title: 'Audio Mastering', description: 'Industry-standard mastering', path: '/#mastering', category: 'Services' },
   { title: 'Instrumental Creation', description: 'Custom beats, arrangements & composition', path: '/production', category: 'Services' },
+  { title: 'Audio Production Academy', description: 'Certified music production & sound engineering courses', path: '/academy', category: 'Academy' },
   { title: 'Complete Recording Package', description: 'All-in-one recording, mixing, and mastering', path: '/pricing', category: 'Pricing' },
   { title: 'Studio Rental', description: 'Book premium studio spaces & rooms', path: '/#rental', category: 'Studios' },
   { title: 'Piano Lessons', description: 'Personalized piano & music instruction', path: '/lessons', category: 'Lessons' },
@@ -54,7 +56,7 @@ const Navbar: React.FC = () => {
   const [isFocused, setIsFocused] = React.useState(false);
   
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
   const location = useLocation();
   const [hideTopBar, setHideTopBar] = React.useState(false);
   const [isFeaturedActive, setIsFeaturedActive] = React.useState(false);
@@ -131,8 +133,8 @@ const Navbar: React.FC = () => {
             <ListItem key={item.label} disablePadding>
               <ListItemText sx={{ my: 0.5 }}>
                 <Button 
-                  component={RouterLink} 
-                  to={item.path} 
+                  component={RouterLink}
+                  to={item.path}
                   fullWidth 
                   sx={{ 
                     color: isActive ? '#ff2a74' : 'rgba(255, 255, 255, 0.85)',
@@ -144,6 +146,7 @@ const Navbar: React.FC = () => {
                     textTransform: 'none',
                     whiteSpace: 'nowrap',
                     position: 'relative',
+                    cursor: 'pointer',
                     '&::before': isActive ? {
                       content: '""',
                       position: 'absolute',
@@ -507,7 +510,7 @@ const Navbar: React.FC = () => {
               Contact
             </Button>
           ) : (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: { md: 0.5, lg: 0.75 } }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: { lg: 0.4, xl: 0.75 } }}>
               <Button
                 component={RouterLink}
                 to="/lessons"
@@ -515,13 +518,13 @@ const Navbar: React.FC = () => {
                   color: location.pathname === '/lessons' ? '#ff2a74' : '#ffffff',
                   fontFamily: '"Space Grotesk", sans-serif',
                   fontWeight: 600,
-                  fontSize: '0.95rem', // Increased font size from 0.85rem
+                  fontSize: { lg: '0.8rem', xl: '0.95rem' },
                   textTransform: 'none',
                   whiteSpace: 'nowrap',
                   position: 'relative',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  px: 0.75,
+                  px: { lg: 0.5, xl: 0.75 },
                   '&::after': {
                     content: '""',
                     position: 'absolute',
@@ -547,13 +550,13 @@ const Navbar: React.FC = () => {
                   color: location.pathname === '/piano-services' ? '#ff2a74' : '#ffffff',
                   fontFamily: '"Space Grotesk", sans-serif',
                   fontWeight: 600,
-                  fontSize: '0.95rem',
+                  fontSize: { lg: '0.8rem', xl: '0.95rem' },
                   textTransform: 'none',
                   whiteSpace: 'nowrap',
                   position: 'relative',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  px: 0.75,
+                  px: { lg: 0.5, xl: 0.75 },
                   '&::after': {
                     content: '""',
                     position: 'absolute',
@@ -579,13 +582,13 @@ const Navbar: React.FC = () => {
                   color: location.pathname === '/production' ? '#ff2a74' : '#ffffff',
                   fontFamily: '"Space Grotesk", sans-serif',
                   fontWeight: 600,
-                  fontSize: '0.95rem',
+                  fontSize: { lg: '0.8rem', xl: '0.95rem' },
                   textTransform: 'none',
                   whiteSpace: 'nowrap',
                   position: 'relative',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  px: 0.75,
+                  px: { lg: 0.5, xl: 0.75 },
                   '&::after': {
                     content: '""',
                     position: 'absolute',
@@ -606,16 +609,48 @@ const Navbar: React.FC = () => {
               </Button>
               <Button
                 component={RouterLink}
+                to="/academy"
+                sx={{
+                  color: location.pathname === '/academy' ? '#ff2a74' : '#ffffff',
+                  fontFamily: '"Space Grotesk", sans-serif',
+                  fontWeight: 600,
+                  fontSize: { lg: '0.8rem', xl: '0.95rem' },
+                  textTransform: 'none',
+                  whiteSpace: 'nowrap',
+                  position: 'relative',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  px: { lg: 0.5, xl: 0.75 },
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    width: location.pathname === '/academy' ? '60%' : '0%',
+                    height: '1.5px',
+                    bottom: '-4px', 
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    backgroundColor: '#ff2a74',
+                    transition: 'width 0.3s ease',
+                  },
+                  '&:hover': { 
+                    bgcolor: 'transparent'
+                  }
+                }}
+              >
+                Production Academy
+              </Button>
+              <Button
+                component={RouterLink}
                 to="/pricing"
                 sx={{
                   color: location.pathname === '/pricing' ? '#ff2a74' : '#ffffff',
                   fontFamily: '"Space Grotesk", sans-serif',
                   fontWeight: 600,
-                  fontSize: '0.95rem', // Increased font size from 0.85rem
+                  fontSize: { lg: '0.8rem', xl: '0.95rem' },
                   textTransform: 'none',
                   whiteSpace: 'nowrap',
                   position: 'relative',
-                  px: 0.75,
+                  px: { lg: 0.5, xl: 0.75 },
                   '&::after': {
                     content: '""',
                     position: 'absolute',
@@ -641,11 +676,11 @@ const Navbar: React.FC = () => {
                   color: (location.pathname === '/' && location.hash === '#testimonials') ? '#ff2a74' : '#ffffff',
                   fontFamily: '"Space Grotesk", sans-serif',
                   fontWeight: 600,
-                  fontSize: '0.95rem', // Increased font size from 0.85rem
+                  fontSize: { lg: '0.8rem', xl: '0.95rem' },
                   textTransform: 'none',
                   whiteSpace: 'nowrap',
                   position: 'relative',
-                  px: 0.75,
+                  px: { lg: 0.5, xl: 0.75 },
                   '&::after': {
                     content: '""',
                     position: 'absolute',
@@ -673,8 +708,8 @@ const Navbar: React.FC = () => {
                   color: '#ffffff',
                   fontFamily: '"Space Grotesk", sans-serif',
                   fontWeight: 700,
-                  fontSize: '0.95rem', // Increased font size from 0.85rem
-                  px: 3.2,
+                  fontSize: { lg: '0.8rem', xl: '0.95rem' },
+                  px: { lg: 2, xl: 3.2 },
                   py: 0.9,
                   borderRadius: '4px',
                   textTransform: 'none',
@@ -700,7 +735,7 @@ const Navbar: React.FC = () => {
         onClose={handleDrawerToggle}
         ModalProps={{ keepMounted: true }}
         sx={{
-          display: { xs: 'block', md: 'none' },
+          display: { xs: 'block', lg: 'none' },
           '& .MuiDrawer-paper': { 
             boxSizing: 'border-box', 
             width: 240,

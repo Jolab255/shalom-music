@@ -225,21 +225,87 @@ const pricingData = {
         popular: false 
       }
     ]
+  },
+  academy: {
+    headline: 'AUDIO PRODUCTION ACADEMY',
+    subtitle: 'Comprehensive 4-Grade curriculum from foundational sound to professional engineering mastery.',
+    plans: [
+      { 
+        title: 'Grade 1 – Foundation', 
+        originalPrice: '400,000 TZS ($180 USD)',
+        promoPrice: '350,000 TZS ($150 USD)', 
+        unit: 'per 3-month certificate course',
+        desc: 'Introduce yourself to the fundamentals of sound, computer software (FL Studio/Cubase), and rhythmic composition.',
+        features: [
+          'Introduction to Music Production & Theory',
+          'DAW Mechanics (FL Studio / Cubase Pro)',
+          'MIDI Programming & Beat Making Basics',
+          'Basic Audio Recording Foundations',
+          'Final Project: Create a simple instrumental beat'
+        ],
+        popular: false 
+      },
+      { 
+        title: 'Grade 2 – Intermediate', 
+        originalPrice: '750,000 TZS ($320 USD)',
+        promoPrice: '650,000 TZS ($280 USD)', 
+        unit: 'per 3-month diploma program',
+        desc: 'Build practical production skills in arrangement, chord progressions, and professional vocal capture techniques.',
+        features: [
+          'Advanced Beat Production & Chords',
+          'Virtual Instruments & Sound Selection',
+          'Vocal Recording & Mic Techniques',
+          'Arrangement & Song Structure',
+          'Final Project: Produce & record a complete song'
+        ],
+        popular: false 
+      },
+      { 
+        title: 'Grade 3 – Advanced', 
+        originalPrice: '1,100,000 TZS ($470 USD)',
+        promoPrice: '950,000 TZS ($400 USD)', 
+        unit: 'per 3-month advanced diploma',
+        desc: 'Develop elite engineering ears with deep dives into mixing fundamentals, dynamic processing, and studio workflows.',
+        features: [
+          'Mixing Fundamentals & Signal Flow',
+          'Surgical EQ & Dynamic Compression',
+          'Spatial Reverb, Delay & Automation',
+          'Advanced Choir & Group Production',
+          'Final Project: Mix a full song professionally'
+        ],
+        popular: true 
+      },
+      { 
+        title: 'Grade 4 – Professional', 
+        originalPrice: '1,500,000 TZS ($640 USD)',
+        promoPrice: '1,250,000 TZS ($530 USD)', 
+        unit: 'per 3-month masterclass',
+        desc: 'Master commercial delivery, professional mastering, music distribution, and the business of engineering.',
+        features: [
+          'Elite Mastering & LUFS Standards',
+          'Live Tracking & Commercial Production',
+          'Sound Design & Foley for Media',
+          'Music Business: Royalties & Copyrights',
+          'Final Project: Complete Commercial Release'
+        ],
+        popular: false 
+      }
+    ]
   }
 };
 
 const Pricing: React.FC = () => {
   const [searchParams] = useSearchParams();
   const categoryParam = searchParams.get('category') || 'production';
-  const initialCategory = ['production', 'instrumental', 'lessons', 'rental', 'pianoServices'].includes(categoryParam)
+  const initialCategory = ['production', 'instrumental', 'lessons', 'academy', 'rental', 'pianoServices'].includes(categoryParam)
     ? (categoryParam as any)
     : 'production';
 
-  const [activeCategory, setActiveCategory] = useState<'production' | 'instrumental' | 'lessons' | 'rental' | 'pianoServices'>(initialCategory);
+  const [activeCategory, setActiveCategory] = useState<'production' | 'instrumental' | 'lessons' | 'academy' | 'rental' | 'pianoServices'>(initialCategory);
 
   React.useEffect(() => {
     const cat = searchParams.get('category');
-    if (cat && ['production', 'instrumental', 'lessons', 'rental', 'pianoServices'].includes(cat)) {
+    if (cat && ['production', 'instrumental', 'lessons', 'academy', 'rental', 'pianoServices'].includes(cat)) {
       setActiveCategory(cat as any);
     }
   }, [searchParams]);
@@ -321,6 +387,7 @@ const Pricing: React.FC = () => {
             { id: 'production', label: 'Music Production' },
             { id: 'instrumental', label: 'Instrumental Creation' },
             { id: 'lessons', label: 'Piano Lessons' },
+            { id: 'academy', label: 'Production Academy' },
             { id: 'rental', label: 'Studio Rental' },
             { id: 'pianoServices', label: 'Piano Services' }
           ].map((cat) => {
@@ -505,12 +572,7 @@ const Pricing: React.FC = () => {
                       px: 1.5,
                       py: 0.2,
                       borderRadius: 0, // Sharp!
-                      textTransform: 'uppercase',
-                      animation: 'pulseGlow 2s infinite alternate',
-                      '@keyframes pulseGlow': {
-                        '0%': { boxShadow: '0 0 8px rgba(255, 42, 116, 0.3)' },
-                        '100%': { boxShadow: '0 0 16px rgba(255, 42, 116, 0.6)' }
-                      }
+                      textTransform: 'uppercase'
                     }}
                   >
                     LIMITED OFFER
@@ -605,7 +667,7 @@ const Pricing: React.FC = () => {
                     } 
                   }}
                 >
-                  Book Professional Package
+                  {activeCategory === 'academy' ? 'Inquire About Course' : 'Book Professional Package'}
                 </Button>
               </Box>
             </Grid>

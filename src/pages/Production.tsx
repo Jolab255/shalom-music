@@ -1428,12 +1428,7 @@ const Production: React.FC = () => {
                       letterSpacing: '0.1em',
                       px: 1.5,
                       py: 0.2,
-                      borderRadius: '0px',
-                      animation: 'pulseGlow 2s infinite alternate',
-                      '@keyframes pulseGlow': {
-                        '0%': { boxShadow: '0 0 10px rgba(255, 42, 116, 0.4)' },
-                        '100%': { boxShadow: '0 0 20px rgba(255, 42, 116, 0.8)' }
-                      }
+                      borderRadius: '0px'
                     }}
                   >
                     LIMITED OFFER

@@ -190,7 +190,7 @@ const teamMembers = [
     additionalRoles: ["Head of Production", "Music Producer", "Piano Tutor"],
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&h=400&q=80",
     socials: {
-      instagram: "https://instagram.com",
+      instagram: "https://www.instagram.com/_shalom_music?igsh=cTMzMWt2aXV2eHR0&utm_source=qr",
       x: "https://x.com",
       gmail: "mailto:shalomamani@gmail.com",
       facebook: "https://facebook.com",
@@ -236,9 +236,7 @@ const teamMembers = [
       linkedin: "https://linkedin.com"
     }
   }
-];
-
-const KnowUsSectionComponent: React.FC = () => {
+];const KnowUsSectionComponent: React.FC = () => {
   const [activeAboutVideo, setActiveAboutVideo] = useState<1 | 2>(1);
   const video1Ref = useRef<HTMLVideoElement>(null);
   const video2Ref = useRef<HTMLVideoElement>(null);
@@ -267,8 +265,6 @@ const KnowUsSectionComponent: React.FC = () => {
   const [typedText2, setTypedText2] = useState("");
   const [isTypingTitle, setIsTypingTitle] = useState(true);
   const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
-  const [startStaggeredFadeOut, setStartStaggeredFadeOut] = useState(false);
-  const [showTeam, setShowTeam] = useState(false);
 
   useEffect(() => {
     if (!hasEnteredViewport) return;
@@ -354,25 +350,6 @@ const KnowUsSectionComponent: React.FC = () => {
   ]);
 
   useEffect(() => {
-    if (typingSegmentIdx === 3) {
-      // 1. Wait 3.0s after typing finishes, then start the fade out of self-typing text
-      const fadeOutTimer = setTimeout(() => {
-        setStartStaggeredFadeOut(true);
-      }, 3000);
-
-      // 2. Wait 4.0s (3s pause + 1.0s transition duration) to mount team members view
-      const showTeamTimer = setTimeout(() => {
-        setShowTeam(true);
-      }, 4000);
-
-      return () => {
-        clearTimeout(fadeOutTimer);
-        clearTimeout(showTeamTimer);
-      };
-    }
-  }, [typingSegmentIdx]);
-
-  useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -388,8 +365,6 @@ const KnowUsSectionComponent: React.FC = () => {
           setTypingSegmentIdx(0);
           setIsTypingTitle(true);
           setHasEnteredViewport(false);
-          setStartStaggeredFadeOut(false);
-          setShowTeam(false);
         }
       },
       { threshold: 0.15 }
@@ -402,7 +377,7 @@ const KnowUsSectionComponent: React.FC = () => {
     return () => {
       observer.disconnect();
     };
-  }, [typingSegmentIdx]);
+  }, []);
 
   return (
     <Box 
@@ -488,12 +463,11 @@ const KnowUsSectionComponent: React.FC = () => {
           sx={{ 
             position: 'relative',
             width: '100%',
-            aspectRatio: showTeam ? { xs: 'auto', md: '16/9' } : '16/9',
-            height: showTeam ? 'auto' : 'auto',
-            minHeight: showTeam ? { md: '520px', lg: '620px' } : 'auto',
+            aspectRatio: '16/9',
+            height: 'auto',
             maxHeight: '80vh',
             borderRadius: { xs: '8px', sm: '16px' },
-            overflow: showTeam ? 'visible' : 'hidden',
+            overflow: 'hidden',
             border: 'none',
             boxShadow: '0 30px 60px rgba(0, 0, 0, 0.8)',
             bgcolor: '#000000',
@@ -568,408 +542,23 @@ const KnowUsSectionComponent: React.FC = () => {
           />
 
           {/* Grid Container for Cards Overlay (Desktop only) */}
-          {!showTeam && (
-            <Box
-              sx={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: { xs: '16px', sm: '20px', md: '28px' },
-                right: { xs: '16px', sm: '20px', md: '28px' },
-                display: { xs: 'none', md: 'grid' },
-                gridTemplateColumns: '1fr 1fr 1fr',
-                gap: '28px',
-                alignItems: 'center', // Centers cards vertically
-                zIndex: 10,
-                pointerEvents: 'none'
-              }}
-            >
-              {typingSegments.map((segment, idx) => {
-                const isCurrent = typingSegmentIdx === idx;
-                const isStarted = typingSegmentIdx >= idx;
-                const typedTitle = idx === 0 ? typedTitle0 : idx === 1 ? typedTitle1 : typedTitle2;
-                const typedText = idx === 0 ? typedText0 : idx === 1 ? typedText1 : typedText2;
-                
-                return (
-                  <Box
-                    key={idx}
-                    sx={{
-                      backdropFilter: 'blur(20px) saturate(180%)',
-                      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                      bgcolor: 'rgba(12, 12, 15, 0.84)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
-                      borderRadius: 0,
-                      padding: '28px 32px',
-                      boxShadow: '0 30px 60px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-                      transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-                      transitionDelay: startStaggeredFadeOut 
-                        ? (idx === 0 ? '0ms' : idx === 1 ? '300ms' : '600ms') 
-                        : '0ms',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 2,
-                      minHeight: '120px', // Baseline height, expands equally upwards and downwards
-                      pointerEvents: isStarted && !startStaggeredFadeOut ? 'auto' : 'none',
-                      opacity: startStaggeredFadeOut ? 0 : (isStarted ? 1 : 0),
-                      transform: startStaggeredFadeOut ? 'translateY(-16px)' : (isStarted ? 'translateY(0)' : 'translateY(24px)'),
-                      gridColumn: idx + 1,
-                      '&:hover': {
-                        border: '1px solid rgba(255, 255, 255, 0.16)',
-                        boxShadow: '0 35px 70px rgba(0, 0, 0, 0.98)',
-                        bgcolor: 'rgba(14, 14, 18, 0.9)',
-                      }
-                    }}
-                  >
-                    {/* Title */}
-                    <Typography
-                      sx={{
-                        fontFamily: '"Linear", sans-serif',
-                        fontSize: '20px',
-                        fontWeight: 700,
-                        color: '#ff2d55', // Pinky!
-                        letterSpacing: '0.04em',
-                        textTransform: 'uppercase',
-                        display: 'flex',
-                        alignItems: 'center',
-                        minHeight: '28px'
-                      }}
-                    >
-                      {typedTitle}
-                      {isCurrent && isTypingTitle && (
-                        <Box
-                          component="span"
-                          sx={{
-                            display: 'inline-block',
-                            width: '2px',
-                            height: '18px',
-                            bgcolor: '#ff2d55', // Pinky cursor
-                            marginLeft: '6px',
-                            animation: 'blinkCursor 0.8s infinite',
-                            '@keyframes blinkCursor': {
-                              '0%, 100%': { opacity: 0 },
-                              '50%': { opacity: 1 }
-                            }
-                          }}
-                        />
-                      )}
-                    </Typography>
-
-                    {/* Text */}
-                    <Typography
-                      sx={{
-                        fontFamily: '"Linear", sans-serif',
-                        fontSize: '16px',
-                        fontWeight: 300,
-                        color: 'rgba(255, 255, 255, 0.88)',
-                        lineHeight: 1.75,
-                        position: 'relative'
-                      }}
-                    >
-                      {typedText}
-                      {isCurrent && !isTypingTitle && typedText.length < segment.text.length && (
-                        <Box
-                          component="span"
-                          sx={{
-                            display: 'inline-block',
-                            width: '2px',
-                            height: '13px',
-                            bgcolor: '#ffffff',
-                            marginLeft: '3px',
-                            verticalAlign: 'middle',
-                            animation: 'blinkCursor 0.8s infinite',
-                            '@keyframes blinkCursor': {
-                              '0%, 100%': { opacity: 0 },
-                              '50%': { opacity: 1 }
-                            }
-                          }}
-                        />
-                      )}
-                    </Typography>
-                  </Box>
-                );
-              })}
-            </Box>
-          )}
-
-          {/* Desktop Team Overlay */}
-          {showTeam && (
-            <Box
-              sx={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: { xs: '16px', sm: '20px', md: '28px' },
-                right: { xs: '16px', sm: '20px', md: '28px' },
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: { md: 2, lg: 3 },
-                zIndex: 12,
-                animation: 'fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards',
-                '@keyframes fadeIn': {
-                  '0%': { opacity: 0 },
-                  '100%': { opacity: 1 }
-                }
-              }}
-            >
-              {/* Title Meet Our Team */}
-              <Typography
-                sx={{
-                  fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
-                  fontSize: { md: '26px', lg: '32px' },
-                  fontWeight: 800,
-                  letterSpacing: '0.06em',
-                  color: '#ffffff', // Clean white
-                  textShadow: '0 0 12px rgba(255, 45, 85, 0.95), 0 0 24px rgba(255, 45, 85, 0.4), 0 2px 4px rgba(0, 0, 0, 0.9)', // Glowing pink shadow
-                  textTransform: 'uppercase',
-                  textAlign: 'center',
-                  mb: 3,
-                  position: 'relative',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: -8,
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: '80px',
-                    height: '2px',
-                    bgcolor: '#ff2d55',
-                    boxShadow: '0 0 8px #ff2d55, 0 0 15px rgba(255, 45, 85, 0.5)'
-                  }
-                }}
-              >
-                Meet Our Team
-              </Typography>
-
-              <Box
-                sx={{
-                  display: 'grid',
-                  gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr 1fr' },
-                  gap: '20px',
-                  width: '100%'
-                }}
-              >
-                {teamMembers.map((member, idx) => (
-                  <Box
-                    key={idx}
-                    sx={{
-                      backdropFilter: 'blur(25px) saturate(190%)',
-                      WebkitBackdropFilter: 'blur(25px) saturate(190%)',
-                      background: 'linear-gradient(135deg, rgba(18, 18, 26, 0.85) 0%, rgba(8, 8, 12, 0.95) 100%)',
-                      border: '1px solid rgba(255, 255, 255, 0.07)',
-                      borderRadius: '0px', // Reverted to sharp corners
-                      padding: 0, // Zero padding for full-bleed image
-                      height: '100%', // Stretch to fill row height
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                      boxShadow: '0 30px 60px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-                      opacity: 0,
-                      transform: 'scale(0.7) translateY(20px)',
-                      animation: 'teamPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
-                      animationDelay: `${idx * 0.2}s`,
-                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                      overflow: 'hidden', // Clips image edges
-                      '@keyframes teamPop': {
-                        '0%': {
-                          transform: 'scale(0.7) translateY(20px)',
-                          opacity: 0
-                        },
-                        '70%': {
-                          transform: 'scale(1.05) translateY(-5px)'
-                        },
-                        '100%': {
-                          transform: 'scale(1) translateY(0)',
-                          opacity: 1
-                        }
-                      },
-                      '&:hover': {
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        bgcolor: 'rgba(14, 14, 20, 0.98)',
-                        transform: 'translateY(-6px)',
-                        boxShadow: '0 35px 70px rgba(0, 0, 0, 0.98)',
-                        '& .team-img-container': {
-                          transform: 'scale(1.06) rotate(-2deg)',
-                        },
-                        '& .team-img': {
-                          transform: 'scale(1.1) rotate(2deg)',
-                        }
-                      }
-                    }}
-                  >
-                    {/* Clean Square Image Container (No border radius) */}
-                    <Box
-                      className="team-img-container"
-                      sx={{
-                        width: '100%',
-                        aspectRatio: '1/1',
-                        overflow: 'hidden',
-                        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        bgcolor: 'rgba(255, 255, 255, 0.02)'
-                      }}
-                    >
-                      <Box
-                        className="team-img"
-                        component="img"
-                        src={member.image}
-                        alt={member.name}
-                        sx={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
-                        }}
-                      />
-                    </Box>
-
-                    {/* Content Details Wrapper (Occupies remaining height nicely) */}
-                    <Box
-                      sx={{
-                        padding: { md: '16px 12px 20px 12px', lg: '20px 16px 24px 16px' },
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        width: '100%',
-                        flexGrow: 1
-                      }}
-                    >
-
-                    {/* Name */}
-                    <Typography
-                      sx={{
-                        fontFamily: '"Space Grotesk", sans-serif',
-                        fontSize: { md: '16px', lg: '18px' },
-                        fontWeight: 700,
-                        color: '#ffffff',
-                        mb: 0.8,
-                        letterSpacing: '-0.02em'
-                      }}
-                    >
-                      {member.name}
-                    </Typography>
-
-                    {/* Position Label (No border/background) */}
-                    <Box
-                      sx={{
-                        mb: 1.5,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        gap: 0.5
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontFamily: '"Space Grotesk", sans-serif',
-                          fontSize: '10px',
-                          fontWeight: 700,
-                          color: '#ff2d55',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.08em',
-                          lineHeight: 1
-                        }}
-                      >
-                        {member.position}
-                      </Typography>
-                      {member.additionalRoles && member.additionalRoles.length > 0 && (
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 0.5, mt: 0.8 }}>
-                          {member.additionalRoles.map((role, rIdx) => (
-                            <Box
-                              key={rIdx}
-                              sx={{
-                                border: '1px solid rgba(255, 45, 85, 0.4)',
-                                px: 1.2,
-                                py: 0.4,
-                                borderRadius: '2px',
-                                bgcolor: 'rgba(255, 45, 85, 0.08)'
-                              }}
-                            >
-                              <Typography
-                                sx={{
-                                  fontFamily: '"Space Grotesk", sans-serif',
-                                  fontSize: '10px',
-                                  fontWeight: 600,
-                                  color: 'rgba(255, 255, 255, 0.95)',
-                                  textTransform: 'uppercase',
-                                  letterSpacing: '0.06em',
-                                  lineHeight: 1
-                                }}
-                              >
-                                {role}
-                              </Typography>
-                            </Box>
-                          ))}
-                        </Box>
-                      )}
-                    </Box>
-
-                    {/* Social Links */}
-                    <Box 
-                      sx={{ 
-                        mt: 'auto', 
-                        pt: 2, 
-                        display: 'flex', 
-                        justifyContent: 'center', 
-                        gap: 1,
-                        width: '100%'
-                      }}
-                    >
-                      {[
-                        { icon: <InstagramIcon fontSize="small" />, url: member.socials.instagram, label: 'Instagram' },
-                        { icon: <XIcon fontSize="small" />, url: member.socials.x, label: 'X' },
-                        { icon: <EmailIcon fontSize="small" />, url: member.socials.gmail, label: 'Gmail' },
-                        { icon: <FacebookIcon fontSize="small" />, url: member.socials.facebook, label: 'Facebook' },
-                        { icon: <LinkedInIcon fontSize="small" />, url: member.socials.linkedin, label: 'LinkedIn' }
-                      ].map((soc, sIdx) => (
-                        <IconButton
-                          key={sIdx}
-                          component="a"
-                          href={soc.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={soc.label}
-                          sx={{
-                            color: 'rgba(255, 255, 255, 0.45)',
-                            p: 0.6,
-                            borderRadius: 0,
-                            border: '1px solid rgba(255, 255, 255, 0.08)',
-                            transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                            '&:hover': {
-                              color: '#ff2d55',
-                              borderColor: 'rgba(255, 45, 85, 0.5)',
-                              bgcolor: 'rgba(255, 45, 85, 0.05)',
-                              transform: 'translateY(-2px)'
-                            }
-                          }}
-                        >
-                          {soc.icon}
-                        </IconButton>
-                      ))}
-                    </Box>
-                    </Box>
-                  </Box>
-                ))}
-              </Box>
-            </Box>
-          )}
-        </Box>
-
-        {/* Active Card Container (Mobile/Tablet only - displayed below the video box) */}
-        {!showTeam ? (
           <Box
             sx={{
-              display: { xs: 'flex', md: 'none' },
-              flexDirection: 'column',
-              mt: 3
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              left: { xs: '16px', sm: '20px', md: '28px' },
+              right: { xs: '16px', sm: '20px', md: '28px' },
+              display: { xs: 'none', md: 'grid' },
+              gridTemplateColumns: '1fr 1fr 1fr',
+              gap: '28px',
+              alignItems: 'center', // Centers cards vertically
+              zIndex: 10,
+              pointerEvents: 'none'
             }}
           >
-            {typingSegments.map((_segment, idx) => {
+            {typingSegments.map((segment, idx) => {
+              const isCurrent = typingSegmentIdx === idx;
               const isStarted = typingSegmentIdx >= idx;
               const typedTitle = idx === 0 ? typedTitle0 : idx === 1 ? typedTitle1 : typedTitle2;
               const typedText = idx === 0 ? typedText0 : idx === 1 ? typedText1 : typedText2;
@@ -978,311 +567,164 @@ const KnowUsSectionComponent: React.FC = () => {
                 <Box
                   key={idx}
                   sx={{
-                    bgcolor: 'rgba(25, 25, 30, 0.6)',
-                    border: isStarted ? '1px solid rgba(212, 175, 55, 0.25)' : '0px solid transparent',
+                    backdropFilter: 'blur(20px) saturate(180%)',
+                    WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                    bgcolor: 'rgba(12, 12, 15, 0.84)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
                     borderRadius: 0,
-                    boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.02)',
+                    padding: '28px 32px',
+                    boxShadow: '0 30px 60px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+                    transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: isStarted ? 1.5 : 0,
-                    minHeight: isStarted ? (startStaggeredFadeOut ? '0px' : '130px') : '0px',
-                    maxHeight: isStarted ? (startStaggeredFadeOut ? '0px' : '300px') : '0px',
-                    padding: isStarted ? (startStaggeredFadeOut ? '0px 28px' : '24px 28px') : '0px 28px',
-                    mb: isStarted ? (startStaggeredFadeOut ? 0 : 2.5) : 0,
-                    opacity: startStaggeredFadeOut ? 0 : (isStarted ? 1 : 0),
-                    transform: startStaggeredFadeOut ? 'translateY(-12px)' : (isStarted ? 'translateY(0)' : 'translateY(16px)'),
-                    transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                    transitionDelay: startStaggeredFadeOut 
-                      ? (idx === 0 ? '0ms' : idx === 1 ? '200ms' : '400ms') 
-                      : '0ms',
-                    overflow: 'hidden',
+                    gap: 2,
+                    minHeight: '120px', // Baseline height, expands equally upwards and downwards
+                    pointerEvents: isStarted ? 'auto' : 'none',
+                    opacity: isStarted ? 1 : 0,
+                    transform: isStarted ? 'translateY(0)' : 'translateY(24px)',
+                    gridColumn: idx + 1,
+                    '&:hover': {
+                      border: '1px solid rgba(255, 255, 255, 0.16)',
+                      boxShadow: '0 35px 70px rgba(0, 0, 0, 0.98)',
+                      bgcolor: 'rgba(14, 14, 18, 0.9)',
+                    }
                   }}
                 >
                   {/* Title */}
                   <Typography
                     sx={{
                       fontFamily: '"Linear", sans-serif',
-                      fontSize: '18px',
+                      fontSize: '20px',
                       fontWeight: 700,
                       color: '#ff2d55', // Pinky!
                       letterSpacing: '0.04em',
-                      textTransform: 'uppercase'
+                      textTransform: 'uppercase',
+                      display: 'flex',
+                      alignItems: 'center',
+                      minHeight: '28px'
                     }}
                   >
                     {typedTitle}
+                    {isCurrent && isTypingTitle && (
+                      <Box
+                        component="span"
+                        sx={{
+                          display: 'inline-block',
+                          width: '2px',
+                          height: '18px',
+                          bgcolor: '#ff2d55', // Pinky cursor
+                          marginLeft: '6px',
+                          animation: 'blinkCursor 0.8s infinite',
+                          '@keyframes blinkCursor': {
+                            '0%, 100%': { opacity: 0 },
+                            '50%': { opacity: 1 }
+                          }
+                        }}
+                      />
+                    )}
                   </Typography>
 
                   {/* Text */}
                   <Typography
                     sx={{
                       fontFamily: '"Linear", sans-serif',
-                      fontSize: '14.5px',
+                      fontSize: '16px',
                       fontWeight: 300,
-                      color: 'rgba(255, 255, 255, 0.85)',
-                      lineHeight: 1.7
+                      color: 'rgba(255, 255, 255, 0.88)',
+                      lineHeight: 1.75,
+                      position: 'relative'
                     }}
                   >
                     {typedText}
+                    {isCurrent && !isTypingTitle && typedText.length < segment.text.length && (
+                      <Box
+                        component="span"
+                        sx={{
+                          display: 'inline-block',
+                          width: '2px',
+                          height: '13px',
+                          bgcolor: '#ffffff',
+                          marginLeft: '3px',
+                          verticalAlign: 'middle',
+                          animation: 'blinkCursor 0.8s infinite',
+                          '@keyframes blinkCursor': {
+                            '0%, 100%': { opacity: 0 },
+                            '50%': { opacity: 1 }
+                          }
+                        }}
+                      />
+                    )}
                   </Typography>
                 </Box>
               );
             })}
           </Box>
-        ) : (
-          /* Mobile Team Members Section */
-          <Box
-            sx={{
-              display: { xs: 'flex', md: 'none' },
-              flexDirection: 'column',
-              gap: 2.5,
-              mt: 3,
-              animation: 'fadeIn 0.6s ease-in-out forwards'
-            }}
-          >
-            {/* Title Meet Our Team */}
-            <Typography
-              sx={{
-                fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
-                fontSize: '24px',
-                fontWeight: 800,
-                letterSpacing: '0.06em',
-                color: '#ffffff', // Clean white
-                textShadow: '0 0 12px rgba(255, 45, 85, 0.95), 0 0 24px rgba(255, 45, 85, 0.4), 0 2px 4px rgba(0, 0, 0, 0.9)', // Glowing pink shadow
-                textTransform: 'uppercase',
-                textAlign: 'center',
-                mb: 3,
-                position: 'relative',
-                '&::after': {
-                  content: '""',
-                  position: 'absolute',
-                  bottom: -8,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: '60px',
-                  height: '2px',
-                  bgcolor: '#ff2d55',
-                  boxShadow: '0 0 8px #ff2d55, 0 0 15px rgba(255, 45, 85, 0.5)'
-                }
-              }}
-            >
-              Meet Our Team
-            </Typography>             {teamMembers.map((member, idx) => (
+        </Box>
+
+        {/* Active Card Container (Mobile/Tablet only - displayed below the video box) */}
+        <Box
+          sx={{
+            display: { xs: 'flex', md: 'none' },
+            flexDirection: 'column',
+            mt: 3
+          }}
+        >
+          {typingSegments.map((_segment, idx) => {
+            const isStarted = typingSegmentIdx >= idx;
+            const typedTitle = idx === 0 ? typedTitle0 : idx === 1 ? typedTitle1 : typedTitle2;
+            const typedText = idx === 0 ? typedText0 : idx === 1 ? typedText1 : typedText2;
+            
+            return (
               <Box
                 key={idx}
                 sx={{
-                  background: 'linear-gradient(135deg, rgba(20, 20, 25, 0.85) 0%, rgba(12, 12, 15, 0.95) 100%)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                  borderRadius: '0px', // Reverted to sharp corners
-                  padding: 0, // Zero padding for full-bleed
-                  minHeight: 'auto', // Auto height
+                  bgcolor: 'rgba(25, 25, 30, 0.6)',
+                  border: isStarted ? '1px solid rgba(212, 175, 55, 0.25)' : '0px solid transparent',
+                  borderRadius: 0,
+                  boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.02)',
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.7)',
-                  opacity: 0,
-                  transform: 'scale(0.7) translateY(20px)',
-                  animation: 'teamPopMobile 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
-                  animationDelay: `${idx * 0.2}s`,
-                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  overflow: 'hidden', // Clips image corners
-                  '@keyframes teamPopMobile': {
-                    '0%': {
-                      transform: 'scale(0.7) translateY(20px)',
-                      opacity: 0
-                    },
-                    '70%': {
-                      transform: 'scale(1.05) translateY(-5px)'
-                    },
-                    '100%': {
-                      transform: 'scale(1) translateY(0)',
-                      opacity: 1
-                    }
-                  },
-                  '@media (hover: hover)': {
-                    '&:hover': {
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      bgcolor: 'rgba(14, 14, 20, 0.98)',
-                      transform: 'translateY(-4px)',
-                      boxShadow: '0 25px 50px rgba(0, 0, 0, 0.85)',
-                      '& .team-img-container': {
-                        transform: 'scale(1.06) rotate(-2deg)',
-                      },
-                      '& .team-img': {
-                        transform: 'scale(1.1) rotate(2deg)',
-                      }
-                    }
-                  },
-                  '&:active': {
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    bgcolor: 'rgba(14, 14, 20, 0.98)',
-                    '& .team-img-container': {
-                      transform: 'scale(1.06) rotate(-2deg)',
-                    },
-                    '& .team-img': {
-                      transform: 'scale(1.1) rotate(2deg)',
-                    }
-                  }
+                  gap: isStarted ? 1.5 : 0,
+                  minHeight: isStarted ? '130px' : '0px',
+                  maxHeight: isStarted ? '300px' : '0px',
+                  padding: isStarted ? '24px 28px' : '0px 28px',
+                  mb: isStarted ? 2.5 : 0,
+                  opacity: isStarted ? 1 : 0,
+                  transform: isStarted ? 'translateY(0)' : 'translateY(16px)',
+                  transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                  overflow: 'hidden',
                 }}
               >
-                {/* Clean Square Image Container (No border radius) */}
-                <Box
-                  className="team-img-container"
-                  sx={{
-                    width: '100%',
-                    height: '240px', // Fixed bleed image height on mobile
-                    overflow: 'hidden',
-                    borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
-                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    bgcolor: 'rgba(255, 255, 255, 0.02)'
-                  }}
-                >
-                  <Box
-                    className="team-img"
-                    component="img"
-                    src={member.image}
-                    alt={member.name}
-                    sx={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
-                    }}
-                  />
-                </Box>
-
-                {/* Content Details Wrapper (Mobile) */}
-                <Box
-                  sx={{
-                    padding: '20px 16px 24px 16px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    width: '100%',
-                    flexGrow: 1
-                  }}
-                >
-
-                {/* Name */}
+                {/* Title */}
                 <Typography
                   sx={{
-                    fontFamily: '"Space Grotesk", sans-serif',
+                    fontFamily: '"Linear", sans-serif',
                     fontSize: '18px',
                     fontWeight: 700,
-                    color: '#ffffff',
-                    mb: 0.8,
-                    letterSpacing: '-0.02em'
+                    color: '#ff2d55', // Pinky!
+                    letterSpacing: '0.04em',
+                    textTransform: 'uppercase'
                   }}
                 >
-                  {member.name}
+                  {typedTitle}
                 </Typography>
 
-                {/* Position Label (No border/background) */}
-                <Box
+                {/* Text */}
+                <Typography
                   sx={{
-                    mb: 1.5,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: 0.5
+                    fontFamily: '"Linear", sans-serif',
+                    fontSize: '14.5px',
+                    fontWeight: 300,
+                    color: 'rgba(255, 255, 255, 0.85)',
+                    lineHeight: 1.7
                   }}
                 >
-                  <Typography
-                    sx={{
-                      fontFamily: '"Space Grotesk", sans-serif',
-                      fontSize: '10px',
-                      fontWeight: 700,
-                      color: '#ff2d55',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.08em',
-                      lineHeight: 1
-                    }}
-                  >
-                    {member.position}
-                  </Typography>
-                  {member.additionalRoles && member.additionalRoles.length > 0 && (
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 0.5, mt: 0.8 }}>
-                      {member.additionalRoles.map((role, rIdx) => (
-                        <Box
-                          key={rIdx}
-                          sx={{
-                            border: '1px solid rgba(255, 45, 85, 0.4)',
-                            px: 1.2,
-                            py: 0.4,
-                            borderRadius: '2px',
-                            bgcolor: 'rgba(255, 45, 85, 0.08)'
-                          }}
-                        >
-                          <Typography
-                            sx={{
-                              fontFamily: '"Space Grotesk", sans-serif',
-                              fontSize: '10px',
-                              fontWeight: 600,
-                              color: 'rgba(255, 255, 255, 0.95)',
-                              textTransform: 'uppercase',
-                              letterSpacing: '0.06em',
-                              lineHeight: 1
-                            }}
-                          >
-                            {role}
-                          </Typography>
-                        </Box>
-                      ))}
-                    </Box>
-                  )}
-                </Box>
-
-                {/* Social Links */}
-                <Box 
-                  sx={{ 
-                    mt: 'auto', 
-                    pt: 2, 
-                    display: 'flex', 
-                    justifyContent: 'center', 
-                    gap: 1,
-                    width: '100%'
-                  }}
-                >
-                  {[
-                    { icon: <InstagramIcon fontSize="small" />, url: member.socials.instagram, label: 'Instagram' },
-                    { icon: <XIcon fontSize="small" />, url: member.socials.x, label: 'X' },
-                    { icon: <EmailIcon fontSize="small" />, url: member.socials.gmail, label: 'Gmail' },
-                    { icon: <FacebookIcon fontSize="small" />, url: member.socials.facebook, label: 'Facebook' },
-                    { icon: <LinkedInIcon fontSize="small" />, url: member.socials.linkedin, label: 'LinkedIn' }
-                  ].map((soc, sIdx) => (
-                    <IconButton
-                      key={sIdx}
-                      component="a"
-                      href={soc.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={soc.label}
-                      sx={{
-                        color: 'rgba(255, 255, 255, 0.45)',
-                        p: 0.6,
-                        borderRadius: 0,
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
-                        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                        '&:hover': {
-                          color: '#ff2d55',
-                          borderColor: 'rgba(255, 45, 85, 0.5)',
-                          bgcolor: 'rgba(255, 45, 85, 0.05)',
-                          transform: 'translateY(-2px)'
-                        }
-                      }}
-                    >
-                      {soc.icon}
-                    </IconButton>
-                  ))}
-                </Box>
+                  {typedText}
+                </Typography>
               </Box>
-            </Box>
-          ))}
+            );
+          })}
         </Box>
-      )}
 
         {/* Action Buttons: Production Plans & Piano Lessons */}
         <Box
@@ -1357,6 +799,472 @@ const KnowUsSectionComponent: React.FC = () => {
             Request Piano Lesson
           </Button>
         </Box>
+      </Container>
+    </Box>
+  );
+};
+
+const OurTeamSectionComponent: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
+  const [animationDone, setAnimationDone] = useState(false);
+  const [isScrollingDown, setIsScrollingDown] = useState(true);
+  const isScrollingDownRef = useRef(true);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      isScrollingDownRef.current = currentScrollY >= lastScrollY;
+      lastScrollY = currentScrollY;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsScrollingDown(isScrollingDownRef.current);
+          setHasEnteredViewport(true);
+        } else {
+          // Reset animation when leaving viewport so it pops up again when scrolling back
+          setHasEnteredViewport(false);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (hasEnteredViewport) {
+      const timer = setTimeout(() => {
+        setAnimationDone(true);
+      }, 1200);
+      return () => clearTimeout(timer);
+    } else {
+      setAnimationDone(false);
+    }
+  }, [hasEnteredViewport]);
+
+  return (
+    <Box
+      id="our-team"
+      ref={sectionRef}
+      sx={{
+        bgcolor: '#000000',
+        color: 'white',
+        py: { xs: 8, sm: 10 },
+        position: 'relative',
+        overflow: 'hidden',
+        transform: 'translate3d(0, 0, 0)',
+        willChange: 'transform',
+        WebkitBackfaceVisibility: 'hidden',
+        backfaceVisibility: 'hidden',
+        background: `
+          radial-gradient(circle at 50% 10%, rgba(45, 45, 55, 0.35) 0%, transparent 60%),
+          radial-gradient(circle at 10% 80%, rgba(35, 35, 45, 0.3) 0%, transparent 70%),
+          #000000
+        `,
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          opacity: 0.035,
+          pointerEvents: 'none',
+          zIndex: 1,
+          transform: 'translate3d(0, 0, 0)',
+          willChange: 'transform',
+          WebkitBackfaceVisibility: 'hidden',
+          backfaceVisibility: 'hidden',
+        }
+      }}
+    >
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+        {/* Section Heading */}
+        <Typography
+          variant="h2"
+          align="center"
+          sx={{
+            mb: 2,
+            fontWeight: 800,
+            fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
+            fontSize: { xs: '2rem', sm: '2.5rem', md: '3.2rem' },
+            letterSpacing: '0.06em',
+            color: 'transparent',
+            WebkitTextStroke: '1.5px #ffffff',
+            textTransform: 'uppercase'
+          }}
+        >
+          Our Team
+        </Typography>
+
+        <Typography
+          variant="body1"
+          align="center"
+          sx={{
+            mb: 6,
+            color: 'rgba(255, 255, 255, 0.6)',
+            fontFamily: '"Space Grotesk", sans-serif',
+            fontSize: { xs: '0.85rem', sm: '1rem' },
+            letterSpacing: '0.05em',
+            maxWidth: '650px',
+            mx: 'auto'
+          }}
+        >
+          Meet the world-class professionals and creative visionaries behind Shalom Music, dedicated to raising the standard of acoustic excellence.
+        </Typography>
+
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr 1fr' },
+            gap: '24px',
+            width: '100%'
+          }}
+        >
+          {teamMembers.map((member, idx) => (
+            <Box
+              key={idx}
+              sx={{
+                backdropFilter: 'blur(25px) saturate(190%)',
+                WebkitBackdropFilter: 'blur(25px) saturate(190%)',
+                background: 'linear-gradient(135deg, rgba(20, 20, 30, 0.65) 0%, rgba(8, 8, 12, 0.85) 100%)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                borderRadius: '16px',
+                padding: '32px 24px 28px 24px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)',
+                opacity: hasEnteredViewport ? 1 : 0,
+                transform: hasEnteredViewport ? 'scale(1) translateY(0)' : 'scale(0.7) translateY(20px)',
+                transition: !hasEnteredViewport
+                  ? `opacity 0.5s ease ${(isScrollingDown ? (teamMembers.length - 1 - idx) : idx) * 0.1}s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${(isScrollingDown ? (teamMembers.length - 1 - idx) : idx) * 0.1}s, border 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease`
+                  : (animationDone
+                      ? 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease, border 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease'
+                      : `opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${(isScrollingDown ? idx : (teamMembers.length - 1 - idx)) * 0.15}s, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${(isScrollingDown ? idx : (teamMembers.length - 1 - idx)) * 0.15}s, border 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease`
+                    ),
+                overflow: 'visible',
+                position: 'relative',
+                '&:hover': {
+                  border: '1px solid rgba(255, 45, 85, 0.4)',
+                  bgcolor: 'rgba(25, 25, 35, 0.85)',
+                  transform: 'scale(1) translateY(-6px)',
+                  boxShadow: '0 30px 60px rgba(255, 45, 85, 0.15), 0 10px 30px rgba(0, 0, 0, 0.8)',
+                  '& .team-avatar-ring': {
+                    borderColor: '#ff2d55',
+                    boxShadow: '0 0 25px rgba(255, 45, 85, 0.6)',
+                  },
+                  '& .team-avatar-img': {
+                    transform: 'scale(1.08)',
+                  }
+                }
+              }}
+            >
+              {/* Circular Avatar Container with Pink Ring */}
+              <Box
+                className="team-avatar-ring"
+                sx={{
+                  width: '120px',
+                  height: '120px',
+                  borderRadius: '50%',
+                  border: '2.5px solid rgba(255, 45, 85, 0.35)',
+                  boxShadow: '0 0 15px rgba(255, 45, 85, 0.1)',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  bgcolor: 'rgba(255, 255, 255, 0.02)',
+                  mb: 3,
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transform: 'translate3d(0, 0, 0)'
+                }}
+              >
+                <Box
+                  className="team-avatar-img"
+                  component="img"
+                  src={member.image}
+                  alt={member.name}
+                  sx={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                />
+              </Box>
+
+              {/* Name */}
+              <Typography
+                sx={{
+                  fontFamily: '"Space Grotesk", sans-serif',
+                  fontSize: '20px',
+                  fontWeight: 700,
+                  color: '#ffffff',
+                  mb: 1,
+                  letterSpacing: '-0.02em'
+                }}
+              >
+                {member.name}
+              </Typography>
+
+              {/* Roles Block */}
+              <Box
+                sx={{
+                  mb: 3,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                {/* Main Position */}
+                <Typography
+                  sx={{
+                    fontFamily: '"Space Grotesk", sans-serif',
+                    fontSize: '11px',
+                    fontWeight: 800,
+                    color: '#ff2d55',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em',
+                    lineHeight: 1.2
+                  }}
+                >
+                  {member.position}
+                </Typography>
+                
+                {/* Additional Roles */}
+                {member.additionalRoles && member.additionalRoles.length > 0 && (
+                  <Typography
+                    sx={{
+                      fontFamily: '"Space Grotesk", sans-serif',
+                      fontSize: '10px',
+                      fontWeight: 500,
+                      color: 'rgba(255, 255, 255, 0.5)',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.06em',
+                      lineHeight: 1.5,
+                      maxWidth: '220px'
+                    }}
+                  >
+                    {member.additionalRoles.join('  •  ')}
+                  </Typography>
+                )}
+              </Box>
+
+              {/* Social Links */}
+              <Box
+                sx={{
+                  mt: 'auto',
+                  pt: 2,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: 1.5,
+                  width: '100%'
+                }}
+              >
+                {[
+                  { icon: <InstagramIcon fontSize="small" />, url: member.socials.instagram, label: 'Instagram' },
+                  { icon: <XIcon fontSize="small" />, url: member.socials.x, label: 'X' },
+                  { icon: <EmailIcon fontSize="small" />, url: member.socials.gmail, label: 'Gmail' },
+                  { icon: <FacebookIcon fontSize="small" />, url: member.socials.facebook, label: 'Facebook' },
+                  { icon: <LinkedInIcon fontSize="small" />, url: member.socials.linkedin, label: 'LinkedIn' }
+                ].map((soc, sIdx) => (
+                  <IconButton
+                    key={sIdx}
+                    component="a"
+                    href={soc.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={soc.label}
+                    sx={{
+                      color: 'rgba(255, 255, 255, 0.45)',
+                      p: '6px',
+                      borderRadius: '50%',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                      '&:hover': {
+                        color: '#ff2d55',
+                        borderColor: 'rgba(255, 45, 85, 0.5)',
+                        bgcolor: 'rgba(255, 45, 85, 0.08)',
+                        transform: 'translateY(-2px)'
+                      }
+                    }}
+                  >
+                    {soc.icon}
+                  </IconButton>
+                ))}
+              </Box>
+            </Box>
+          ))}
+        </Box>
+      </Container>
+    </Box>
+  );
+};
+
+const StatsSectionComponent: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
+  const [audioCount, setAudioCount] = useState(0);
+  const [soundtrackCount, setSoundtrackCount] = useState(0);
+  const [clientCount, setClientCount] = useState(0);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasEnteredViewport(true);
+        } else {
+          // Reset count when leaving viewport so it recounts on re-scroll
+          setHasEnteredViewport(false);
+          setAudioCount(0);
+          setSoundtrackCount(0);
+          setClientCount(0);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!hasEnteredViewport) return;
+
+    const duration = 1500; 
+    const frameRate = 1000 / 60; 
+    const totalFrames = Math.round(duration / frameRate);
+    
+    let frame = 0;
+    const timer = setInterval(() => {
+      frame++;
+      const progress = frame / totalFrames;
+      const easeProgress = progress * (2 - progress); // easeOutQuad
+      
+      setAudioCount(Math.min(300, Math.round(easeProgress * 300)));
+      setSoundtrackCount(Math.min(450, Math.round(easeProgress * 450)));
+      setClientCount(Math.min(70, Math.round(easeProgress * 70)));
+
+      if (frame >= totalFrames) {
+        clearInterval(timer);
+      }
+    }, frameRate);
+
+    return () => clearInterval(timer);
+  }, [hasEnteredViewport]);
+
+  return (
+    <Box
+      ref={sectionRef}
+      sx={{
+        bgcolor: '#000000',
+        color: 'white',
+        py: { xs: 8, sm: 10, md: 12 },
+        position: 'relative',
+        overflow: 'hidden',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+        background: `
+          radial-gradient(circle at 50% 50%, rgba(35, 35, 45, 0.35) 0%, transparent 70%),
+          #050508
+        `,
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          opacity: 0.035, 
+          pointerEvents: 'none',
+          zIndex: 1
+        }
+      }}
+    >
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+        {/* Section Heading */}
+        <Typography 
+          variant="h2" 
+          align="center" 
+          sx={{ 
+            mb: { xs: 6, md: 10 }, 
+            fontWeight: 800,
+            fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
+            fontSize: { xs: '2rem', sm: '2.5rem', md: '3.2rem' },
+            letterSpacing: '0.06em',
+            color: 'transparent',
+            WebkitTextStroke: '1.5px #ffffff',
+            textTransform: 'uppercase'
+          }}
+        >
+          Our Performance
+        </Typography>
+
+        <Grid container spacing={{ xs: 4, md: 2 }} justifyContent="center" alignItems="center">
+          {[
+            { label: 'Audio', value: audioCount, icon: <GraphicEqIcon sx={{ fontSize: { xs: 32, md: 40 }, color: '#ff2d55', mb: 1.5 }} /> },
+            { label: 'Soundtrack', value: soundtrackCount, icon: <MusicNoteIcon sx={{ fontSize: { xs: 32, md: 40 }, color: '#ff2d55', mb: 1.5 }} /> },
+            { label: 'Client', value: clientCount, icon: <StarIcon sx={{ fontSize: { xs: 32, md: 40 }, color: '#ff2d55', mb: 1.5 }} /> }
+          ].map((stat, i) => (
+            <Grid key={i} size={{ xs: 12, sm: 4 }} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              {stat.icon}
+              <Typography
+                sx={{
+                  fontFamily: '"Space Grotesk", sans-serif',
+                  fontSize: { xs: '3.2rem', sm: '4.2rem', md: '5.5rem' },
+                  fontWeight: 800,
+                  lineHeight: 1,
+                  mb: 1,
+                  color: '#ff2d55',
+                  letterSpacing: '0.04em'
+                }}
+              >
+                {stat.value}+
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: '"Space Grotesk", sans-serif',
+                  fontSize: { xs: '11px', sm: '12px', md: '14px' },
+                  fontWeight: 700,
+                  color: 'rgba(255, 255, 255, 0.55)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.15em'
+                }}
+              >
+                {stat.label}
+              </Typography>
+            </Grid>
+          ))}
+        </Grid>
       </Container>
     </Box>
   );
@@ -1670,7 +1578,7 @@ const Home: React.FC = () => {
             },
             "sameAs": [
               "https://www.facebook.com/shalommusic",
-              "https://www.instagram.com/shalommusic"
+              "https://www.instagram.com/_shalom_music?igsh=cTMzMWt2aXV2eHR0&utm_source=qr"
             ]
           })}
         </script>
@@ -2055,8 +1963,14 @@ const Home: React.FC = () => {
         </Grid>
       </Box>
 
+      {/* Stats counter Section */}
+      <StatsSectionComponent />
+
       {/* Know us Section */}
       <KnowUsSectionComponent />
+
+      {/* Our Team Section */}
+      <OurTeamSectionComponent />
 
       {/* Core Services Overview */}
       <Box 
@@ -2132,7 +2046,7 @@ const Home: React.FC = () => {
                     fontSize: { xs: '1.05rem', sm: '1.15rem', md: '1.3rem' },
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
-                    color: '#ffffff'
+                    color: '#ff2a74'
                   }}
                 >
                   {stat.label}

@@ -390,13 +390,13 @@ const Lessons: React.FC = () => {
                       <Typography 
                         variant="overline" 
                         sx={{ 
-                          color: 'white',
+                          color: '#ff2a74', 
                           fontWeight: 800, 
                           letterSpacing: '0.3em', 
                           fontFamily: '"Space Grotesk", sans-serif',
                           mb: 1.5, 
                           display: 'block',
-                          opacity: 0.8
+                          opacity: 0.9
                         }}
                       >
                         GRADE 0{idx + 1}

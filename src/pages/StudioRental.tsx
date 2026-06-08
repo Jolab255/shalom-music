@@ -139,19 +139,20 @@ const StudioRental: React.FC = () => {
                 minWidth: 50, 
                 height: 50, 
                 bgcolor: 'black', 
-                color: 'white', 
+                color: '#ff2a74', 
                 borderRadius: '50%', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
-                fontWeight: 800
+                fontWeight: 800,
+                border: '1px solid rgba(255, 255, 255, 0.1)'
               }}>
                 {idx + 1}
               </Box>
               <Box>
                 <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>{item.step}</Typography>
-                <Typography variant="body1" color="text.secondary">{item.desc}</Typography>
-                {idx < 3 && <Divider sx={{ mt: 4 }} />}
+                <Typography variant="body1" color="rgba(255, 255, 255, 0.65)">{item.desc}</Typography>
+                {idx < 3 && <Divider sx={{ mt: 4, borderColor: 'rgba(255, 255, 255, 0.08)' }} />}
               </Box>
             </Box>
           ))}

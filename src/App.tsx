@@ -19,6 +19,7 @@ const PianoServices = lazy(() => import('./pages/PianoServices'));
 const Pricing = lazy(() => import('./pages/Pricing'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
+const Academy = lazy(() => import('./pages/Academy'));
 
 // Scroll to hash handler for routing links like "#testimonials"
 const ScrollToHash = () => {
@@ -66,6 +67,7 @@ function App() {
                     <Route path="/offers" element={<Pricing />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
+                    <Route path="/academy" element={<Academy />} />
                   </Routes>
                 </Suspense>
               </Layout>

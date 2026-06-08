@@ -104,7 +104,7 @@ const Footer: React.FC = () => {
             <Box sx={{ display: 'flex', gap: 2 }}>
               {[
                 { icon: <FacebookIcon fontSize="small" />, label: 'Facebook', url: '#' },
-                { icon: <InstagramIcon fontSize="small" />, label: 'Instagram', url: '#' },
+                { icon: <InstagramIcon fontSize="small" />, label: 'Instagram', url: 'https://www.instagram.com/_shalom_music?igsh=cTMzMWt2aXV2eHR0&utm_source=qr' },
                 { icon: <YouTubeIcon fontSize="small" />, label: 'YouTube', url: 'https://www.youtube.com/watch?v=tC0QnPUsrCk' }
               ].map((social, i) => (
                 <IconButton 
@@ -150,6 +150,7 @@ const Footer: React.FC = () => {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {[
                 { label: 'Audio Production', path: '/#recording' },
+                { label: 'Production Academy', path: '/academy' },
                 { label: 'Piano & Music Lessons', path: '/lessons' },
                 { label: 'Concert Accompanist', path: '/piano-services' },
                 { label: 'Studio Space Rental', path: '/#rental' },
