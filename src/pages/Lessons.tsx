@@ -1068,7 +1068,7 @@ const Lessons: React.FC = () => {
             <Box sx={{ mt: 8, display: 'flex', justifyContent: 'center' }}>
               <Button
                 component={RouterLink}
-                to="/contact?service=lessons"
+                to="/contact?service=lessons&package=Piano%20Lessons%20Inquiry"
                 variant="outlined"
                 size="large"
                 sx={{
@@ -1279,7 +1279,7 @@ const Lessons: React.FC = () => {
                   </Button>
                   <Button
                     component={RouterLink}
-                    to="/contact?service=lessons"
+                    to="/contact?service=lessons&package=Piano%20Lessons%20Inquiry"
                     variant="contained"
                     size="large"
                     sx={{
