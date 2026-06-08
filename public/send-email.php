@@ -30,14 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // 2. SMTP & Mail Server Configuration
 define("RECIPIENT_EMAIL", "info@shalommusic.co.tz");
-define("SENDER_EMAIL", "webmaster@shalommusic.co.tz"); // Must match your hosting domain to avoid SPF/spam issues
-define("SMTP_ENABLED", false); // Set to true to override local mail server and use external SMTP
+define("SENDER_EMAIL", "info@shalommusic.co.tz"); // Must match your hosting domain to avoid SPF/spam issues
+define("SMTP_ENABLED", true); // Set to true to override local mail server and use external SMTP
 
 // If SMTP_ENABLED is true, populate these credentials
-define("SMTP_HOST", "mail.shalommusic.co.tz");
+define("SMTP_HOST", "server14.tanzaniaservers.com");
 define("SMTP_PORT", 465); // 465 (SSL) or 587 (TLS/STARTTLS)
-define("SMTP_USER", "notifications@shalommusic.co.tz");
-define("SMTP_PASS", "your-secure-smtp-password-here");
+define("SMTP_USER", "info@shalommusic.co.tz");
+define("SMTP_PASS", "shalommusicMkombozi.");
 define("SMTP_SECURE", "ssl"); // 'ssl' or 'tls'
 
 // 3. Retrieve and Parse JSON Body
