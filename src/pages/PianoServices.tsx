@@ -40,7 +40,7 @@ const PianoServices: React.FC = () => {
       image: campMeetingImg,
       price: '399,999 TZS ($280 USD)',
       originalPrice: '500,000 TZS ($360 USD)',
-      duration: 'per day (multi-session)',
+      duration: 'per week (multi-session)',
       inquiryName: 'Camp Meeting Booking'
     },
     { 
