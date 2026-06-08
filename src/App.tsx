@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { HelmetProvider } from 'react-helmet-async';
 import { Box, CircularProgress } from '@mui/material';
@@ -14,7 +14,7 @@ import { NotificationProvider } from './components/common/NotificationContext';
 const Home = lazy(() => import('./pages/Home'));
 const Production = lazy(() => import('./pages/Production'));
 const Lessons = lazy(() => import('./pages/Lessons'));
-const StudioRental = lazy(() => import('./pages/StudioRental'));
+
 const PianoService = lazy(() => import('./pages/PianoService'));
 const PianoServices = lazy(() => import('./pages/PianoServices'));
 const Pricing = lazy(() => import('./pages/Pricing'));
@@ -94,7 +94,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/production" element={<Production />} />
                     <Route path="/lessons" element={<Lessons />} />
-                    <Route path="/rental" element={<StudioRental />} />
+                    <Route path="/rental" element={<Navigate to="/#rental" replace />} />
                     <Route path="/piano-service" element={<PianoService />} />
                     <Route path="/piano-services" element={<PianoServices />} />
                     <Route path="/pricing" element={<Pricing />} />

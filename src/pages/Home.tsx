@@ -1706,7 +1706,7 @@ const Home: React.FC = () => {
               </Button>
               <Button 
                 component={RouterLink}
-                to="/rental"
+                to="/#rental"
                 variant="outlined" 
                 size="large" 
                 sx={{ 
