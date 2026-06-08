@@ -185,7 +185,7 @@ const Academy: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Professional Audio Production Academy | Shalom Music Studios</title>
+        <title>Professional Audio Production School | Shalom Music Studios</title>
         <meta name="description" content="Certified music production, sound engineering, vocal editing, mixing, and mastering courses in Dar es Salaam, Tanzania. Elevate your sound with hands-on academy training." />
         <link rel="canonical" href="https://shalommusic.co.tz/academy" />
       </Helmet>
@@ -248,7 +248,7 @@ const Academy: React.FC = () => {
           {/* Slowly zooming background image */}
           <motion.img
             src={audioRecordingImg}
-            alt="Audio production academy student mixing tracks"
+            alt="Audio production school student mixing tracks"
             initial={{ scale: 1.0 }}
             animate={{ scale: 1.15 }}
             transition={{
@@ -302,7 +302,7 @@ const Academy: React.FC = () => {
                   textShadow: '0 4px 15px rgba(0,0,0,0.5)'
                 }}
               >
-                Audio Production Academy
+                Audio Production School
               </Typography>
 
               <Typography 

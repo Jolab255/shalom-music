@@ -227,7 +227,7 @@ const pricingData = {
     ]
   },
   academy: {
-    headline: 'AUDIO PRODUCTION ACADEMY',
+    headline: 'AUDIO PRODUCTION SCHOOL',
     subtitle: 'Comprehensive 4-Grade curriculum from foundational sound to professional engineering mastery.',
     plans: [
       { 
@@ -387,7 +387,7 @@ const Pricing: React.FC = () => {
             { id: 'production', label: 'Music Production' },
             { id: 'instrumental', label: 'Instrumental Creation' },
             { id: 'lessons', label: 'Piano Lessons' },
-            { id: 'academy', label: 'Production Academy' },
+            { id: 'academy', label: 'Production School' },
             { id: 'rental', label: 'Studio Rental' },
             { id: 'pianoServices', label: 'Piano Services' }
           ].map((cat) => {

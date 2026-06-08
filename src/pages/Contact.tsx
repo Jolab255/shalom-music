@@ -13,7 +13,7 @@ const services = [
   'Piano Lessons',
   'Studio Rental',
   'Piano Service',
-  'Audio Production Academy',
+  'Audio Production School',
   'Other Inquiries'
 ];
 
@@ -70,7 +70,7 @@ const Contact: React.FC = () => {
     if (serviceParam) {
       const query = serviceParam.toLowerCase().trim();
       if (query.includes('academy') || query.includes('school') || query === 'class') {
-        setService('Audio Production Academy');
+        setService('Audio Production School');
       } else if (query.includes('production') || query === 'music') {
         setService('Music Production');
       } else if (query.includes('lesson') || query === 'piano') {

@@ -23,7 +23,7 @@ const drawerNavItems = [
   { label: 'Audio Mixing', path: '/#mixing' },
   { label: 'Audio Mastering', path: '/#mastering' },
   { label: 'Instrumental Creation', path: '/production' },
-  { label: 'Production Academy', path: '/academy' },
+  { label: 'Production School', path: '/academy' },
   { label: 'Studio Rental', path: '/#rental' },
   { label: 'About', path: '/#about' },
   { label: 'Piano Lessons', path: '/lessons' },
@@ -39,7 +39,7 @@ const searchDatabase = [
   { title: 'Audio Mixing', description: 'Multi-dimensional audio mixing', path: '/#mixing', category: 'Services' },
   { title: 'Audio Mastering', description: 'Industry-standard mastering', path: '/#mastering', category: 'Services' },
   { title: 'Instrumental Creation', description: 'Custom beats, arrangements & composition', path: '/production', category: 'Services' },
-  { title: 'Audio Production Academy', description: 'Certified music production & sound engineering courses', path: '/academy', category: 'Academy' },
+  { title: 'Audio Production School', description: 'Certified music production & sound engineering courses', path: '/academy', category: 'School' },
   { title: 'Complete Recording Package', description: 'All-in-one recording, mixing, and mastering', path: '/pricing', category: 'Pricing' },
   { title: 'Studio Rental', description: 'Book premium studio spaces & rooms', path: '/#rental', category: 'Studios' },
   { title: 'Piano Lessons', description: 'Personalized piano & music instruction', path: '/lessons', category: 'Lessons' },
@@ -637,7 +637,7 @@ const Navbar: React.FC = () => {
                   }
                 }}
               >
-                Production Academy
+                Production School
               </Button>
               <Button
                 component={RouterLink}

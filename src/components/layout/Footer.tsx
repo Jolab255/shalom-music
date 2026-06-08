@@ -150,7 +150,7 @@ const Footer: React.FC = () => {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {[
                 { label: 'Audio Production', path: '/#recording' },
-                { label: 'Production Academy', path: '/academy' },
+                { label: 'Production School', path: '/academy' },
                 { label: 'Piano & Music Lessons', path: '/lessons' },
                 { label: 'Concert Accompanist', path: '/piano-services' },
                 { label: 'Studio Space Rental', path: '/#rental' },
