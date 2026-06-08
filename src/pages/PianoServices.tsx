@@ -254,7 +254,7 @@ const PianoServices: React.FC = () => {
                   focus: 'Spiritual Unity & Leadership',
                   desc: 'Comprehensive performance coverage for multi-day conventions, open-air camps, dynamic choral assemblies, and fellowship services.',
                   items: ['Multi-Session Continuous Playback', 'Mass Choir Collaboration', 'Real-Time Transpositions', 'Liturgical Devotional Hymnal Standards'],
-                  image: campMeetingImg
+                  image: pianoImg
                 },
                 { 
                   level: 'Music Concerts', 
@@ -282,7 +282,7 @@ const PianoServices: React.FC = () => {
                   focus: 'Versatility & Promptness',
                   desc: 'Available for classical recitals, funerals and memorial services, private parties, academic masterclasses, and community events.',
                   items: ['Memorial Service Solemn Hymns', 'Masterclass Demonstrations', 'High-End Private Gatherings', 'Flexible Location Setup Options'],
-                  image: pianoImg
+                  image: campMeetingImg
                 }
               ].map((program, idx) => (
                 <Grid size={{ xs: 12, sm: 6, md: 4 }} key={idx} sx={{ display: 'flex' }}>
