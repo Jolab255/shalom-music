@@ -65,25 +65,30 @@ const Contact: React.FC = () => {
   
   const [searchParams] = useSearchParams();
   const serviceParam = searchParams.get('service');
-
+  const packageParam = searchParams.get('package');
+ 
   useEffect(() => {
     if (serviceParam) {
       const query = serviceParam.toLowerCase().trim();
       if (query.includes('academy') || query.includes('school') || query === 'class') {
         setService('Audio Production School');
-      } else if (query.includes('production') || query === 'music') {
+      } else if (query.includes('production') || query === 'music' || query === 'mixing' || query === 'mastering') {
         setService('Music Production');
       } else if (query.includes('lesson') || query === 'piano') {
         setService('Piano Lessons');
       } else if (query.includes('rental') || query === 'studio') {
         setService('Studio Rental');
-      } else if (query.includes('service') || query === 'tuning') {
+      } else if (query.includes('service') || query === 'tuning' || query.includes('accompanist')) {
         setService('Piano Service');
       } else if (query.includes('other') || query.includes('inquiry')) {
         setService('Other Inquiries');
       }
     }
-  }, [serviceParam]);
+ 
+    if (packageParam) {
+      setMessage(`Hi, I'm interested in booking the "${packageParam}" package. Please let me know the availability.`);
+    }
+  }, [serviceParam, packageParam]);
   
   // Field validation error states
   const [nameError, setNameError] = useState('');

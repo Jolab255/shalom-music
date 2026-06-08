@@ -825,7 +825,7 @@ const Academy: React.FC = () => {
             </Typography>
             <Button 
               component={RouterLink}
-              to="/contact?service=academy"
+              to="/contact?service=school&package=Audio%20Production%20School%20Enrollment"
               variant="contained" 
               size="large" 
               sx={{ 
@@ -1280,7 +1280,7 @@ const Academy: React.FC = () => {
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                   <Button
                     component={RouterLink}
-                    to={`/contact?service=academy&package=${encodeURIComponent(pkg.title)}`}
+                    to={`/contact?service=school&package=${encodeURIComponent(pkg.title)}`}
                     onClick={() => setIsPricingOpen(false)}
                     variant="contained"
                     fullWidth

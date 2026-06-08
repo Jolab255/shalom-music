@@ -452,7 +452,7 @@ const Production: React.FC = () => {
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                   <Button 
                     component={RouterLink}
-                    to="/contact?service=production"
+                    to="/contact?service=production&package=Instrumental%20Creation%20Booking"
                     variant="contained" 
                     size="large" 
                     sx={{ 

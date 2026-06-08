@@ -26,7 +26,7 @@ const PianoService: React.FC = () => {
           </Typography>
           <Button 
             component={RouterLink}
-            to="/contact?service=service"
+            to="/contact?service=service&package=Piano%20Tuning%20and%20Care"
             variant="contained" 
             size="large" 
             sx={{ bgcolor: 'white', color: 'black', px: 6, py: 1.5, '&:hover': { bgcolor: '#e0e0e0' } }}

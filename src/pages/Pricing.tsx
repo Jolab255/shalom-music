@@ -644,7 +644,7 @@ const Pricing: React.FC = () => {
                 {/* Custom Branded Tab Action Button */}
                 <Button 
                   component={RouterLink}
-                  to={`/contact?service=${activeCategory}`}
+                  to={`/contact?service=${activeCategory}&package=${encodeURIComponent(plan.title)}`}
                   variant={plan.popular ? "contained" : "outlined"} 
                   fullWidth 
                   sx={{ 

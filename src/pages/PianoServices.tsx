@@ -1,5 +1,6 @@
 import React from 'react';
-import { Container, Typography, Box, Button, List, ListItem, ListItemIcon, ListItemText, Grid2 as Grid, Paper, Divider } from '@mui/material';
+import { Container, Typography, Box, Button, List, ListItem, ListItemIcon, ListItemText, Grid2 as Grid, Paper, Divider, Dialog, DialogContent, IconButton, Grow } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -11,6 +12,83 @@ import concertImg from '../assets/concert.png';
 import pianoImg from '../assets/piano.jpeg';
 
 const PianoServices: React.FC = () => {
+  const [isPricingOpen, setIsPricingOpen] = React.useState(false);
+  const [selectedOccasionId, setSelectedOccasionId] = React.useState<number | null>(null);
+
+  const handleBookNow = (idx: number) => {
+    setSelectedOccasionId(idx);
+    setIsPricingOpen(true);
+  };
+
+  const occasions = [
+    { 
+      level: 'Churches', 
+      focus: 'Liturgical Elegance & Worship',
+      desc: 'Reverent accompaniments for divine services, Sabbath convocations, choral support, and special congregational prayer assemblies.',
+      items: ['Congregational Worship Playing', 'Hymnal Harmonizations', 'Choir Accompanist & Rehearsals', 'Preludes & Quiet Devotional Underscores'],
+      image: 'https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&w=600&h=400&q=80',
+      price: '120,000 TZS ($85 USD)',
+      originalPrice: '150,000 TZS ($110 USD)',
+      duration: 'per service session',
+      inquiryName: 'Church Service Booking'
+    },
+    { 
+      level: 'Camp Meetings', 
+      focus: 'Spiritual Unity & Leadership',
+      desc: 'Comprehensive performance coverage for multi-day conventions, open-air camps, dynamic choral assemblies, and fellowship services.',
+      items: ['Multi-Session Continuous Playback', 'Mass Choir Collaboration', 'Real-Time Transpositions', 'Liturgical Devotional Hymnal Standards'],
+      image: pianoImg,
+      price: '399,999 TZS ($280 USD)',
+      originalPrice: '500,000 TZS ($360 USD)',
+      duration: 'per day (multi-session)',
+      inquiryName: 'Camp Meeting Booking'
+    },
+    { 
+      level: 'Music Concerts', 
+      focus: 'Virtuosity & Collaboration',
+      desc: 'Concert-grade piano recitals, collaborative classical accompanying for soloists, instrumentalists, and chamber ensemble backing.',
+      items: ['Solo Piano Recitals', 'Collaborative Sonata Accompanying', 'Orchestra/Ensemble Backing', 'HD Recording & Session Playing'],
+      image: concertImg,
+      price: '699,999 TZS ($490 USD)',
+      originalPrice: '800,000 TZS ($580 USD)',
+      duration: 'per concert event',
+      inquiryName: 'Music Concert Booking'
+    },
+    { 
+      level: 'Wedding Ceremonies', 
+      focus: 'Sophistication & Emotion',
+      desc: 'Live grand piano accompaniment to score the milestones of your union. Beautiful entrances, registries, recessions, and cocktail hours.',
+      items: ['Bridal March Processionals', 'Registry Signing Underscores', 'Elegant Cocktail Hour Jazz & Pop', 'Custom Arrangement Requests'],
+      image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&h=400&q=80',
+      price: '199,999 TZS ($140 USD)',
+      originalPrice: '250,000 TZS ($180 USD)',
+      duration: 'per wedding event',
+      inquiryName: 'Wedding Ceremony Booking'
+    },
+    { 
+      level: 'Functions', 
+      focus: 'Bespoke Ambient Repertoire',
+      desc: 'Polished background standards and performance numbers for banquets, award ceremonies, grand launches, and corporate galas.',
+      items: ['Sophisticated Ambient Standards', 'Official Walk-up/Theme Fanfares', 'Tailored Genre Selection', 'High-Fidelity Sound Coordination'],
+      image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&h=400&q=80',
+      price: '299,999 TZS ($210 USD)',
+      originalPrice: '350,000 TZS ($250 USD)',
+      duration: 'per event session',
+      inquiryName: 'Function Booking'
+    },
+    { 
+      level: 'Other Places', 
+      focus: 'Versatility & Promptness',
+      desc: 'Available for classical recitals, funerals and memorial services, private parties, academic masterclasses, and community events.',
+      items: ['Memorial Service Solemn Hymns', 'Masterclass Demonstrations', 'High-End Private Gatherings', 'Flexible Location Setup Options'],
+      image: campMeetingImg,
+      price: '149,999 TZS ($110 USD)',
+      originalPrice: '200,000 TZS ($150 USD)',
+      duration: 'per booking session',
+      inquiryName: 'Other Places Booking'
+    }
+  ];
+
   return (
     <>
       <Helmet>
@@ -241,50 +319,7 @@ const PianoServices: React.FC = () => {
             </Typography>
 
             <Grid container spacing={4} alignItems="stretch">
-              {[
-                { 
-                  level: 'Churches', 
-                  focus: 'Liturgical Elegance & Worship',
-                  desc: 'Reverent accompaniments for divine services, Sabbath convocations, choral support, and special congregational prayer assemblies.',
-                  items: ['Congregational Worship Playing', 'Hymnal Harmonizations', 'Choir Accompanist & Rehearsals', 'Preludes & Quiet Devotional Underscores'],
-                  image: 'https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&w=600&h=400&q=80'
-                },
-                { 
-                  level: 'Camp Meetings', 
-                  focus: 'Spiritual Unity & Leadership',
-                  desc: 'Comprehensive performance coverage for multi-day conventions, open-air camps, dynamic choral assemblies, and fellowship services.',
-                  items: ['Multi-Session Continuous Playback', 'Mass Choir Collaboration', 'Real-Time Transpositions', 'Liturgical Devotional Hymnal Standards'],
-                  image: pianoImg
-                },
-                { 
-                  level: 'Music Concerts', 
-                  focus: 'Virtuosity & Collaboration',
-                  desc: 'Concert-grade piano recitals, collaborative classical accompanying for soloists, instrumentalists, and chamber ensemble backing.',
-                  items: ['Solo Piano Recitals', 'Collaborative Sonata Accompanying', 'Orchestra/Ensemble Backing', 'HD Recording & Session Playing'],
-                  image: concertImg
-                },
-                { 
-                  level: 'Wedding Ceremonies', 
-                  focus: 'Sophistication & Emotion',
-                  desc: 'Live grand piano accompaniment to score the milestones of your union. Beautiful entrances, registries, recessions, and cocktail hours.',
-                  items: ['Bridal March Processionals', 'Registry Signing Underscores', 'Elegant Cocktail Hour Jazz & Pop', 'Custom Arrangement Requests'],
-                  image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&h=400&q=80'
-                },
-                { 
-                  level: 'Functions', 
-                  focus: 'Bespoke Ambient Repertoire',
-                  desc: 'Polished background standards and performance numbers for banquets, award ceremonies, grand launches, and corporate galas.',
-                  items: ['Sophisticated Ambient Standards', 'Official Walk-up/Theme Fanfares', 'Tailored Genre Selection', 'High-Fidelity Sound Coordination'],
-                  image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&h=400&q=80'
-                },
-                { 
-                  level: 'Other Places', 
-                  focus: 'Versatility & Promptness',
-                  desc: 'Available for classical recitals, funerals and memorial services, private parties, academic masterclasses, and community events.',
-                  items: ['Memorial Service Solemn Hymns', 'Masterclass Demonstrations', 'High-End Private Gatherings', 'Flexible Location Setup Options'],
-                  image: campMeetingImg
-                }
-              ].map((program, idx) => (
+              {occasions.map((program, idx) => (
                 <Grid size={{ xs: 12, sm: 6, md: 4 }} key={idx} sx={{ display: 'flex' }}>
                   <Paper 
                     elevation={0} 
@@ -404,8 +439,7 @@ const PianoServices: React.FC = () => {
                       </List>
 
                       <Button 
-                        component={RouterLink}
-                        to="/pricing?category=pianoServices"
+                        onClick={() => handleBookNow(idx)}
                         variant="text"
                         sx={{
                           mt: 4,
@@ -425,7 +459,7 @@ const PianoServices: React.FC = () => {
                           }
                         }}
                       >
-                        See Prices & Availability →
+                        Book Now →
                       </Button>
                     </Box>
                   </Paper>
@@ -575,6 +609,237 @@ const PianoServices: React.FC = () => {
             </Button>
           </Container>
         </Box>
+
+        {/* Pricing Modal */}
+        <Dialog
+          open={isPricingOpen}
+          onClose={() => setIsPricingOpen(false)}
+          TransitionComponent={Grow}
+          transitionDuration={{ enter: 400, exit: 250 }}
+          scroll="paper"
+          PaperProps={{
+            sx: {
+              bgcolor: '#0a0a0a',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              borderRadius: '0px',
+              maxWidth: '440px',
+              width: '100%',
+              maxHeight: 'calc(100vh - 48px)',
+              py: { xs: 2, sm: 2.5 },
+              px: { xs: 3, sm: 3.5 },
+              position: 'relative',
+              boxShadow: '0 20px 45px rgba(0, 0, 0, 0.95)',
+              backgroundImage: 'none',
+              display: 'flex',
+              flexDirection: 'column'
+            }
+          }}
+          sx={{
+            backdropFilter: 'blur(10px)',
+            '& .MuiBackdrop-root': {
+              bgcolor: 'rgba(0, 0, 0, 0.85)'
+            }
+          }}
+        >
+          <IconButton 
+            onClick={() => setIsPricingOpen(false)} 
+            aria-label="close"
+            sx={{ 
+              position: 'absolute', 
+              top: 12, 
+              right: 12, 
+              zIndex: 10,
+              color: 'rgba(255, 255, 255, 0.6)', 
+              '&:hover': { color: 'white', bgcolor: 'rgba(255, 255, 255, 0.05)' } 
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+
+          {selectedOccasionId !== null && (() => {
+            const program = occasions[selectedOccasionId];
+            if (!program) return null;
+            return (
+              <DialogContent 
+                sx={{ 
+                  p: 0, 
+                  textAlign: 'center', 
+                  color: 'white', 
+                  overflowY: 'auto',
+                  '&::-webkit-scrollbar': { display: 'none' },
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none'
+                }}
+              >
+                <Typography 
+                  variant="h4" 
+                  sx={{ 
+                    fontFamily: '"Space Grotesk", sans-serif', 
+                    fontWeight: 700, 
+                    fontSize: { xs: '1.3rem', sm: '1.5rem' },
+                    mb: 1,
+                    mt: 2,
+                    px: 2,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.02em'
+                  }}
+                >
+                  {program.level}
+                </Typography>
+                <Typography 
+                  sx={{ 
+                    fontFamily: '"Linear", sans-serif',
+                    fontWeight: 300,
+                    fontSize: '0.88rem',
+                    color: 'rgba(255, 255, 255, 0.65)',
+                    mb: 2.5,
+                    lineHeight: 1.4,
+                    px: 1
+                  }}
+                >
+                  {program.desc}
+                </Typography>
+
+                {/* Pricing Panel */}
+                <Box 
+                  sx={{ 
+                    bgcolor: 'rgba(255, 42, 116, 0.04)',
+                    border: '1px dashed rgba(255, 42, 116, 0.25)',
+                    borderRadius: '0px',
+                    py: 2.5,
+                    px: 2,
+                    mb: 3,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'relative'
+                  }}
+                >
+                  <Box 
+                    sx={{ 
+                      position: 'absolute',
+                      top: -10,
+                      bgcolor: '#ff2a74',
+                      color: 'white',
+                      fontFamily: '"Space Grotesk", sans-serif',
+                      fontWeight: 700,
+                      fontSize: '0.65rem',
+                      letterSpacing: '0.1em',
+                      px: 1.5,
+                      py: 0.2,
+                      borderRadius: '0px'
+                    }}
+                  >
+                    LIMITED OFFER
+                  </Box>
+
+                  <Typography 
+                    sx={{ 
+                      textDecoration: 'line-through', 
+                      color: 'rgba(255, 255, 255, 0.4)', 
+                      fontSize: '0.78rem',
+                      fontFamily: '"Space Grotesk", sans-serif',
+                      fontWeight: 500,
+                      mb: 0.25,
+                      mt: 0.25,
+                      textAlign: 'center'
+                    }}
+                  >
+                    {program.originalPrice}
+                  </Typography>
+                  <Typography 
+                    sx={{ 
+                      color: '#ff2a74', 
+                      fontWeight: 900, 
+                      fontSize: { xs: '1.25rem', sm: '1.4rem' },
+                      fontFamily: '"Space Grotesk", sans-serif',
+                      lineHeight: 1,
+                      textAlign: 'center'
+                    }}
+                  >
+                    {program.price}
+                  </Typography>
+                  <Typography 
+                    sx={{ 
+                      fontSize: '0.75rem',
+                      color: 'rgba(255, 255, 255, 0.5)',
+                      fontFamily: '"Linear", sans-serif',
+                      mt: 0.75,
+                      textAlign: 'center'
+                    }}
+                  >
+                    {program.duration}
+                  </Typography>
+                </Box>
+
+                {/* Inclusions List */}
+                <Box sx={{ textAlign: 'left', mb: 3.5, display: 'flex', flexDirection: 'column', gap: 1.5, px: 1 }}>
+                  {program.items.map((text, i) => (
+                    <Box key={i} sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.25 }}>
+                      <CheckCircleIcon sx={{ color: '#ff2a74', fontSize: 15, mt: 0.3 }} />
+                      <Typography 
+                        sx={{ 
+                          fontFamily: '"Linear", sans-serif', 
+                          fontWeight: 300, 
+                          fontSize: '0.84rem', 
+                          color: 'rgba(255, 255, 255, 0.85)',
+                          lineHeight: 1.3
+                        }}
+                      >
+                        {text}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
+
+                {/* Booking Actions */}
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                  <Button
+                    component={RouterLink}
+                    to={`/contact?service=accompanist&package=${encodeURIComponent(program.inquiryName)}`}
+                    onClick={() => setIsPricingOpen(false)}
+                    variant="contained"
+                    fullWidth
+                    sx={{
+                      bgcolor: '#ff2a74',
+                      color: 'white',
+                      py: 1.4,
+                      fontSize: '0.82rem',
+                      fontWeight: 700,
+                      borderRadius: '0px',
+                      boxShadow: 'none',
+                      '&:hover': { bgcolor: '#e01b5d', boxShadow: 'none' },
+                      fontFamily: '"Space Grotesk", sans-serif',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
+                    }}
+                  >
+                    Continue to Book
+                  </Button>
+                  <Button
+                    onClick={() => setIsPricingOpen(false)}
+                    variant="text"
+                    fullWidth
+                    sx={{
+                      color: 'rgba(255, 255, 255, 0.5)',
+                      py: 1,
+                      fontSize: '0.82rem',
+                      fontWeight: 500,
+                      borderRadius: '0px',
+                      '&:hover': { color: 'white', bgcolor: 'rgba(255, 255, 255, 0.05)' },
+                      fontFamily: '"Space Grotesk", sans-serif',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+              </DialogContent>
+            );
+          })()}
+        </Dialog>
       </Box>
     </>
   );

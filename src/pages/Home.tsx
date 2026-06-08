@@ -1484,7 +1484,7 @@ const Home: React.FC = () => {
       headline: 'Pristine Multi-Track Studio Recording',
       desc: 'Experience absolute acoustic purity with our high-end multi-track studio recording services. Designed for bands, vocalists, acoustic ensembles, and voiceover artists seeking state-of-the-art capture mechanics and premium microphone systems.',
       features: ['Multi-Room Acoustic Control', 'Premium Valve & Condenser Mics', 'Ultra-low Noise Preamps', 'High-Definition Digital Capture'],
-      link: '/contact',
+      link: '/contact?service=production&package=Audio%20Recording',
       largeIcon: <MicIcon sx={{ fontSize: 48 }} />
     },
     {
@@ -1492,7 +1492,7 @@ const Home: React.FC = () => {
       headline: 'Field Recording & Ambient Sound Capture',
       desc: 'High-fidelity ambient sound capture, location sound for film, and premium live performance capturing. We use professional field recording modules and specialized stereo microphone arrays to document organic soundscapes with spectacular depth.',
       features: ['Location Sound for Cinema & Media', 'High-Definition Field Recorder Modules', 'Custom Binaural & Stereo Arrays', 'Live Concert Multi-track Capture'],
-      link: '/contact',
+      link: '/contact?service=production&package=Audio%20Capturing',
       largeIcon: <GraphicEqIcon sx={{ fontSize: 48 }} />
     },
     {
@@ -1500,7 +1500,7 @@ const Home: React.FC = () => {
       headline: 'Multi-Dimensional Audio Mixing',
       desc: 'Balance your tracks with an elite three-dimensional soundstage. Our hybrid analog/digital mixing service blends warmth, clarity, depth, and spatial panning to deliver a professional sonic profile tailored for modern listening environments.',
       features: ['Hybrid Analog & Digital Summing', 'Three-Dimensional Spatial Panning', 'Precise Frequency Separation', 'Vocal Presence & Balance Control'],
-      link: '/contact',
+      link: '/contact?service=production&package=Audio%20Mixing',
       largeIcon: <EqualizerIcon sx={{ fontSize: 48 }} />
     },
     {
@@ -1508,7 +1508,7 @@ const Home: React.FC = () => {
       headline: 'Audio Mastering',
       desc: 'Prepare your tracks for global distribution on Spotify, Apple Music, and vinyl. Our commercial mastering suite optimizes loudness dynamics, checks stereo field compatibility, and applies premium multi-band compression.',
       features: ['Commercial Loudness Optimization (LUFS)', 'Dynamic Stereo Field Balancing', 'Multi-Band Compression & EQ Polish', 'Global Distribution Readiness (DDP)'],
-      link: '/contact',
+      link: '/contact?service=production&package=Audio%20Mastering',
       largeIcon: <StarIcon sx={{ fontSize: 48 }} />
     },
 
@@ -1517,7 +1517,7 @@ const Home: React.FC = () => {
       headline: 'Elite Creative Production Spaces',
       desc: 'Rent our world-class, acoustically perfected recording studios and production rooms. Fully equipped with industry-standard analog consoles, vintage instruments, premium microphone systems, and comfortable creative lounges.',
       features: ['Acoustically Calibrated Recording Spaces', 'Elite Analog Summing & Console Routing', 'Vintage Pianos, Synths & Drum Kits', 'Luxury Lounges & Production Suites'],
-      link: '/contact',
+      link: '/contact?service=rental&package=Studio%20Rental',
       largeIcon: <PianoIcon sx={{ fontSize: 48 }} />
     }
   ];

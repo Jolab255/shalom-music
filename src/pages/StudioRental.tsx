@@ -28,7 +28,7 @@ const StudioRental: React.FC = () => {
               </Typography>
               <Button 
                 component={RouterLink}
-                to="/contact?service=rental"
+                to="/contact?service=rental&package=Studio%20Rental"
                 variant="contained" 
                 size="large" 
                 sx={{ bgcolor: 'white', color: 'black', px: 6, py: 1.5, '&:hover': { bgcolor: '#e0e0e0' } }}

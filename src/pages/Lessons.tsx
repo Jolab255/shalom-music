@@ -713,7 +713,7 @@ const Lessons: React.FC = () => {
                   <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 3, alignItems: 'center' }}>
                     <Button
                       component={RouterLink}
-                      to="/contact?service=lessons"
+                      to={`/contact?service=lessons&package=${encodeURIComponent(packagesData[displayPkg].title)}`}
                       variant="contained"
                       sx={{
                         bgcolor: '#ff2a74',
