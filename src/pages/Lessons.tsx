@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { Container, Typography, Box, Button, List, ListItem, ListItemIcon, ListItemText, Grid2 as Grid, Divider, Fade } from '@mui/material';
+import { Container, Typography, Box, Button, List, ListItem, ListItemIcon, ListItemText, Grid2 as Grid, Divider, Fade, Dialog, DialogContent, IconButton, Grow } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink } from 'react-router-dom';
@@ -28,7 +29,7 @@ const packagesData = [
     title: 'Young Keys Academy',
     subtitle: 'Ages 6-12 Play & Discover',
     image: pianoKidsImg,
-    description: 'Introduce children aged 6–12 to the joy of piano through the world-renowned John Thompson\'s Easiest Piano Course. Our junior curriculum combines melodic reading, visual flashcards, and popular children\'s songs to nurture a lifelong love for the keys.',
+    description: 'Introduce children aged 6–12 to piano basics through John Thompson\'s Easiest Piano Course, melodic reading, and fun, gamified lessons.',
     inclusions: [
       '8 x 30-Minute private grand piano lessons',
       'John Thompson\'s Easiest Piano Course books',
@@ -36,7 +37,10 @@ const packagesData = [
       'Acoustic grand practice room access (1 hr/week)',
       'Secure student progress portfolio & practice logs',
       'Performance slot in seasonal recitals & showcases'
-    ]
+    ],
+    price: '200,000 TZS ($140 USD)',
+    originalPrice: '240,000 TZS ($170 USD)',
+    duration: 'per month (8 sessions)'
   },
   {
     id: 1,
@@ -44,7 +48,7 @@ const packagesData = [
     title: 'Beginner Foundations',
     subtitle: 'Teens & Adults Starting Fresh',
     image: pianoBeginnerImg,
-    description: 'A comprehensive starting point for teens and adults using ABRSM foundations and "Hymns Made Easy." We focus on sight-reading and dual-staff note reading, enabling you to play your favorite hymns and classical themes in your first month.',
+    description: 'A fresh start for teens and adults focusing on basic sight-reading, keyboard postures, and easy hymns from the very first month.',
     inclusions: [
       '8 x 50-Minute private grand piano lessons',
       'Hymns Made Easy & ABRSM method books',
@@ -52,7 +56,10 @@ const packagesData = [
       'Dual-clef note reading & common time signatures',
       'Single acoustic grand practice session access',
       '24/7 direct chat support with your instructor'
-    ]
+    ],
+    price: '280,000 TZS ($195 USD)',
+    originalPrice: '320,000 TZS ($220 USD)',
+    duration: 'per month (8 sessions)'
   },
   {
     id: 2,
@@ -60,7 +67,7 @@ const packagesData = [
     title: 'Intermediate Artistry',
     subtitle: 'Technique & Personal Style',
     image: pianoIntermediateImg,
-    description: 'Transition your technical fluency into personal musical expression using ABRSM Grade 1-3 syllabi and intermediate Hymn arrangements. We introduce advanced scale routines and teach keyboard harmony, giving you the tools to perform with professional style.',
+    description: 'Develop musical expression using ABRSM Grade 1-3 syllabi, scale routines, and essential keyboard chord harmonies.',
     inclusions: [
       '8 x 1-Hour weekly grand piano lessons',
       'ABRSM / Trinity graded syllabus integrated',
@@ -68,7 +75,10 @@ const packagesData = [
       'Chord theory & intermediate keyboard harmony',
       'Acoustic grand practice room access (2 hrs/week)',
       '2 makeup lesson rollover credits per semester'
-    ]
+    ],
+    price: '360,000 TZS ($250 USD)',
+    originalPrice: '400,000 TZS ($280 USD)',
+    duration: 'per month (8 sessions)'
   },
   {
     id: 3,
@@ -76,7 +86,7 @@ const packagesData = [
     title: 'Advanced Concert Mastery',
     subtitle: 'Artistry & Board Exam Prep',
     image: pianoAdvancedImg,
-    description: 'Intensive training for advanced pianists aiming for ultimate keyboard control using the full ABRSM Grades 4-8 curriculum. Master complex keyboard voicings, speed arpeggios, and virtuoso literature under expert guidance for professional concert recitals.',
+    description: 'Master ultimate keyboard control, complex voicings, speed arpeggios, and advanced ABRSM Grades 4-8 classical repertoire.',
     inclusions: [
       '8 x 1-Hour flexible private lessons',
       'Elite board exam preparation (ABRSM Grades 1-8)',
@@ -84,7 +94,10 @@ const packagesData = [
       'Acoustic grand practice room access (4 hrs/week)',
       'VIP recital performance slot with HD recording',
       'Advanced music theory & multi-voice harmony workshops'
-    ]
+    ],
+    price: '400,000 TZS ($280 USD)',
+    originalPrice: '480,000 TZS ($340 USD)',
+    duration: 'per month (8 sessions)'
   }
 ];
 
@@ -149,6 +162,14 @@ const Lessons: React.FC = () => {
   const [activePkg, setActivePkg] = useState(0);
   const [displayPkg, setDisplayPkg] = useState(0);
   const [isFadingOut, setIsFadingOut] = useState(false);
+
+  const [isPricingOpen, setIsPricingOpen] = useState(false);
+  const [selectedPkgId, setSelectedPkgId] = useState<number | null>(null);
+
+  const handleEnrollClick = (pkgId: number) => {
+    setSelectedPkgId(pkgId);
+    setIsPricingOpen(true);
+  };
 
   useEffect(() => {
     if (activePkg !== displayPkg) {
@@ -712,8 +733,7 @@ const Lessons: React.FC = () => {
 
                   <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 3, alignItems: 'center' }}>
                     <Button
-                      component={RouterLink}
-                      to={`/contact?service=lessons&package=${encodeURIComponent(packagesData[displayPkg].title)}`}
+                      onClick={() => handleEnrollClick(displayPkg)}
                       variant="contained"
                       sx={{
                         bgcolor: '#ff2a74',
@@ -912,6 +932,29 @@ const Lessons: React.FC = () => {
                       </ListItem>
                     ))}
                   </List>
+                  <Button
+                    onClick={() => handleEnrollClick(idx)}
+                    variant="contained"
+                    fullWidth
+                    sx={{
+                      mt: 4,
+                      bgcolor: '#ff2a74',
+                      color: 'white',
+                      fontFamily: '"Space Grotesk", sans-serif',
+                      fontWeight: 700,
+                      py: 1.5,
+                      borderRadius: '0px',
+                      textTransform: 'none',
+                      boxShadow: 'none',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        bgcolor: '#e01b5d',
+                        transform: 'translateY(-2px)'
+                      }
+                    }}
+                  >
+                    Enroll Now
+                  </Button>
                 </Box>
               </Grid>
             ))}
@@ -1310,6 +1353,240 @@ const Lessons: React.FC = () => {
           </Container>
         </Box>
       </Box>
+
+      {/* Pricing Modal */}
+      <Dialog
+        open={isPricingOpen}
+        onClose={() => setIsPricingOpen(false)}
+        TransitionComponent={Grow}
+        transitionDuration={{ enter: 400, exit: 250 }}
+        scroll="paper"
+        PaperProps={{
+          sx: {
+            bgcolor: '#0a0a0a',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '0px',
+            maxWidth: '440px',
+            width: '100%',
+            maxHeight: 'calc(100vh - 48px)',
+            py: { xs: 2, sm: 2.5 },
+            px: { xs: 3, sm: 3.5 },
+            position: 'relative',
+            boxShadow: '0 20px 45px rgba(0, 0, 0, 0.95)',
+            backgroundImage: 'none',
+            display: 'flex',
+            flexDirection: 'column'
+          }
+        }}
+        sx={{
+          backdropFilter: 'blur(10px)',
+          '& .MuiBackdrop-root': {
+            bgcolor: 'rgba(0, 0, 0, 0.85)'
+          }
+        }}
+      >
+        <IconButton 
+          onClick={() => setIsPricingOpen(false)} 
+          aria-label="close"
+          sx={{ 
+            position: 'absolute', 
+            top: 12, 
+            right: 12, 
+            zIndex: 10,
+            color: 'rgba(255, 255, 255, 0.6)', 
+            '&:hover': { color: 'white', bgcolor: 'rgba(255, 255, 255, 0.05)' } 
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+
+        {selectedPkgId !== null && (() => {
+          const pkg = packagesData[selectedPkgId];
+          if (!pkg) return null;
+          const gradeNames = ['Young Keys Grade', 'Beginner Grade', 'Intermediate Grade', 'Advanced Grade'];
+          const gradeName = gradeNames[selectedPkgId] || pkg.title;
+
+          return (
+            <DialogContent 
+              sx={{ 
+                p: 0, 
+                textAlign: 'center', 
+                color: 'white', 
+                overflowY: 'auto',
+                '&::-webkit-scrollbar': { display: 'none' },
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none'
+              }}
+            >
+              <Typography 
+                variant="h4" 
+                sx={{ 
+                  fontFamily: '"Space Grotesk", sans-serif', 
+                  fontWeight: 700, 
+                  fontSize: { xs: '1.3rem', sm: '1.5rem' },
+                  mb: 1,
+                  mt: 2,
+                  px: 2,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.02em'
+                }}
+              >
+                {gradeName}
+              </Typography>
+              <Typography 
+                sx={{ 
+                  fontFamily: '"Linear", sans-serif',
+                  fontWeight: 300,
+                  fontSize: '0.88rem',
+                  color: 'rgba(255, 255, 255, 0.65)',
+                  mb: 2.5,
+                  lineHeight: 1.4,
+                  px: 1
+                }}
+              >
+                {pkg.description}
+              </Typography>
+
+              {/* Pricing Panel */}
+              <Box 
+                sx={{ 
+                  bgcolor: 'rgba(255, 42, 116, 0.04)',
+                  border: '1px dashed rgba(255, 42, 116, 0.25)',
+                  borderRadius: '0px',
+                  py: 2.5,
+                  px: 2,
+                  mb: 3,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'relative'
+                }}
+              >
+                <Box 
+                  sx={{ 
+                    position: 'absolute',
+                    top: -10,
+                    bgcolor: '#ff2a74',
+                    color: 'white',
+                    fontFamily: '"Space Grotesk", sans-serif',
+                    fontWeight: 700,
+                    fontSize: '0.65rem',
+                    letterSpacing: '0.1em',
+                    px: 1.5,
+                    py: 0.2,
+                    borderRadius: '0px'
+                  }}
+                >
+                  LIMITED OFFER
+                </Box>
+
+                <Typography 
+                  sx={{ 
+                    textDecoration: 'line-through', 
+                    color: 'rgba(255, 255, 255, 0.4)', 
+                    fontSize: '0.78rem',
+                    fontFamily: '"Space Grotesk", sans-serif',
+                    fontWeight: 500,
+                    mb: 0.25,
+                    mt: 0.25,
+                    textAlign: 'center'
+                  }}
+                >
+                  {pkg.originalPrice}
+                </Typography>
+                <Typography 
+                  sx={{ 
+                    color: '#ff2a74', 
+                    fontWeight: 900, 
+                    fontSize: { xs: '1.25rem', sm: '1.4rem' },
+                    fontFamily: '"Space Grotesk", sans-serif',
+                    lineHeight: 1,
+                    textAlign: 'center'
+                  }}
+                >
+                  {pkg.price}
+                </Typography>
+                <Typography 
+                  sx={{ 
+                    fontSize: '0.75rem',
+                    color: 'rgba(255, 255, 255, 0.5)',
+                    fontFamily: '"Linear", sans-serif',
+                    mt: 0.75,
+                    textAlign: 'center'
+                  }}
+                >
+                  {pkg.duration}
+                </Typography>
+              </Box>
+
+              {/* Inclusions List */}
+              <Box sx={{ textAlign: 'left', mb: 3.5, display: 'flex', flexDirection: 'column', gap: 1.5, px: 1 }}>
+                {pkg.inclusions.map((text, i) => (
+                  <Box key={i} sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.25 }}>
+                    <CheckCircleIcon sx={{ color: '#ff2a74', fontSize: 15, mt: 0.3 }} />
+                    <Typography 
+                      sx={{ 
+                        fontFamily: '"Linear", sans-serif', 
+                        fontWeight: 300, 
+                        fontSize: '0.84rem', 
+                        color: 'rgba(255, 255, 255, 0.85)',
+                        lineHeight: 1.3
+                      }}
+                    >
+                      {text}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+
+              {/* Booking Actions */}
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                <Button
+                  component={RouterLink}
+                  to={`/contact?service=lessons&package=${encodeURIComponent(pkg.title)}`}
+                  onClick={() => setIsPricingOpen(false)}
+                  variant="contained"
+                  fullWidth
+                  sx={{
+                    bgcolor: '#ff2a74',
+                    color: 'white',
+                    py: 1.4,
+                    fontSize: '0.82rem',
+                    fontWeight: 700,
+                    borderRadius: '0px',
+                    boxShadow: 'none',
+                    '&:hover': { bgcolor: '#e01b5d', boxShadow: 'none' },
+                    fontFamily: '"Space Grotesk", sans-serif',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}
+                >
+                  Continue to Book
+                </Button>
+                <Button
+                  onClick={() => setIsPricingOpen(false)}
+                  variant="text"
+                  fullWidth
+                  sx={{
+                    color: 'rgba(255, 255, 255, 0.5)',
+                    py: 1,
+                    fontSize: '0.82rem',
+                    fontWeight: 500,
+                    borderRadius: '0px',
+                    '&:hover': { color: 'white', bgcolor: 'rgba(255, 255, 255, 0.05)' },
+                    fontFamily: '"Space Grotesk", sans-serif',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}
+                >
+                  Cancel
+                </Button>
+              </Box>
+            </DialogContent>
+          );
+        })()}
+      </Dialog>
     </Box>
     </>
   );

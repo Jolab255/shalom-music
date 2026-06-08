@@ -9,11 +9,26 @@ import SendIcon from '@mui/icons-material/Send';
 import { useNotification } from '../components/common/NotificationContext';
 
 const services = [
-  'Music Production',
-  'Piano Lessons',
+  'Music Production / Audio Recording',
+  'Music Production / Audio Capturing',
+  'Music Production / Audio Mixing',
+  'Music Production / Audio Mastering',
+  'Music Production / Instrumental Creation',
+  'Piano Lessons / Young Keys Grade',
+  'Piano Lessons / Beginner Grade',
+  'Piano Lessons / Intermediate Grade',
+  'Piano Lessons / Advanced Grade',
   'Studio Rental',
-  'Piano Service',
-  'Audio Production School',
+  'Piano Service / Churches',
+  'Piano Service / Camp Meetings',
+  'Piano Service / Music Concerts',
+  'Piano Service / Wedding Ceremonies',
+  'Piano Service / Functions',
+  'Piano Service / Other Places',
+  'Audio Production School / Grade 1 - Foundation Level',
+  'Audio Production School / Grade 2 - Intermediate Level',
+  'Audio Production School / Grade 3 - Advanced Production',
+  'Audio Production School / Grade 4 - Professional Engineering',
   'Other Inquiries'
 ];
 
@@ -60,7 +75,7 @@ const Contact: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [service, setService] = useState('Music Production');
+  const [service, setService] = useState('Music Production / Audio Recording');
   const [message, setMessage] = useState('');
   
   const [searchParams] = useSearchParams();
@@ -68,23 +83,77 @@ const Contact: React.FC = () => {
   const packageParam = searchParams.get('package');
  
   useEffect(() => {
+    let matchedService = 'Music Production / Audio Recording'; // default fallback
+
     if (serviceParam) {
-      const query = serviceParam.toLowerCase().trim();
-      if (query.includes('academy') || query.includes('school') || query === 'class') {
-        setService('Audio Production School');
-      } else if (query.includes('production') || query === 'music' || query === 'mixing' || query === 'mastering') {
-        setService('Music Production');
-      } else if (query.includes('lesson') || query === 'piano') {
-        setService('Piano Lessons');
-      } else if (query.includes('rental') || query === 'studio') {
-        setService('Studio Rental');
-      } else if (query.includes('service') || query === 'tuning' || query.includes('accompanist')) {
-        setService('Piano Service');
-      } else if (query.includes('other') || query.includes('inquiry')) {
-        setService('Other Inquiries');
+      const sQuery = serviceParam.toLowerCase().trim();
+      const pQuery = packageParam ? packageParam.toLowerCase().trim() : '';
+
+      if (sQuery.includes('lessons') || sQuery === 'piano') {
+        if (pQuery.includes('young') || pQuery.includes('kids')) {
+          matchedService = 'Piano Lessons / Young Keys Grade';
+        } else if (pQuery.includes('beginner')) {
+          matchedService = 'Piano Lessons / Beginner Grade';
+        } else if (pQuery.includes('intermediate')) {
+          matchedService = 'Piano Lessons / Intermediate Grade';
+        } else if (pQuery.includes('advanced')) {
+          matchedService = 'Piano Lessons / Advanced Grade';
+        } else {
+          matchedService = 'Piano Lessons / Beginner Grade'; // default lesson
+        }
+      } else if (sQuery.includes('academy') || sQuery.includes('school') || sQuery === 'class') {
+        if (pQuery.includes('1') || pQuery.includes('foundation')) {
+          matchedService = 'Audio Production School / Grade 1 - Foundation Level';
+        } else if (pQuery.includes('2') || pQuery.includes('intermediate')) {
+          matchedService = 'Audio Production School / Grade 2 - Intermediate Level';
+        } else if (pQuery.includes('3') || pQuery.includes('advanced')) {
+          matchedService = 'Audio Production School / Grade 3 - Advanced Production';
+        } else if (pQuery.includes('4') || pQuery.includes('professional') || pQuery.includes('engineering')) {
+          matchedService = 'Audio Production School / Grade 4 - Professional Engineering';
+        } else {
+          matchedService = 'Audio Production School / Grade 1 - Foundation Level'; // default school
+        }
+      } else if (sQuery.includes('production') || sQuery === 'music' || sQuery === 'mixing' || sQuery === 'mastering') {
+        if (pQuery.includes('recording')) {
+          matchedService = 'Music Production / Audio Recording';
+        } else if (pQuery.includes('capturing')) {
+          matchedService = 'Music Production / Audio Capturing';
+        } else if (pQuery.includes('mixing')) {
+          matchedService = 'Music Production / Audio Mixing';
+        } else if (pQuery.includes('mastering')) {
+          matchedService = 'Music Production / Audio Mastering';
+        } else if (pQuery.includes('instrumental') || pQuery.includes('creation')) {
+          matchedService = 'Music Production / Instrumental Creation';
+        } else {
+          matchedService = 'Music Production / Audio Recording'; // default production
+        }
+      } else if (sQuery.includes('rental') || sQuery === 'studio') {
+        matchedService = 'Studio Rental';
+      } else if (sQuery.includes('service') || sQuery === 'tuning' || sQuery.includes('accompanist')) {
+        if (pQuery.includes('church')) {
+          matchedService = 'Piano Service / Churches';
+        } else if (pQuery.includes('camp')) {
+          matchedService = 'Piano Service / Camp Meetings';
+        } else if (pQuery.includes('concert')) {
+          matchedService = 'Piano Service / Music Concerts';
+        } else if (pQuery.includes('wedding')) {
+          matchedService = 'Piano Service / Wedding Ceremonies';
+        } else if (pQuery.includes('function')) {
+          matchedService = 'Piano Service / Functions';
+        } else if (pQuery.includes('other') || pQuery.includes('place')) {
+          matchedService = 'Piano Service / Other Places';
+        } else {
+          matchedService = 'Piano Service / Churches'; // default service
+        }
+      } else if (sQuery.includes('other') || sQuery.includes('inquiry')) {
+        matchedService = 'Other Inquiries';
       }
+      
+      setService(matchedService);
+    } else {
+      setService('Music Production / Audio Recording');
     }
- 
+
     if (packageParam) {
       setMessage(`Hi, I'm interested in booking the "${packageParam}" package. Please let me know the availability.`);
     }

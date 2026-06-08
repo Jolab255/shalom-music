@@ -1,11 +1,12 @@
-import { useState, useEffect, Suspense, lazy } from 'react';
+import { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { HelmetProvider } from 'react-helmet-async';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import theme from './theme/theme';
 import Layout from './components/layout/Layout';
 import Loader from './components/layout/Loader';
+import PageTransitionLoader from './components/layout/PageTransitionLoader';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import { NotificationProvider } from './components/common/NotificationContext';
 
@@ -24,18 +25,27 @@ const Academy = lazy(() => import('./pages/Academy'));
 // Scroll to hash handler for routing links like "#testimonials"
 const ScrollToHash = () => {
   const { pathname, hash } = useLocation();
+  const lastPathRef = useRef(pathname);
 
   useEffect(() => {
     if (hash) {
       const id = hash.replace('#', '');
       const element = document.getElementById(id);
       if (element) {
+        const isSamePage = pathname === lastPathRef.current;
+        lastPathRef.current = pathname;
+
         const timer = setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // If same page, scroll smoothly. If different page, jump instantly to avoid rendering lag under loader!
+          element.scrollIntoView({ 
+            behavior: isSamePage ? 'smooth' : 'auto', 
+            block: 'start' 
+          });
         }, 150);
         return () => clearTimeout(timer);
       }
     } else {
+      lastPathRef.current = pathname;
       window.scrollTo(0, 0);
     }
   }, [pathname, hash]);
@@ -54,8 +64,32 @@ function App() {
             {loading && <Loader onComplete={() => setLoading(false)} />}
             <Router>
               <ScrollToHash />
+              <PageTransitionLoader />
               <Layout>
-                <Suspense fallback={<Box sx={{ bgcolor: '#000000', minHeight: '80vh' }} />}>
+                <Suspense
+                  fallback={
+                    <Box
+                      sx={{
+                        bgcolor: '#000000',
+                        minHeight: '80vh',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <CircularProgress
+                        variant="indeterminate"
+                        size={50}
+                        thickness={3}
+                        sx={{
+                          color: '#ff2a74',
+                          filter: 'drop-shadow(0 0 10px rgba(255, 42, 116, 0.4))',
+                        }}
+                      />
+                    </Box>
+                  }
+                >
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/production" element={<Production />} />
