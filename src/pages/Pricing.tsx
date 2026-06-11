@@ -30,13 +30,31 @@ const pricingData = {
         popular: false 
       },
       { 
-        title: 'Complete Recording Package', 
-        originalPrice: '250,000 TZS ($180 USD)',
-        promoPrice: '249,999 TZS ($150 USD)', 
-        unit: 'per full song project',
-        desc: 'Our premier all-in-one package comprising recording, professional mixing, and high-fidelity mastering.',
-        features: ['Complete multi-track studio recording (up to 8 hours)', 'Multi-dimensional audio mixing with elite console panning', 'Pristine industry-standard stereo mastering', 'Full access to concert grand piano & high-end microphone vault', '2 complimentary project revision cycles'],
+        title: 'Complete Package - Solo Artist', 
+        originalPrice: '180,000 TZS ($130 USD)',
+        promoPrice: '150,000 TZS ($110 USD)', 
+        unit: 'per song project',
+        desc: 'All-in-one recording, custom mixing, and mastering tailored for a single vocal or instrumental artist.',
+        features: ['Full multi-track studio recording (up to 6 hours)', 'Custom audio mixing & soundstage calibration', 'Pristine industry-standard stereo mastering', 'Full access to concert grand piano & premium microphone vault', '2 complimentary project revision cycles'],
+        popular: false 
+      },
+      { 
+        title: 'Complete Package - Acapella Group', 
+        originalPrice: '180,000 TZS ($130 USD)',
+        promoPrice: '150,000 TZS ($110 USD)', 
+        unit: 'per song project',
+        desc: 'All-in-one tracking and vocal mixing tailored specifically to balance and polish multi-part group harmonies.',
+        features: ['Group vocal recording session (up to 8 hours)', 'Precision harmonic vocal alignment & pitch correction', 'Stereo imaging & high-definition vocal mixing', 'Pristine industry-standard stereo mastering', '2 complimentary project revision cycles'],
         popular: true 
+      },
+      { 
+        title: 'Complete Package - Choirs', 
+        originalPrice: '250,000 TZS ($180 USD)',
+        promoPrice: '200,000 TZS ($140 USD)', 
+        unit: 'per song project',
+        desc: 'Premier full-scale production engineered to capture the massive depth, resonance, and balance of a large choir.',
+        features: ['Choir multi-microphone array setup & tracking', 'Multi-channel raw track editing & room resonance control', 'Surgical mixing for large ensembles & high-definition panning', 'Pristine industry-standard stereo mastering', '3 complimentary project revision cycles'],
+        popular: false 
       },
       { 
         title: 'Audio Mastering', 

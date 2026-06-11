@@ -7,6 +7,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SendIcon from '@mui/icons-material/Send';
 import { useNotification } from '../components/common/NotificationContext';
+import { ContactPhoneLink } from '../components/common/ContactPhoneLink';
 
 const services = [
   'Music Production / Audio Recording',
@@ -456,10 +457,9 @@ const Contact: React.FC = () => {
                   label: 'Direct Phone', 
                   render: () => (
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-                      <Link 
-                        href="tel:+255746180419" 
-                        color="inherit" 
-                        underline="none"
+                      <ContactPhoneLink 
+                        phone="+255746180419" 
+                        label="0746 180 419" 
                         sx={{ 
                           fontFamily: '"Linear", sans-serif', 
                           fontSize: '0.9rem', 
@@ -468,13 +468,10 @@ const Contact: React.FC = () => {
                           transition: 'all 0.2s',
                           '&:hover': { color: '#ff2a74' }
                         }}
-                      >
-                        0746 180 419
-                      </Link>
-                      <Link 
-                        href="tel:+255654429035" 
-                        color="inherit" 
-                        underline="none"
+                      />
+                      <ContactPhoneLink 
+                        phone="+255654429035" 
+                        label="0654 429 035" 
                         sx={{ 
                           fontFamily: '"Linear", sans-serif', 
                           fontSize: '0.9rem', 
@@ -483,9 +480,7 @@ const Contact: React.FC = () => {
                           transition: 'all 0.2s',
                           '&:hover': { color: '#ff2a74' }
                         }}
-                      >
-                        0654 429 035
-                      </Link>
+                      />
                     </Box>
                   )
                 },

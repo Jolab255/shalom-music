@@ -5,6 +5,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { Link as RouterLink } from 'react-router-dom';
 import loaderVideo from '../../assets/loader-video.mp4';
+import { ContactPhoneLink } from '../common/ContactPhoneLink';
 
 const Footer: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -223,10 +224,9 @@ const Footer: React.FC = () => {
                   Direct Phone
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-                  <Link 
-                    href="tel:+255746180419" 
-                    color="inherit" 
-                    underline="none"
+                  <ContactPhoneLink 
+                    phone="+255746180419" 
+                    label="0746 180 419" 
                     sx={{ 
                       fontFamily: '"Linear", sans-serif', 
                       fontSize: '0.86rem', 
@@ -235,13 +235,10 @@ const Footer: React.FC = () => {
                       transition: 'all 0.2s',
                       '&:hover': { color: '#ff2a74' }
                     }}
-                  >
-                    0746 180 419
-                  </Link>
-                  <Link 
-                    href="tel:+255654429035" 
-                    color="inherit" 
-                    underline="none"
+                  />
+                  <ContactPhoneLink 
+                    phone="+255654429035" 
+                    label="0654 429 035" 
                     sx={{ 
                       fontFamily: '"Linear", sans-serif', 
                       fontSize: '0.86rem', 
@@ -250,9 +247,7 @@ const Footer: React.FC = () => {
                       transition: 'all 0.2s',
                       '&:hover': { color: '#ff2a74' }
                     }}
-                  >
-                    0654 429 035
-                  </Link>
+                  />
                 </Box>
               </Box>
               <Box>
@@ -297,6 +292,19 @@ const Footer: React.FC = () => {
             }}
           >
             © {new Date().getFullYear()} Shalom Music Studios. All rights reserved.
+            {' '}•{' '}
+            <Link 
+              component={RouterLink} 
+              to="/terms" 
+              sx={{ 
+                color: 'rgba(255, 255, 255, 0.4)', 
+                textDecoration: 'none',
+                transition: 'color 0.25s ease',
+                '&:hover': { color: '#ff2a74', textDecoration: 'underline' }
+              }}
+            >
+              Terms & Conditions
+            </Link>
           </Typography>
           <Typography 
             sx={{ 

@@ -21,6 +21,7 @@ const Pricing = lazy(() => import('./pages/Pricing'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Academy = lazy(() => import('./pages/Academy'));
+const Terms = lazy(() => import('./pages/Terms'));
 
 // Scroll to hash handler for routing links like "#testimonials"
 const ScrollToHash = () => {
@@ -102,6 +103,7 @@ function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/academy" element={<Academy />} />
+                    <Route path="/terms" element={<Terms />} />
                   </Routes>
                 </Suspense>
               </Layout>
