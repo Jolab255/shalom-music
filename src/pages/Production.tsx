@@ -11,7 +11,7 @@ import simpleTrackImg from '../assets/simple-track-instrumental.png';
 import classicalImg from '../assets/classical-instrumental.png';
 import orchestralImg from '../assets/orchestral-instrumental.png';
 import instrumentalCreationImg from '../assets/instrumental-creation.webp';
-import simpleInstrumentalAudio from '../assets/simple-instrumental.mp3';
+import simpleInstrumentalAudio from '../assets/simple instrumental.mp3';
 import classicalInstrumentalAudio from '../assets/weka alama soundtrack.mp3';
 import orchestralInstrumentalAudio from '../assets/Ochestro.mp3';
 import audioRecordingImg from '../assets/audio-recording.webp';
