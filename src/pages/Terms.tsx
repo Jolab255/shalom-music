@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Typography, Box, Paper, Grid2 as Grid, Accordion, AccordionSummary, AccordionDetails, Divider } from '@mui/material';
+import { Container, Typography, Box, Paper, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import GavelIcon from '@mui/icons-material/Gavel';
