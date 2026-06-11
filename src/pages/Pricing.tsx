@@ -539,7 +539,8 @@ const Pricing: React.FC = () => {
                     letterSpacing: '0.04em',
                     textTransform: 'uppercase',
                     color: '#ffffff',
-                    mb: 1.5 
+                    mb: 1.5,
+                    textAlign: 'center'
                   }}
                 >
                   {plan.title}
