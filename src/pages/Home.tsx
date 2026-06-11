@@ -200,7 +200,7 @@ const teamMembers = [
   {
     name: "Enoch Mkama",
     position: "Studio Manager",
-    additionalRoles: ["Piano Tutor"],
+    additionalRoles: [],
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&h=400&q=80",
     socials: {
       instagram: "https://instagram.com",
