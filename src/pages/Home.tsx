@@ -3569,6 +3569,7 @@ const Home: React.FC = () => {
                     fontSize: { xs: '1.6rem', sm: '2.8rem', md: '4.8rem' },
                     color: 'white',
                     lineHeight: 1.1,
+                    letterSpacing: '0.06em',
                     mb: 1
                   }}
                 >
@@ -3652,6 +3653,7 @@ const Home: React.FC = () => {
                     fontSize: { xs: '1.6rem', sm: '2.8rem', md: '4.8rem' },
                     color: 'white',
                     lineHeight: 1.1,
+                    letterSpacing: '0.06em',
                     mb: 1
                   }}
                 >
@@ -4116,6 +4118,7 @@ const Home: React.FC = () => {
                     fontSize: { xs: '1.6rem', sm: '2.8rem', md: '4.8rem' },
                     color: 'white',
                     lineHeight: 1.1,
+                    letterSpacing: '0.06em',
                     mb: 1
                   }}
                 >
@@ -4199,6 +4202,7 @@ const Home: React.FC = () => {
                     fontSize: { xs: '1.6rem', sm: '2.8rem', md: '4.8rem' },
                     color: 'white',
                     lineHeight: 1.1,
+                    letterSpacing: '0.06em',
                     mb: 1
                   }}
                 >
@@ -4663,6 +4667,7 @@ const Home: React.FC = () => {
                     fontSize: { xs: '1.6rem', sm: '2.8rem', md: '4.8rem' },
                     color: 'white',
                     lineHeight: 1.1,
+                    letterSpacing: '0.06em',
                     mb: 1
                   }}
                 >
