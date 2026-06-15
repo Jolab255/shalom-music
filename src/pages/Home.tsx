@@ -30,6 +30,8 @@ import whyShalom4Img from '../assets/why-shalom-4.webp';
 import harmonyImg from '../assets/harmony.png';
 import livingLightImg from '../assets/living_light.png';
 import accendoImg from '../assets/accendo.png';
+import barrettImg from '../assets/barrett.jpg';
+import tucasaImg from '../assets/tucasa.jpg';
 import aboutUsVideo1 from '../assets/about-us-1.webm';
 import aboutUsVideo2 from '../assets/about-us-2.webm';
 import shalomCtaVideo from '../assets/shalom-cta.mp4';
@@ -4173,6 +4175,553 @@ const Home: React.FC = () => {
                     }}
                   >
                     Chuo Kikuu SDA Church
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+
+          {/* Fourth Testimony: Barrett Mapunda (Left Column: Testimony, Right Column: Video) */}
+          <Grid container spacing={6} alignItems="center" sx={{ mt: 12 }}>
+            {/* Left Column: Testimony Content */}
+            <Grid 
+              size={{ xs: 12, md: 5 }} 
+              order={{ xs: 2, md: 1 }}
+              sx={{ display: 'flex', flexDirection: 'column', gap: 3, justifyContent: 'center' }}
+            >
+              {/* Name Block */}
+              <Box>
+                <Typography 
+                  variant="h3" 
+                  sx={{ 
+                    fontWeight: 900,
+                    fontFamily: '"Sans Superellipse Ragan 2", sans-serif',
+                    fontSize: { xs: '1.6rem', sm: '2.8rem', md: '4.8rem' },
+                    color: 'white',
+                    lineHeight: 1.1,
+                    mb: 1
+                  }}
+                >
+                  Barrett Mapunda
+                </Typography>
+                <Typography 
+                  variant="subtitle1" 
+                  sx={{ 
+                    fontFamily: '"Linear", sans-serif', 
+                    color: 'rgba(255,255,255,0.4)',
+                    fontWeight: 400
+                  }}
+                >
+                  Gospel Music Production & Live Tracking
+                </Typography>
+              </Box>
+
+              {/* Testimony Block */}
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                <Typography 
+                  variant="body1" 
+                  sx={{ 
+                    fontFamily: '"Linear", sans-serif',
+                    fontWeight: 300,
+                    fontSize: { xs: '1.05rem', sm: '1.15rem' },
+                    color: 'rgba(255, 255, 255, 0.85)',
+                    lineHeight: 1.8,
+                    position: 'relative',
+                    pr: { xs: 0, md: 3 },
+                    pl: { xs: 3, md: 0 },
+                    borderRight: { xs: 'none', md: '2px solid #ff2a74' },
+                    borderLeft: { xs: '2px solid #ff2a74', md: 'none' },
+                    textAlign: 'justify'
+                  }}
+                >
+                  "Working with Shalom Music Studios was an absolute revelation. Their state-of-the-art live room and capture technology brought 'Tabibu' to life exactly as we envisioned. The team's creative input, technical precision, and warm spirit made us feel right at home. They are hands down the best studio for gospel and live instrumentation in the region."
+                </Typography>
+                
+                {/* Location below testimony */}
+                <Box 
+                  sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 0.5, 
+                    color: '#ff2a74',
+                    justifyContent: 'flex-start',
+                    pl: { xs: 3, md: 0 },
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  <LocationOnIcon sx={{ fontSize: { xs: '0.95rem', sm: '1.2rem' } }} />
+                  <Typography 
+                    variant="subtitle2" 
+                    sx={{ 
+                      fontFamily: '"Space Grotesk", sans-serif', 
+                      fontWeight: 700, 
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      fontSize: { xs: '0.7rem', sm: '0.85rem', md: '1rem' }
+                    }}
+                  >
+                    Dar es Salaam, Tanzania
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+
+            {/* Right Column: Interactive Video Thumbnail Card */}
+            <Grid size={{ xs: 12, md: 7 }} order={{ xs: 1, md: 2 }}>
+              <Box 
+                onClick={() => playingVideo !== 'barrett' && handlePlayVideo('barrett')}
+                sx={{ 
+                  display: 'block',
+                  position: 'relative',
+                  width: '100%',
+                  height: { xs: '240px', sm: '380px', md: '440px' },
+                  overflow: 'hidden',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)',
+                  cursor: playingVideo === 'barrett' ? 'default' : 'pointer',
+                  '&:hover .video-cover': {
+                    transform: playingVideo === 'barrett' ? 'none' : 'scale(1.03)',
+                  }
+                }}
+              >
+                {playingVideo === 'barrett' ? (
+                  <Box 
+                    component="iframe"
+                    src="https://www.youtube-nocookie.com/embed/L7-Lp1HMPgA?autoplay=1&mute=0&rel=0&modestbranding=1"
+                    title="Barrett Mapunda - Tabibu Ft The Humbed Tz"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      border: 0
+                    }}
+                  />
+                ) : (
+                  <>
+                    {/* Real YouTube Video Thumbnail */}
+                    <Box 
+                      className="video-cover"
+                      component="img"
+                      src={barrettImg}
+                      alt="Barrett Mapunda Project Cover"
+                      sx={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
+                      }}
+                    />
+
+                    {/* Modern Pulsing Play Button overlay */}
+                    <Box 
+                      sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: { xs: 60, sm: 80 },
+                        height: { xs: 60, sm: 80 },
+                        borderRadius: '50%',
+                        bgcolor: 'rgba(255, 42, 116, 0.9)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 3,
+                        boxShadow: '0 0 30px rgba(255, 42, 116, 0.6)',
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                          transform: 'translate(-50%, -50%) scale(1.1)',
+                          bgcolor: '#ff2a74',
+                          boxShadow: '0 0 40px rgba(255, 42, 116, 0.8)'
+                        },
+                        '@keyframes barrettPulse': {
+                          '0%': {
+                            transform: 'scale(1)',
+                            opacity: 0.8
+                          },
+                          '100%': {
+                            transform: 'scale(1.5)',
+                            opacity: 0
+                          }
+                        },
+                        '&::after': {
+                          content: '""',
+                          position: 'absolute',
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: '50%',
+                          border: '2px solid #ff2a74',
+                          animation: 'barrettPulse 2s infinite',
+                          opacity: 0.6
+                        }
+                      }}
+                    >
+                      <PlayArrowIcon sx={{ color: 'white', fontSize: { xs: 30, sm: 40 }, ml: 0.5 }} />
+                    </Box>
+
+                    {/* Dark Overlay for depth */}
+                    <Box 
+                      sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%)',
+                        zIndex: 2
+                      }}
+                    />
+                  </>
+                )}
+
+                {/* Continue to Watch Glassmorphism Overlay */}
+                {overlayVideo === 'barrett' && (
+                  <Box 
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'rgba(0, 0, 0, 0.85)',
+                      backdropFilter: 'blur(12px)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: { xs: 2, sm: 3 },
+                      zIndex: 10,
+                      textAlign: 'center',
+                      px: { xs: 2, sm: 4 },
+                      '@keyframes barrettFadeIn': {
+                        from: { opacity: 0 },
+                        to: { opacity: 1 }
+                      },
+                      animation: 'barrettFadeIn 0.5s ease-out'
+                    }}
+                  >
+                    <Typography 
+                      variant="h4" 
+                      sx={{ 
+                        color: 'white', 
+                        fontWeight: 900,
+                        fontSize: { xs: '2rem', sm: '3.2rem', md: '4rem' },
+                        fontFamily: '"Sans Superellipse Ragan 2", sans-serif',
+                        lineHeight: 1.3
+                      }}
+                    >
+                      Enjoying the Music?
+                    </Typography>
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        color: 'rgba(255, 255, 255, 0.7)', 
+                        maxWidth: '450px',
+                        fontFamily: '"Space Grotesk", sans-serif',
+                        fontSize: { xs: '0.8rem', sm: '0.95rem' },
+                        letterSpacing: '0.05em'
+                      }}
+                    >
+                      Continue to watch the full video on YouTube to experience their complete masterpiece!
+                    </Typography>
+                    <Button 
+                      component="a"
+                      href="https://www.youtube.com/watch?v=L7-Lp1HMPgA"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="contained"
+                      sx={{
+                        bgcolor: '#ff2a74',
+                        color: 'white',
+                        fontWeight: 700,
+                        px: 4,
+                        py: 1.5,
+                        borderRadius: 0,
+                        fontFamily: '"Space Grotesk", sans-serif',
+                        letterSpacing: '0.1em',
+                        textTransform: 'uppercase',
+                        boxShadow: '0 8px 25px rgba(255, 42, 116, 0.4)',
+                        '&:hover': {
+                          bgcolor: '#e01f61',
+                          boxShadow: '0 8px 30px rgba(255, 42, 116, 0.6)'
+                        }
+                      }}
+                    >
+                      Continue to Watch
+                    </Button>
+                  </Box>
+                )}
+              </Box>
+            </Grid>
+          </Grid>
+
+          {/* Fifth Testimony: TUCASA IAA Choir (Left Column: Video, Right Column: Testimony) */}
+          <Grid container spacing={6} alignItems="center" sx={{ mt: 12 }}>
+            {/* Left Column: Interactive Video Thumbnail Card */}
+            <Grid size={{ xs: 12, md: 7 }}>
+              <Box 
+                onClick={() => playingVideo !== 'tucasa' && handlePlayVideo('tucasa')}
+                sx={{ 
+                  display: 'block',
+                  position: 'relative',
+                  width: '100%',
+                  height: { xs: '240px', sm: '380px', md: '440px' },
+                  overflow: 'hidden',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)',
+                  cursor: playingVideo === 'tucasa' ? 'default' : 'pointer',
+                  '&:hover .video-cover': {
+                    transform: playingVideo === 'tucasa' ? 'none' : 'scale(1.03)',
+                  }
+                }}
+              >
+                {playingVideo === 'tucasa' ? (
+                  <Box 
+                    component="iframe"
+                    src="https://www.youtube-nocookie.com/embed/4UCOPQi0RZU?autoplay=1&mute=0&rel=0&modestbranding=1"
+                    title="TUCASA IAA CHOIR | HESHIMA NA UTUKUFU"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      border: 0
+                    }}
+                  />
+                ) : (
+                  <>
+                    {/* Real YouTube Video Thumbnail */}
+                    <Box 
+                      className="video-cover"
+                      component="img"
+                      src={tucasaImg}
+                      alt="TUCASA IAA Choir Project Cover"
+                      sx={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
+                      }}
+                    />
+
+                    {/* Modern Pulsing Play Button overlay */}
+                    <Box 
+                      sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: { xs: 60, sm: 80 },
+                        height: { xs: 60, sm: 80 },
+                        borderRadius: '50%',
+                        bgcolor: 'rgba(255, 42, 116, 0.9)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 3,
+                        boxShadow: '0 0 30px rgba(255, 42, 116, 0.6)',
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                          transform: 'translate(-50%, -50%) scale(1.1)',
+                          bgcolor: '#ff2a74',
+                          boxShadow: '0 0 40px rgba(255, 42, 116, 0.8)'
+                        },
+                        '@keyframes tucasaPulse': {
+                          '0%': {
+                            transform: 'scale(1)',
+                            opacity: 0.8
+                          },
+                          '100%': {
+                            transform: 'scale(1.5)',
+                            opacity: 0
+                          }
+                        },
+                        '&::after': {
+                          content: '""',
+                          position: 'absolute',
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: '50%',
+                          border: '2px solid #ff2a74',
+                          animation: 'tucasaPulse 2s infinite',
+                          opacity: 0.6
+                        }
+                      }}
+                    >
+                      <PlayArrowIcon sx={{ color: 'white', fontSize: { xs: 30, sm: 40 }, ml: 0.5 }} />
+                    </Box>
+
+                    {/* Dark Overlay for depth */}
+                    <Box 
+                      sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%)',
+                        zIndex: 2
+                      }}
+                    />
+                  </>
+                )}
+
+                {/* Continue to Watch Glassmorphism Overlay */}
+                {overlayVideo === 'tucasa' && (
+                  <Box 
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'rgba(0, 0, 0, 0.85)',
+                      backdropFilter: 'blur(12px)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: { xs: 2, sm: 3 },
+                      zIndex: 10,
+                      textAlign: 'center',
+                      px: { xs: 2, sm: 4 },
+                      '@keyframes tucasaFadeIn': {
+                        from: { opacity: 0 },
+                        to: { opacity: 1 }
+                      },
+                      animation: 'tucasaFadeIn 0.5s ease-out'
+                    }}
+                  >
+                    <Typography 
+                      variant="h4" 
+                      sx={{ 
+                        color: 'white', 
+                        fontWeight: 900,
+                        fontSize: { xs: '2rem', sm: '3.2rem', md: '4rem' },
+                        fontFamily: '"Sans Superellipse Ragan 2", sans-serif',
+                        lineHeight: 1.3
+                      }}
+                    >
+                      Enjoying the Music?
+                    </Typography>
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        color: 'rgba(255, 255, 255, 0.7)', 
+                        maxWidth: '450px',
+                        fontFamily: '"Space Grotesk", sans-serif',
+                        fontSize: { xs: '0.8rem', sm: '0.95rem' },
+                        letterSpacing: '0.05em'
+                      }}
+                    >
+                      Continue to watch the full video on YouTube to experience their complete masterpiece!
+                    </Typography>
+                    <Button 
+                      component="a"
+                      href="https://www.youtube.com/watch?v=4UCOPQi0RZU"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="contained"
+                      sx={{
+                        bgcolor: '#ff2a74',
+                        color: 'white',
+                        fontWeight: 700,
+                        px: 4,
+                        py: 1.5,
+                        borderRadius: 0,
+                        fontFamily: '"Space Grotesk", sans-serif',
+                        letterSpacing: '0.1em',
+                        textTransform: 'uppercase',
+                        boxShadow: '0 8px 25px rgba(255, 42, 116, 0.4)',
+                        '&:hover': {
+                          bgcolor: '#e01f61',
+                          boxShadow: '0 8px 30px rgba(255, 42, 116, 0.6)'
+                        }
+                      }}
+                    >
+                      Continue to Watch
+                    </Button>
+                  </Box>
+                )}
+              </Box>
+            </Grid>
+
+            {/* Right Column: Testimony Content */}
+            <Grid size={{ xs: 12, md: 5 }} sx={{ display: 'flex', flexDirection: 'column', gap: 3, justifyContent: 'center' }}>
+              {/* Name Block */}
+              <Box>
+                <Typography 
+                  variant="h3" 
+                  sx={{ 
+                    fontWeight: 900,
+                    fontFamily: '"Sans Superellipse Ragan 2", sans-serif',
+                    fontSize: { xs: '1.6rem', sm: '2.8rem', md: '4.8rem' },
+                    color: 'white',
+                    lineHeight: 1.1,
+                    mb: 1
+                  }}
+                >
+                  TUCASA IAA Choir
+                </Typography>
+                <Typography 
+                  variant="subtitle1" 
+                  sx={{ 
+                    fontFamily: '"Linear", sans-serif', 
+                    color: 'rgba(255,255,255,0.4)',
+                    fontWeight: 400
+                  }}
+                >
+                  Choral Recording & Cinematic Mix
+                </Typography>
+              </Box>
+
+              {/* Testimony Block */}
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                <Typography 
+                  variant="body1" 
+                  sx={{ 
+                    fontFamily: '"Linear", sans-serif',
+                    fontWeight: 300,
+                    fontSize: { xs: '1.05rem', sm: '1.15rem' },
+                    color: 'rgba(255, 255, 255, 0.85)',
+                    lineHeight: 1.8,
+                    position: 'relative',
+                    pl: 3,
+                    borderLeft: '2px solid #ff2a74',
+                    textAlign: 'justify'
+                  }}
+                >
+                  "Capturing a large choir with true depth and clarity is a massive technical challenge, but Shalom Music Studios executed it flawlessly. The mix is incredibly rich, clean, and powerful, preserving the natural warmth of our voices. Their dedication, professionalism, and state-of-the-art facilities exceed all expectations."
+                </Typography>
+                
+                {/* Location below testimony */}
+                <Box 
+                  sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 0.5, 
+                    color: '#ff2a74',
+                    pl: 3,
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  <LocationOnIcon sx={{ fontSize: { xs: '0.95rem', sm: '1.2rem' } }} />
+                  <Typography 
+                    variant="subtitle2" 
+                    sx={{ 
+                      fontFamily: '"Space Grotesk", sans-serif', 
+                      fontWeight: 700, 
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      fontSize: { xs: '0.7rem', sm: '0.85rem', md: '1rem' }
+                    }}
+                  >
+                    Arusha, Tanzania
                   </Typography>
                 </Box>
               </Box>
