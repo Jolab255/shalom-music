@@ -9,11 +9,15 @@ import Loader from './components/layout/Loader';
 import PageTransitionLoader from './components/layout/PageTransitionLoader';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import { NotificationProvider } from './components/common/NotificationContext';
+import { AudioPlayerProvider } from './context/AudioPlayerContext';
+import { MiniPlayer } from './components/player/MiniPlayer';
 
 // Dynamic lazy-loaded page imports to optimize initial bundle delivery
 const Home = lazy(() => import('./pages/Home'));
 const Production = lazy(() => import('./pages/Production'));
 const Lessons = lazy(() => import('./pages/Lessons'));
+const MediaPlayer = lazy(() => import('./pages/MediaPlayer'));
+const CMSPage = lazy(() => import('./pages/CMSPage'));
 
 const PianoService = lazy(() => import('./pages/PianoService'));
 const PianoServices = lazy(() => import('./pages/PianoServices'));
@@ -63,51 +67,57 @@ function App() {
         <NotificationProvider>
           <ThemeProvider theme={theme}>
             {loading && <Loader onComplete={() => setLoading(false)} />}
-            <Router>
-              <ScrollToHash />
-              <PageTransitionLoader />
-              <Layout>
-                <Suspense
-                  fallback={
-                    <Box
-                      sx={{
-                        bgcolor: '#000000',
-                        minHeight: '80vh',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <CircularProgress
-                        variant="indeterminate"
-                        size={50}
-                        thickness={3}
+            <AudioPlayerProvider>
+              <Router>
+                <ScrollToHash />
+                <PageTransitionLoader />
+                <Layout>
+                  <Suspense
+                    fallback={
+                      <Box
                         sx={{
-                          color: '#ff2a74',
-                          filter: 'drop-shadow(0 0 10px rgba(255, 42, 116, 0.4))',
+                          bgcolor: '#000000',
+                          minHeight: '80vh',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center',
                         }}
-                      />
-                    </Box>
-                  }
-                >
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/production" element={<Production />} />
-                    <Route path="/lessons" element={<Lessons />} />
-                    <Route path="/rental" element={<Navigate to="/#rental" replace />} />
-                    <Route path="/piano-service" element={<PianoService />} />
-                    <Route path="/piano-services" element={<PianoServices />} />
-                    <Route path="/pricing" element={<Pricing />} />
-                    <Route path="/offers" element={<Pricing />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/academy" element={<Academy />} />
-                    <Route path="/terms" element={<Terms />} />
-                  </Routes>
-                </Suspense>
-              </Layout>
-            </Router>
+                      >
+                        <CircularProgress
+                          variant="indeterminate"
+                          size={50}
+                          thickness={3}
+                          sx={{
+                            color: '#ff2a74',
+                            filter: 'drop-shadow(0 0 10px rgba(255, 42, 116, 0.4))',
+                          }}
+                        />
+                      </Box>
+                    }
+                  >
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/player" element={<MediaPlayer />} />
+                      <Route path="/media-player" element={<MediaPlayer />} />
+                      <Route path="/cms" element={<CMSPage />} />
+                      <Route path="/production" element={<Production />} />
+                      <Route path="/lessons" element={<Lessons />} />
+                      <Route path="/rental" element={<Navigate to="/#rental" replace />} />
+                      <Route path="/piano-service" element={<PianoService />} />
+                      <Route path="/piano-services" element={<PianoServices />} />
+                      <Route path="/pricing" element={<Pricing />} />
+                      <Route path="/offers" element={<Pricing />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/contact" element={<Contact />} />
+                      <Route path="/academy" element={<Academy />} />
+                      <Route path="/terms" element={<Terms />} />
+                    </Routes>
+                  </Suspense>
+                </Layout>
+                <MiniPlayer />
+              </Router>
+            </AudioPlayerProvider>
           </ThemeProvider>
         </NotificationProvider>
       </HelmetProvider>

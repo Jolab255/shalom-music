@@ -7,6 +7,7 @@ import logo from '../../assets/logo.webp';
 
 // Categories in the top slim bar
 const navItems = [
+  { label: 'Music Library', path: '/player' },
   { label: 'Audio Recording', path: '/#recording' },
   { label: 'Audio Capturing', path: '/#capturing' },
   { label: 'Audio Mixing', path: '/#mixing' },
@@ -18,6 +19,7 @@ const navItems = [
 // Expanded navigation items for mobile drawer
 const drawerNavItems = [
   { label: 'Home', path: '/' },
+  { label: 'Shalom Music Library', path: '/player' },
   { label: 'Audio Recording', path: '/#recording' },
   { label: 'Audio Capturing', path: '/#capturing' },
   { label: 'Audio Mixing', path: '/#mixing' },
@@ -34,6 +36,7 @@ const drawerNavItems = [
 ];
 
 const searchDatabase = [
+  { title: 'Shalom Music Library', description: 'Stream master songs, acoustic tracks & studio recordings', path: '/player', category: 'Music' },
   { title: 'Audio Recording', description: 'Pristine multi-track studio recording', path: '/#recording', category: 'Services' },
   { title: 'Audio Capturing', description: 'High-fidelity ambient sound capture', path: '/#capturing', category: 'Services' },
   { title: 'Audio Mixing', description: 'Multi-dimensional audio mixing', path: '/#mixing', category: 'Services' },
@@ -329,7 +332,7 @@ const Navbar: React.FC = () => {
               display: 'flex', 
               alignItems: 'center', 
               bgcolor: '#1a1a1a', // Lighter dark gray for contrast on black
-              borderRadius: '4px', 
+              borderRadius: '2px', 
               px: 2, 
               py: 0.5,
               ml: { xs: 1.5, sm: 2, md: 3 },
@@ -375,7 +378,7 @@ const Navbar: React.FC = () => {
                   backdropFilter: 'blur(25px) saturate(180%)',
                   WebkitBackdropFilter: 'blur(25px) saturate(180%)',
                   border: '1px solid rgba(255, 42, 116, 0.25)',
-                  borderRadius: '6px',
+                  borderRadius: '2px',
                   boxShadow: '0 20px 60px rgba(0, 0, 0, 0.95), 0 0 15px rgba(255, 42, 116, 0.15)',
                   zIndex: 9999,
                   maxHeight: '340px',
@@ -497,7 +500,7 @@ const Navbar: React.FC = () => {
                 fontSize: '0.85rem', // Increased font size from 0.78rem
                 px: 2.2,
                 py: 0.7,
-                borderRadius: '4px',
+                borderRadius: '2px',
                 textTransform: 'none',
                 boxShadow: '0 4px 8px rgba(255, 42, 116, 0.3)',
                 '&:hover': {
@@ -711,7 +714,8 @@ const Navbar: React.FC = () => {
                   fontSize: { lg: '0.8rem', xl: '0.95rem' },
                   px: { lg: 2, xl: 3.2 },
                   py: 0.9,
-                  borderRadius: '4px',
+                  ml: { lg: 2.5, xl: 3.5 },
+                  borderRadius: '2px',
                   textTransform: 'none',
                   whiteSpace: 'nowrap',
                   boxShadow: '0 4px 10px rgba(255, 42, 116, 0.35)',

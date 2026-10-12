@@ -11,9 +11,14 @@ import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import CloseIcon from '@mui/icons-material/Close';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
+import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import type { Song } from '../types/song';
+import { songStorage, SONGS_UPDATED_EVENT } from '../services/songStorage';
+import { useAudioPlayer } from '../context/AudioPlayerContext';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
 import XIcon from '@mui/icons-material/X';
@@ -1288,6 +1293,21 @@ const Home: React.FC = () => {
   const [overlayVideo, setOverlayVideo] = useState<string | null>(null);
   const videoTimeoutRef = useRef<any>(null);
   const overlayTimeoutRef = useRef<any>(null);
+
+  // Dynamic Client Songs featured via CMS
+  const [clientsSaySongs, setClientsSaySongs] = useState<Song[]>([]);
+  const { currentSong, isPlaying: isAudioPlaying, playSong, togglePlay: toggleAudioPlay } = useAudioPlayer();
+
+  useEffect(() => {
+    const loadClientSongs = async () => {
+      const songs = await songStorage.getClientsSaySongs();
+      setClientsSaySongs(songs);
+    };
+    loadClientSongs();
+
+    window.addEventListener(SONGS_UPDATED_EVENT, loadClientSongs);
+    return () => window.removeEventListener(SONGS_UPDATED_EVENT, loadClientSongs);
+  }, []);
 
   // Scroll spy to highlight active service tab in the sticky sub-navbar on mobile
   useEffect(() => {
@@ -3352,7 +3372,7 @@ const Home: React.FC = () => {
             variant="h2" 
             align="center" 
             sx={{ 
-              mb: 5, 
+              mb: 2, 
               fontWeight: 800,
               fontFamily: '"AerodomeRegular-2vMGK", sans-serif',
               fontSize: { xs: '1.8rem', sm: '2.4rem', md: '3rem' },
@@ -3364,6 +3384,135 @@ const Home: React.FC = () => {
           >
             What Our Clients Say
           </Typography>
+
+          {/* Subheading & CMS Management Controls */}
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center', gap: 2, mb: 4 }}>
+            <Typography variant="body1" align="center" sx={{ color: 'rgba(255, 255, 255, 0.7)', fontFamily: '"Space Grotesk", sans-serif' }}>
+              Master recordings, hybrid mixes, and words from ministries and artists who record with us
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
+              <Button
+                component={RouterLink}
+                to="/player"
+                size="small"
+                startIcon={<AudiotrackIcon />}
+                sx={{
+                  bgcolor: 'rgba(255, 42, 116, 0.15)',
+                  color: '#ff2a74',
+                  border: '1px solid #ff2a74',
+                  textTransform: 'none',
+                  fontWeight: 600,
+                  fontFamily: '"Space Grotesk", sans-serif',
+                  '&:hover': { bgcolor: '#ff2a74', color: '#ffffff' }
+                }}
+              >
+                Open Media Player
+              </Button>
+            </Box>
+          </Box>
+
+          {/* Dynamic Showcase of Arranged Client Songs from CMS */}
+          {clientsSaySongs.length === 0 ? (
+            <Box sx={{ mb: 6, p: 3, textAlign: 'center', bgcolor: 'rgba(20, 20, 26, 0.5)', borderRadius: 2 }}>
+              <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.45)' }}>
+                no songs yet
+              </Typography>
+            </Box>
+          ) : (
+            <Box sx={{ mb: 6, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: `repeat(${Math.min(clientsSaySongs.length, 4)}, 1fr)` }, gap: 2.5 }}>
+              {clientsSaySongs.map((song, idx) => {
+                const isThisPlaying = isAudioPlaying && currentSong?.id === song.id;
+                return (
+                  <Box
+                    key={song.id}
+                    onClick={() => {
+                      if (currentSong?.id === song.id) toggleAudioPlay();
+                      else playSong(song, clientsSaySongs);
+                    }}
+                    sx={{
+                      p: 2,
+                      bgcolor: isThisPlaying ? 'rgba(255, 42, 116, 0.12)' : 'rgba(20, 20, 26, 0.85)',
+                      backdropFilter: 'blur(12px)',
+                      border: isThisPlaying ? '1px solid #ff2a74' : '1px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: 2,
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      position: 'relative',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      boxShadow: isThisPlaying ? '0 10px 30px rgba(255, 42, 116, 0.25)' : 'none',
+                      '&:hover': {
+                        transform: 'translateY(-4px)',
+                        borderColor: '#ff2a74',
+                        bgcolor: 'rgba(255, 42, 116, 0.08)'
+                      }
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
+                      <Box sx={{ position: 'relative', width: 50, height: 50, flexShrink: 0 }}>
+                        <Box
+                          component="img"
+                          src={song.coverUrl}
+                          alt={song.title}
+                          sx={{ width: 50, height: 50, borderRadius: 1.5, objectFit: 'cover' }}
+                        />
+                        <Box
+                          sx={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: 50,
+                            height: 50,
+                            borderRadius: 1.5,
+                            bgcolor: isThisPlaying ? 'rgba(255, 42, 116, 0.8)' : 'rgba(0, 0, 0, 0.5)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            opacity: isThisPlaying ? 1 : 0.8,
+                            '&:hover': { opacity: 1 }
+                          }}
+                        >
+                          {isThisPlaying ? <PauseIcon sx={{ color: '#fff', fontSize: 24 }} /> : <PlayArrowIcon sx={{ color: '#fff', fontSize: 24 }} />}
+                        </Box>
+                      </Box>
+                      <Box sx={{ minWidth: 0 }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 800, color: isThisPlaying ? '#ff2a74' : '#ffffff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          {song.title}
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.65)', display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          {song.artist}
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: '#ff2a74', fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase' }}>
+                          #{idx + 1} {song.genre}
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    {song.clientSayQuote && (
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'rgba(255, 255, 255, 0.75)',
+                          fontStyle: 'italic',
+                          fontFamily: '"Linear", sans-serif',
+                          lineHeight: 1.4,
+                          display: '-webkit-box',
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          borderLeft: '2px solid #ff2a74',
+                          pl: 1,
+                          mt: 'auto'
+                        }}
+                      >
+                        "{song.clientSayQuote}"
+                      </Typography>
+                    )}
+                  </Box>
+                );
+              })}
+            </Box>
+          )}
 
           <Grid container spacing={6} alignItems="center" sx={{ mt: 2 }}>
             {/* Left Column: Interactive Video Thumbnail Card */}
