@@ -9,6 +9,8 @@ export interface Song {
   coverUrl: string;           // Cover photo (mandatory - Base64 or object URL)
   audioUrl: string;           // Audio source (Base64 data or object URL or bundled asset)
   audioBlob?: Blob;           // Optional raw blob stored in IndexedDB
+  audioFile?: File;           // Raw File for upload to server API
+  coverFile?: File;           // Raw File for upload to server API
   fileName?: string;
   fileSize?: number;          // Size in bytes (max 8MB = 8 * 1024 * 1024)
   fileFormat?: 'mp3' | 'm4a' | 'wav' | string;

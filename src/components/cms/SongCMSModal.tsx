@@ -87,6 +87,7 @@ export const SongCMSModal: React.FC<SongCMSModalProps> = ({ open, onClose, onSon
   const [description, setDescription] = useState('');
   const [coverUrl, setCoverUrl] = useState('');
   const [coverFileName, setCoverFileName] = useState('');
+  const [coverFile, setCoverFile] = useState<File | null>(null);
 
   // Audio file states
   const [audioFile, setAudioFile] = useState<File | null>(null);
@@ -141,6 +142,7 @@ export const SongCMSModal: React.FC<SongCMSModalProps> = ({ open, onClose, onSon
     setDescription('');
     setCoverUrl('');
     setCoverFileName('');
+    setCoverFile(null);
     setAudioFile(null);
     setAudioFileName('');
     setAudioFileSize(0);
@@ -218,6 +220,7 @@ export const SongCMSModal: React.FC<SongCMSModalProps> = ({ open, onClose, onSon
     }
 
     setCoverFileName(file.name);
+    setCoverFile(file);
     const reader = new FileReader();
     reader.onload = (event) => {
       if (event.target?.result) {
@@ -348,6 +351,8 @@ export const SongCMSModal: React.FC<SongCMSModalProps> = ({ open, onClose, onSon
         // For edits with no new file, keep the existing audioUrl as-is.
         audioUrl: audioFile ? '' : existingAudioUrl,
         audioBlob: audioFile ?? undefined,
+        audioFile: audioFile ?? undefined,
+        coverFile: coverFile ?? undefined,
         duration: audioDuration,
         fileSize: audioFileSize || (audioFile ? audioFile.size : 0),
         fileName: audioFileName,

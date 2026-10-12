@@ -251,14 +251,29 @@ async function ensureSeedData(db: IDBDatabase): Promise<Song[]> {
   });
 }
 
+const API_URL = '/songs-api.php';
+
 export const songStorage = {
   /**
    * Retrieve all songs sorted by created date descending.
-   * For uploaded songs that have an audio Blob in the blobAudio store,
-   * generate a fresh blob: URL so the HTML audio element can play them
-   * without the 5-6 MB base64 data URL size limit browsers enforce.
+   * Fetches from server API first; falls back to local IndexedDB/cache if offline.
    */
   async getAllSongs(): Promise<Song[]> {
+    try {
+      const response = await fetch(`${API_URL}?t=${Date.now()}`);
+      if (response.ok) {
+        const json = await response.json();
+        if (json && json.success && Array.isArray(json.data)) {
+          const remoteSongs: Song[] = json.data;
+          // Sync to local fallback cache
+          saveLocalFallback(remoteSongs);
+          return remoteSongs.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        }
+      }
+    } catch {
+      // Server API unavailable or running offline - continue to local cache
+    }
+
     try {
       const db = await openDB();
       const songs = await ensureSeedData(db);
@@ -271,8 +286,7 @@ export const songStorage = {
       const resolved = await Promise.all(
         songs.map((song) =>
           new Promise<Song>((res) => {
-            // Seed songs already have a working bundled asset URL — skip blob store
-            if (song.id.startsWith('seed-')) {
+            if (song.id.startsWith('seed-') || song.audioUrl.startsWith('http') || song.audioUrl.startsWith('/uploads/')) {
               res(song);
               return;
             }
@@ -284,7 +298,6 @@ export const songStorage = {
             req.onsuccess = () => {
               const record = req.result as { id: string; blob: Blob } | undefined;
               if (record?.blob) {
-                // Revoke previous blob URL for this song if it exists
                 const prevUrl = _activeBlobUrls.get(song.id);
                 if (prevUrl) URL.revokeObjectURL(prevUrl);
 
@@ -292,17 +305,16 @@ export const songStorage = {
                 _activeBlobUrls.set(song.id, blobUrl);
                 res({ ...song, audioUrl: blobUrl });
               } else {
-                // Fall back to whatever audioUrl is already on the song record
                 res(song);
               }
             };
 
-            req.onerror = () => res(song); // still return the song even if blob fetch fails
+            req.onerror = () => res(song);
           })
         )
       );
 
-      return resolved.sort((a, b) => b.createdAt - a.createdAt);
+      return resolved.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
     } catch {
       const fallback = getLocalFallback();
       if (fallback !== null) return fallback;
@@ -321,26 +333,63 @@ export const songStorage = {
   },
 
   /**
-   * Save a newly uploaded song.
-   * The song's audioBlob (if present) is stored in the dedicated blobAudio store.
-   * The songs store only saves lightweight metadata + a placeholder audioUrl.
+   * Save a newly uploaded song to server API and local store.
    */
   async addSong(song: Song): Promise<Song> {
-    const audioBlob = song.audioBlob;
+    const audioBlob = song.audioBlob || song.audioFile;
+    let savedSong: Song = { ...song };
 
-    // Build a metadata-only record — strip the blob and the large base64 url
+    // 1. Upload to server API via FormData
+    try {
+      const formData = new FormData();
+      formData.append('id', song.id);
+      formData.append('title', song.title);
+      formData.append('artist', song.artist);
+      formData.append('album', song.album);
+      formData.append('genre', song.genre);
+      formData.append('copyright', song.copyright);
+      formData.append('description', song.description);
+      formData.append('duration', String(song.duration));
+      formData.append('featuredInClientsSay', String(song.featuredInClientsSay));
+      formData.append('clientSayOrder', String(song.clientSayOrder));
+      if (song.clientSayQuote) formData.append('clientSayQuote', song.clientSayQuote);
+      if (song.clientSayLocation) formData.append('clientSayLocation', song.clientSayLocation);
+      if (song.audioUrl) formData.append('existingAudioUrl', song.audioUrl);
+      if (song.coverUrl) formData.append('coverUrl', song.coverUrl);
+
+      if (song.audioFile) {
+        formData.append('audioFile', song.audioFile, song.audioFile.name);
+      }
+      if (song.coverFile) {
+        formData.append('coverFile', song.coverFile, song.coverFile.name);
+      }
+
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (res.ok) {
+        const json = await res.json();
+        if (json && json.success && json.data) {
+          savedSong = json.data;
+        }
+      }
+    } catch {
+      // Fallback locally if network fails
+    }
+
+    // 2. Local database cache backup
     const meta: Song = {
-      ...song,
+      ...savedSong,
       audioBlob: undefined,
-      // Keep audioUrl only if it's a short bundled asset path (not a large base64 string).
-      // For uploaded files we always use the blobAudio store instead.
-      audioUrl: audioBlob ? '' : song.audioUrl,
+      audioFile: undefined,
+      coverFile: undefined,
+      audioUrl: audioBlob ? (savedSong.audioUrl || '') : savedSong.audioUrl,
     };
 
     try {
       const db = await openDB();
-
-      // Save metadata
       await new Promise<void>((resolve, reject) => {
         const tx = db.transaction(STORE_NAME, 'readwrite');
         const store = tx.objectStore(STORE_NAME);
@@ -349,7 +398,6 @@ export const songStorage = {
         tx.onerror = () => reject(tx.error);
       });
 
-      // Save blob separately (if provided)
       if (audioBlob) {
         await new Promise<void>((resolve, reject) => {
           const tx = db.transaction(BLOB_STORE_NAME, 'readwrite');
@@ -364,11 +412,12 @@ export const songStorage = {
       saveLocalFallback(all);
     } catch {
       const current = (await this.getAllSongs()) || [];
-      const updated = [meta, ...current];
+      const updated = [meta, ...current.filter((s) => s.id !== meta.id)];
       saveLocalFallback(updated);
     }
+
     notifyUpdated();
-    return meta;
+    return savedSong;
   },
 
   /**
@@ -380,6 +429,40 @@ export const songStorage = {
       updatedAt: Date.now(),
     };
 
+    // Update on server API
+    try {
+      const formData = new FormData();
+      formData.append('id', updatedSong.id);
+      formData.append('title', updatedSong.title);
+      formData.append('artist', updatedSong.artist);
+      formData.append('album', updatedSong.album);
+      formData.append('genre', updatedSong.genre);
+      formData.append('copyright', updatedSong.copyright);
+      formData.append('description', updatedSong.description);
+      formData.append('duration', String(updatedSong.duration));
+      formData.append('featuredInClientsSay', String(updatedSong.featuredInClientsSay));
+      formData.append('clientSayOrder', String(updatedSong.clientSayOrder));
+      if (updatedSong.clientSayQuote) formData.append('clientSayQuote', updatedSong.clientSayQuote);
+      if (updatedSong.clientSayLocation) formData.append('clientSayLocation', updatedSong.clientSayLocation);
+      if (updatedSong.audioUrl) formData.append('existingAudioUrl', updatedSong.audioUrl);
+      if (updatedSong.coverUrl) formData.append('coverUrl', updatedSong.coverUrl);
+
+      if (song.audioFile) {
+        formData.append('audioFile', song.audioFile, song.audioFile.name);
+      }
+      if (song.coverFile) {
+        formData.append('coverFile', song.coverFile, song.coverFile.name);
+      }
+
+      await fetch(API_URL, {
+        method: 'POST',
+        body: formData,
+      });
+    } catch {
+      // Continue locally
+    }
+
+    // Update local cache
     try {
       const db = await openDB();
       await new Promise<void>((resolve, reject) => {
@@ -396,25 +479,35 @@ export const songStorage = {
       const updated = current.map((s) => (s.id === song.id ? updatedSong : s));
       saveLocalFallback(updated);
     }
+
     notifyUpdated();
     return updatedSong;
   },
 
   /**
-   * Delete a song by id — also removes audio blob and revokes blob URL
+   * Delete a song by id — deletes from server API and local caches
    */
   async deleteSong(id: string): Promise<void> {
-    // Revoke blob URL if one was generated for this song
+    // 1. Delete on server API
+    try {
+      await fetch(`${API_URL}?action=delete&id=${encodeURIComponent(id)}`, {
+        method: 'POST',
+      });
+    } catch {
+      // Continue locally
+    }
+
+    // 2. Revoke blob URL
     const blobUrl = _activeBlobUrls.get(id);
     if (blobUrl) {
       URL.revokeObjectURL(blobUrl);
       _activeBlobUrls.delete(id);
     }
 
+    // 3. Delete from local IndexedDB & localStorage
     try {
       const db = await openDB();
 
-      // Delete metadata
       await new Promise<void>((resolve, reject) => {
         const tx = db.transaction(STORE_NAME, 'readwrite');
         const store = tx.objectStore(STORE_NAME);
@@ -423,13 +516,12 @@ export const songStorage = {
         tx.onerror = () => reject(tx.error);
       });
 
-      // Delete blob (may not exist for seed songs — silent on error)
       await new Promise<void>((resolve) => {
         const tx = db.transaction(BLOB_STORE_NAME, 'readwrite');
         const store = tx.objectStore(BLOB_STORE_NAME);
         store.delete(id);
         tx.oncomplete = () => resolve();
-        tx.onerror = () => resolve(); // non-fatal
+        tx.onerror = () => resolve();
       });
 
       const all = await this.getAllSongs();
@@ -439,6 +531,7 @@ export const songStorage = {
       const updated = current.filter((s) => s.id !== id);
       saveLocalFallback(updated);
     }
+
     notifyUpdated();
   },
 
@@ -458,7 +551,7 @@ export const songStorage = {
   },
 
   /**
-   * Reset store back to the default original studio seed list
+   * Reset store back to empty or studio seed list
    */
   async resetToDefaults(): Promise<Song[]> {
     try {
