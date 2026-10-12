@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useRef, useEffect, useCallback } from 'react';
 import type { Song, AudioPlayerRepeatMode } from '../types/song';
+import { songStorage, SONGS_UPDATED_EVENT } from '../services/songStorage';
 
 interface AudioPlayerContextType {
   currentSong: Song | null;
@@ -92,6 +93,38 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
       audioRef.current.volume = isMuted ? 0 : volume;
     }
   }, [volume, isMuted]);
+
+  // Synchronize player with storage changes in real time (e.g. deletions or edits in CMS)
+  useEffect(() => {
+    const handleStorageUpdate = async () => {
+      const all = await songStorage.getAllSongs();
+      // If currentSong was deleted, stop playback and clear it
+      setCurrentSong((prev) => {
+        if (!prev) return null;
+        const exists = all.find((s) => s.id === prev.id);
+        if (!exists) {
+          if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.src = '';
+          }
+          setIsPlaying(false);
+          setCurrentTime(0);
+          setDuration(0);
+          return null;
+        }
+        return exists;
+      });
+
+      // Also filter deleted songs out of the playback queue
+      setQueue((prevQueue) => {
+        if (prevQueue.length === 0) return [];
+        return prevQueue.filter((qs) => all.some((s) => s.id === qs.id));
+      });
+    };
+
+    window.addEventListener(SONGS_UPDATED_EVENT, handleStorageUpdate);
+    return () => window.removeEventListener(SONGS_UPDATED_EVENT, handleStorageUpdate);
+  }, []);
 
   // Compute shuffle mapping whenever queue changes
   useEffect(() => {

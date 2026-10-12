@@ -206,16 +206,20 @@ function notifyUpdated() {
   }
 }
 
-// Initialize seed data if database is empty
+const SEEDED_KEY = 'shalom_music_seeded_v2';
+
+// Initialize seed data only on first visit / install, not when user deliberately empties the library
 async function ensureSeedData(db: IDBDatabase): Promise<Song[]> {
+  const isAlreadySeeded = localStorage.getItem(SEEDED_KEY);
+
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_NAME, 'readonly');
     const store = tx.objectStore(STORE_NAME);
     const countReq = store.count();
 
     countReq.onsuccess = async () => {
-      if (countReq.result === 0) {
-        // Seed database
+      if (countReq.result === 0 && !isAlreadySeeded) {
+        // First-time seed of initial sample tracks
         try {
           const writeTx = db.transaction(STORE_NAME, 'readwrite');
           const writeStore = writeTx.objectStore(STORE_NAME);
@@ -223,6 +227,7 @@ async function ensureSeedData(db: IDBDatabase): Promise<Song[]> {
             writeStore.put(s);
           }
           writeTx.oncomplete = () => {
+            localStorage.setItem(SEEDED_KEY, 'true');
             saveLocalFallback(DEFAULT_SONGS);
             resolve(DEFAULT_SONGS);
           };
@@ -231,7 +236,11 @@ async function ensureSeedData(db: IDBDatabase): Promise<Song[]> {
           reject(e);
         }
       } else {
-        // Fetch all
+        // Mark seeded flag if count is already > 0 so subsequent deletes won't re-seed
+        if (countReq.result > 0) {
+          localStorage.setItem(SEEDED_KEY, 'true');
+        }
+        // Fetch all current songs (may be empty if user deleted all)
         const getAllReq = store.getAll();
         getAllReq.onsuccess = () => resolve(getAllReq.result || []);
         getAllReq.onerror = () => reject(getAllReq.error);
@@ -296,7 +305,8 @@ export const songStorage = {
       return resolved.sort((a, b) => b.createdAt - a.createdAt);
     } catch {
       const fallback = getLocalFallback();
-      return fallback && fallback.length > 0 ? fallback : DEFAULT_SONGS;
+      if (fallback !== null) return fallback;
+      return localStorage.getItem(SEEDED_KEY) ? [] : DEFAULT_SONGS;
     }
   },
 

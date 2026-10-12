@@ -548,9 +548,38 @@ const MediaPlayer: React.FC = () => {
                   </Box>
                 </>
               ) : (
-                <Box sx={{ p: 4, textAlign: 'center' }}>
-                  <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                    no songs yet
+                <Box
+                  sx={{
+                    py: 8,
+                    px: 3,
+                    textAlign: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 64,
+                      height: 64,
+                      borderRadius: '50%',
+                      bgcolor: 'rgba(255, 42, 116, 0.1)',
+                      border: '1px solid rgba(255, 42, 116, 0.25)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      mb: 2,
+                      color: '#ff2a74',
+                    }}
+                  >
+                    <MusicNoteIcon sx={{ fontSize: 32 }} />
+                  </Box>
+                  <Typography variant="h6" sx={{ fontWeight: 700, color: '#ffffff', mb: 0.8 }}>
+                    No Songs Loaded
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.5)', maxWidth: 280, fontSize: '0.85rem' }}>
+                    There are currently no songs in the library. Upload new tracks in the studio CMS to play them here in real time.
                   </Typography>
                 </Box>
               )}
