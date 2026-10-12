@@ -253,6 +253,49 @@ async function ensureSeedData(db: IDBDatabase): Promise<Song[]> {
 
 const API_URL = '/songs-api.php';
 
+export type UploadProgressCallback = (percent: number, loadedBytes: number, totalBytes: number) => void;
+
+function uploadFormDataWithProgress(
+  formData: FormData,
+  onProgress?: UploadProgressCallback
+): Promise<{ ok: boolean; data?: Song }> {
+  return new Promise((resolve) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API_URL);
+
+    if (xhr.upload && onProgress) {
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable && event.total > 0) {
+          const percent = Math.min(100, Math.round((event.loaded / event.total) * 100));
+          onProgress(percent, event.loaded, event.total);
+        }
+      };
+    }
+
+    xhr.onload = () => {
+      try {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          const json = JSON.parse(xhr.responseText);
+          if (json && json.success && json.data) {
+            if (onProgress) onProgress(100, 100, 100);
+            resolve({ ok: true, data: json.data });
+            return;
+          }
+        }
+      } catch {
+        // Fall through
+      }
+      resolve({ ok: false });
+    };
+
+    xhr.onerror = () => {
+      resolve({ ok: false });
+    };
+
+    xhr.send(formData);
+  });
+}
+
 export const songStorage = {
   /**
    * Retrieve all songs sorted by created date descending.
@@ -365,11 +408,11 @@ export const songStorage = {
   /**
    * Save a newly uploaded song to server API and local store.
    */
-  async addSong(song: Song): Promise<Song> {
+  async addSong(song: Song, onProgress?: UploadProgressCallback): Promise<Song> {
     const audioBlob = song.audioBlob || song.audioFile;
     let savedSong: Song = { ...song };
 
-    // 1. Upload to server API via FormData
+    // 1. Upload to server API via FormData with real-time progress
     try {
       const formData = new FormData();
       formData.append('id', song.id);
@@ -394,16 +437,9 @@ export const songStorage = {
         formData.append('coverFile', song.coverFile, song.coverFile.name);
       }
 
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (res.ok) {
-        const json = await res.json();
-        if (json && json.success && json.data) {
-          savedSong = json.data;
-        }
+      const res = await uploadFormDataWithProgress(formData, onProgress);
+      if (res.ok && res.data) {
+        savedSong = res.data;
       }
     } catch {
       // Fallback locally if network fails
@@ -453,13 +489,13 @@ export const songStorage = {
   /**
    * Update an existing song's metadata or status
    */
-  async updateSong(song: Song): Promise<Song> {
+  async updateSong(song: Song, onProgress?: UploadProgressCallback): Promise<Song> {
     const updatedSong: Song = {
       ...song,
       updatedAt: Date.now(),
     };
 
-    // Update on server API
+    // Update on server API with real-time progress
     try {
       const formData = new FormData();
       formData.append('id', updatedSong.id);
@@ -484,10 +520,10 @@ export const songStorage = {
         formData.append('coverFile', song.coverFile, song.coverFile.name);
       }
 
-      await fetch(API_URL, {
-        method: 'POST',
-        body: formData,
-      });
+      const res = await uploadFormDataWithProgress(formData, onProgress);
+      if (res.ok && res.data) {
+        Object.assign(updatedSong, res.data);
+      }
     } catch {
       // Continue locally
     }

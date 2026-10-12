@@ -28,6 +28,7 @@ import {
   InputAdornment,
   Dialog,
   DialogContent,
+  Snackbar,
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink } from 'react-router-dom';
@@ -61,6 +62,8 @@ import {
   ConfirmDeleteDialog,
   ConfirmEditDialog,
   ConfirmResetDialog,
+  SuccessPopupDialog,
+  UploadProgressDialog,
 } from '../components/cms/ConfirmationDialogs';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 
@@ -165,6 +168,18 @@ const CMSPage: React.FC = () => {
   const [uploadSpeedText, setUploadSpeedText] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  // Success Popup State
+  const [successPopupOpen, setSuccessPopupOpen] = useState(false);
+  const [successPopupTitle, setSuccessPopupTitle] = useState('Success!');
+  const [successPopupSong, setSuccessPopupSong] = useState<Partial<Song> | null>(null);
+
+  const showSuccessPopup = (msg: string, title = 'Success!', songData: Partial<Song> | null = null) => {
+    setSuccessMessage(msg);
+    setSuccessPopupTitle(title);
+    setSuccessPopupSong(songData);
+    setSuccessPopupOpen(true);
+  };
 
   // Confirmation Modals State
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -383,8 +398,8 @@ const CMSPage: React.FC = () => {
   const executeSaveSong = async () => {
     setEditModalOpen(false);
     setIsUploading(true);
-    setUploadProgress(5);
-    setUploadSpeedText('Analyzing audio file...');
+    setUploadProgress(0);
+    setUploadSpeedText('Preparing audio stream...');
 
     try {
       let finalAudioUrl = existingAudioUrl;
@@ -396,8 +411,8 @@ const CMSPage: React.FC = () => {
         finalFormat = audioFile.name.split('.').pop()?.toLowerCase() || 'mp3';
         finalBlob = audioFile; // pass the raw File (which is a Blob subtype) to IndexedDB
 
-        setUploadProgress(30);
-        setUploadSpeedText('Reading audio metadata...');
+        setUploadProgress(5);
+        setUploadSpeedText('Inspecting audio metadata...');
 
         // Re-read duration from the file now (in case handleAudioFileChange fired before metadata loaded)
         const detectedDuration = await new Promise<number>((resolve) => {
@@ -424,18 +439,12 @@ const CMSPage: React.FC = () => {
           setTimeout(() => {
             cleanup();
             resolve(audioDuration || 180);
-          }, 8000);
+          }, 4000);
         });
 
         finalDuration = detectedDuration;
         setAudioDuration(detectedDuration);
-
-        setUploadProgress(70);
-        setUploadSpeedText(`Storing audio in IndexedDB (${(audioFile.size / (1024 * 1024)).toFixed(2)} MB)...`);
       }
-
-      setUploadProgress(90);
-      setUploadSpeedText('Finalizing metadata & publishing...');
 
       const finalGenre = genre === 'Other' ? customGenre.trim() : genre;
       const songData: Song = {
@@ -463,14 +472,27 @@ const CMSPage: React.FC = () => {
         updatedAt: Date.now(),
       };
 
+      setUploadSpeedText('Connecting to server...');
+
+      const progressHandler = (pct: number, loaded: number, total: number) => {
+        setUploadProgress(pct);
+        const mbDone = (loaded / (1024 * 1024)).toFixed(2);
+        const mbTotal = (total / (1024 * 1024)).toFixed(2);
+        setUploadSpeedText(
+          pct >= 100
+            ? 'Upload complete! Finalizing & saving...'
+            : `Uploading: ${pct}% (${mbDone} MB / ${mbTotal} MB)`
+        );
+      };
+
       if (editingSongId) {
-        await songStorage.updateSong(songData);
+        await songStorage.updateSong(songData, progressHandler);
         adminAuth.logActivity('Track Updated', `Updated metadata for "${songData.title}" (${songData.artist})`, 'info');
-        setSuccessMessage(`Changes confirmed! "${songData.title}" updated successfully.`);
+        showSuccessPopup(`Changes confirmed! "${songData.title}" updated successfully.`, 'Track Updated Successfully!', songData);
       } else {
-        await songStorage.addSong(songData);
+        await songStorage.addSong(songData, progressHandler);
         adminAuth.logActivity('Track Added', `Uploaded and added "${songData.title}" to library`, 'success');
-        setSuccessMessage(`Track confirmed! "${songData.title}" has been published to the Shalom Music Library.`);
+        showSuccessPopup(`Track confirmed! "${songData.title}" has been published to the Shalom Music Library.`, 'Track Published Successfully!', songData);
       }
 
       await loadSongsList();
@@ -481,7 +503,7 @@ const CMSPage: React.FC = () => {
         setUploadProgress(0);
         resetFormToNewSong();
         setActiveTab(1);
-      }, 700);
+      }, 500);
     } catch (err: any) {
       setIsUploading(false);
       setUploadProgress(0);
@@ -503,7 +525,7 @@ const CMSPage: React.FC = () => {
     setDeleteModalOpen(false);
     await loadSongsList();
     refreshAuditLogs();
-    setSuccessMessage(`Successfully deleted "${deletedTitle}" from the library and showcase.`);
+    showSuccessPopup(`Successfully deleted "${deletedTitle}" from the library and showcase.`, 'Track Deleted');
   };
 
   const handleToggleClientsSay = async (song: Song) => {
@@ -517,7 +539,7 @@ const CMSPage: React.FC = () => {
     );
     await loadSongsList();
     refreshAuditLogs();
-    setSuccessMessage(`"${song.title}" is now ${newStatus ? 'featured in' : 'hidden from'} Client Showcase.`);
+    showSuccessPopup(`"${song.title}" is now ${newStatus ? 'featured in' : 'hidden from'} Client Showcase.`, 'Showcase Updated', updated);
   };
 
   const clientsSayList = songs
@@ -546,7 +568,7 @@ const CMSPage: React.FC = () => {
     setSongs(res);
     adminAuth.logActivity('Library Reset', 'Reset music library to default studio seed tracks', 'warning');
     refreshAuditLogs();
-    setSuccessMessage('Library reset to default Shalom Music seed tracks.');
+    showSuccessPopup('Library reset to default Shalom Music seed tracks.', 'Library Reset Completed');
   };
 
   const handlePasswordUpdate = async (e: React.FormEvent) => {
@@ -561,7 +583,7 @@ const CMSPage: React.FC = () => {
 
     const res = await adminAuth.updatePassword(currentPass, newPass);
     if (res.success) {
-      setSecurityMessage('Password updated successfully.');
+      showSuccessPopup('Admin password updated successfully.', 'Security Settings Updated');
       setCurrentPass('');
       setNewPass('');
       setConfirmPass('');
@@ -987,15 +1009,6 @@ const CMSPage: React.FC = () => {
             sx={{ mb: 3, borderRadius: 0, bgcolor: 'rgba(211, 47, 47, 0.18)', color: '#ff8a80', border: '1px solid #d32f2f' }}
           >
             {errorMessage}
-          </Alert>
-        )}
-        {successMessage && (
-          <Alert
-            severity="success"
-            onClose={() => setSuccessMessage(null)}
-            sx={{ mb: 3, borderRadius: 0, bgcolor: 'rgba(46, 125, 50, 0.18)', color: '#a5d6a7', border: '1px solid #2e7d32' }}
-          >
-            {successMessage}
           </Alert>
         )}
 
@@ -2020,6 +2033,49 @@ const CMSPage: React.FC = () => {
         onCancel={() => setResetModalOpen(false)}
         onConfirm={handleConfirmReset}
       />
+
+      {/* SUCCESS POPUP MODAL DIALOG */}
+      <SuccessPopupDialog
+        open={successPopupOpen}
+        title={successPopupTitle}
+        message={successMessage || ''}
+        song={successPopupSong}
+        onClose={() => setSuccessPopupOpen(false)}
+      />
+
+      {/* REAL-TIME UPLOAD PROGRESS DIALOG */}
+      <UploadProgressDialog
+        open={isUploading}
+        progress={uploadProgress}
+        statusText={uploadSpeedText}
+        fileName={audioFileName || (audioFile ? audioFile.name : undefined)}
+        fileSize={audioFileSize || (audioFile ? audioFile.size : undefined)}
+      />
+
+      {/* FLOATING SUCCESS NOTIFICATION POPUP (FOR BACKGROUND/QUICK CONFIRMATIONS) */}
+      <Snackbar
+        open={Boolean(successMessage) && !successPopupOpen}
+        autoHideDuration={4000}
+        onClose={() => setSuccessMessage(null)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setSuccessMessage(null)}
+          severity="success"
+          variant="filled"
+          sx={{
+            bgcolor: '#10b981',
+            color: '#000000',
+            fontWeight: 800,
+            borderRadius: 0,
+            fontFamily: '"Space Grotesk", sans-serif',
+            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(16, 185, 129, 0.5)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+          }}
+        >
+          {successMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

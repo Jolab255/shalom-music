@@ -26,6 +26,7 @@ import {
   Tabs,
   Tab,
   Tooltip,
+  Snackbar,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -47,6 +48,8 @@ import {
   ConfirmDeleteDialog,
   ConfirmEditDialog,
   ConfirmResetDialog,
+  SuccessPopupDialog,
+  UploadProgressDialog,
 } from './ConfirmationDialogs';
 
 const MAX_FILE_SIZE_BYTES = 8 * 1024 * 1024; // 8 Megabytes maximum
@@ -108,6 +111,18 @@ export const SongCMSModal: React.FC<SongCMSModalProps> = ({ open, onClose, onSon
   const [uploadSpeedText, setUploadSpeedText] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  // Success Popup State
+  const [successPopupOpen, setSuccessPopupOpen] = useState(false);
+  const [successPopupTitle, setSuccessPopupTitle] = useState('Success!');
+  const [successPopupSong, setSuccessPopupSong] = useState<Partial<Song> | null>(null);
+
+  const showSuccessPopup = (msg: string, title = 'Success!', songData: Partial<Song> | null = null) => {
+    setSuccessMessage(msg);
+    setSuccessPopupTitle(title);
+    setSuccessPopupSong(songData);
+    setSuccessPopupOpen(true);
+  };
 
   // Confirmation Modals State
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -311,30 +326,17 @@ export const SongCMSModal: React.FC<SongCMSModalProps> = ({ open, onClose, onSon
   const executeSaveSong = async () => {
     setEditModalOpen(false);
     setIsUploading(true);
-    setUploadProgress(5);
-    setUploadSpeedText('Initializing audio stream & indexing...');
+    setUploadProgress(0);
+    setUploadSpeedText('Preparing audio stream...');
 
     try {
       let finalFormat = 'mp3';
 
       if (audioFile) {
         finalFormat = audioFile.name.split('.').pop()?.toLowerCase() || 'mp3';
-
-        // Simulate progress visually while the blob is being prepared
-        // (No FileReader needed — raw Blob goes straight to IndexedDB via audioBlob field)
-        const steps = [20, 40, 60, 80, 90, 95];
-        for (const pct of steps) {
-          await new Promise<void>((res) => setTimeout(res, 60));
-          const mbDone = ((audioFile.size * pct) / 100 / (1024 * 1024)).toFixed(2);
-          const mbTotal = (audioFile.size / (1024 * 1024)).toFixed(2);
-          setUploadProgress(pct);
-          setUploadSpeedText(`Uploading: ${pct}% (${mbDone}MB / ${mbTotal}MB)`);
-        }
+        setUploadProgress(5);
+        setUploadSpeedText('Preparing audio file...');
       }
-
-      // Final processing
-      setUploadProgress(100);
-      setUploadSpeedText('Finalizing metadata...');
 
       const finalGenre = genre === 'Other' ? customGenre.trim() : genre;
       const songData: Song = {
@@ -365,12 +367,25 @@ export const SongCMSModal: React.FC<SongCMSModalProps> = ({ open, onClose, onSon
         updatedAt: Date.now(),
       };
 
+      setUploadSpeedText('Connecting to server...');
+
+      const progressHandler = (pct: number, loaded: number, total: number) => {
+        setUploadProgress(pct);
+        const mbDone = (loaded / (1024 * 1024)).toFixed(2);
+        const mbTotal = (total / (1024 * 1024)).toFixed(2);
+        setUploadSpeedText(
+          pct >= 100
+            ? 'Upload complete! Finalizing metadata...'
+            : `Uploading: ${pct}% (${mbDone} MB / ${mbTotal} MB)`
+        );
+      };
+
       if (editingSongId) {
-        await songStorage.updateSong(songData);
-        setSuccessMessage(`"${songData.title}" updated successfully!`);
+        await songStorage.updateSong(songData, progressHandler);
+        showSuccessPopup(`"${songData.title}" updated successfully!`, 'Track Updated Successfully!', songData);
       } else {
-        await songStorage.addSong(songData);
-        setSuccessMessage(`"${songData.title}" uploaded & added to Shalom Music library successfully!`);
+        await songStorage.addSong(songData, progressHandler);
+        showSuccessPopup(`"${songData.title}" uploaded & added to Shalom Music library successfully!`, 'Track Published Successfully!', songData);
       }
 
       await loadSongsList();
@@ -382,7 +397,7 @@ export const SongCMSModal: React.FC<SongCMSModalProps> = ({ open, onClose, onSon
         setUploadProgress(0);
         resetForm();
         setActiveTab(1); // Show song list
-      }, 700);
+      }, 500);
     } catch (err: any) {
       setIsUploading(false);
       setUploadProgress(0);
@@ -403,14 +418,14 @@ export const SongCMSModal: React.FC<SongCMSModalProps> = ({ open, onClose, onSon
     setSongToDelete(null);
     setDeleteModalOpen(false);
     await loadSongsList();
-    setSuccessMessage(`Deleted "${titleToDelete}".`);
+    showSuccessPopup(`Deleted "${titleToDelete}" from library.`, 'Track Deleted');
   };
 
   const handleConfirmReset = async () => {
     setResetModalOpen(false);
     const res = await songStorage.resetToDefaults();
     setSongs(res);
-    setSuccessMessage('Reset to default studio seed tracks.');
+    showSuccessPopup('Reset to default studio seed tracks.', 'Library Reset Completed');
   };
 
   // Toggle Featured in Clients Say directly from list
@@ -418,6 +433,11 @@ export const SongCMSModal: React.FC<SongCMSModalProps> = ({ open, onClose, onSon
     const updated = { ...song, featuredInClientsSay: !song.featuredInClientsSay };
     await songStorage.updateSong(updated);
     await loadSongsList();
+    showSuccessPopup(
+      `"${song.title}" is now ${updated.featuredInClientsSay ? 'featured in' : 'hidden from'} Client Showcase.`,
+      'Showcase Updated',
+      updated
+    );
   };
 
   // Reordering in Clients Say
@@ -530,11 +550,6 @@ export const SongCMSModal: React.FC<SongCMSModalProps> = ({ open, onClose, onSon
         {errorMessage && (
           <Alert severity="error" sx={{ mb: 2.5, bgcolor: 'rgba(211, 47, 47, 0.15)', color: '#ff8a80', border: '1px solid #d32f2f' }}>
             {errorMessage}
-          </Alert>
-        )}
-        {successMessage && (
-          <Alert severity="success" sx={{ mb: 2.5, bgcolor: 'rgba(46, 125, 50, 0.15)', color: '#a5d6a7', border: '1px solid #2e7d32' }}>
-            {successMessage}
           </Alert>
         )}
 
@@ -1148,6 +1163,49 @@ export const SongCMSModal: React.FC<SongCMSModalProps> = ({ open, onClose, onSon
         onCancel={() => setResetModalOpen(false)}
         onConfirm={handleConfirmReset}
       />
+
+      {/* SUCCESS POPUP MODAL DIALOG */}
+      <SuccessPopupDialog
+        open={successPopupOpen}
+        title={successPopupTitle}
+        message={successMessage || ''}
+        song={successPopupSong}
+        onClose={() => setSuccessPopupOpen(false)}
+      />
+
+      {/* REAL-TIME UPLOAD PROGRESS DIALOG */}
+      <UploadProgressDialog
+        open={isUploading}
+        progress={uploadProgress}
+        statusText={uploadSpeedText}
+        fileName={audioFileName || (audioFile ? audioFile.name : undefined)}
+        fileSize={audioFileSize || (audioFile ? audioFile.size : undefined)}
+      />
+
+      {/* FLOATING SUCCESS NOTIFICATION POPUP */}
+      <Snackbar
+        open={Boolean(successMessage) && !successPopupOpen}
+        autoHideDuration={4000}
+        onClose={() => setSuccessMessage(null)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setSuccessMessage(null)}
+          severity="success"
+          variant="filled"
+          sx={{
+            bgcolor: '#10b981',
+            color: '#000000',
+            fontWeight: 800,
+            borderRadius: 0,
+            fontFamily: '"Space Grotesk", sans-serif',
+            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(16, 185, 129, 0.5)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+          }}
+        >
+          {successMessage}
+        </Alert>
+      </Snackbar>
     </Dialog>
   );
 };
