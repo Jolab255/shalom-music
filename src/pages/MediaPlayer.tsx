@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Container,
   Box,
@@ -11,8 +11,6 @@ import {
   Chip,
   Paper,
   Tooltip,
-  useMediaQuery,
-  useTheme,
   Divider,
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
@@ -31,7 +29,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import StarIcon from '@mui/icons-material/Star';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 
 import type { Song } from '../types/song';
@@ -46,8 +43,6 @@ const formatTime = (time: number) => {
 };
 
 const MediaPlayer: React.FC = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const {
     currentSong,

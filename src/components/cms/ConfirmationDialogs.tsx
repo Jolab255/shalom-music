@@ -92,7 +92,7 @@ export const ConfirmDeleteDialog: React.FC<ConfirmDeleteDialogProps> = ({
             sx={{ width: 56, height: 56, borderRadius: 0, objectFit: 'cover' }}
           />
           <Box sx={{ minWidth: 0 }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#ffffff', noWrap: true }}>
+            <Typography noWrap variant="subtitle2" sx={{ fontWeight: 700, color: '#ffffff' }}>
               {song.title}
             </Typography>
             <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.6)', display: 'block' }}>

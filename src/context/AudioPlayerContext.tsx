@@ -39,7 +39,7 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [repeatMode, setRepeatMode] = useState<AudioPlayerRepeatMode>('all');
   const [isShuffle, setIsShuffle] = useState<boolean>(false);
   const [queue, setQueue] = useState<Song[]>([]);
-  const [shuffledIndices, setShuffledIndices] = useState<number[]>([]);
+  const [_shuffledIndices, setShuffledIndices] = useState<number[]>([]);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
