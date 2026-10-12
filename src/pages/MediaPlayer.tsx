@@ -54,6 +54,7 @@ const MediaPlayer: React.FC = () => {
     repeatMode,
     isShuffle,
     playSong,
+    loadSong,
     togglePlay,
     playNext,
     playPrev,
@@ -116,15 +117,12 @@ const MediaPlayer: React.FC = () => {
     return list;
   }, [allSongs, searchQuery, selectedGenre, searchCache]);
 
-  // Auto-select first song if nothing is currently loaded
+  // Stage first song in deck ready to play without browser autoplay blockage
   useEffect(() => {
     if (!currentSong && allSongs.length > 0) {
-      // Just set as queued/ready
-      playSong(allSongs[0], allSongs);
-      // Immediately pause so it doesn't auto-blast audio without user gesture
-      // (useAudioPlayer handles this or user can press play)
+      loadSong(allSongs[0], allSongs);
     }
-  }, [allSongs, currentSong, playSong]);
+  }, [allSongs, currentSong, loadSong]);
 
   const activeSong = currentSong || allSongs[0] || null;
 

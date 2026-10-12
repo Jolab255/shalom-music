@@ -14,6 +14,7 @@ interface AudioPlayerContextType {
   queue: Song[];
   currentIndex: number;
   playSong: (song: Song, newQueue?: Song[]) => void;
+  loadSong: (song: Song, newQueue?: Song[]) => void;
   togglePlay: () => void;
   pause: () => void;
   resume: () => void;
@@ -158,6 +159,22 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }).catch((err) => {
       console.warn('Audio playback interrupted or requires user gesture:', err);
     });
+  }, []);
+
+  const loadSong = useCallback((song: Song, newQueue?: Song[]) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (newQueue && newQueue.length > 0) {
+      setQueue(newQueue);
+    } else {
+      setQueue((prev) => (prev.some((s) => s.id === song.id) ? prev : [song, ...prev]));
+    }
+
+    setCurrentSong(song);
+    audio.src = song.audioUrl;
+    audio.currentTime = 0;
+    setIsPlaying(false);
   }, []);
 
   const togglePlay = useCallback(() => {
@@ -316,6 +333,7 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
         queue,
         currentIndex,
         playSong,
+        loadSong,
         togglePlay,
         pause,
         resume,
