@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Server-side uploads (songs data & media — lives on the server, not in git)
+public/uploads/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

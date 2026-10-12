@@ -52,7 +52,7 @@ import {
   UploadProgressDialog,
 } from './ConfirmationDialogs';
 
-const MAX_FILE_SIZE_BYTES = 8 * 1024 * 1024; // 8 Megabytes maximum
+const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024; // 100 Megabytes maximum
 const ALLOWED_EXTENSIONS = ['mp3', 'm4a', 'wav'];
 
 const GENRE_OPTIONS = [
@@ -585,8 +585,7 @@ export const SongCMSModal: React.FC<SongCMSModalProps> = ({ open, onClose, onSon
                   {audioFileName ? audioFileName : 'Select audio file from local storage'}
                 </Typography>
                 <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-                  Allowed formats: <b>.mp3, .m4a, .wav</b> (Maximum allowed size: <b>8MB</b>)
-                </Typography>
+                  Allowed formats: <b>.mp3, .m4a, .wav</b> (Maximum allowed size: <b>100MB</b>)</Typography>
                 <Button
                   variant="outlined"
                   onClick={() => audioInputRef.current?.click()}
