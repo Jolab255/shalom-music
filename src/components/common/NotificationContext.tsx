@@ -71,6 +71,18 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
       const reason = event.reason;
       const message = reason instanceof Error ? reason.message : String(reason);
+      const stack = reason instanceof Error ? (reason.stack || '') : '';
+
+      // Suppress Vite HMR internal errors — these are dev-server noise, not app errors
+      const isViteInternal =
+        stack.includes('/@vite/') ||
+        stack.includes('@vite/client') ||
+        stack.includes('vite/dist/') ||
+        message.includes('__vite__') ||
+        /^Cannot read propert(?:y|ies) of undefined \(reading '[A-Z_]{2,}'\)$/.test(message);
+
+      if (isViteInternal) return;
+
       showError(message || 'An unhandled asynchronous operation failed.', 'Network / Async Error');
     };
 
