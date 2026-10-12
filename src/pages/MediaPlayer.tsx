@@ -649,7 +649,7 @@ const MediaPlayer: React.FC = () => {
                   {searchSuggestions.length === 0 ? (
                     <Box sx={{ p: 3, textAlign: 'center' }}>
                       <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-                        no songs yet
+                        No matching tracks found
                       </Typography>
                     </Box>
                   ) : (

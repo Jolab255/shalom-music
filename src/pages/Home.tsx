@@ -3412,13 +3412,7 @@ const Home: React.FC = () => {
           </Box>
 
           {/* Dynamic Showcase of Arranged Client Songs from CMS */}
-          {clientsSaySongs.length === 0 ? (
-            <Box sx={{ mb: 6, p: 3, textAlign: 'center', bgcolor: 'rgba(20, 20, 26, 0.5)', borderRadius: 2 }}>
-              <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.45)' }}>
-                no songs yet
-              </Typography>
-            </Box>
-          ) : (
+          {clientsSaySongs.length > 0 && (
             <Box sx={{ mb: 6, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: `repeat(${Math.min(clientsSaySongs.length, 4)}, 1fr)` }, gap: 2.5 }}>
               {clientsSaySongs.map((song, idx) => {
                 const isThisPlaying = isAudioPlaying && currentSong?.id === song.id;
