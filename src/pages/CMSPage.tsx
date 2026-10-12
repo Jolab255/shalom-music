@@ -144,6 +144,7 @@ const CMSPage: React.FC = () => {
   const [description, setDescription] = useState('');
   const [coverUrl, setCoverUrl] = useState('');
   const [coverFileName, setCoverFileName] = useState('');
+  const [coverFile, setCoverFile] = useState<File | null>(null);
 
   // Audio file states
   const [audioFile, setAudioFile] = useState<File | null>(null);
@@ -218,6 +219,7 @@ const CMSPage: React.FC = () => {
     setDescription('');
     setCoverUrl('');
     setCoverFileName('');
+    setCoverFile(null);
     setAudioFile(null);
     setAudioFileName('');
     setAudioFileSize(0);
@@ -289,6 +291,7 @@ const CMSPage: React.FC = () => {
     }
 
     setCoverFileName(file.name);
+    setCoverFile(file);
     const reader = new FileReader();
     reader.onload = (event) => {
       if (event.target?.result) {
@@ -446,6 +449,8 @@ const CMSPage: React.FC = () => {
         coverUrl,
         audioUrl: finalAudioUrl,  // empty for new uploads; resolved to blob: URL by getAllSongs()
         audioBlob: finalBlob,     // raw Blob stored in blobAudio IndexedDB store
+        audioFile: audioFile ?? undefined,
+        coverFile: coverFile ?? undefined,
         duration: finalDuration,
         fileSize: audioFileSize || (audioFile ? audioFile.size : 0),
         fileName: audioFileName,

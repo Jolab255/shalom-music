@@ -259,19 +259,17 @@ export const songStorage = {
    * Fetches from server API first; falls back to local IndexedDB/cache if offline.
    */
   async getAllSongs(): Promise<Song[]> {
+    let serverSongs: Song[] | null = null;
     try {
       const response = await fetch(`${API_URL}?t=${Date.now()}`);
       if (response.ok) {
         const json = await response.json();
         if (json && json.success && Array.isArray(json.data)) {
-          const remoteSongs: Song[] = json.data;
-          // Sync to local fallback cache
-          saveLocalFallback(remoteSongs);
-          return remoteSongs.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          serverSongs = json.data;
         }
       }
     } catch {
-      // Server API unavailable or running offline - continue to local cache
+      // Server API unreachable or running on local dev
     }
 
     try {
@@ -314,8 +312,40 @@ export const songStorage = {
         )
       );
 
-      return resolved.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      // If server returned songs, merge them with any local songs (prefer local blob URLs if present)
+      let combined = resolved;
+      if (serverSongs && Array.isArray(serverSongs)) {
+        const localMap = new Map(resolved.map((s) => [s.id, s]));
+        const merged: Song[] = [];
+
+        for (const s of serverSongs) {
+          if (localMap.has(s.id)) {
+            // Keep local version if it has active blob URL
+            const local = localMap.get(s.id)!;
+            merged.push(local.audioUrl.startsWith('blob:') ? local : s);
+            localMap.delete(s.id);
+          } else {
+            merged.push(s);
+          }
+        }
+
+        // Include any newly added local songs not yet on the server
+        localMap.forEach((localSong) => {
+          if (!localSong.id.startsWith('seed-')) {
+            merged.push(localSong);
+          }
+        });
+
+        combined = merged;
+      }
+
+      saveLocalFallback(combined);
+      return combined.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
     } catch {
+      if (serverSongs && Array.isArray(serverSongs)) {
+        saveLocalFallback(serverSongs);
+        return serverSongs.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      }
       const fallback = getLocalFallback();
       if (fallback !== null) return fallback;
       return localStorage.getItem(SEEDED_KEY) ? [] : DEFAULT_SONGS;
