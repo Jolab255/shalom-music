@@ -5,6 +5,7 @@ import { songStorage, SONGS_UPDATED_EVENT } from '../services/songStorage';
 interface AudioPlayerContextType {
   currentSong: Song | null;
   isPlaying: boolean;
+  isBuffering: boolean;
   currentTime: number;
   duration: number;
   volume: number;
@@ -17,6 +18,7 @@ interface AudioPlayerContextType {
   loadSong: (song: Song, newQueue?: Song[]) => void;
   togglePlay: () => void;
   pause: () => void;
+  closePlayer: () => void;
   resume: () => void;
   playNext: () => void;
   playPrev: () => void;
@@ -27,6 +29,7 @@ interface AudioPlayerContextType {
   toggleMute: () => void;
   toggleShuffle: () => void;
   cycleRepeat: () => void;
+  audioRef: React.RefObject<HTMLAudioElement | null>;
 }
 
 const AudioPlayerContext = createContext<AudioPlayerContextType | null>(null);
@@ -34,6 +37,7 @@ const AudioPlayerContext = createContext<AudioPlayerContextType | null>(null);
 export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isBuffering, setIsBuffering] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [volume, setVolumeState] = useState<number>(0.85);
@@ -70,11 +74,26 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
     const onPlay = () => setIsPlaying(true);
     const onPause = () => setIsPlaying(false);
 
+    // Buffering state: fires when the browser is waiting for data
+    const onWaiting = () => setIsBuffering(true);
+    // 'playing' fires when playback actually starts/resumes after a buffer wait
+    const onPlayingActual = () => setIsBuffering(false);
+    // 'canplay' means enough data is buffered to start — clear spinner even before playing
+    const onCanPlay = () => setIsBuffering(false);
+    // Stalled/error — also clear to avoid being stuck on spinner forever
+    const onStalled = () => setIsBuffering(false);
+    const onError = () => setIsBuffering(false);
+
     audio.addEventListener('timeupdate', onTimeUpdate);
     audio.addEventListener('durationchange', onDurationChange);
     audio.addEventListener('loadedmetadata', onLoadedMetadata);
     audio.addEventListener('play', onPlay);
     audio.addEventListener('pause', onPause);
+    audio.addEventListener('waiting', onWaiting);
+    audio.addEventListener('playing', onPlayingActual);
+    audio.addEventListener('canplay', onCanPlay);
+    audio.addEventListener('stalled', onStalled);
+    audio.addEventListener('error', onError);
 
     return () => {
       audio.removeEventListener('timeupdate', onTimeUpdate);
@@ -82,6 +101,11 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
       audio.removeEventListener('loadedmetadata', onLoadedMetadata);
       audio.removeEventListener('play', onPlay);
       audio.removeEventListener('pause', onPause);
+      audio.removeEventListener('waiting', onWaiting);
+      audio.removeEventListener('playing', onPlayingActual);
+      audio.removeEventListener('canplay', onCanPlay);
+      audio.removeEventListener('stalled', onStalled);
+      audio.removeEventListener('error', onError);
       audio.pause();
     };
   }, []);
@@ -151,12 +175,14 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
       setQueue((prev) => (prev.some((s) => s.id === song.id) ? prev : [song, ...prev]));
     }
 
+    setIsBuffering(true); // show spinner immediately — before any data arrives
     setCurrentSong(song);
     audio.src = song.audioUrl;
     audio.currentTime = 0;
     audio.play().then(() => {
       setIsPlaying(true);
     }).catch((err) => {
+      setIsBuffering(false);
       console.warn('Audio playback interrupted or requires user gesture:', err);
     });
   }, []);
@@ -201,6 +227,19 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
       audioRef.current.pause();
       setIsPlaying(false);
     }
+  }, []);
+
+  const closePlayer = useCallback(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      audio.src = '';
+    }
+    setIsPlaying(false);
+    setCurrentSong(null);
+    setCurrentTime(0);
+    setDuration(0);
+    setQueue([]);
   }, []);
 
   const resume = useCallback(() => {
@@ -324,6 +363,7 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
       value={{
         currentSong,
         isPlaying,
+        isBuffering,
         currentTime,
         duration,
         volume,
@@ -336,6 +376,7 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
         loadSong,
         togglePlay,
         pause,
+        closePlayer,
         resume,
         playNext,
         playPrev,
@@ -346,6 +387,7 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
         toggleMute,
         toggleShuffle,
         cycleRepeat,
+        audioRef,
       }}
     >
       {children}

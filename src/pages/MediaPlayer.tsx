@@ -12,6 +12,7 @@ import {
   Paper,
   Tooltip,
   Divider,
+  CircularProgress,
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -34,6 +35,7 @@ import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import type { Song } from '../types/song';
 import { songStorage, SongSearchCache, SONGS_UPDATED_EVENT } from '../services/songStorage';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
+import { AnimatedCoverArt } from '../components/player/AnimatedCoverArt';
 
 const formatTime = (time: number) => {
   if (isNaN(time) || !isFinite(time)) return '0:00';
@@ -47,6 +49,7 @@ const MediaPlayer: React.FC = () => {
   const {
     currentSong,
     isPlaying,
+    isBuffering,
     currentTime,
     duration,
     volume,
@@ -65,6 +68,7 @@ const MediaPlayer: React.FC = () => {
     toggleMute,
     toggleShuffle,
     cycleRepeat,
+    audioRef,
   } = useAudioPlayer();
 
   const [allSongs, setAllSongs] = useState<Song[]>([]);
@@ -220,104 +224,16 @@ const MediaPlayer: React.FC = () => {
             >
               {activeSong ? (
                 <>
-                  {/* Album Cover & Animated Vinyl Aura */}
-                  <Box
-                    sx={{
-                      position: 'relative',
-                      width: '100%',
-                      paddingTop: '80%', // Aspect ratio container
-                      borderRadius: '2px',
-                      overflow: 'hidden',
-                      mb: 3,
-                      boxShadow: '0 15px 40px rgba(0, 0, 0, 0.8)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
-                    }}
-                  >
-                    <Box
-                      component="img"
-                      src={activeSong.coverUrl}
-                      alt={activeSong.title}
-                      sx={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        transition: 'transform 0.5s ease',
-                        transform: isPlaying ? 'scale(1.03)' : 'scale(1)',
-                      }}
+                  {/* Animated Cover Art with Real-Time Audio Rhythm & Equalizer */}
+                  <Box sx={{ mb: 3 }}>
+                    <AnimatedCoverArt
+                      song={activeSong}
+                      isPlaying={isPlaying}
+                      isBuffering={isBuffering}
+                      audioRef={audioRef}
+                      aspectRatio="80%"
+                      borderRadius="2px"
                     />
-
-                    {/* Gradient Overlay */}
-                    <Box
-                      sx={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        height: '60%',
-                        background: 'linear-gradient(to top, rgba(10, 10, 13, 0.95), transparent)',
-                      }}
-                    />
-
-                    {/* Featured Badge overlay (if featured in Clients Say) */}
-                    {activeSong.featuredInClientsSay && (
-                      <Box
-                        sx={{
-                          position: 'absolute',
-                          top: 16,
-                          left: 16,
-                          display: 'flex',
-                          gap: 1,
-                        }}
-                      >
-                        <Chip
-                          size="small"
-                          icon={<StarIcon sx={{ color: '#ffd700 !important', fontSize: '0.9rem' }} />}
-                          label="Clients Say Showcase"
-                          sx={{
-                            bgcolor: 'rgba(0, 0, 0, 0.7)',
-                            color: '#ffd700',
-                            fontWeight: 700,
-                            backdropFilter: 'blur(8px)',
-                            border: '1px solid rgba(255, 215, 0, 0.4)',
-                            borderRadius: '2px',
-                          }}
-                        />
-                      </Box>
-                    )}
-
-                    {/* Animated Waveform Visualizer in bottom of cover */}
-                    <Box
-                      sx={{
-                        position: 'absolute',
-                        bottom: 16,
-                        left: 16,
-                        right: 16,
-                        display: 'flex',
-                        alignItems: 'flex-end',
-                        gap: '3px',
-                        height: 36,
-                      }}
-                    >
-                      {Array.from({ length: 28 }).map((_, i) => {
-                        const randomHeight = isPlaying ? 20 + ((i * 17) % 80) : 12;
-                        return (
-                          <Box
-                            key={i}
-                            sx={{
-                              flex: 1,
-                              height: `${randomHeight}%`,
-                              bgcolor: isPlaying ? '#ff2a74' : 'rgba(255, 255, 255, 0.25)',
-                              borderRadius: '2px',
-                              transition: isPlaying ? 'height 0.15s ease' : 'none',
-                              boxShadow: isPlaying ? '0 0 6px rgba(255, 42, 116, 0.8)' : 'none',
-                            }}
-                          />
-                        );
-                      })}
-                    </Box>
                   </Box>
 
                   {/* Song Title & Artist Details */}
@@ -432,7 +348,7 @@ const MediaPlayer: React.FC = () => {
 
                     {/* Giant Play/Pause button */}
                     <IconButton
-                      onClick={togglePlay}
+                      onClick={isBuffering ? undefined : togglePlay}
                       sx={{
                         width: 64,
                         height: 64,
@@ -440,14 +356,17 @@ const MediaPlayer: React.FC = () => {
                         color: '#ffffff',
                         boxShadow: '0 0 25px rgba(255, 42, 116, 0.6)',
                         '&:hover': {
-                          bgcolor: '#e01b5d',
-                          transform: 'scale(1.06)',
-                          boxShadow: '0 0 35px rgba(255, 42, 116, 0.85)',
+                          bgcolor: isBuffering ? '#ff2a74' : '#e01b5d',
+                          transform: isBuffering ? 'none' : 'scale(1.06)',
+                          boxShadow: isBuffering ? '0 0 25px rgba(255, 42, 116, 0.6)' : '0 0 35px rgba(255, 42, 116, 0.85)',
                         },
                         transition: 'all 0.25s ease',
+                        position: 'relative',
                       }}
                     >
-                      {isPlaying ? (
+                      {isBuffering ? (
+                        <CircularProgress size={28} sx={{ color: '#ffffff' }} />
+                      ) : isPlaying ? (
                         <PauseIcon sx={{ fontSize: '2.4rem' }} />
                       ) : (
                         <PlayArrowIcon sx={{ fontSize: '2.4rem', ml: 0.5 }} />

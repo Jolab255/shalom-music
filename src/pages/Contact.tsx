@@ -497,7 +497,8 @@ const Contact: React.FC = () => {
                         lineHeight: 1.5
                       }}
                     >
-                      Msikiti wa udongo, Dar es Salaam, Tanzania
+                      Sea View - Upanga, Plot No. 17 Barack Obama Dr,{' '}
+                      <br />Dar es Salaam 80113, Tanzania
                     </Typography>
                   )
                 }

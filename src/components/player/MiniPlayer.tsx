@@ -5,6 +5,7 @@ import {
   IconButton,
   Slider,
   Tooltip,
+  CircularProgress,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
@@ -36,6 +37,7 @@ export const MiniPlayer: React.FC = () => {
   const {
     currentSong,
     isPlaying,
+    isBuffering,
     currentTime,
     duration,
     volume,
@@ -53,6 +55,7 @@ export const MiniPlayer: React.FC = () => {
     toggleShuffle,
     cycleRepeat,
     pause,
+    closePlayer,
   } = useAudioPlayer();
 
   const theme = useTheme();
@@ -123,18 +126,35 @@ export const MiniPlayer: React.FC = () => {
           }}
         >
           <Box
-            component="img"
-            src={currentSong.coverUrl}
-            alt={currentSong.title}
             sx={{
+              position: 'relative',
               width: { xs: 40, sm: 48 },
               height: { xs: 40, sm: 48 },
-              borderRadius: 1.2,
-              objectFit: 'cover',
-              border: '1px solid rgba(255, 42, 116, 0.3)',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
+              flexShrink: 0,
             }}
-          />
+          >
+            <Box
+              component="img"
+              src={currentSong.coverUrl}
+              alt={currentSong.title}
+              sx={{
+                width: '100%',
+                height: '100%',
+                borderRadius: 1.2,
+                objectFit: 'cover',
+                border: isPlaying ? '1px solid #ff2a74' : '1px solid rgba(255, 42, 116, 0.3)',
+                boxShadow: isPlaying ? '0 0 12px rgba(255, 42, 116, 0.6)' : '0 4px 12px rgba(0, 0, 0, 0.5)',
+                transform: isPlaying ? 'scale(1.04)' : 'scale(1)',
+                animation: isPlaying ? 'miniCoverRhythm 1.6s ease-in-out infinite alternate' : 'none',
+                transition: 'all 0.3s ease',
+                '@keyframes miniCoverRhythm': {
+                  '0%': { transform: 'scale(1)', filter: 'brightness(1)' },
+                  '50%': { transform: 'scale(1.06)', filter: 'brightness(1.12)' },
+                  '100%': { transform: 'scale(1.02)', filter: 'brightness(1.04)' },
+                },
+              }}
+            />
+          </Box>
           <Box sx={{ overflow: 'hidden' }}>
             <Typography
               variant="body2"
@@ -193,18 +213,25 @@ export const MiniPlayer: React.FC = () => {
           </IconButton>
 
           <IconButton
-            onClick={togglePlay}
+            onClick={isBuffering ? undefined : togglePlay}
             sx={{
               width: { xs: 38, sm: 44 },
               height: { xs: 38, sm: 44 },
               bgcolor: '#ff2a74',
               color: '#ffffff',
               boxShadow: '0 0 15px rgba(255, 42, 116, 0.5)',
-              '&:hover': { bgcolor: '#e01b5d', transform: 'scale(1.05)' },
+              '&:hover': { bgcolor: isBuffering ? '#ff2a74' : '#e01b5d', transform: isBuffering ? 'none' : 'scale(1.05)' },
               transition: 'all 0.2s ease',
+              position: 'relative',
             }}
           >
-            {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
+            {isBuffering ? (
+              <CircularProgress size={20} sx={{ color: '#ffffff' }} />
+            ) : isPlaying ? (
+              <PauseIcon />
+            ) : (
+              <PlayArrowIcon />
+            )}
           </IconButton>
 
           <IconButton size="small" onClick={playNext} sx={{ color: '#ffffff' }}>
@@ -269,10 +296,10 @@ export const MiniPlayer: React.FC = () => {
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="Pause & Close">
+          <Tooltip title="Close Player">
             <IconButton
               size="small"
-              onClick={pause}
+              onClick={closePlayer}
               sx={{ color: 'rgba(255, 255, 255, 0.4)', '&:hover': { color: '#ffffff' } }}
             >
               <CloseIcon fontSize="small" />
