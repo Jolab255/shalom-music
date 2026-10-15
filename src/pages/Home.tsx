@@ -231,14 +231,14 @@ const teamMembers = [
     }
   },
   {
-    name: "Samson Misheto",
+    name: "Isaack Thadeo",
     position: "Audio Engineer",
     additionalRoles: ["Music Producer", "Recording Assistant"],
     image: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=400&h=400&q=80",
     socials: {
       instagram: "https://instagram.com",
       x: "https://x.com",
-      gmail: "mailto:samsonmisheto@gmail.com",
+      gmail: "mailto:isaackthadeo@gmail.com",
       facebook: "https://facebook.com",
       linkedin: "https://linkedin.com"
     }
