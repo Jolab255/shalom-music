@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Chip } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
-import type { Song } from '../types/song';
+import type { Song } from '../../types/song';
 
 interface AnimatedCoverArtProps {
   song: Song;

@@ -54,7 +54,6 @@ export const MiniPlayer: React.FC = () => {
     toggleMute,
     toggleShuffle,
     cycleRepeat,
-    pause,
     closePlayer,
   } = useAudioPlayer();
 
